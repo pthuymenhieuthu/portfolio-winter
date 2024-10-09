@@ -135,6 +135,35 @@ export const DATA = {
       end: "2025",
     },
   ],
+  certifications: [
+    {
+      name: "Certificate of Completion - UI Design Course",
+      href: "https://colorme.vn/digitalcertificate/136748",
+      org: "colorME",
+      logoUrl: "/colorme.jpg",
+      start: "2024",
+      description:
+        "8 UI Design classes have helped me learn a lot about how to design screens on Figma, how to prototype, and the basic steps to create a Design System.", 
+    },
+    {
+      name: "Certificate of Achievement",
+      href: "https://drive.google.com/file/d/1n_WjUM_JDBbSDktjhxP3E3UXPgbYV1lg/view?usp=sharing",
+      org: "Lollypop Design Studio Vietnam",
+      logoUrl: "/lollypop.jpg",
+      start: "2024",
+      description:
+        "I completed 24 hours of intensive UI/UX design training with 97 other designers, gaining insights on presenting engaging design challenges and understanding the design process at the agency.", 
+    },
+    {
+      name: "UX Design Certificate",
+      href: "https://www.coursera.org/account/accomplishments/records/F9ZGWQTH3RH3",
+      org: "Google",
+      logoUrl: "/google.png",
+      start: "2024",
+      description:
+        "I spent a month taking 5 core classes of the Google UX Design course, which provided me with foundational knowledge of UX and its processes, helping me understand its role and apply it in practice.", 
+    },
+  ],
   projects: [
     {
       title: "Chat Collect",
