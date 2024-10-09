@@ -175,9 +175,18 @@ export default function Page() {
         </div>
       </section>
       <section id="icon-cloud-demo">
-        <BlurFade delay={BLUR_FADE_DELAY * 17}>
-          <IconCloudDemo />
+        <div className="grid items-center justify-center gap-4 px-4 text-center md:px-6 w-full py-12">
+        <BlurFade delay={BLUR_FADE_DELAY * 16}>
+          <div className="space-y-3">
+              <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
+                Favorite Apps
+              </div>
+          </div>
+          <div className="flex justify-center"> {/* Add this div for centering */}
+            <IconCloudDemo />
+          </div>
         </BlurFade>
+        </div>
       </section>
       <section id="contact">
         <div className="grid items-center justify-center gap-4 px-4 text-center md:px-6 w-full py-12">
