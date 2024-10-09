@@ -7,49 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
-import IconCloud from "@/components/ui/icon-cloud";
+import { IconCloudDemo } from "@/components/icon-cloud-demo";
 
 const BLUR_FADE_DELAY = 0.04;
-const slugs = [
-  "typescript",
-  "javascript",
-  "dart",
-  "java",
-  "react",
-  "flutter",
-  "android",
-  "html5",
-  "css3",
-  "nodedotjs",
-  "express",
-  "nextdotjs",
-  "prisma",
-  "amazonaws",
-  "postgresql",
-  "firebase",
-  "nginx",
-  "vercel",
-  "testinglibrary",
-  "jest",
-  "cypress",
-  "docker",
-  "git",
-  "jira",
-  "github",
-  "gitlab",
-  "visualstudiocode",
-  "androidstudio",
-  "sonarqube",
-  "figma",
-];
 
-export function IconCloudDemo() {
-  return (
-    <div className="relative flex size-full max-w-lg items-center justify-center overflow-hidden rounded-lg border bg-background px-20 pb-20 pt-8 ">
-      <IconCloud iconSlugs={slugs} />
-    </div>
-  );
-}
 export default function Page() {
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-10">
