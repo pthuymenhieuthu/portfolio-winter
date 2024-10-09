@@ -182,7 +182,7 @@ export default function Page() {
                 Favorite Apps
               </div>
           </div>
-          <div className="flex justify-center"> {/* Add this div for centering */}
+          <div className="mt-4 flex justify-center"> {/* Add this div for centering */}
             <IconCloudDemo />
           </div>
         </BlurFade>
