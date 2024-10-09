@@ -29,6 +29,20 @@ export const DATA = {
     email: "phuongthuy101222@gmail.com",
     tel: "+84 583 546 018",
     social: {
+      Behance: {
+        name: "Behance",
+        url: "https://www.behance.net/thuynguyen175",
+        icon: Icons.behance,
+
+        navbar: true,
+      },
+      Dribble: {
+        name: "Dribble",
+        url: "https://www.behance.net/thuynguyen175",
+        icon: Icons.dribble,
+
+        navbar: true,
+      },
       LinkedIn: {
         name: "LinkedIn",
         url: "https://www.linkedin.com/in/thuy-nguyen-1665ab208/",
@@ -36,9 +50,16 @@ export const DATA = {
 
         navbar: true,
       },
+      Threads: {
+        name: "Threads",
+        url: "https://www.threads.net/@winter.arrt",
+        icon: Icons.threads,
+
+        navbar: true,
+      },
       email: {
         name: "Send Email",
-        url: "mailto:phuongthuy101222@gmail.com",
+        url: "mailto: phuongthuy101222@gmail.com",
         icon: Icons.email,
 
         navbar: true,
