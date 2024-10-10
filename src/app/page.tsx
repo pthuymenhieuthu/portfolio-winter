@@ -175,7 +175,7 @@ export default function Page() {
         </div>
       </section>
       <section id="icon-cloud-demo">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-[800px] mx-auto items-center justify-center px-4 text-center md:px-6 w-full py-6">
+        <div className="space-y-12 w-full py-12">
           <BlurFade delay={BLUR_FADE_DELAY * 16}>
             <div className="space-y-3">
               <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
