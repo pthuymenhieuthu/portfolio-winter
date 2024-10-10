@@ -181,6 +181,9 @@ export default function Page() {
               <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
                 Favorite Apps
               </div>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                Explore my favorite apps
+              </h2>
           </div>
           <div className="mt-4 flex justify-center col-span-full"> {/* col-span-full để đảm bảo nó fill cả grid */}
             <IconCloudDemo />
