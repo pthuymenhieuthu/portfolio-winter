@@ -175,17 +175,17 @@ export default function Page() {
         </div>
       </section>
       <section id="icon-cloud-demo">
-        <div className="space-y-12 w-full py-12">
-          <BlurFade delay={BLUR_FADE_DELAY * 16}>
-            <div className="space-y-3">
+        <div className="grid items-center justify-center gap-4 px-4 text-center md:px-6 w-full py-6">
+        <BlurFade delay={BLUR_FADE_DELAY * 16}>
+          <div className="space-y-3">
               <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
                 Favorite Apps
               </div>
-            </div>
-            <div className="mt-4 flex justify-center">
-              <IconCloudDemo />
-            </div>
-          </BlurFade>
+          </div>
+          <div className="mt-4 flex justify-center col-span-full"> {/* col-span-full để đảm bảo nó fill cả grid */}
+            <IconCloudDemo />
+          </div>
+        </BlurFade>
         </div>
       </section>
       <section id="contact">
