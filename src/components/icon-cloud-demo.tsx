@@ -2,15 +2,10 @@
 import IconCloud from "@/components/ui/icon-cloud";
 
 const slugs = [
-  "typescript",
-  "javascript",
-  "vercel",
-  "github",
-  "html5",
-  "visualstudiocode",
   "adobeillustrator",
   "adobephotoshop",
-  "capcut",
+  "miro",
+  "pinterest",
   "figma",
   "framer",
   "canva",
@@ -20,6 +15,11 @@ const slugs = [
   "threads",
   "notion",
   "medium",
+  "typescript",
+  "vercel",
+  "github",
+  "html5",
+  "visualstudiocode",
 ];
 
 export function IconCloudDemo() {
