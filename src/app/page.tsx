@@ -185,7 +185,7 @@ export default function Page() {
                 Explore my favorite apps
               </h2>
           </div>
-          <div className="mt-4 flex justify-center col-span-full"> {/* col-span-full để đảm bảo nó fill cả grid */}
+          <div className="mt-8 flex justify-center col-span-full"> {/* col-span-full để đảm bảo nó fill cả grid */}
             <IconCloudDemo />
           </div>
         </BlurFade>
