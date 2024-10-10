@@ -202,12 +202,12 @@ export default function Page() {
                 Get in Touch
               </h2>
               <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Excited to collaborate! Drop me an {" "}
+                Excited to collaborate! Email me at {" "}
                 <Link
                   href={DATA.contact.social.email.url}
                   className="text-blue-500 hover:underline"
                 >
-                 Email
+                 phuongthuy101222@gmail.com
                 </Link>{" "}
                 or DM me on {" "}
                 <Link
