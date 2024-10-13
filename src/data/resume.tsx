@@ -183,6 +183,11 @@ export const DATA = {
           href: "https://www.behance.net/gallery/208908063/TalkPiggy-Money-Management-App",
           icon: <Icons.behance className="size-3" />,
         },
+        {
+          type: "Dribble",
+          href: "https://dribbble.com/shots/24954839-Finance-Management-Budget-Mobile-App?utm_source=Clipboard_Shot&utm_campaign=pthuy&utm_content=Finance%20Management%20-%20Budget%20Mobile%20App&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=pthuy&utm_content=Finance%20Management%20-%20Budget%20Mobile%20App&utm_medium=Social_Share",
+          icon: <Icons.dribble className="size-3" />,
+        },
       ],
       image: "",
       video:
@@ -190,7 +195,7 @@ export const DATA = {
     },
     {
       title: "Innisfree Landing Page Redesign",
-      href: "https://dribbble.com/shots/24978397-Innisfree-vn-Redesign-Landing-Page",
+      href: "https://www.behance.net/gallery/210091149/Innisfree-Beauty-Ecommerce-Page-Redesign",
       dates: "Sep 2024 - Present",
       active: true,
       description:
@@ -232,9 +237,9 @@ export const DATA = {
       ],
       links: [
         {
-          type: "Behance",
-          href: "https://llm.report",
-          icon: <Icons.behance className="size-3" />,
+          type: "Prototype",
+          href: "https://www.figma.com/proto/bEJfJb6iB0pXlrrLDIONC1/K14---Team-14?page-id=7004%3A4&node-id=7138-5885&node-type=frame&viewport=545%2C292%2C0.06&t=zJ3CTlFM4bFMSAe1-1&scaling=scale-down-width&content-scaling=fixed",
+          icon: <Icons.figma className="size-3" />,
         },
       ],
       image: "",
