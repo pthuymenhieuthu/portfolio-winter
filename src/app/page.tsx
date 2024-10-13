@@ -179,10 +179,10 @@ export default function Page() {
         <BlurFade delay={BLUR_FADE_DELAY * 16}>
           <div className="space-y-3">
               <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
-                Favorite Apps
+                My Tech Stack
               </div>
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                Explore my favorite apps
+                A list of my skills and technologies used in projects.
               </h2>
           </div>
           <div className="mt-12 flex justify-center col-span-full"> {/* col-span-full để đảm bảo nó fill cả grid */}
