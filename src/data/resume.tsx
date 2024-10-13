@@ -203,6 +203,11 @@ export const DATA = {
       ],
       links: [
         {
+          type: "Behance",
+          href: "https://www.behance.net/gallery/210091149/Innisfree-Beauty-Ecommerce-Page-Redesign",
+          icon: <Icons.behance className="size-3" />,
+        },
+        {
           type: "Dribble",
           href: "https://dribbble.com/shots/24978397-Innisfree-vn-Redesign-Landing-Page",
           icon: <Icons.dribble className="size-3" />,
