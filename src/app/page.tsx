@@ -147,7 +147,7 @@ export default function Page() {
                   Check out my latest work
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                I chose to highlight three key projects:
+                I chose to highlight four key projects:
                 </p>
               </div>
             </div>
