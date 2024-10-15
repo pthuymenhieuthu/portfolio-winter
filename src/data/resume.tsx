@@ -173,9 +173,10 @@ export const DATA = {
         " A fintech app that addresses both financial management and social connection.",
       technologies: [
         "Product Design",
+        "App Design",
         "UI Design",
         "UX Research",
-        "Design Process",
+        "Fintech",
       ],
       links: [
         {
@@ -196,15 +197,16 @@ export const DATA = {
     {
       title: "Innisfree Landing Page Redesign",
       href: "https://www.behance.net/gallery/210091149/Innisfree-Beauty-Ecommerce-Page-Redesign",
-      dates: "Sep 2024 - Present",
+      dates: "Sep 2024",
       active: true,
       description:
         "Leveraging my experience managing the innisfree.vn brand site, I led a redesign project to enhance interaction through prototypes and optimize the user flow.",
       technologies: [
         "Web Design",
-        "UI Design",
-        "UX Research",
+        "UI/UX Design",
         "Prototype",
+        "E-commerce",
+        "Beauty"
       ],
       links: [
         {
@@ -222,6 +224,34 @@ export const DATA = {
       video: "/innisfree.gif",
     },
     {
+      title: "Accesstrade | Affiliate Marketing Business Website",
+      href: "https://www.behance.net/gallery/210240561/Accesstrade-Affiliate-Marketing-Business-Website",
+      dates: "Oct 2024",
+      active: true,
+      description:
+        "A mini-project on designing a corporate business website for affiliate marketing service",
+      technologies: [
+        "Web Design",
+        "UI Design",
+        "Corporate",
+        "Affiliate Marketing"
+      ],
+      links: [
+        {
+          type: "Behance",
+          href: "https://www.behance.net/gallery/210240561/Accesstrade-Affiliate-Marketing-Business-Website",
+          icon: <Icons.behance className="size-3" />,
+        },
+        {
+          type: "Dribble",
+          href: "https://dribbble.com/shots/25031962-Affiliate-Marketing-Corporate-Business-Website-Redesign",
+          icon: <Icons.dribble className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "/accesstrade.gif",
+    },
+    {
       title: "ZanZan",
       href: "https://www.figma.com/proto/bEJfJb6iB0pXlrrLDIONC1/K14---Team-14?page-id=7004%3A4&node-id=7138-5885&node-type=frame&viewport=545%2C292%2C0.06&t=zJ3CTlFM4bFMSAe1-1&scaling=scale-down-width&content-scaling=fixed",
       dates: "Sep 2024",
@@ -230,10 +260,8 @@ export const DATA = {
         "A project with Team 14 at Lollypop Designathon 2024, centered around traditional folk games.",
       technologies: [
         "Web Design",
-        "UI Design",
         "UX Research",
         "Prototype",
-        "Motion Design",
       ],
       links: [
         {
