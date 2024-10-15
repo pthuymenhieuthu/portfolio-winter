@@ -1,6 +1,7 @@
+// google-tracking.tsx
 import { useEffect } from 'react';
 
-const App = () => {
+const GoogleTracking = () => {
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://www.googletagmanager.com/gtag/js?id=G-JCEWNL7GJ3';
@@ -17,7 +18,7 @@ const App = () => {
     document.head.appendChild(inlineScript);
   }, []);
 
-  return <div>Your React App</div>;
+  return null; // Không cần render gì ra giao diện
 };
 
-export default App;
+export default GoogleTracking;
