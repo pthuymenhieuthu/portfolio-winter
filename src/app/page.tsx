@@ -8,11 +8,14 @@ import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
 import { IconCloudDemo } from "@/components/icon-cloud-demo";
+import GoogleTracking from "@/components/google-tracking";
 
 const BLUR_FADE_DELAY = 0.04;
 
 export default function Page() {
   return (
+    <>
+    <GoogleTracking />
     <main className="flex flex-col min-h-[100dvh] space-y-10">
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
@@ -222,5 +225,6 @@ export default function Page() {
         </div>
       </section>
     </main>
+    </>
   );
 }
