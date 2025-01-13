@@ -263,27 +263,27 @@ export const DATA = {
       image: "",
       video: "/accesstrade.gif",
     },
-    {
-      title: "ZanZan",
-      href: "https://www.figma.com/proto/bEJfJb6iB0pXlrrLDIONC1/K14---Team-14?page-id=7004%3A4&node-id=7138-5885&node-type=frame&viewport=545%2C292%2C0.06&t=zJ3CTlFM4bFMSAe1-1&scaling=scale-down-width&content-scaling=fixed",
-      dates: "Sep 2024",
-      active: true,
-      description:
-        "A project with Team 14 at Lollypop Designathon 2024, centered around traditional folk games.",
-      technologies: [
-        "Web Design",
-        "UX Research",
-        "Prototype",
-      ],
-      links: [
-        {
-          type: "Prototype",
-          href: "https://www.figma.com/proto/bEJfJb6iB0pXlrrLDIONC1/K14---Team-14?page-id=7004%3A4&node-id=7138-5885&node-type=frame&viewport=545%2C292%2C0.06&t=zJ3CTlFM4bFMSAe1-1&scaling=scale-down-width&content-scaling=fixed",
-          icon: <Icons.figma className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "/zanzan.gif",
-    },
+    //{
+      //title: "ZanZan",
+      //href: "https://www.figma.com/proto/bEJfJb6iB0pXlrrLDIONC1/K14---Team-14?page-id=7004%3A4&node-id=7138-5885&node-type=frame&viewport=545%2C292%2C0.06&t=zJ3CTlFM4bFMSAe1-1&scaling=scale-down-width&content-scaling=fixed",
+      //dates: "Sep 2024",
+      //active: true,
+      //description:
+      //  "A project with Team 14 at Lollypop Designathon 2024, centered around traditional folk games.",
+      //technologies: [
+      //  "Web Design",
+      //  "UX Research",
+      //  "Prototype",
+      //],
+      //links: [
+      //  {
+      //    type: "Prototype",
+       //   href: "https://www.figma.com/proto/bEJfJb6iB0pXlrrLDIONC1/K14---Team-14?page-id=7004%3A4&node-id=7138-5885&node-type=frame&viewport=545%2C292%2C0.06&t=zJ3CTlFM4bFMSAe1-1&scaling=scale-down-width&content-scaling=fixed",
+       //   icon: <Icons.figma className="size-3" />,
+       // },
+      //],
+      //image: "",
+      //video: "/zanzan.gif",
+    //},
   ],
 } as const;
