@@ -150,7 +150,7 @@ export default function Page() {
                   Check out my latest work
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                I chose to highlight four key projects:
+                  Find out more on my <a href="https://www.behance.net/thuynguyen175" target="_blank" rel="noopener noreferrer">Behance</a>.
                 </p>
               </div>
             </div>
