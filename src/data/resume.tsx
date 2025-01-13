@@ -115,6 +115,18 @@ export const DATA = {
       description:
         "• Regularly used Figma to design social media posts, enhancing design and layout skills.\n • Understood the user purchasing journey through experience in e-commerce platforms.\n • Conducted competitor research on sales academy flows on Lazada and Shopee, identifying key UX/UI improvements.",
     },
+    {
+      company: "FireGroup",
+      href: "",
+      badges: [],
+      location: "Ho Chi Minh City",
+      title: "Intern",
+      logoUrl: "/firegroup.jpeg",
+      start: "Nov 2024",
+      end: "Jan 2025",
+      description:
+        "• Understand the product overview, the primary user personas utilizing the product, and their journey.\n • Familiarize with the Design System being applied to the product.\n • Learn how to create illustrations that meet the product's standards and grasp the basic process of handoff to the development team.",
+    },
   ],
   education: [
     {
