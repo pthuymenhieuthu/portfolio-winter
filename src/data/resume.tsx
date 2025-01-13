@@ -68,6 +68,30 @@ export const DATA = {
 
   work: [
     {
+      company: "FireGroup",
+      href: "",
+      badges: [],
+      location: "Ho Chi Minh City",
+      title: "Product Design Intern",
+      logoUrl: "/firegroup.jpeg",
+      start: "Nov 2024",
+      end: "Jan 2025",
+      description:
+        "• Understand the product overview, the primary user personas utilizing the product, and their journey.\n • Familiarize with the Design System being applied to the product.\n • Learn how to create illustrations that meet the product's standards and grasp the basic process of handoff to the development team.",
+    },
+    {
+      company: "TikTok Shop",
+      href: "",
+      badges: [],
+      location: "Ho Chi Minh City",
+      title: "Seller Engagement Intern",
+      logoUrl: "/tiktokshop.png",
+      start: "Dec 2023",
+      end: "Jul 2024",
+      description:
+        "• Regularly used Figma to design social media posts, enhancing design and layout skills.\n • Understood the user purchasing journey through experience in e-commerce platforms.\n • Conducted competitor research on sales academy flows on Lazada and Shopee, identifying key UX/UI improvements.",
+    },
+    {
       company: "Gufoods",
       href: "https://www.gufoods.com",
       badges: [],
@@ -79,54 +103,30 @@ export const DATA = {
       description:
         "• Developed the Information Architecture (IA), and completed the high-fidelity wireframe design for Rice Cake Recipes.\n • Designed marketing collateral, including brochures, social media posts, and promotional materials.\n • Edited videos and created interactive stories using CapCut.",
     },
-    {
-      company: "ELSA Speak",
-      badges: [],
-      href: "https://elsaspeak.com",
-      location: "Remote",
-      title: "Intern",
-      logoUrl: "/elsaspeak.png",
-      start: "Nov 2022",
-      end: "Aug 2023",
-      description:
-        "• Planned and created content across social media channels\n • Designed corresponding images and videos.\n • Supported Influencer Marketing campaign.",
-    },
-    {
-      company: "Innisfree",
-      href: "https://innisfree.vn/",
-      badges: [],
-      location: "Ho Chi Minh City",
-      title: "Intern",
-      logoUrl: "/innisfree.png",
-      start: "May 2023",
-      end: "Oct 2023",
-      description:
-        "• Collaborated with the CJ development team to enhance the landing page\n • Set up campaigns and inserted code into the event page to ensure functionality on sale days.\n • Conducted competitor research on other sales pages, providing briefs and visual feedback for both the key visuals and event pages.",
-    },
-    {
-      company: "TikTok Shop",
-      href: "",
-      badges: [],
-      location: "Ho Chi Minh City",
-      title: "Intern",
-      logoUrl: "/tiktokshop.png",
-      start: "Dec 2023",
-      end: "Jul 2024",
-      description:
-        "• Regularly used Figma to design social media posts, enhancing design and layout skills.\n • Understood the user purchasing journey through experience in e-commerce platforms.\n • Conducted competitor research on sales academy flows on Lazada and Shopee, identifying key UX/UI improvements.",
-    },
-    {
-      company: "FireGroup",
-      href: "",
-      badges: [],
-      location: "Ho Chi Minh City",
-      title: "Intern",
-      logoUrl: "/firegroup.jpeg",
-      start: "Nov 2024",
-      end: "Jan 2025",
-      description:
-        "• Understand the product overview, the primary user personas utilizing the product, and their journey.\n • Familiarize with the Design System being applied to the product.\n • Learn how to create illustrations that meet the product's standards and grasp the basic process of handoff to the development team.",
-    },
+    //{
+      //company: "ELSA Speak",
+      //badges: [],
+      //href: "https://elsaspeak.com",
+      //location: "Remote",
+      //title: "Intern",
+      //logoUrl: "/elsaspeak.png",
+      //start: "Nov 2022",
+      //end: "Aug 2023",
+      //description:
+      //  "• Planned and created content across social media channels\n • Designed corresponding images and videos.\n • Supported Influencer Marketing campaign.",
+    //},
+    //{
+      //company: "Innisfree",
+      //href: "https://innisfree.vn/",
+      //badges: [],
+      //location: "Ho Chi Minh City",
+      //title: "Intern",
+      //logoUrl: "/innisfree.png",
+      //start: "May 2023",
+      //end: "Oct 2023",
+      //description:
+       // "• Collaborated with the CJ development team to enhance the landing page\n • Set up campaigns and inserted code into the event page to ensure functionality on sale days.\n • Conducted competitor research on other sales pages, providing briefs and visual feedback for both the key visuals and event pages.",
+    //},
   ],
   education: [
     {
