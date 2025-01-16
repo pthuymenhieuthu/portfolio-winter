@@ -10,7 +10,7 @@ export const DATA = {
   description:
     "Proactive UI/UX Designer · Passionate about learning and growth",
   summary:
-    "My name is Thuy (Winter). I just graduated in July this year, and [I have dedicated a significant amount of time learning about UI/UX as well as participating in a competition](/#certifications), so I have a good understanding of how the design process works and some knowledge of front-end development/coding. Additionally, with internship experience at major companies like [TikTok, Innisfree, and ELSA Speak](/#work), I am confident that I have a solid grasp of business requirements and can view things from both a business and user perspective to deliver the best product. I look forward to collaborating with you!",
+    "My name is Thuy (Winter). I just graduated in July this year, and [I have dedicated a significant amount of time learning about UI/UX as well as participating in a competition](/#certifications), My internship at [FireGroup](/#work) enhanced my understanding of team collaboration, while my experience at [TikTok Shop](/#work) allowed me to regularly use Figma and develop a solid grasp of business requirements. I can effectively balance business and user perspectives to deliver impactful products. I look forward to collaborating with you!",
   avatarUrl: "/me.png",
   skills: [
     "UI Design",
