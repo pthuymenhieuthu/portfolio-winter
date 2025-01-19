@@ -178,7 +178,7 @@ export const DATA = {
   projects: [
     {
       title: "TalkPiggy",
-      href: "https://www.behance.net/gallery/208908063/TalkPiggy-Money-Management-App",
+      href: "/blog/hello-world",
       dates: "Aug 2024 - Sep 2024",
       active: true,
       description:
