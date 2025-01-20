@@ -178,7 +178,7 @@ export const DATA = {
   projects: [
     {
       title: "Innisfree Landing Page Redesign",
-      href: "/blog/hello-world",
+      href: "/blog/innisfree",
       dates: "Sep 2024",
       active: true,
       description:
