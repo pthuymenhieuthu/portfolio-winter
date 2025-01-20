@@ -177,8 +177,37 @@ export const DATA = {
   ],
   projects: [
     {
-      title: "TalkPiggy",
+      title: "Innisfree Landing Page Redesign",
       href: "/blog/hello-world",
+      dates: "Sep 2024",
+      active: true,
+      description:
+        "Leveraging my experience managing the innisfree.vn brand site, I led a redesign project to enhance interaction through prototypes and optimize the user flow.",
+      technologies: [
+        "Web Design",
+        "UI/UX Design",
+        "Prototype",
+        "E-commerce",
+        "Beauty"
+      ],
+      links: [
+        {
+          type: "Behance",
+          href: "https://www.behance.net/gallery/210091149/Innisfree-Beauty-Ecommerce-Page-Redesign",
+          icon: <Icons.behance className="size-3" />,
+        },
+        {
+          type: "Dribble",
+          href: "https://dribbble.com/shots/24978397-Innisfree-vn-Redesign-Landing-Page",
+          icon: <Icons.dribble className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "/innisfree.gif",
+    },
+    {
+      title: "TalkPiggy",
+      href: "https://www.behance.net/gallery/208908063/TalkPiggy-Money-Management-App",
       dates: "Aug 2024 - Sep 2024",
       active: true,
       description:
@@ -205,35 +234,6 @@ export const DATA = {
       image: "",
       video:
         "/talkpiggy.gif",
-    },
-    {
-      title: "Innisfree Landing Page Redesign",
-      href: "https://www.behance.net/gallery/210091149/Innisfree-Beauty-Ecommerce-Page-Redesign",
-      dates: "Sep 2024",
-      active: true,
-      description:
-        "Leveraging my experience managing the innisfree.vn brand site, I led a redesign project to enhance interaction through prototypes and optimize the user flow.",
-      technologies: [
-        "Web Design",
-        "UI/UX Design",
-        "Prototype",
-        "E-commerce",
-        "Beauty"
-      ],
-      links: [
-        {
-          type: "Behance",
-          href: "https://www.behance.net/gallery/210091149/Innisfree-Beauty-Ecommerce-Page-Redesign",
-          icon: <Icons.behance className="size-3" />,
-        },
-        {
-          type: "Dribble",
-          href: "https://dribbble.com/shots/24978397-Innisfree-vn-Redesign-Landing-Page",
-          icon: <Icons.dribble className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "/innisfree.gif",
     },
     {
       title: "Accesstrade | Affiliate Marketing Business Website",
