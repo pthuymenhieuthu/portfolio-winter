@@ -11,7 +11,7 @@ export const DATA = {
     "Proactive Product Designer · Passionate about learning and growth",
   summary:
     "My name is **Thuy (Winter)**. I recently graduated in July and have accumulated valuable experience in the UI/UX field. During my internship at **FireGroup**, I gained foundational knowledge of how product designers collaborate with various stakeholders within a sprint team model. Additionally, my experience working at **TikTok Shop** involved frequent use of Figma and provided me with a strong understanding of business requirements, further enhancing my practical skills and insights into the industry. Find out more about my journey and projects [below](/#work).",
-  avatarUrl: "/me.png",
+  avatarUrl: "/me.jpg",
   skills: [
     "UI Design",
     "UX Design",
