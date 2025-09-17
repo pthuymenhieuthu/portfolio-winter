@@ -72,7 +72,7 @@ export const DATA = {
       href: "",
       badges: [],
       location: "Ho Chi Minh City",
-      title: "Product Design Intern",
+      title: "Product Design Fresher",
       logoUrl: "/firegroup.jpeg",
       start: "Nov 2024",
       end: "Jan 2025",
