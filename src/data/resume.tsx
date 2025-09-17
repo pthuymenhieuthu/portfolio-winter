@@ -1,5 +1,15 @@
 import { Icons } from "@/components/icons";
 import { HomeIcon, NotebookIcon } from "lucide-react";
+import { SmoothCursor } from "@/components/ui/smooth-cursor";
+
+export default function Page() {
+  return (
+    <div className="cursor-none"> {/* Ẩn chuột mặc định */}
+      <SmoothCursor />
+      {/* Nội dung page của bạn */}
+    </div>
+  );
+}
 
 export const DATA = {
   name: "Winter Nguyen",
@@ -148,7 +158,7 @@ export const DATA = {
   ],
   certifications: [
     {
-      name: "MASTERCLASS: DESIGN A REAL WEBSITE",
+      name: "Masterclass: Design a real website",
       href: "https://das.info.vn/programs",
       org: "DAS",
       logoUrl: "/das.jpg",
