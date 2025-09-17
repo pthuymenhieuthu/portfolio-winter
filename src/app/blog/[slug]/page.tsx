@@ -18,12 +18,12 @@ export default async function BlogPage({
   }
 
   return (
-    <div className="cursor-none min-h-screen flex relative">
+    <div className="cursor-none min-h-screen grid grid-cols-12 relative">
       {/* Chuột ảo */}
       <SmoothCursor />
 
       {/* Nội dung blog */}
-      <main className="flex-1 px-6 lg:px-12 py-10 max-w-4xl">
+      <main className="col-span-12 lg:col-span-9 px-6 lg:px-12 py-10">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
           {post.metadata.title}
         </h1>
@@ -41,7 +41,7 @@ export default async function BlogPage({
       </main>
 
       {/* Sidebar TOC */}
-      <aside className="hidden lg:block w-[300px] flex-shrink-0 p-6 bg-muted/40 border-l border-border">
+      <aside className="hidden lg:block col-span-3 p-6 bg-muted/40 border-l border-border">
         <div className="sticky top-20">
           <TableOfContents />
         </div>
