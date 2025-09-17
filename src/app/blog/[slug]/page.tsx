@@ -1,9 +1,10 @@
-import { getBlogPosts, getPost } from "@/data/blog";
+import { getBlogPosts, getPost } from "@/data/blog"; 
 import { DATA } from "@/data/resume";
 import { formatDate } from "@/lib/utils";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { SmoothCursor } from "@/components/ui/smooth-cursor"; // 👈 add import
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
@@ -66,6 +67,9 @@ export default async function Blog({
 
   return (
     <section id="blog">
+      {/* 👇 Smooth cursor */}
+      <SmoothCursor />  
+
       <script
         type="application/ld+json"
         suppressHydrationWarning
