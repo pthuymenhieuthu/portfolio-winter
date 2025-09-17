@@ -1,15 +1,5 @@
 import { Icons } from "@/components/icons";
 import { HomeIcon, NotebookIcon } from "lucide-react";
-import { SmoothCursor } from "@/components/ui/smooth-cursor";
-
-export default function Page() {
-  return (
-    <div className="cursor-none"> {/* Ẩn chuột mặc định */}
-      <SmoothCursor />
-      {/* Nội dung page của bạn */}
-    </div>
-  );
-}
 
 export const DATA = {
   name: "Winter Nguyen",
