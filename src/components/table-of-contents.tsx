@@ -71,10 +71,10 @@ export function TableOfContents({ className }: TableOfContentsProps) {
 
   return (
     <div className={cn("space-y-2", className)}>
-      <h4 className="text-sm font-semibold text-foreground mb-3">
+      <h4 className="text-xs font-semibold text-foreground mb-3">
         On this page
       </h4>
-      <ul className="space-y-2 text-sm">
+      <ul className="space-y-2 text-xs">
         {headings.map((h) => (
           <li key={h.id} className={cn(h.level === 3 && "ml-4")}>
             <button
