@@ -155,7 +155,8 @@ export const DATA = {
       start: "2025",
       description:
         "The learning process with Mr. Sun Hung helped me understand the real workflow of creating a landing page, how to craft a story, and useful tips to apply in actual UI/UX work.", 
-    },{
+    },
+    {
       name: "Certificate of Completion - UI Design Course",
       href: "https://colorme.vn/digitalcertificate/136748",
       org: "colorME",
