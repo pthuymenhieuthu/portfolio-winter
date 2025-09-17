@@ -17,36 +17,34 @@ export default async function BlogPage({
   }
 
   return (
-    <div className="cursor-none min-h-screen grid grid-cols-12 relative w-full">
+    <div className="cursor-none min-h-screen grid grid-cols-12 relative">
       {/* Chuột ảo */}
       <SmoothCursor />
 
-      {/* Nội dung blog */}
-      <main className="col-span-12 lg:col-span-9 px-6 lg:px-12 py-10">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            {post.metadata.title}
-          </h1>
-
-          <div className="text-sm text-muted-foreground mb-6">
-            <Suspense fallback={<p className="h-5" />}>
-              <p>{formatDate(post.metadata.publishedAt)}</p>
-            </Suspense>
-          </div>
-
-          <article
-            className="prose dark:prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: post.source }}
-          />
-        </div>
-      </main>
-
-      {/* Sidebar TOC */}
-      <aside className="hidden lg:block col-span-3 p-6 bg-muted/40 border-l border-border">
+      {/* Sidebar TOC (chiếm 3/12 bên trái) */}
+      <aside className="hidden lg:block col-span-3 p-4 border-r border-border">
         <div className="sticky top-20">
-          <TableOfContents />
+          <TableOfContents className="text-xs" />
         </div>
       </aside>
+
+      {/* Nội dung blog (chiếm 9/12 bên phải) */}
+      <main className="col-span-12 lg:col-span-9 px-6 lg:px-12 py-10">
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+          {post.metadata.title}
+        </h1>
+
+        <div className="text-sm text-muted-foreground mb-6">
+          <Suspense fallback={<p className="h-5" />}>
+            <p>{formatDate(post.metadata.publishedAt)}</p>
+          </Suspense>
+        </div>
+
+        <article
+          className="prose dark:prose-invert max-w-none"
+          dangerouslySetInnerHTML={{ __html: post.source }}
+        />
+      </main>
     </div>
   );
 }
