@@ -16,10 +16,10 @@ interface TableOfContentsProps {
 export function TableOfContents({ className }: TableOfContentsProps) {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string>("");
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    // Quét các heading trong bài (h2, h3)
-    const headingElements = document.querySelectorAll("h2, h3");
+    const headingElements = document.querySelectorAll("h2, h3, h4");
     const items: Heading[] = [];
 
     headingElements.forEach((el) => {
@@ -45,7 +45,6 @@ export function TableOfContents({ className }: TableOfContentsProps) {
         };
       });
 
-      // heading nào gần top nhất thì active
       const active = positions.find((p) => p.top >= 0 && p.top <= 120);
       if (active && active.id !== activeId) {
         setActiveId(active.id);
@@ -53,7 +52,7 @@ export function TableOfContents({ className }: TableOfContentsProps) {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // chạy lần đầu
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, [headings, activeId]);
@@ -61,36 +60,73 @@ export function TableOfContents({ className }: TableOfContentsProps) {
   const handleClick = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      const yOffset = -80; // để trừ header
+      const yOffset = -80;
       const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
+  const toggleSection = (id: string) => {
+    setOpenSections((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   if (headings.length === 0) return null;
 
   return (
-    <div className={cn("space-y-2", className)}>
-      <h4 className="text-xs font-semibold text-foreground mb-3">
+    <div className={cn("space-y-2 text-sm", className)}>
+      <h4 className="text-sm font-semibold text-foreground mb-3">
         On this page
       </h4>
-      <ul className="space-y-2 text-xs">
-        {headings.map((h) => (
-          <li key={h.id} className={cn(h.level === 3 && "ml-4")}>
-            <button
-              onClick={() => handleClick(h.id)}
-              className={cn(
-                "hover:text-foreground text-muted-foreground transition-colors",
-                {
-                  "text-primary font-medium":
-                    activeId === h.id,
-                }
-              )}
-            >
-              {h.text}
-            </button>
-          </li>
-        ))}
+      <ul className="space-y-2">
+        {headings.map((h, idx) => {
+          // Chỉ render trực tiếp H2
+          if (h.level === 2) {
+            const subHeadings = headings.filter(
+              (sub) => sub.level > 2 && idx < headings.indexOf(sub)
+            );
+
+            return (
+              <li key={h.id}>
+                <button
+                  onClick={() => {
+                    handleClick(h.id);
+                    toggleSection(h.id);
+                  }}
+                  className={cn(
+                    "w-full text-left transition-colors",
+                    "hover:text-foreground text-muted-foreground",
+                    activeId === h.id && "text-primary font-medium underline"
+                  )}
+                >
+                  {h.text}
+                </button>
+
+                {/* Hiển thị subheading nếu section mở */}
+                {openSections[h.id] && (
+                  <ul className="ml-4 mt-2 space-y-1 border-l border-muted-foreground/20 pl-3">
+                    {subHeadings.map((sub) => (
+                      <li key={sub.id} className="text-xs">
+                        <button
+                          onClick={() => handleClick(sub.id)}
+                          className={cn(
+                            "hover:text-foreground text-muted-foreground transition-colors",
+                            activeId === sub.id && "text-primary font-medium"
+                          )}
+                        >
+                          {sub.text}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          }
+          return null;
+        })}
       </ul>
     </div>
   );
