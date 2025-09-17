@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { SmoothCursor } from "@/components/ui/smooth-cursor"; // 👈 add import
+import { Particles } from "@/components/ui/particles";
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();

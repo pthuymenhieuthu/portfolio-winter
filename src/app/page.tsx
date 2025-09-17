@@ -10,6 +10,7 @@ import Markdown from "react-markdown";
 import { IconCloudDemo } from "@/components/icon-cloud-demo";
 import GoogleTracking from "@/components/google-tracking";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
+import { Particles } from "@/components/ui/particles";
 
 const BLUR_FADE_DELAY = 0.04;
 
