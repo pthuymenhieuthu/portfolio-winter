@@ -6,7 +6,10 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
-import { ScrollProgress } from "@/components/ui/scroll-progress"; // 👈 import thêm
+import { ScrollProgress } from "@/components/ui/scroll-progress"; 
+
+// 👉 import GridBackground local
+import { GridBackground } from "@/components/ui/grid-background";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -58,10 +61,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased max-w-2xl mx-auto py-12 sm:py-24 px-6",
+          "relative min-h-screen bg-background font-sans antialiased max-w-2xl mx-auto py-12 sm:py-24 px-6",
           fontSans.variable
         )}
       >
+        {/* 👇 Background grid */}
+        <GridBackground className="absolute inset-0 -z-10 opacity-40 dark:opacity-20" />
+
         {/* 👇 thanh progress bar luôn hiển thị */}
         <ScrollProgress />
 
