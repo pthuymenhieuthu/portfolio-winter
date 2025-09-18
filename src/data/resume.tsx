@@ -272,27 +272,57 @@ export const DATA = {
       image: "",
       video: "/accesstrade.gif",
     },
-    //{
-      //title: "ZanZan",
-      //href: "https://www.figma.com/proto/bEJfJb6iB0pXlrrLDIONC1/K14---Team-14?page-id=7004%3A4&node-id=7138-5885&node-type=frame&viewport=545%2C292%2C0.06&t=zJ3CTlFM4bFMSAe1-1&scaling=scale-down-width&content-scaling=fixed",
-      //dates: "Sep 2024",
-      //active: true,
-      //description:
-      //  "A project with Team 14 at Lollypop Designathon 2024, centered around traditional folk games.",
-      //technologies: [
-      //  "Web Design",
-      //  "UX Research",
-      //  "Prototype",
-      //],
-      //links: [
-      //  {
-      //    type: "Prototype",
-       //   href: "https://www.figma.com/proto/bEJfJb6iB0pXlrrLDIONC1/K14---Team-14?page-id=7004%3A4&node-id=7138-5885&node-type=frame&viewport=545%2C292%2C0.06&t=zJ3CTlFM4bFMSAe1-1&scaling=scale-down-width&content-scaling=fixed",
-       //   icon: <Icons.figma className="size-3" />,
-       // },
-      //],
-      //image: "",
-      //video: "/zanzan.gif",
-    //},
+    {
+      title: "ZanZan",
+      href: "https://www.figma.com/proto/bEJfJb6iB0pXlrrLDIONC1/K14---Team-14?page-id=7004%3A4&node-id=7138-5885&node-type=frame&viewport=545%2C292%2C0.06&t=zJ3CTlFM4bFMSAe1-1&scaling=scale-down-width&content-scaling=fixed",
+      dates: "Sep 2024",
+      active: true,
+      description:
+        "A project with Team 14 at Lollypop Designathon 2024, centered around traditional folk games.",
+      technologies: [
+        "Web Design",
+        "UX Research",
+        "Prototype",
+      ],
+      links: [
+        {
+          type: "Prototype",
+          href: "https://www.figma.com/proto/bEJfJb6iB0pXlrrLDIONC1/K14---Team-14?page-id=7004%3A4&node-id=7138-5885&node-type=frame&viewport=545%2C292%2C0.06&t=zJ3CTlFM4bFMSAe1-1&scaling=scale-down-width&content-scaling=fixed",
+          icon: <Icons.figma className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "/zanzan.gif",
+    },
+    {
+      title: "TalkPiggy",
+      href: "https://www.behance.net/gallery/208908063/TalkPiggy-Money-Management-App",
+      dates: "Aug 2024 - Sep 2024",
+      active: true,
+      description:
+        " A fintech app that addresses both financial management and social connection.",
+      technologies: [
+        "Product Design",
+        "App Design",
+        "UI Design",
+        "UX Research",
+        "Fintech",
+      ],
+      links: [
+        {
+          type: "Behance",
+          href: "https://www.behance.net/gallery/208908063/TalkPiggy-Money-Management-App",
+          icon: <Icons.behance className="size-3" />,
+        },
+        {
+          type: "Dribble",
+          href: "https://dribbble.com/shots/24954839-Finance-Management-Budget-Mobile-App?utm_source=Clipboard_Shot&utm_campaign=pthuy&utm_content=Finance%20Management%20-%20Budget%20Mobile%20App&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=pthuy&utm_content=Finance%20Management%20-%20Budget%20Mobile%20App&utm_medium=Social_Share",
+          icon: <Icons.dribble className="size-3" />,
+        },
+      ],
+      image: "",
+      video:
+        "/talkpiggy.gif",
+    },
   ],
 } as const;
