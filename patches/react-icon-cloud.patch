@@ -66,3 +66,13 @@ index 8611e6b17cba7da873f0408a0428ec4570ed4778..70898fb2400b014d7ac668d18677435c
 +    return { simpleIcons: {}, allIcon: {} }
    }
  }
+\ No newline at end of file
+diff --git a/src/utils/get_slug.ts b/src/utils/get_slug.ts
+deleted file mode 100644
+index 656337d3ca05d18da24af9df9426679523fe676d..0000000000000000000000000000000000000000
+diff --git a/src/utils/get_slug_hexs.ts b/src/utils/get_slug_hexs.ts
+deleted file mode 100644
+index 37fb078ab8bab1b5f6f1e7080af1a1b0dadf3951..0000000000000000000000000000000000000000
+diff --git a/src/utils/get_slugs_path.ts b/src/utils/get_slugs_path.ts
+deleted file mode 100644
+index 8ef417bc8fe599216c4ab5f58863c566a02128ab..0000000000000000000000000000000000000000
