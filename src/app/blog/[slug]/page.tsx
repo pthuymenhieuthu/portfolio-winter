@@ -17,19 +17,21 @@ export default async function BlogPage({
   }
 
   return (
-    <div className="cursor-none min-h-screen grid grid-cols-12 relative">
+    <div className="cursor-none min-h-screen grid grid-cols-5 relative">
       {/* Chuột ảo */}
       <SmoothCursor />
 
-      {/* Sidebar TOC (chiếm 3/12 bên trái) */}
-      <aside className="hidden lg:block col-span-3 p-4 border-r border-border">
+      {/* Sidebar TOC (chiếm 1/5 bên trái) */}
+      <aside className="hidden lg:block col-span-1 p-4 border-r border-border">
         <div className="sticky top-20">
-          <TableOfContents className="text-xs" />
+          <nav aria-label="Table of contents">
+            <TableOfContents className="text-xs" />
+          </nav>
         </div>
       </aside>
 
-      {/* Nội dung blog (chiếm 9/12 bên phải) */}
-      <main className="col-span-12 lg:col-span-9 px-6 lg:px-12 py-10">
+      {/* Nội dung blog (chiếm 4/5 bên phải) */}
+      <main className="col-span-5 lg:col-span-4 px-6 lg:px-12 py-10">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
           {post.metadata.title}
         </h1>
