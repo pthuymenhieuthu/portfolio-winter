@@ -118,7 +118,7 @@ export function TableOfContents({ className }: TableOfContentsProps) {
                         <button
                           onClick={() => handleClick(sub.id)}
                           className={cn(
-                            "w-full text-left block text-[10px] transition-colors",
+                            "w-full text-left block text-[11px] transition-colors",
                             activeId === sub.id
                               ? "text-gray-600 font-medium"
                               : "text-gray-400 hover:text-gray-500"
