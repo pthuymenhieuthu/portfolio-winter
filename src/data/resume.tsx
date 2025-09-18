@@ -77,7 +77,7 @@ export const DATA = {
       start: "Nov 2024",
       end: "Apr 2025",
       description:
-        "• Contributed to improving the landing page to support marketing efforts for <a href='https://trueprofit.io/' target='_blank' rel='noopener noreferrer' class='text-blue-500 underline'>TrueProfit</a>, a Shopify dashboard app that helps merchants track their financial performance.\n • Redesigned the onboarding illustrations to enhance user experience and visual consistency.\n • Participated in the product development process following the Sprint methodology.\n",
+        "• Contributed to improving the landing page to support marketing efforts for [TrueProfit](https://trueprofit.io/), a Shopify dashboard app that helps merchants track their financial performance.\n • Redesigned the onboarding illustrations to enhance user experience and visual consistency.\n • Participated in the product development process following the Sprint methodology.\n",
     },
     {
       company: "TikTok Shop",
