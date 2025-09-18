@@ -11,24 +11,18 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
-// Kiểm tra DATA.url có hợp lệ chưa
-const siteUrl =
-  typeof DATA?.url === "string" && DATA.url.startsWith("http")
-    ? DATA.url
-    : "https://example.com"; // fallback an toàn
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(DATA.url),
   title: {
-    default: DATA?.name || "My Site",
-    template: `%s | ${DATA?.name || "My Site"}`,
+    default: DATA.name,
+    template: `%s | ${DATA.name}`,
   },
-  description: DATA?.description || "Default description",
+  description: DATA.description,
   openGraph: {
-    title: `${DATA?.name || "My Site"}`,
-    description: DATA?.description || "Default description",
-    url: siteUrl,
-    siteName: `${DATA?.name || "My Site"}`,
+    title: `${DATA.name}`,
+    description: DATA.description,
+    url: DATA.url,
+    siteName: `${DATA.name}`,
     locale: "en_US",
     type: "website",
   },
@@ -44,7 +38,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: `${DATA?.name || "My Site"}`,
+    title: `${DATA.name}`,
     card: "summary_large_image",
   },
   verification: {
