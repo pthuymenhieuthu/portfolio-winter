@@ -43,7 +43,7 @@ export default async function BlogPage({
           </Suspense>
         </div>
 
-        {/* 👇 Render nội dung + zoom */}
+        {/* 👇 Render nội dung blog có zoom ảnh */}
         <ClientBlog source={post.source} />
       </main>
     </div>
