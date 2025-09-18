@@ -21,8 +21,8 @@ export default async function BlogPage({
       {/* Chuột ảo */}
       <SmoothCursor />
 
-      {/* Sidebar TOC (chiếm 1/5 bên trái) */}
-      <aside className="hidden lg:block col-span-1 p-4 border-r border-border">
+      {/* Sidebar TOC (chiếm 1/5 bên trái, nền xám f9f9f9) */}
+      <aside className="hidden lg:block col-span-1 p-4 border-r border-border bg-[#f9f9f9]">
         <div className="sticky top-20">
           <nav aria-label="Table of contents">
             <TableOfContents className="text-xs" />
