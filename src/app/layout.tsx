@@ -61,22 +61,25 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "relative min-h-screen bg-background font-sans antialiased max-w-2xl mx-auto py-12 sm:py-24 px-6",
+          "relative min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
       >
-        {/* 👇 Background grid */}
+        {/* 👇 Background grid full screen */}
         <GridBackground className="absolute inset-0 -z-10 opacity-40 dark:opacity-20" />
 
-        {/* 👇 thanh progress bar luôn hiển thị */}
-        <ScrollProgress />
+        {/* 👇 Container giữ content ở giữa */}
+        <div className="max-w-2xl mx-auto py-12 sm:py-24 px-6">
+          {/* thanh progress bar luôn hiển thị */}
+          <ScrollProgress />
 
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <TooltipProvider delayDuration={0}>
-            {children}
-            <Navbar />
-          </TooltipProvider>
-        </ThemeProvider>
+          <ThemeProvider attribute="class" defaultTheme="light">
+            <TooltipProvider delayDuration={0}>
+              {children}
+              <Navbar />
+            </TooltipProvider>
+          </ThemeProvider>
+        </div>
       </body>
     </html>
   );
