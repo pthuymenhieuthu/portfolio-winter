@@ -77,7 +77,7 @@ export const DATA = {
       start: "Nov 2024",
       end: "Apr 2025",
       description:
-        "• Contributed to improving the landing page to support marketing efforts for TrueProfit, a Shopify dashboard app that helps merchants track their financial performance (https://trueprofit.io/).\n • Redesigned the onboarding illustrations to enhance user experience and visual consistency.\n • Participated in the product development process following the Sprint methodology.\n",
+        "• Contributed to improving the landing page to support marketing efforts for <a href='https://trueprofit.io/' target='_blank' rel='noopener noreferrer' class='text-blue-500 underline'>TrueProfit</a>, a Shopify dashboard app that helps merchants track their financial performance.\n • Redesigned the onboarding illustrations to enhance user experience and visual consistency.\n • Participated in the product development process following the Sprint methodology.\n",
     },
     {
       company: "TikTok Shop",
@@ -103,18 +103,18 @@ export const DATA = {
       description:
         "• Developed the Information Architecture (IA), and completed the high-fidelity wireframe design for Rice Cake Recipes.\n • Designed marketing collateral, including brochures, social media posts, and promotional materials.\n • Edited videos and created interactive stories using CapCut.",
     },
-    //{
-      //company: "ELSA Speak",
-      //badges: [],
-      //href: "https://elsaspeak.com",
-      //location: "Remote",
-      //title: "Intern",
-      //logoUrl: "/elsaspeak.png",
-      //start: "Nov 2022",
-      //end: "Aug 2023",
-      //description:
-      //  "• Planned and created content across social media channels\n • Designed corresponding images and videos.\n • Supported Influencer Marketing campaign.",
-    //},
+    {
+      company: "ELSA Speak",
+      badges: [],
+      href: "https://elsaspeak.com",
+      location: "Remote",
+      title: "Intern",
+      logoUrl: "/elsaspeak.png",
+      start: "Nov 2022",
+      end: "Aug 2023",
+      description:
+        "• Planned and created content across social media channels\n • Designed corresponding images and videos.\n • Supported Influencer Marketing campaign.",
+    },
     //{
       //company: "Innisfree",
       //href: "https://innisfree.vn/",
