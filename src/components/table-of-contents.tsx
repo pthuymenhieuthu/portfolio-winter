@@ -36,26 +36,48 @@ export function TableOfContents({ className }: TableOfContentsProps) {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const positions = headings.map((h) => {
-        const element = document.getElementById(h.id);
-        return {
-          id: h.id,
-          top: element ? element.getBoundingClientRect().top : Infinity,
-        };
-      });
+  const handleScroll = () => {
+    const scrollY = window.scrollY + 100; // offset 100px để tính active
+    let currentActive = "";
 
-      const active = positions.find((p) => p.top >= 0 && p.top <= 120);
-      if (active && active.id !== activeId) {
-        setActiveId(active.id);
+    headings.forEach((h, idx) => {
+      const el = document.getElementById(h.id);
+      if (!el) return;
+
+      const top = el.offsetTop - 120; // offset cho trigger sớm hơn
+      // tìm H2 kế tiếp
+      const nextH2 = headings.find(
+        (item, i) => i > idx && item.level === 2
+      );
+      const bottom = nextH2
+        ? document.getElementById(nextH2.id)?.offsetTop || Infinity
+        : Infinity;
+
+      // Nếu là H2 → active trong cả block (từ top đến trước H2 tiếp theo)
+      if (h.level === 2) {
+        if (scrollY >= top && scrollY < bottom) {
+          currentActive = h.id;
+        }
       }
-    };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+      // Nếu là H3/H4 → active trong block cha
+      if (h.level > 2) {
+        if (scrollY >= top && scrollY < bottom) {
+          currentActive = h.id;
+        }
+      }
+    });
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [headings, activeId]);
+    if (currentActive !== activeId) {
+      setActiveId(currentActive);
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  handleScroll();
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [headings, activeId]);
 
   const handleClick = (id: string) => {
     const el = document.getElementById(id);
