@@ -5,7 +5,7 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-import "../globals.css"; // 👈 nhớ đổi path vì đang ở folder blog
+import "../../globals.css"; // 👈 nhớ đổi path vì đang ở folder blog
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 
 const fontSans = FontSans({
