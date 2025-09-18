@@ -1,12 +1,10 @@
-"use client";
-
 import { getPost } from "@/data/blog";
 import { formatDate } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { TableOfContents } from "@/components/table-of-contents";
-import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom"; // 👈 import từ local
+import ClientBlog from "@/components/client-blog"; // 👈 gọi file client-blog
 
 export default async function BlogPage({
   params,
@@ -45,19 +43,8 @@ export default async function BlogPage({
           </Suspense>
         </div>
 
-        {/* 👇 Wrap article để ảnh zoom được */}
-        <article className="prose dark:prose-invert max-w-none">
-          {/* Tạm thời render HTML thô */}
-          <div
-            dangerouslySetInnerHTML={{ __html: post.source }}
-            className="[&>img]:cursor-zoom-in [&>img]:rounded-lg [&>img]:shadow"
-          />
-
-          {/* Nếu muốn bấm vào ảnh để zoom */}
-          {/* <ImageZoom>
-            <img src="/research-goal.png" alt="Research Goal" />
-          </ImageZoom> */}
-        </article>
+        {/* 👇 Render nội dung + zoom */}
+        <ClientBlog source={post.source} />
       </main>
     </div>
   );
