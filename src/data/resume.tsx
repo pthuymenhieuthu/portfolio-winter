@@ -10,7 +10,7 @@ export const DATA = {
   description:
     "Proactive UI/UX Designer · Passionate about learning and growth",
   summary:
-    "My name is **Thuy (Winter)**. I recently graduated in July and have accumulated valuable experience in the UI/UX field. During my internship at **FireGroup**, I gained foundational knowledge of how product designers collaborate with various stakeholders within a sprint team model. Additionally, my experience working at **TikTok Shop** involved frequent use of Figma and provided me with a strong understanding of business requirements, further enhancing my practical skills and insights into the industry. Find out more about my journey and projects [below](/#work).",
+    "Hi, I’m **Thuy Nguyen**, a curious **UX/UI designer** passionate about creating **intuitive digital experiences**. I’ve **interned at leading companies** such as **TikTok Shop**, **ELSA Speak**, and **Innisfree**, giving me a strong understanding of both **user needs** and **business perspectives**. Beyond that, I gained **hands-on experience in product design** at **TrueProfit**, **freelanced with Wedlify**, and **challenged myself in the Mingg UI Challenge**. Blending **logic with creativity**, I turn **research-driven insights** into **engaging, user-friendly products**. I’m always eager to **learn, grow, and bring fresh perspectives** to every project I work on. ",
   avatarUrl: "/me.jpg",
   skills: [
     "UI Design",
@@ -75,9 +75,9 @@ export const DATA = {
       title: "Product Design Fresher",
       logoUrl: "/firegroup.jpeg",
       start: "Nov 2024",
-      end: "Jan 2025",
+      end: "Apr 2025",
       description:
-        "• Understand the product overview, the primary user personas utilizing the product, and their journey.\n • Familiarize with the Design System being applied to the product.\n • Learn how to create illustrations that meet the product's standards and grasp the basic process of handoff to the development team.",
+        "• Contributed to improving the landing page to support marketing efforts for TrueProfit, a Shopify dashboard app that helps merchants track their financial performance (https://trueprofit.io/).\n • Redesigned the onboarding illustrations to enhance user experience and visual consistency.\n • Participated in the product development process following the Sprint methodology.\n",
     },
     {
       company: "TikTok Shop",
