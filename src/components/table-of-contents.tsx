@@ -77,22 +77,21 @@ export function TableOfContents({ className }: TableOfContentsProps) {
 
   return (
     <div className={cn("space-y-2 text-sm", className)}>
-      <h4 className="text-sm font-semibold text-foreground mb-3">
+      {/* Tiêu đề TOC */}
+      <h4 className="text-sm font-semibold text-gray-600 mb-3">
         On this page
       </h4>
+
       <ul className="space-y-2">
         {headings.map((h, idx) => {
           if (h.level === 2) {
-            // Tìm vị trí h2 kế tiếp
             const nextH2Index = headings.findIndex(
               (item, i) => i > idx && item.level === 2
             );
 
-            // Subheadings = tất cả h3/h4 nằm giữa h2 hiện tại và h2 kế tiếp
-            const subHeadings = headings.slice(
-              idx + 1,
-              nextH2Index === -1 ? headings.length : nextH2Index
-            ).filter((sub) => sub.level > 2);
+            const subHeadings = headings
+              .slice(idx + 1, nextH2Index === -1 ? headings.length : nextH2Index)
+              .filter((sub) => sub.level > 2);
 
             return (
               <li key={h.id}>
@@ -103,8 +102,9 @@ export function TableOfContents({ className }: TableOfContentsProps) {
                   }}
                   className={cn(
                     "w-full text-left transition-colors",
-                    "hover:text-foreground text-muted-foreground",
-                    activeId === h.id && "text-primary font-medium underline"
+                    activeId === h.id
+                      ? "text-gray-600 font-medium" // Active
+                      : "text-gray-400 hover:text-gray-500" // Inactive
                   )}
                 >
                   {h.text}
@@ -117,8 +117,10 @@ export function TableOfContents({ className }: TableOfContentsProps) {
                         <button
                           onClick={() => handleClick(sub.id)}
                           className={cn(
-                            "hover:text-foreground text-muted-foreground transition-colors",
-                            activeId === sub.id && "text-primary font-medium"
+                            "transition-colors",
+                            activeId === sub.id
+                              ? "text-gray-600 font-medium"
+                              : "text-gray-400 hover:text-gray-500"
                           )}
                         >
                           {sub.text}
