@@ -78,8 +78,8 @@ export function TableOfContents({ className }: TableOfContentsProps) {
   if (headings.length === 0) return null;
 
   return (
-    <div className={cn("space-y-2 text-sm", className)}>
-      <h4 className="text-sm font-semibold text-gray-600 mb-3">
+    <div className={cn("space-y-2 text-xs", className)}>
+      <h4 className="text-xs font-semibold text-gray-600 mb-3">
         On this page
       </h4>
 
@@ -118,7 +118,7 @@ export function TableOfContents({ className }: TableOfContentsProps) {
                         <button
                           onClick={() => handleClick(sub.id)}
                           className={cn(
-                            "w-full text-left block text-xs transition-colors",
+                            "w-full text-left block text-[10px] transition-colors",
                             activeId === sub.id
                               ? "text-gray-600 font-medium"
                               : "text-gray-400 hover:text-gray-500"
