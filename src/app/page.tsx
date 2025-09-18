@@ -148,7 +148,7 @@ export default function Page() {
         </section>
 
         <section id="projects">
-          <div className="flex min-h-0 flex-col gap-y-3">
+          <div className="space-y-12 w-full py-12">
             <BlurFade delay={BLUR_FADE_DELAY * 11}>
               <div className="flex flex-col items-center justify-center space-y-4 text-center">
                 <div className="space-y-2">
