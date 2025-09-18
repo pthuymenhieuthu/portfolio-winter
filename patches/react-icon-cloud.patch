@@ -1,0 +1,68 @@
+diff --git a/src/utils/fetch_simple_icons.ts b/src/utils/fetch_simple_icons.ts
+index 8611e6b17cba7da873f0408a0428ec4570ed4778..70898fb2400b014d7ac668d18677435caa5810b1 100644
+--- a/src/utils/fetch_simple_icons.ts
++++ b/src/utils/fetch_simple_icons.ts
+@@ -1,32 +1,36 @@
+-import {SimpleIcon} from '../types/simple_icon'
+-import {getSlugsPath} from './get_slugs_path'
+-import {getSlugHexs} from './get_slug_hexs'
++import { SimpleIcon } from '../types/simple_icon'
++import * as icons from "simple-icons/icons"
+ 
+-export const fetchSimpleIcons = async ({slugs}: {slugs: string[]}) => {
+-  const [paths, {hexs, cache}] = await Promise.all([
+-    getSlugsPath(slugs),
+-    getSlugHexs(slugs),
+-  ])
+-  const map = {} as any
+-  hexs.forEach(hex => {
+-    map[hex.slug] = hex
+-  })
+-  paths.forEach(path => {
+-    map[path.slug].path = path.path
+-  })
+-  slugs.forEach(s => {
+-    const o = map[s]
+-    if (!o.hex || !o.path) {
+-      if (process.env.NODE_ENV !== 'production') {
+-        console.error(
+-          `'react-icon-cloud/fetchSimpleIcons': the response of ${o.slug} was malformed and it will be ignored.`
+-        )
++export const fetchSimpleIcons = async ({ slugs }: { slugs: string[] }) => {
++  try {
++    const map: Record<string, SimpleIcon> = {}
++
++    slugs.forEach(slug => {
++      // slug thường viết như "github", "linkedin"
++      const key = `si${slug.charAt(0).toUpperCase()}${slug.slice(1)}`
++      const icon = (icons as any)[key]
++
++      if (!icon) {
++        if (process.env.NODE_ENV !== 'production') {
++          console.error(`[fetchSimpleIcons] Icon not found: ${slug}`)
++        }
++        return
+       }
+-      delete map[s]
++
++      map[slug] = {
++        slug,
++        hex: icon.hex,
++        title: icon.title,
++        path: icon.path,
++      }
++    })
++
++    return {
++      simpleIcons: map,
++      allIcon: icons, // giữ lại toàn bộ nếu cần dùng
+     }
+-  })
+-  return {
+-    simpleIcons: map as Record<string, SimpleIcon>,
+-    allIcon: cache!,
++  } catch (e) {
++    console.error('[fetchSimpleIcons] failed:', e)
++    return { simpleIcons: {}, allIcon: {} }
+   }
+ }
