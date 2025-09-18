@@ -82,11 +82,17 @@ export function TableOfContents({ className }: TableOfContentsProps) {
       </h4>
       <ul className="space-y-2">
         {headings.map((h, idx) => {
-          // Chỉ render trực tiếp H2
           if (h.level === 2) {
-            const subHeadings = headings.filter(
-              (sub) => sub.level > 2 && idx < headings.indexOf(sub)
+            // Tìm vị trí h2 kế tiếp
+            const nextH2Index = headings.findIndex(
+              (item, i) => i > idx && item.level === 2
             );
+
+            // Subheadings = tất cả h3/h4 nằm giữa h2 hiện tại và h2 kế tiếp
+            const subHeadings = headings.slice(
+              idx + 1,
+              nextH2Index === -1 ? headings.length : nextH2Index
+            ).filter((sub) => sub.level > 2);
 
             return (
               <li key={h.id}>
@@ -104,8 +110,7 @@ export function TableOfContents({ className }: TableOfContentsProps) {
                   {h.text}
                 </button>
 
-                {/* Hiển thị subheading nếu section mở */}
-                {openSections[h.id] && (
+                {openSections[h.id] && subHeadings.length > 0 && (
                   <ul className="ml-4 mt-2 space-y-1 border-l border-muted-foreground/20 pl-3">
                     {subHeadings.map((sub) => (
                       <li key={sub.id} className="text-xs">
