@@ -36,7 +36,7 @@ export function TableOfContents({ className }: TableOfContentsProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY + 120; // offset một chút
+      const scrollY = window.scrollY + 120; 
       let currentActive = "";
 
       for (let i = 0; i < headings.length; i++) {
@@ -94,13 +94,17 @@ export function TableOfContents({ className }: TableOfContentsProps) {
               .slice(idx + 1, nextH2Index === -1 ? headings.length : nextH2Index)
               .filter((sub) => sub.level > 2);
 
+            // kiểm tra nếu activeId là h2 hoặc 1 trong subHeadings
+            const isActiveGroup =
+              activeId === h.id || subHeadings.some((s) => s.id === activeId);
+
             return (
               <li key={h.id} className="w-full">
                 <button
                   onClick={() => handleClick(h.id)}
                   className={cn(
                     "w-full text-left block transition-colors",
-                    activeId === h.id
+                    isActiveGroup
                       ? "text-gray-600 font-medium"
                       : "text-gray-400 hover:text-gray-500"
                   )}
@@ -108,7 +112,7 @@ export function TableOfContents({ className }: TableOfContentsProps) {
                   {h.text}
                 </button>
 
-                {subHeadings.length > 0 && (
+                {isActiveGroup && subHeadings.length > 0 && (
                   <ul className="ml-4 mt-2 space-y-1 border-l border-muted-foreground/20 pl-3">
                     {subHeadings.map((sub) => (
                       <li key={sub.id} className="w-full">
