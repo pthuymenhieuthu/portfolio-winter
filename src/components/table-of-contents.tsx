@@ -36,7 +36,7 @@ export function TableOfContents({ className }: TableOfContentsProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY + 120; 
+      const scrollY = window.scrollY + 120;
       let currentActive = "";
 
       for (let i = 0; i < headings.length; i++) {
@@ -83,7 +83,7 @@ export function TableOfContents({ className }: TableOfContentsProps) {
         On this page
       </h4>
 
-      <ul className="space-y-2">
+      <ul className="space-y-2 max-w-[220px] break-words whitespace-normal">
         {headings.map((h, idx) => {
           if (h.level === 2) {
             const nextH2Index = headings.findIndex(
@@ -94,7 +94,6 @@ export function TableOfContents({ className }: TableOfContentsProps) {
               .slice(idx + 1, nextH2Index === -1 ? headings.length : nextH2Index)
               .filter((sub) => sub.level > 2);
 
-            // kiểm tra nếu activeId là h2 hoặc 1 trong subHeadings
             const isActiveGroup =
               activeId === h.id || subHeadings.some((s) => s.id === activeId);
 
@@ -113,7 +112,7 @@ export function TableOfContents({ className }: TableOfContentsProps) {
                 </button>
 
                 {isActiveGroup && subHeadings.length > 0 && (
-                  <ul className="ml-4 mt-2 space-y-1 border-l border-muted-foreground/20 pl-3">
+                  <ul className="ml-4 mt-2 space-y-1 border-l border-muted-foreground/20 pl-3 max-w-[200px] break-words whitespace-normal">
                     {subHeadings.map((sub) => (
                       <li key={sub.id} className="w-full">
                         <button
