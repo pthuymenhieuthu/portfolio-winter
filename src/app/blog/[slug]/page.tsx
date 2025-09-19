@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { TableOfContents } from "@/components/table-of-contents";
-import ClientBlog from "@/components/client-blog"; // 👈 gọi file client-blog
+import ClientBlog from "@/components/client-blog";
 
 export default async function BlogPage({
   params,
@@ -18,21 +18,12 @@ export default async function BlogPage({
   }
 
   return (
-    <div className="cursor-none min-h-screen grid grid-cols-5 relative">
+    <div className="cursor-none min-h-screen relative flex justify-center">
       {/* Chuột ảo */}
       <SmoothCursor />
 
-      {/* Sidebar TOC (chiếm 1/5 bên trái) */}
-      <aside className="hidden lg:block col-span-1 p-4 border-r border-border">
-        <div className="sticky top-20">
-          <nav aria-label="Table of contents">
-            <TableOfContents className="text-xs" />
-          </nav>
-        </div>
-      </aside>
-
-      {/* Nội dung blog (chiếm 4/5 bên phải) */}
-      <main className="col-span-5 lg:col-span-4 px-6 lg:px-12 py-10">
+      {/* Nội dung blog */}
+      <main className="max-w-3xl w-full px-6 lg:px-12 py-10">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
           {post.metadata.title}
         </h1>
@@ -43,9 +34,15 @@ export default async function BlogPage({
           </Suspense>
         </div>
 
-        {/* 👇 Render nội dung blog có zoom ảnh */}
         <ClientBlog source={post.source} />
       </main>
+
+      {/* TOC: nằm ngoài content, cách 40px */}
+      <aside className="hidden lg:block absolute left-[calc(50%-768px/2-220px)] top-20 w-44">
+        <nav aria-label="Table of contents" className="sticky top-20">
+          <TableOfContents className="text-xs" />
+        </nav>
+      </aside>
     </div>
   );
 }
