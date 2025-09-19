@@ -38,8 +38,8 @@ export default async function BlogPage({
       </main>
 
       {/* TOC: nằm ngoài content, cách 28px */}
-      <aside className="hidden lg:block absolute left-[calc(50%-768px/2-204px)] top-20 w-44">
-        <nav aria-label="Table of contents" className="sticky top-20">
+      <aside className="hidden lg:block fixed left-[calc(50%-768px/2-204px)] top-20 w-44">
+        <nav aria-label="Table of contents">
           <TableOfContents className="text-xs" />
         </nav>
       </aside>
