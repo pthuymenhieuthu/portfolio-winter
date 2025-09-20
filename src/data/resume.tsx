@@ -186,6 +186,30 @@ export const DATA = {
   ],
   projects: [
     {
+      title: "Pizzy - Finance Management App",
+      href: "/blog/pizzy",
+      dates: "Aug 2025",
+      active: true,
+      description:
+        "Pizzy is a mobile application that helps users manage shared budgets with friends in a simple, engaging, and social way.",
+      technologies: [
+        "App Design",
+        "UI/UX Design",
+        "Motion",
+        "Prototype",
+        "Finance",
+      ],
+      links: [
+        {
+          type: "Behance",
+          href: "https://www.behance.net/gallery/232892697/Pizzy-Social-Budget-Management-App-UXUI-Design",
+          icon: <Icons.behance className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "/https://res.cloudinary.com/dqtfjvkok/video/upload/v1758327780/pizzy-shocase6_htqvh1.mov",
+    },
+    {
       title: "Innisfree Landing Page Redesign",
       href: "/blog/innisfree",
       dates: "Sep 2024",
@@ -293,36 +317,6 @@ export const DATA = {
       ],
       image: "",
       video: "/zanzan.gif",
-    },
-    {
-      title: "TalkPiggy",
-      href: "https://www.behance.net/gallery/208908063/TalkPiggy-Money-Management-App",
-      dates: "Aug 2024 - Sep 2024",
-      active: true,
-      description:
-        " A fintech app that addresses both financial management and social connection.",
-      technologies: [
-        "Product Design",
-        "App Design",
-        "UI Design",
-        "UX Research",
-        "Fintech",
-      ],
-      links: [
-        {
-          type: "Behance",
-          href: "https://www.behance.net/gallery/208908063/TalkPiggy-Money-Management-App",
-          icon: <Icons.behance className="size-3" />,
-        },
-        {
-          type: "Dribble",
-          href: "https://dribbble.com/shots/24954839-Finance-Management-Budget-Mobile-App?utm_source=Clipboard_Shot&utm_campaign=pthuy&utm_content=Finance%20Management%20-%20Budget%20Mobile%20App&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=pthuy&utm_content=Finance%20Management%20-%20Budget%20Mobile%20App&utm_medium=Social_Share",
-          icon: <Icons.dribble className="size-3" />,
-        },
-      ],
-      image: "",
-      video:
-        "/talkpiggy.gif",
     },
   ],
 } as const;
