@@ -210,6 +210,29 @@ export const DATA = {
       video: "/pizzy.gif",
     },
     {
+      title: "UI Design Series",
+      href: "/blog/chande",
+      dates: "Jul 2025",
+      active: true,
+      description:
+        "Mingg UI Design Challenge: A 6-week UI design competition where participants created one landing page per week based on a given brief.",
+      technologies: [
+        "UI Design",
+        "Web Design",
+        "Motion",
+        "Prototype",
+      ],
+      links: [
+        {
+          type: "Behance",
+          href: "https://www.behance.net/thuynguyen175?fbclid=IwY2xjawMnJzZleHRuA2FlbQIxMABicmlkETFiNktNMVpJaTlCWkY4a29RAR5tjrgVNL2qaAfS824pS6_HGMleBwazaQmDA03I71mIIqZ8wBTAGmBR-BSD8A_aem_oQB3E8ApP2trzP5kBapFCA",
+          icon: <Icons.behance className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "/chande.gif",
+    },
+    {
       title: "Innisfree Landing Page Redesign",
       href: "/blog/innisfree",
       dates: "Sep 2024",
