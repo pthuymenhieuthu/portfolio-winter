@@ -207,7 +207,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "/https://res.cloudinary.com/dqtfjvkok/video/upload/v1758327780/pizzy-shocase6_htqvh1.mov",
+      video: "https://res.cloudinary.com/dqtfjvkok/video/upload/v1758327780/pizzy-shocase6_htqvh1.mov",
     },
     {
       title: "Innisfree Landing Page Redesign",
