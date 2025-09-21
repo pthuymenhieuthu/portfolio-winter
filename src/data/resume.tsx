@@ -186,6 +186,25 @@ export const DATA = {
   ],
   projects: [
     {
+      title: "TrueProfit - Landing Page & Onboarding Illustrations",
+      href: "/blog/trueprofit",
+      dates: "Jan 2025",
+      active: true,
+      description:
+        "- Contributed to refining the [TrueProfit landing page](https://trueprofit.io/)- Redesigned the in-app onboarding flow for TrueProfit",
+      technologies: [
+        "Web Design",
+        "Product Design",
+        "UI/UX Design",
+        "Prototype",
+        "E-commerce",
+        "Finance",
+        "Shopify"
+      ],
+      image: "",
+      video: "/trueprofit.gif",
+    },
+    {
       title: "Pizzy - Finance Management App",
       href: "/blog/pizzy",
       dates: "Aug 2025",
