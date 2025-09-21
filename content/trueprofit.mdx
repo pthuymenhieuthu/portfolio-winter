@@ -18,7 +18,7 @@ At TrueProfit, I took on two key responsibilities:
 The goal was to create a homepage that clearly communicates the product’s value while aligning with the marketing strategy.  
 
 ### Process  
-- **Understanding requirements**: Reviewed the existing design system and collected expectations from stakeholders.  
+- **Understanding requirements**: Reviewed the existing design system and collected expectations from stakeholders. *(~1 week)*  
 - **Research & benchmarking**: Studied competitor websites to identify strengths, weaknesses, and opportunities. *(~1 week)*  
 - **Wireframing**: Created low-fidelity homepage layouts based on hierarchy and content structure. *(~2 weeks)*  
 - **Information Architecture**: Defined sitemap and content flow for clarity. *(~1 week)*  
@@ -29,7 +29,30 @@ The goal was to create a homepage that clearly communicates the product’s valu
 
 ## Onboarding Illustration  
 
-The second task focused on onboarding illustrations for the in-app experience.  
+import { Comparison, ComparisonHandle, ComparisonItem } from "@/components/ui/shadcn-io/comparison"
+import Image from "next/image"
+
+<Comparison className="aspect-video my-6">
+  <ComparisonItem position="left">
+    <Image
+      alt="Before design"
+      src="https://placehold.co/1920x1080?text=Before"
+      width={1920}
+      height={1080}
+      unoptimized
+    />
+  </ComparisonItem>
+  <ComparisonItem position="right">
+    <Image
+      alt="After design"
+      src="https://placehold.co/1920x1080?text=After"
+      width={1920}
+      height={1080}
+      unoptimized
+    />
+  </ComparisonItem>
+  <ComparisonHandle />
+</Comparison>
 
 ### Process  
 - **Analyze onboarding flow**: Identified key steps where illustrations would support user understanding. *(~1 week)*  
