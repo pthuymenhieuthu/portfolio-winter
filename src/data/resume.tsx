@@ -201,6 +201,12 @@ export const DATA = {
         "Finance",
         "Shopify"
       ],
+      links: [
+        {
+          type: "Live site",
+          href: "https://trueprofit.io/",
+        },
+      ],
       image: "",
       video: "/trueprofit.gif",
     },
