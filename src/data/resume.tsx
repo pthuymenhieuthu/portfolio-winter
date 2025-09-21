@@ -205,6 +205,7 @@ export const DATA = {
         {
           type: "Live site",
           href: "https://trueprofit.io/",
+          icon: <Icons.link className="size-3" />,
         },
       ],
       image: "",
