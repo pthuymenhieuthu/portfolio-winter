@@ -1,25 +1,31 @@
-"use client";
+// src/components/client-blog.tsx
+'use client';
 
 import { useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
+import { useMDXComponent } from "next-contentlayer/hooks";
 
-export default function ClientBlog({ source }: { source: string }) {
+type ClientBlogProps = {
+  source: string; // MDX body code
+  components?: Record<string, React.ComponentType<any>>;
+};
+
+export default function ClientBlog({ source, components }: ClientBlogProps) {
+  const MDXContent = useMDXComponent(source);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!ref.current) return;
 
+    // Zoom ảnh sau khi MDX render xong
     const imgs = ref.current.querySelectorAll("img");
-
     imgs.forEach((img) => {
       if (!img.closest("[data-rmiz]")) {
-        // Tạo wrapper
         const wrapper = document.createElement("div");
         img.parentNode?.insertBefore(wrapper, img);
         wrapper.appendChild(img);
 
-        // Render ImageZoom
         const root = createRoot(wrapper);
         root.render(
           <ImageZoom>
@@ -31,10 +37,8 @@ export default function ClientBlog({ source }: { source: string }) {
   }, [source]);
 
   return (
-    <article
-      ref={ref}
-      className="prose dark:prose-invert max-w-none"
-      dangerouslySetInnerHTML={{ __html: source }}
-    />
+    <article ref={ref} className="prose dark:prose-invert max-w-none">
+      <MDXContent components={components ?? {}} />
+    </article>
   );
 }

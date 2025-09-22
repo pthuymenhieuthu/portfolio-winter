@@ -1,20 +1,21 @@
-import { getPost } from "@/data/blog";
-import { formatDate } from "@/lib/utils";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
-import { SmoothCursor } from "@/components/ui/smooth-cursor";
-import { TableOfContents } from "@/components/table-of-contents";
-import ClientBlog from "@/components/client-blog";
+import { getPost } from "@/data/blog"
+import { formatDate } from "@/lib/utils"
+import { notFound } from "next/navigation"
+import { Suspense } from "react"
+import { SmoothCursor } from "@/components/ui/smooth-cursor"
+import { TableOfContents } from "@/components/table-of-contents"
+import ClientBlog from "@/components/client-blog"
+import { mdxComponents } from "@/components/mdx-components"
 
 export default async function BlogPage({
   params,
 }: {
-  params: { slug: string };
+  params: { slug: string }
 }) {
-  const post = await getPost(params.slug);
+  const post = await getPost(params.slug)
 
   if (!post) {
-    notFound();
+    notFound()
   }
 
   return (
@@ -34,7 +35,8 @@ export default async function BlogPage({
           </Suspense>
         </div>
 
-        <ClientBlog source={post.source} />
+        {/* Truyền mdxComponents để map React components trong file .mdx */}
+        <ClientBlog source={post.source} components={mdxComponents} />
       </main>
 
       {/* TOC: nằm ngoài content, cách 28px */}
@@ -44,5 +46,5 @@ export default async function BlogPage({
         </nav>
       </aside>
     </div>
-  );
+  )
 }
