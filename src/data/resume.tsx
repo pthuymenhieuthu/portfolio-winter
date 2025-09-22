@@ -209,7 +209,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "/trueprofit.gif",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
     },
     {
       title: "Pizzy - Finance Management App",
@@ -233,7 +233,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "/pizzy.gif",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518716/pizzy_k1m4ci.gif",
     },
     {
       title: "UI Design Series",
@@ -285,7 +285,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "/innisfree.gif",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518717/innisfree_u2qocu.gif",
     },
     {
       title: "ZanZan",
@@ -364,7 +364,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "/accesstrade.gif",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518716/accesstrade_t987ah.gif",
     },
   ],
 } as const;
