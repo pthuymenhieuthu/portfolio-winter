@@ -7,8 +7,6 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { ScrollProgress } from "@/components/ui/scroll-progress"; 
-
-// 👉 import GridBackground local
 import { GridBackground } from "@/components/ui/grid-background";
 
 const fontSans = FontSans({
@@ -16,18 +14,21 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
+// ✅ Nếu DATA.url không hợp lệ thì bỏ metadataBase
 export const metadata: Metadata = {
-  metadataBase: new URL(DATA.url),
+  ...(DATA.url
+    ? { metadataBase: new URL(DATA.url) }
+    : {}), 
   title: {
     default: DATA.name,
     template: `%s | ${DATA.name}`,
   },
   description: DATA.description,
   openGraph: {
-    title: `${DATA.name}`,
+    title: DATA.name,
     description: DATA.description,
     url: DATA.url,
-    siteName: `${DATA.name}`,
+    siteName: DATA.name,
     locale: "en_US",
     type: "website",
   },
@@ -43,20 +44,16 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: `${DATA.name}`,
+    title: DATA.name,
     card: "summary_large_image",
-  },
-  verification: {
-    google: "",
-    yandex: "",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -65,18 +62,17 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {/* 👇 Background grid full screen */}
+        {/* Background grid */}
         <GridBackground className="absolute inset-0 -z-10 opacity-20 dark:opacity-10" />
 
-        {/* 👇 Container giữ content ở giữa */}
         <div className="max-w-2xl mx-auto py-12 sm:py-24 px-6">
-          {/* thanh progress bar luôn hiển thị */}
+          {/* Progress bar */}
           <ScrollProgress />
 
           <ThemeProvider attribute="class" defaultTheme="light">
             <TooltipProvider delayDuration={0}>
               {children}
-              <Navbar />
+              <Navbar /> {/* 👈 giữ nguyên */}
             </TooltipProvider>
           </ThemeProvider>
         </div>

@@ -5,13 +5,20 @@
 /* ✅ Chuột mặc định */
 html,
 body {
-  cursor: auto;
+  cursor: auto !important;
 }
 
+/* ✅ Input giữ text cursor */
 input,
 textarea,
 select {
   cursor: text !important;
+}
+
+/* ✅ Link & button giữ pointer */
+a,
+button {
+  cursor: pointer !important;
 }
 
 @layer base {
