@@ -4,21 +4,18 @@
 import { useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
-import { useMDXComponent } from "next-contentlayer/hooks";
 
 type ClientBlogProps = {
-  source: string; // MDX body code
-  components?: Record<string, React.ComponentType<any>>;
+  source: string; // HTML string thay vì MDX code
 };
 
-export default function ClientBlog({ source, components }: ClientBlogProps) {
-  const MDXContent = useMDXComponent(source);
+export default function ClientBlog({ source }: ClientBlogProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!ref.current) return;
 
-    // Zoom ảnh sau khi MDX render xong
+    // Zoom ảnh sau khi render xong
     const imgs = ref.current.querySelectorAll("img");
     imgs.forEach((img) => {
       if (!img.closest("[data-rmiz]")) {
@@ -37,8 +34,10 @@ export default function ClientBlog({ source, components }: ClientBlogProps) {
   }, [source]);
 
   return (
-    <article ref={ref} className="prose dark:prose-invert max-w-none">
-      <MDXContent components={components ?? {}} />
-    </article>
+    <article
+      ref={ref}
+      className="prose dark:prose-invert max-w-none"
+      dangerouslySetInnerHTML={{ __html: source }}
+    />
   );
 }

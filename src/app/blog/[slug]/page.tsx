@@ -34,10 +34,11 @@ export default async function BlogPage({
           </Suspense>
         </div>
 
+        {/* Render nội dung blog */}
         <ClientBlog source={post.source} />
       </main>
 
-      {/* TOC: nằm ngoài content, cách 28px */}
+      {/* TOC */}
       <aside className="hidden lg:block fixed left-[calc(50%-768px/2-200px)] top-36 w-44">
         <nav aria-label="Table of contents">
           <TableOfContents className="text-xs" />
