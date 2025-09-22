@@ -1,3 +1,6 @@
+// 👇 phải có "use client" ở đầu vì ta sẽ gọi hook client-side
+"use client";
+
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,9 +22,7 @@ const fontSans = FontSans({
 
 // ✅ Nếu DATA.url không hợp lệ thì bỏ metadataBase
 export const metadata: Metadata = {
-  ...(DATA.url
-    ? { metadataBase: new URL(DATA.url) }
-    : {}), 
+  ...(DATA.url ? { metadataBase: new URL(DATA.url) } : {}), 
   title: {
     default: DATA.name,
     template: `%s | ${DATA.name}`,
