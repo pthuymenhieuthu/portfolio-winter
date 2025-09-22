@@ -10,7 +10,7 @@ export const DATA = {
   description:
     "Proactive UI/UX Designer · Passionate about learning and growth",
   summary:
-    "Hi, I’m **Thuy Nguyen**, a curious **UX/UI designer** passionate about creating **intuitive digital experiences**. I’ve **interned at leading companies** such as **TikTok Shop**, **ELSA Speak**, and **Innisfree**, giving me a strong understanding of both **user needs** and **business perspectives**. Beyond that, I gained **hands-on experience in product design** at **TrueProfit**, **freelanced with Wedlify**, and **challenged myself in the Mingg UI Challenge**. Blending **logic with creativity**, I turn **research-driven insights** into **engaging, user-friendly products**. I’m always eager to **learn, grow, and bring fresh perspectives** to every project I work on. ",
+    "Hi, I’m **Thuy Nguyen**, a curious UX/UI designer passionate about creating intuitive digital experiences. I’ve interned at leading companies such as **TikTok Shop**, **ELSA Speak**, and **Innisfree**, giving me a strong understanding of both user needs and business perspectives. Beyond that, I gained hands-on experience in product design at **FireGroup**, freelanced with **Wedlify**, and challenged myself in the **Mingg UI Challenge**. Blending logic with creativity, I turn research-driven insights into engaging, user-friendly products. I’m always eager to learn, grow, and bring fresh perspectives to every project I work on. ",
   avatarUrl: "/me.jpg",
   skills: [
     "UI Design",
