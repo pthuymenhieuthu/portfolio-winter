@@ -2,7 +2,6 @@ import BlurFade from "@/components/magicui/blur-fade";
 import { getBlogPosts } from "@/data/blog";
 import Link from "next/link";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
-import { Particles } from "@/components/ui/particles";
 
 export const metadata = {
   title: "Blog",
