@@ -1,7 +1,6 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import { getBlogPosts } from "@/data/blog";
 import Link from "next/link";
-import { SmoothCursor } from "@/components/ui/smooth-cursor";
 
 export const metadata = {
   title: "Blog",
@@ -14,8 +13,7 @@ export default async function BlogPage() {
   const posts = await getBlogPosts();
 
   return (
-    <div className="cursor-none"> {/* Ẩn chuột mặc định */}
-      <SmoothCursor /> {/* Chuột ảo */}
+    <div>
       <section>
         <BlurFade delay={BLUR_FADE_DELAY}>
           <h1 className="font-medium text-2xl mb-8 tracking-tighter">blog</h1>

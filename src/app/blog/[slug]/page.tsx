@@ -2,7 +2,6 @@ import { getPost } from "@/data/blog";
 import { formatDate } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { TableOfContents } from "@/components/table-of-contents";
 import ClientBlog from "@/components/client-blog";
 
@@ -18,10 +17,7 @@ export default async function BlogPage({
   }
 
   return (
-    <div className="cursor-none min-h-screen relative flex justify-center">
-      {/* Chuột ảo */}
-      <SmoothCursor />
-
+    <div className="min-h-screen relative flex justify-center">
       {/* Nội dung blog */}
       <main className="max-w-3xl w-full px-6 lg:px-12 py-10">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">

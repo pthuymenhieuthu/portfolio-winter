@@ -66,7 +66,7 @@ export default function RootLayout({
         )}
       >
         {/* 👇 Background grid full screen */}
-        <GridBackground className="absolute inset-0 -z-10 opacity-40 dark:opacity-20" />
+        <GridBackground className="absolute inset-0 -z-10 opacity-20 dark:opacity-10" />
 
         {/* 👇 Container giữ content ở giữa */}
         <div className="max-w-2xl mx-auto py-12 sm:py-24 px-6">
