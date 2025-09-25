@@ -8,14 +8,14 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { ScrollProgress } from "@/components/ui/scroll-progress"; 
 import { GridBackground } from "@/components/ui/grid-background";
-import LayoutClient from "./layout-client"; // 👈 import client component
+import LayoutClient from "./layout-client"; 
+import Script from "next/script"; // 👈 import Script
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-// ✅ Đây là server-side metadata
 export const metadata: Metadata = {
   ...(DATA.url ? { metadataBase: new URL(DATA.url) } : {}), 
   title: {
@@ -55,17 +55,30 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-R3RF6WJBJZ"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-R3RF6WJBJZ');
+          `}
+        </Script>
+      </head>
       <body
         className={cn(
           "relative min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
       >
-        {/* Background grid */}
         <GridBackground className="absolute inset-0 -z-10 opacity-20 dark:opacity-10" />
 
         <div className="max-w-2xl mx-auto py-12 sm:py-24 px-6">
-          {/* 👇 Client component */}
           <LayoutClient>{children}</LayoutClient>
         </div>
       </body>
