@@ -72,7 +72,7 @@ export const DATA = {
       href: "",
       badges: [],
       location: "Ho Chi Minh City",
-      title: "Product Design Fresher",
+      title: "Product Design",
       logoUrl: "/firegroup.jpeg",
       start: "Nov 2024",
       end: "Apr 2025",
