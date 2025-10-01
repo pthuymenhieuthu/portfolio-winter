@@ -259,6 +259,28 @@ export const DATA = {
       video: "/chande.gif",
     },
     {
+      title: "Wedlify - Freelancing Project",
+      href: "/blog/wedlify",
+      dates: "Mar 2025",
+      active: true,
+      description:
+        "Wedlify is an online platform for digital wedding invitations, planning, and budgeting.",
+      technologies: [
+        "UI Design",
+        "Web Design",
+        "Prototype",
+      ],
+      links: [
+        {
+          type: "Live site",
+          href: "https://wedlify-client.vercel.app/",
+          icon: <Icons.link className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759319611/Untitled_design_38_jamjj1.gif",
+    },
+    {
       title: "Innisfree Landing Page Redesign",
       href: "/blog/innisfree",
       dates: "Sep 2024",
