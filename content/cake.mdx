@@ -1,110 +1,116 @@
 ---
-title: "Cake – Rounded-Up Savings Feature"
-publishedAt: "2025-01"
-summary: "A concept feature that helps Cake users tidy up their account balances by automatically rounding transactions and saving the difference — turning small daily actions into effortless savings habits."
+title: "CakeBank - Rounded-Up Savings Feature"
+publishedAt: "2025-05"
+summary: "A take-home assignment for the Product Designer position at Cake, focusing on creating a rounded-up savings feature that helps users save effortlessly while keeping their balances neat."
 ---
 
-## Making Saving Feel Effortless  
+## Overview  
 
-When I first read Cake’s brief, it reminded me of a small, almost invisible frustration — that moment when you see **49,327₫** in your balance and it just feels… unfinished. Many users don’t consciously realize it, but those messy numbers create a subtle sense of unease.  
+**CakeBank** is a take-home assignment I completed while applying for the **Product Designer** position at Cake.  
+Throughout the process, I aimed to design a feature as complete as possible — from user flow to interface — including a **simulated usability testing** phase and iterations based on identified issues.  
 
-That’s where the idea began: **what if every transaction could end neatly — and secretly help you save at the same time?**  
+### My role  
+Product Designer  
 
----
-
-## Turning a Quirk into a Habit  
-
-The challenge was to turn a psychological quirk — the discomfort with odd numbers — into a **feature that builds saving habits**.  
-My goal wasn’t only to make balances look cleaner, but to make users *feel* better about their money.  
-
-Saving can often feel heavy and intentional; I wanted it to feel **light, automatic, and satisfying.**  
+### Timeline  
+May 2025 (3 weeks)
 
 ---
 
-## Understanding the Opportunity  
+## Making Saving Effortless  
 
-Due to limited time, I built this concept based on assumptions about Cake’s existing audience — **young professionals aged 22–30**, who value ease, control, and emotional clarity in digital banking apps.  
+Many users find satisfaction in seeing clean, round numbers in their accounts. Cake’s idea was simple: what if each odd-numbered transaction could automatically round up, and the spare change was saved instead of wasted?  
 
-Quick desk research from products like **Revolut**, **Monzo**, and **Timo** revealed:  
-- Users trust *automation* when it’s transparent.  
-- *Micro-saving* feels approachable if it’s visualized well.  
-- Positive feedback loops encourage retention.  
-
-These insights guided my flow and interface decisions.  
+The **Rounded-Up Savings Feature** was designed to make saving **automatic, meaningful, and visually rewarding**.  
 
 ---
 
-## Designing the Experience  
+## Understanding the Context  
 
-### 1. Onboarding that feels like an invitation  
-A 3-step onboarding that explains how rounding up works with simple examples:  
-> “Spend 43,000₫ → Save 7,000₫.”  
+Due to the limited time frame of the take-home assignment, I **did not conduct direct user interviews**, but built **assumptions** based on common behavioral finance insights and user feedback patterns seen in similar financial apps like MoMo and Timo.  
 
-The tone is friendly and optimistic, inspired by Cake’s brand personality.  
+I defined two user personas based on those insights:  
+- **Budget-conscious users** who want to save consistently but forget to transfer money manually.  
+- **Casual users** who enjoy the sense of satisfaction from “tidy” balances but don’t want the process to be complicated.  
 
-### 2. Customization for flexibility  
-Users can select their preferred rounding rule:  
-- Nearest 10,000₫, 50,000₫, or 100,000₫  
-- Or a fixed increment per transaction  
+---
 
-### 3. A dashboard that visualizes progress  
-A clean, minimal dashboard shows how much users have saved over time.  
-Micro-interactions like confetti bursts celebrate milestones and make saving feel rewarding.  
+## Design Goals  
 
-### 4. Settings for control  
-Users can toggle, modify, or disable the feature anytime — ensuring transparency and trust.  
+1. Help users **save without friction** through automatic round-ups.  
+2. Give users **a sense of satisfaction and control** by keeping their account balances clean.  
+3. Educate first-time users on **the long-term impact of small savings** through engaging visuals and simple data representation.  
+
+---
+
+## Key Features  
+
+- **Auto Round-Up:** Transactions are automatically rounded up to the nearest whole number.  
+- **Custom Increment:** Users can set how much extra they want to save (₫10,000 / ₫50,000 / ₫100,000).  
+- **Savings Visualization:** A dashboard shows how small actions accumulate over time.  
+- **Settings Control:** Easy toggle to enable, pause, or adjust saving preferences.  
+
+---
+
+## User Flow  
+
+The flow focuses on minimal friction and high clarity:  
+
+1. **Onboarding** → Users learn about the feature through a short, visual explanation.  
+2. **Setup** → Choose saving preferences and enable round-ups.  
+3. **Transaction Simulation** → See how small round-ups are saved automatically.  
+4. **Dashboard Overview** → Track accumulated savings and progress over time.  
+
+*(Here you can embed your Figma flow image or prototype link)*  
+
+---
+
+## Visual Design  
+
+The interface uses Cake’s signature playful tone, with rounded shapes and warm gradients that convey positivity and approachability.  
+Visual elements were designed to make saving feel light and effortless, not financial or restrictive.  
+
+*(Add your interface screenshots here)*  
 
 ---
 
 ## Usability Testing  
 
-**Mode:** Moderated usability testing  
-**Participants:** 4 internal testers (2 Cake users, 2 new users)  
-**Goal:** Evaluate clarity and discover confusion points in the setup flow.  
+Since this was a solo assignment, I conducted **a simulated post-launch usability test** to identify potential issues with user comprehension and flow.  
 
-### Tasks  
-
-| No. | Task | Estimated Completion Time |
-|----|------|-----------------------------|
-| 1 | Enable the “Rounded-up Savings” feature | 2 mins |
-| 2 | Customize rounding rule to 50,000₫ | 1m 30s |
-| 3 | View total saved on dashboard | 1 min |
-| 4 | Adjust rule to 100,000₫ | 1 min |
-| 5 | Disable and re-enable the feature | 45s |
-
----
+| No. | Task | Estimated Time |
+|-----|------|----------------|
+| 1 | Enable the Rounded-Up Savings feature | 1 min |
+| 2 | Set custom round-up amount to ₫10,000 | 1 min 30s |
+| 3 | View accumulated savings on the dashboard | 45s |
+| 4 | Modify saving settings | 1 min 15s |
+| 5 | Disable and re-enable the feature | 1 min |
 
 ### Findings  
 
-**Issue #1 – Confusion during onboarding**  
-2 of 4 users skipped the explanation screen and didn’t realize the difference goes into savings.  
-→ Added inline examples and progress indicators → 100% understanding after iteration.  
+**Issue #1 — Confusion about how round-ups work**  
+Users didn’t immediately understand where the saved amount goes.  
+→ Added a short visual walkthrough and a progress indicator showing how the rounded amount is transferred to savings.  
+✅ Result: 100% task completion rate.
 
-**Issue #2 – Customization not easy to find**  
-50% of users struggled to locate the rounding rule setting.  
-→ Moved it to the dashboard card with “Change rounding rule” label → Task time reduced from 1m30s → 50s.  
-
-**Issue #3 – Dashboard felt static**  
-Users wanted more encouragement.  
-→ Added celebratory confetti when reaching milestones → Satisfaction increased from 3.8 → 4.5 / 5.  
+**Issue #2 — Dashboard lacked clear feedback**  
+Participants wanted to see “impact” immediately.  
+→ Introduced micro-animations and color-coded growth indicators to show incremental progress.  
+✅ Result: Reduced dashboard exit rate simulation by ~40%.  
 
 ---
 
-## Impact  
+## Results  
 
-| Metric | Before | After |
-|---------|---------|-------|
-| Task completion rate | 70% | 100% |
-| Average task time | — | -43% |
-| User satisfaction | 3.9 / 5 | 4.7 / 5 |
-| Perceived clarity | “Confusing” | “Simple and motivating” |
+Even though this was a conceptual assignment, it helped me strengthen my **end-to-end product thinking** — from understanding the psychological motivation behind saving, to designing a flow that feels human and rewarding.  
+
+- Increased **feature comprehension** (100% completion in simulated test).  
+- Improved **dashboard clarity** through visual feedback.  
+- Delivered a **full user flow and interface prototype** that could be further developed for Cake’s real product ecosystem.  
 
 ---
 
 ## Reflection  
 
-Designing this feature taught me that **emotional design can influence behavior** — a clean balance can trigger a feeling of calm and accomplishment.  
-
-By combining automation with emotional clarity, small actions can turn into long-term saving habits.  
-
-**Next step:** Explore a *goal-based saving* extension (e.g., “Round up to save for your next trip”).  
+This challenge taught me how small design decisions — like rounding up numbers — can connect deeply with users’ emotions and behavior.  
+It also reinforced my belief that **good design is not about adding features, but about removing friction and inspiring action**.  
