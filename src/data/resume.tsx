@@ -212,6 +212,28 @@ export const DATA = {
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
     },
     {
+      title: "CakeBank Case Study - Rounded-Up Savings Feature",
+      href: "/blog/cake",
+      dates: "Jan 2025",
+      active: true,
+      description:
+        "- Contributed to refining the [TrueProfit landing page](https://trueprofit.io/)- Redesigned the in-app onboarding flow for TrueProfit",
+      technologies: [
+        "Product Design",
+        "UI/UX Design",
+        "Prototype",
+      ],
+      links: [
+        {
+          type: "About Cake",
+          href: "https://cake.vn//",
+          icon: <Icons.link className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
+    },
+    {
       title: "Pizzy - Finance Management App",
       href: "/blog/pizzy",
       dates: "Aug 2025",
