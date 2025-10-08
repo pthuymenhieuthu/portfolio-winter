@@ -186,6 +186,51 @@ export const DATA = {
   ],
   projects: [
     {
+      title: "Web UI Design Series",
+      href: "/blog/chande",
+      dates: "Jul 2025",
+      active: true,
+      description:
+        "Mingg UI Design Challenge: A 6-week UI design competition where participants created one landing page per week based on a given brief.",
+      technologies: [
+        "UI Design",
+        "Web Design",
+        "Motion",
+        "Prototype",
+      ],
+      links: [
+        {
+          type: "Behance",
+          href: "https://www.behance.net/thuynguyen175?fbclid=IwY2xjawMnJzZleHRuA2FlbQIxMABicmlkETFiNktNMVpJaTlCWkY4a29RAR5tjrgVNL2qaAfS824pS6_HGMleBwazaQmDA03I71mIIqZ8wBTAGmBR-BSD8A_aem_oQB3E8ApP2trzP5kBapFCA",
+          icon: <Icons.behance className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "/chande.gif",
+    },
+    {
+      title: "Wedlify - Freelancing Project",
+      href: "/blog/wedlify",
+      dates: "Mar 2025",
+      active: true,
+      description:
+        "Wedlify is an online platform for digital wedding invitations, planning, and budgeting.",
+      technologies: [
+        "UI Design",
+        "Web Design",
+        "Prototype",
+      ],
+      links: [
+        {
+          type: "Self-developed demo site",
+          href: "https://wedlify-client.vercel.app/",
+          icon: <Icons.link className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759319611/Untitled_design_38_jamjj1.gif",
+    },
+    {
       title: "TrueProfit - Landing Page & Onboarding Illustrations",
       href: "/blog/trueprofit",
       dates: "Jan 2025",
@@ -256,51 +301,6 @@ export const DATA = {
       ],
       image: "",
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518716/pizzy_k1m4ci.gif",
-    },
-    {
-      title: "UI Design Series",
-      href: "/blog/chande",
-      dates: "Jul 2025",
-      active: true,
-      description:
-        "Mingg UI Design Challenge: A 6-week UI design competition where participants created one landing page per week based on a given brief.",
-      technologies: [
-        "UI Design",
-        "Web Design",
-        "Motion",
-        "Prototype",
-      ],
-      links: [
-        {
-          type: "Behance",
-          href: "https://www.behance.net/thuynguyen175?fbclid=IwY2xjawMnJzZleHRuA2FlbQIxMABicmlkETFiNktNMVpJaTlCWkY4a29RAR5tjrgVNL2qaAfS824pS6_HGMleBwazaQmDA03I71mIIqZ8wBTAGmBR-BSD8A_aem_oQB3E8ApP2trzP5kBapFCA",
-          icon: <Icons.behance className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "/chande.gif",
-    },
-    {
-      title: "Wedlify - Freelancing Project",
-      href: "/blog/wedlify",
-      dates: "Mar 2025",
-      active: true,
-      description:
-        "Wedlify is an online platform for digital wedding invitations, planning, and budgeting.",
-      technologies: [
-        "UI Design",
-        "Web Design",
-        "Prototype",
-      ],
-      links: [
-        {
-          type: "Live site",
-          href: "https://wedlify-client.vercel.app/",
-          icon: <Icons.link className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759319611/Untitled_design_38_jamjj1.gif",
     },
     {
       title: "Innisfree Landing Page Redesign",
