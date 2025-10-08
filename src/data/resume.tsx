@@ -231,7 +231,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759915810/Untitled_design_43_ymcl3e.gif",
     },
     {
       title: "Pizzy - Finance Management App",
