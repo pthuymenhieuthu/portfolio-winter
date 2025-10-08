@@ -186,7 +186,7 @@ export const DATA = {
   ],
   projects: [
     {
-      title: "Web UI Design Series",
+      title: "Website UI Design Series",
       href: "/blog/chande",
       dates: "Jul 2025",
       active: true,
@@ -209,7 +209,7 @@ export const DATA = {
       video: "/chande.gif",
     },
     {
-      title: "Wedlify - Freelancing Project",
+      title: "Wedlify - Digital Wedding Invitation Platform",
       href: "/blog/wedlify",
       dates: "Mar 2025",
       active: true,
@@ -262,7 +262,7 @@ export const DATA = {
       dates: "Jan 2025",
       active: true,
       description:
-        "- Contributed to refining the [TrueProfit landing page](https://trueprofit.io/)- Redesigned the in-app onboarding flow for TrueProfit",
+        "A take-home assignment for the Product Designer position at Cake, focusing on creating a rounded-up savings feature that helps users save effortlessly while keeping their balances neat.",
       technologies: [
         "Product Design",
         "UI/UX Design",
