@@ -235,28 +235,6 @@ export const DATA = {
       video: "/chande.gif",
     },
     {
-      title: "Wedlify - Digital Wedding Invitation Platform",
-      href: "/blog/wedlify",
-      dates: "Mar 2025",
-      active: true,
-      description:
-        "Wedlify is an online platform for digital wedding invitations, planning, and budgeting.",
-      technologies: [
-        "UI Design",
-        "Web Design",
-        "Prototype",
-      ],
-      links: [
-        {
-          type: "Self-developed demo site",
-          href: "https://wedlify-client.vercel.app/",
-          icon: <Icons.link className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759319611/Untitled_design_38_jamjj1.gif",
-    },
-    {
       title: "CakeBank Case Study - Rounded-Up Savings Feature",
       href: "/blog/cake",
       dates: "Jan 2025",
@@ -277,6 +255,28 @@ export const DATA = {
       ],
       image: "",
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759915810/Untitled_design_43_ymcl3e.gif",
+    },
+    {
+      title: "Wedlify - Digital Wedding Invitation Platform",
+      href: "/blog/wedlify",
+      dates: "Mar 2025",
+      active: true,
+      description:
+        "Wedlify is an online platform for digital wedding invitations, planning, and budgeting.",
+      technologies: [
+        "UI Design",
+        "Web Design",
+        "Prototype",
+      ],
+      links: [
+        {
+          type: "Self-developed demo site",
+          href: "https://wedlify-client.vercel.app/",
+          icon: <Icons.link className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759319611/Untitled_design_38_jamjj1.gif",
     },
     {
       title: "Pizzy - Finance Management App",
