@@ -186,6 +186,32 @@ export const DATA = {
   ],
   projects: [
     {
+      title: "TrueProfit - Landing Page & Onboarding Illustrations",
+      href: "/blog/trueprofit",
+      dates: "Jan 2025",
+      active: true,
+      description:
+        "- Contributed to refining the [TrueProfit landing page](https://trueprofit.io/)- Redesigned the in-app onboarding flow for TrueProfit",
+      technologies: [
+        "Web Design",
+        "Product Design",
+        "UI/UX Design",
+        "Prototype",
+        "E-commerce",
+        "Finance",
+        "Shopify"
+      ],
+      links: [
+        {
+          type: "Live site",
+          href: "https://trueprofit.io/",
+          icon: <Icons.link className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
+    },
+    {
       title: "Website UI Design Series",
       href: "/blog/chande",
       dates: "Jul 2025",
@@ -229,32 +255,6 @@ export const DATA = {
       ],
       image: "",
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759319611/Untitled_design_38_jamjj1.gif",
-    },
-    {
-      title: "TrueProfit - Landing Page & Onboarding Illustrations",
-      href: "/blog/trueprofit",
-      dates: "Jan 2025",
-      active: true,
-      description:
-        "- Contributed to refining the [TrueProfit landing page](https://trueprofit.io/)- Redesigned the in-app onboarding flow for TrueProfit",
-      technologies: [
-        "Web Design",
-        "Product Design",
-        "UI/UX Design",
-        "Prototype",
-        "E-commerce",
-        "Finance",
-        "Shopify"
-      ],
-      links: [
-        {
-          type: "Live site",
-          href: "https://trueprofit.io/",
-          icon: <Icons.link className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
     },
     {
       title: "CakeBank Case Study - Rounded-Up Savings Feature",
