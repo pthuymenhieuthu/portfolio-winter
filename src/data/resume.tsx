@@ -186,6 +186,30 @@ export const DATA = {
   ],
   projects: [
     {
+      title: "Zoan AI Projects",
+      href: "/blog/zoan",
+      dates: "November 2025",
+      active: true,
+      description:
+        "Mingg UI Design Challenge: A 6-week UI design competition where participants created one landing page per week based on a given brief.",
+      technologies: [
+        "UI Design",
+        "Product Design",
+        "Clean Dashboard",
+        "Motion",
+        "Prototype",
+      ],
+      links: [
+        {
+          type: "About project site",
+          href: "http://zoan.app/",
+          icon: <Icons.link className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1763879219/Untitled_design_44_wgxr30.gif",
+    },
+    {
       title: "TrueProfit - Landing Page & Onboarding Illustrations",
       href: "/blog/trueprofit",
       dates: "Jan 2025",
