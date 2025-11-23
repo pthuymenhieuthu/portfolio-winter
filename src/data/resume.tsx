@@ -207,7 +207,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1763879219/Untitled_design_44_wgxr30.gif",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1763881286/Timeline_5HEHE_latwko.gif",
     },
     {
       title: "TrueProfit - Landing Page & Onboarding Illustrations",

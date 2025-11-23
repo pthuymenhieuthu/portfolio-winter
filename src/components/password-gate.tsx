@@ -39,38 +39,41 @@ export function PasswordGate({ slug, title, children }: PasswordGateProps) {
 
   return (
     <div className="mt-8 max-w-md border rounded-2xl p-6 bg-background/60 backdrop-blur">
-      <h2 className="text-lg font-semibold mb-1">
-        This post is protected 🔒
-      </h2>
-      {title && (
-        <p className="text-sm font-medium mb-1">
-          {title}
-        </p>
-      )}
-      <p className="text-xs text-muted-foreground mb-4">
-        Enter the password to view this case study.
-      </p>
+  <h2 className="text-lg font-semibold mb-1">
+    This post is protected 🔒
+  </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          type="password"
-          placeholder="Enter password"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="w-full border rounded-lg px-3 py-2 text-sm bg-background"
-        />
-        {error && (
-          <p className="text-xs text-red-500">
-            {error}
-          </p>
-        )}
-        <button
-          type="submit"
-          className="inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium border bg-primary text-primary-foreground"
-        >
-          Unlock
-        </button>
-      </form>
-    </div>
+  {title && (
+    <p className="text-sm font-medium mb-1">
+      {title}
+    </p>
+  )}
+
+  <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
+    This project is currently under an NDA agreement, so I’m unable to share the full details publicly.  
+    Please enter the password I provided to view the complete breakdown of my work on this project.
+  </p>
+
+  <form onSubmit={handleSubmit} className="space-y-3">
+    <input
+      type="password"
+      placeholder="Enter password"
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      className="w-full border rounded-lg px-3 py-2 text-sm bg-background"
+    />
+    {error && (
+      <p className="text-xs text-red-500">
+        {error}
+      </p>
+    )}
+    <button
+      type="submit"
+      className="inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium border bg-primary text-primary-foreground"
+    >
+      Unlock
+    </button>
+  </form>
+</div>
   );
 }
