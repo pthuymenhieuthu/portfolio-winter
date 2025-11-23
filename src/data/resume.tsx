@@ -188,7 +188,7 @@ export const DATA = {
     {
       title: "Zoan AI – Design System & Product Redesign",
       href: "/blog/zoan",
-      dates: "November 2025",
+      dates: "May 2025",
       active: true,
       description:
         "From fearing AI to designing for it.",
