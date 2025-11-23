@@ -66,42 +66,64 @@ Every component was documented with interaction rules to ensure predictable impl
 
 ## Phase 4: Applying the System Across Platforms
 
-### Task Flow Mapping
+### Task Definition and Flow Mapping
 
-Before designing any screen, I created detailed task flows to map how users moved through the system from start to end.  
-This included both happy paths and potential edge cases, ensuring the experience stayed stable even under unexpected scenarios.
+Before moving into UI design, our team started by outlining a comprehensive **task list** for each part of the system.  
+The goal was to identify everything a user could possibly do, then break it into clear, manageable tasks.
 
-These flows aligned the entire team around the same mental model and made it easier to break work into manageable increments for later sprints.  
-By the time the UI phase began, we had already validated the structure of the experience.
+From this list, I collaborated with the product and engineering teams to create **task flows** that mapped out how users move from one step to another.  
+We defined:
+
+• Starting points  
+• End points  
+• Main flows (happy paths)  
+• Sub-flows  
+• Edge cases and alternative paths (unhappy paths)
+
+This structured process ensured that the design would hold up even when users encountered unusual scenarios or non-linear behavior.
+
+By mapping task flows early, we were able to:
+
+• Build alignment across the entire team  
+• Reduce ambiguity before sprint work began  
+• Identify dependencies between modules  
+• Clarify interaction expectations for both desktop and mobile  
+• Ensure no important path was overlooked  
+
+This foundation allowed later sprints to move faster and with fewer surprises, because every screen and interaction had already been logically validated.
+
+Below is an example of the structured process we used:
+
+![taskflowimg](sandbox:/mnt/data/1f2554ea-ca10-4625-83b8-40759c42d2ac.png)
 
 ### Desktop Platform
 
-I redesigned key areas including:
+Once the flows were validated, I applied the new design system across the desktop tools:
 
 • The main dashboard  
-• AI-assisted creation flows  
+• AI-assisted creation workflows  
 • Content and asset management  
-• Review and iteration tools  
-• Internal utilities for handling generated outputs  
+• Review and iteration screens  
+• Internal management utilities  
 
-The updated system became more structured, scalable, and visually consistent.
+The updated interface became more structured, predictable, and cohesive.
 
 ### Mobile Experience
 
-The mobile side enabled users to:
+On mobile, users could:
 
 • Chat with the AI engine  
-• Receive structured, interactive outputs  
+• Receive structured interactive outputs  
 • Preview the generated content  
-• Interact with lightweight modules used for testing  
-• Access internal tools, user settings, and utilities  
+• Interact with lightweight modules used to test it  
+• Manage settings and other internal tools  
 
 ![mobileflow](sandbox:/mnt/data/799dcf06-e054-453c-a706-f5e0c4fb7d9f.png)
 
-Designing this experience required adapting the system to smaller screens while keeping everything consistent.  
-The chat output required defining message structure, interaction states, content cards, preview modules, and loading patterns.
+The mobile UI adopted the same design language as the desktop system, adapted for smaller screens.  
+This required defining message structures, interactive cards, preview modules, and a mobile-first navigation model.
 
-A major goal was ensuring web and mobile felt like one connected ecosystem.\
+The goal was to ensure that the ecosystem felt unified, whether accessed through desktop or mobile.
 
 ## Phase 5: Design to Engineering Collaboration
 
