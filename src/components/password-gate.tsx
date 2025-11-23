@@ -50,7 +50,7 @@ export function PasswordGate({ slug, title, children }: PasswordGateProps) {
   )}
 
   <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
-    This project is under an NDA, so I’m unable to share full details publicly.  
+    This project is private, so I’m unable to share full details publicly.  
     Please enter the password I provided to view the complete case study.
   </p>
 
@@ -77,11 +77,23 @@ export function PasswordGate({ slug, title, children }: PasswordGateProps) {
     </button>
   </form>
 
-  <p className="text-xs text-muted-foreground mt-4">
+  <p className="text-xs text-muted-foreground mt-4 leading-relaxed">
     Need access? Contact me at{" "}
-    <span className="font-medium text-foreground">
+    <a
+      href="mailto:phuongthuy101222@gmail.com"
+      className="font-medium underline underline-offset-2 hover:text-foreground"
+    >
       phuongthuy101222@gmail.com
-    </span>
+    </a>{" "}
+    or connect with me on{" "}
+    <a
+      href="https://www.linkedin.com/in/thuy-nguyen-1665ab208/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="font-medium underline underline-offset-2 hover:text-foreground"
+    >
+      LinkedIn
+    </a>.
   </p>
 </div>
   );
