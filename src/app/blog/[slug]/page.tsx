@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { TableOfContents } from "@/components/table-of-contents";
 import ClientBlog from "@/components/client-blog";
+import { PasswordGate } from "@/components/password-gate";
 
 export default async function BlogPage({
   params,
@@ -15,6 +16,8 @@ export default async function BlogPage({
   if (!post) {
     notFound();
   }
+
+  const isProtected = Boolean(post.metadata.protected);
 
   return (
     <div className="min-h-screen relative flex justify-center">
@@ -30,8 +33,14 @@ export default async function BlogPage({
           </Suspense>
         </div>
 
-        {/* Render nội dung blog */}
-        <ClientBlog source={post.source} />
+        {/* Nếu bài viết được đánh dấu protected thì wrap trong PasswordGate */}
+        {isProtected ? (
+          <PasswordGate slug={params.slug} title={post.metadata.title}>
+            <ClientBlog source={post.source} />
+          </PasswordGate>
+        ) : (
+          <ClientBlog source={post.source} />
+        )}
       </main>
 
       {/* TOC */}
