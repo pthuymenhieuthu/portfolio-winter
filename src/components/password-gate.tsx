@@ -3,22 +3,23 @@
 import { useState } from "react";
 
 const PASSWORD_BY_SLUG: Record<string, string> = {
-  zoan: "1125",
-  // cake: "abc123", // nếu sau này muốn lock bài khác thì add thêm
+  zoan: "1125", // bài /blog/zoan dùng pass 1125
+  // thêm slug khác nếu muốn
 };
 
 type PasswordGateProps = {
   slug: string;
+  title?: string; // <- thêm title vào props ở đây
   children: React.ReactNode;
 };
 
-export function PasswordGate({ slug, children }: PasswordGateProps) {
+export function PasswordGate({ slug, title, children }: PasswordGateProps) {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
   const [unlocked, setUnlocked] = useState(false);
 
+  // nếu quên define password cho slug này thì cho qua luôn
   if (!PASSWORD_BY_SLUG[slug]) {
-    // Nếu quên set password trong map thì cho qua luôn
     return <>{children}</>;
   }
 
@@ -37,9 +38,16 @@ export function PasswordGate({ slug, children }: PasswordGateProps) {
   }
 
   return (
-    <div className="max-w-xl mx-auto mt-12 border rounded-2xl p-6">
-      <h2 className="text-lg font-semibold mb-2">This post is protected 🔒</h2>
-      <p className="text-sm text-muted-foreground mb-4">
+    <div className="mt-8 max-w-md border rounded-2xl p-6 bg-background/60 backdrop-blur">
+      <h2 className="text-lg font-semibold mb-1">
+        This post is protected 🔒
+      </h2>
+      {title && (
+        <p className="text-sm font-medium mb-1">
+          {title}
+        </p>
+      )}
+      <p className="text-xs text-muted-foreground mb-4">
         Enter the password to view this case study.
       </p>
 

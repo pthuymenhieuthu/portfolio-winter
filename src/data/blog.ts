@@ -14,6 +14,7 @@ type Metadata = {
   publishedAt: string;
   summary: string;
   image?: string;
+  protected?: boolean;
 };
 
 function getMDXFiles(dir: string) {
