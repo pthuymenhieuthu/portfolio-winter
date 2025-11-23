@@ -186,12 +186,12 @@ export const DATA = {
   ],
   projects: [
     {
-      title: "Zoan AI Projects",
+      title: "Zoan AI – Design System & Product Redesign",
       href: "/blog/zoan",
       dates: "November 2025",
       active: true,
       description:
-        "Mingg UI Design Challenge: A 6-week UI design competition where participants created one landing page per week based on a given brief.",
+        "From fearing AI to designing for it.",
       technologies: [
         "UI Design",
         "Product Design",
