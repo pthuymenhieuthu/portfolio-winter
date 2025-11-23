@@ -195,15 +195,14 @@ export const DATA = {
       technologies: [
         "UI Design",
         "Product Design",
-        "Clean Dashboard",
-        "Motion",
-        "Prototype",
+        "Rive Motion Design",
+        "AI Product",
       ],
       links: [
         {
-          type: "About project site",
-          href: "http://zoan.app/",
-          icon: <Icons.link className="size-3" />,
+          type: "Linkedin",
+          href: "https://www.linkedin.com/company/zoanai/posts/?feedView=all",
+          icon: <Icons.linkedin className="size-3" />,
         },
       ],
       image: "",
