@@ -50,8 +50,8 @@ export function PasswordGate({ slug, title, children }: PasswordGateProps) {
   )}
 
   <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
-    This project is currently under an NDA agreement, so I’m unable to share the full details publicly.  
-    Please enter the password I provided to view the complete breakdown of my work on this project.
+    This project is under an NDA, so I’m unable to share full details publicly.  
+    Please enter the password I provided to view the complete case study.
   </p>
 
   <form onSubmit={handleSubmit} className="space-y-3">
@@ -62,11 +62,13 @@ export function PasswordGate({ slug, title, children }: PasswordGateProps) {
       onChange={(e) => setInput(e.target.value)}
       className="w-full border rounded-lg px-3 py-2 text-sm bg-background"
     />
+
     {error && (
       <p className="text-xs text-red-500">
         {error}
       </p>
     )}
+
     <button
       type="submit"
       className="inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium border bg-primary text-primary-foreground"
@@ -74,6 +76,13 @@ export function PasswordGate({ slug, title, children }: PasswordGateProps) {
       Unlock
     </button>
   </form>
+
+  <p className="text-xs text-muted-foreground mt-4">
+    Need access? Contact me at{" "}
+    <span className="font-medium text-foreground">
+      phuongthuy101222@gmail.com
+    </span>
+  </p>
 </div>
   );
 }
