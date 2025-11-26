@@ -200,13 +200,13 @@ export const DATA = {
       ],
       links: [
         {
-          type: "Linkedin",
+          type: "Project Linkedin",
           href: "https://www.linkedin.com/company/zoanai/posts/?feedView=all",
           icon: <Icons.linkedin className="size-3" />,
         },
       ],
       image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1763881286/Timeline_5HEHE_latwko.gif",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764167274/Timeline_1_4_h2grpq.gif",
     },
     {
       title: "TrueProfit - Landing Page & Onboarding Illustrations",
