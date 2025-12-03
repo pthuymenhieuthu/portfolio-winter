@@ -187,7 +187,7 @@ export const DATA = {
   projects: [
     {
   title: "Language Learning Apps — UI Enhancement Showcase",
-  href: "/blog/edtech-ui-showcase",
+  href: "/blog/edtechapp",
   dates: "Feb 2025",
   active: true,
   description:
