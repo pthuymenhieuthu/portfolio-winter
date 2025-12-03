@@ -259,6 +259,30 @@ export const DATA = {
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
     },
     {
+      title: "Pizzy - Finance Management App",
+      href: "/blog/pizzy",
+      dates: "Aug 2025",
+      active: true,
+      description:
+        "Pizzy is a mobile application that helps users manage shared budgets with friends in a simple, engaging, and social way.",
+      technologies: [
+        "App Design",
+        "UI/UX Design",
+        "Motion",
+        "Prototype",
+        "Finance",
+      ],
+      links: [
+        {
+          type: "Behance",
+          href: "https://www.behance.net/gallery/232892697/Pizzy-Social-Budget-Management-App-UXUI-Design",
+          icon: <Icons.behance className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518716/pizzy_k1m4ci.gif",
+    },
+    {
       title: "Website UI Design Series",
       href: "/blog/chande",
       dates: "Jul 2025",
@@ -324,30 +348,6 @@ export const DATA = {
       ],
       image: "",
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759319611/Untitled_design_38_jamjj1.gif",
-    },
-    {
-      title: "Pizzy - Finance Management App",
-      href: "/blog/pizzy",
-      dates: "Aug 2025",
-      active: true,
-      description:
-        "Pizzy is a mobile application that helps users manage shared budgets with friends in a simple, engaging, and social way.",
-      technologies: [
-        "App Design",
-        "UI/UX Design",
-        "Motion",
-        "Prototype",
-        "Finance",
-      ],
-      links: [
-        {
-          type: "Behance",
-          href: "https://www.behance.net/gallery/232892697/Pizzy-Social-Budget-Management-App-UXUI-Design",
-          icon: <Icons.behance className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518716/pizzy_k1m4ci.gif",
     },
     {
       title: "Innisfree Landing Page Redesign",
