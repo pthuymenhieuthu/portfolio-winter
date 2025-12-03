@@ -186,6 +186,30 @@ export const DATA = {
   ],
   projects: [
     {
+  title: "Language Learning Apps — UI Enhancement Showcase",
+  href: "/blog/edtech-ui-showcase",
+  dates: "Feb 2025",
+  active: true,
+  description:
+    "UI improvements for top-rated learning apps on the App Store.",
+  technologies: [
+    "UI Design",
+    "Mobile App",
+    "EdTech",
+    "App Store Graphics",
+  ],
+  links: [
+    {
+      type: "App Store",
+      href: "https://apps.apple.com/app/id6468914724",
+      icon: <Icons.appstore className="size-3" />,
+    },
+  ],
+  image: "",
+  video:
+    "https://res.cloudinary.com/dqtfjvkok/image/upload/vYOURLINK/preview.gif",
+},
+    {
       title: "Zoan AI – Design System & Product Redesign",
       href: "/blog/zoan",
       dates: "May 2025",
