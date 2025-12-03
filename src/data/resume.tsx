@@ -207,7 +207,7 @@ export const DATA = {
   ],
   image: "",
   video:
-    "https://res.cloudinary.com/dqtfjvkok/image/upload/vYOURLINK/preview.gif",
+    "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764751725/Phone_shocase_lxj9ih.gif",
 },
     {
       title: "Zoan AI – Design System & Product Redesign",
