@@ -85,7 +85,7 @@ export const DATA = {
       badges: [],
       location: "Ho Chi Minh City",
       title: "UI/UX Designer",
-      logoUrl: "/logo.png",
+      logoUrl: "/zoan.png",
       start: "May 2025",
       end: "Present",
       description:
