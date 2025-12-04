@@ -211,29 +211,54 @@ export const DATA = {
   ],
   projects: [
     {
-  title: "Language Learning Apps — UI Enhancement Showcase",
-  href: "/blog/edtechapp",
-  dates: "Feb 2025",
-  active: true,
-  description:
-    "UI improvements for top-rated learning apps on the App Store.",
-  technologies: [
-    "UI Design",
-    "Mobile App",
-    "EdTech",
-    "App Store Graphics",
-  ],
-  links: [
-    {
-      type: "App Store",
-      href: "https://apps.apple.com/app/id6468914724",
-      icon: <Icons.appstore className="size-3" />,
+      title: "TrueProfit - Landing Page & Onboarding Illustrations",
+      href: "/blog/trueprofit",
+      dates: "Jan 2025",
+      active: true,
+      description:
+        "- Contributed to refining the [TrueProfit landing page](https://trueprofit.io/)- Redesigned the in-app onboarding flow for TrueProfit",
+      technologies: [
+        "Web Design",
+        "Product Design",
+        "UI/UX Design",
+        "Prototype",
+        "E-commerce",
+        "Finance",
+        "Shopify"
+      ],
+      links: [
+        {
+          type: "Live site",
+          href: "https://www.behance.net/gallery/206146695/Seller-Engagement-Design-TikTok-Shop",
+          icon: <Icons.behance className="size-3" />,
+        },
+      ],
+      image: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764848423/2abe5d31-c309-4796-853d-ec6a0e614eba_lv5upz.png",
+      video: "",
+    },{
+      title: "Marketing Graphics — Campaign & Social Design",
+      href: "/blog/graphics",
+      dates: "2023-2025",
+      active: true,
+      description:
+        "- Social & promotional visuals for TikTok Shop campaigns\n- Product highlight & seasonal banners for language learning apps",
+      technologies: [
+        "Marketing Design",
+        "Visual Communication",
+        "Campaign Graphics",
+        "App Promotion",
+        "E-commerce",
+      ],
+      links: [
+        {
+          type: "Behance",
+          href: "https://trueprofit.io/",
+          icon: <Icons.link className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
     },
-  ],
-  image: "",
-  video:
-    "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764751725/Phone_shocase_lxj9ih.gif",
-},
     {
       title: "Zoan AI – Design System & Product Redesign",
       href: "/blog/zoan",
@@ -258,31 +283,29 @@ export const DATA = {
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764167274/Timeline_1_4_h2grpq.gif",
     },
     {
-      title: "TrueProfit - Landing Page & Onboarding Illustrations",
-      href: "/blog/trueprofit",
-      dates: "Jan 2025",
-      active: true,
-      description:
-        "- Contributed to refining the [TrueProfit landing page](https://trueprofit.io/)- Redesigned the in-app onboarding flow for TrueProfit",
-      technologies: [
-        "Web Design",
-        "Product Design",
-        "UI/UX Design",
-        "Prototype",
-        "E-commerce",
-        "Finance",
-        "Shopify"
-      ],
-      links: [
-        {
-          type: "Live site",
-          href: "https://trueprofit.io/",
-          icon: <Icons.link className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
-    },
+    title: "Language Learning Apps — UI & Motion Enhancement Showcase",
+    href: "/blog/edtechapp",
+    dates: "Feb 2025",
+    active: true,
+    description:
+      "UI improvements for top-rated learning apps on the App Store.",
+    technologies: [
+      "UI Design",
+      "Mobile App",
+      "EdTech",
+      "App Store Graphics",
+    ],
+    links: [
+      {
+        type: "App Store",
+        href: "https://apps.apple.com/app/id6468914724",
+        icon: <Icons.appstore className="size-3" />,
+      },
+    ],
+    image: "",
+    video:
+      "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764751725/Phone_shocase_lxj9ih.gif",
+  },
     {
       title: "Pizzy - Finance Management App",
       href: "/blog/pizzy",
