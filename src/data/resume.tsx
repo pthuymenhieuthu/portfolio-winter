@@ -328,7 +328,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1760415910/1014_1_zbbizq.gif",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758519116/Untitled_design_34_ooq2kc.gif",
     },
     {
       title: "CakeBank Case Study - Rounded-Up Savings Feature",
