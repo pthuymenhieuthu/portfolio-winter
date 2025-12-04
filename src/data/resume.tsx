@@ -229,12 +229,12 @@ export const DATA = {
       links: [
         {
           type: "Live site",
-          href: "https://www.behance.net/gallery/206146695/Seller-Engagement-Design-TikTok-Shop",
-          icon: <Icons.behance className="size-3" />,
+          href: "https://trueprofit.io/",
+          icon: <Icons.link className="size-3" />,
         },
       ],
-      image: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764848423/2abe5d31-c309-4796-853d-ec6a0e614eba_lv5upz.png",
-      video: "",
+      image: "",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
     },{
       title: "Marketing Graphics — Campaign & Social Design",
       href: "/blog/graphics",
@@ -252,12 +252,12 @@ export const DATA = {
       links: [
         {
           type: "Behance",
-          href: "https://trueprofit.io/",
-          icon: <Icons.link className="size-3" />,
+          href: "https://www.behance.net/gallery/206146695/Seller-Engagement-Design-TikTok-Shop",
+          icon: <Icons.behance className="size-3" />,
         },
       ],
       image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764848423/2abe5d31-c309-4796-853d-ec6a0e614eba_lv5upz.png",
     },
     {
       title: "Zoan AI – Design System & Product Redesign",
