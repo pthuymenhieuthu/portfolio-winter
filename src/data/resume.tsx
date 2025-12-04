@@ -68,14 +68,38 @@ export const DATA = {
 
   work: [
     {
+      company: "Language App Studio",
+      href: "",
+      badges: [],
+      location: "Ho Chi Minh City",
+      title: "Freelance UI/UX Designer",
+      logoUrl: "/speakchinese.png",
+      start: "Oct 2025",
+      end: "Present",
+      description:
+        "• Improved UI clarity and motivation for public EdTech apps (4.9–5★ ratings).\n• Designed onboarding, splash screens, and micro-interactions using Rive and After Effects.\n• Created App Store visuals aligned with branding to support user conversion.\n• Iterated UI based on usability feedback and design reviews with the studio team.",
+    },
+    {
+      company: "Zoan AI",
+      href: "",
+      badges: [],
+      location: "Ho Chi Minh City",
+      title: "UI/UX Designer",
+      logoUrl: "/zoan.svg",
+      start: "May 2025",
+      end: "Present",
+      description:
+        "• Designed cross-platform interfaces for an early-stage AI content creation system.\n• Built design system foundations (tokens, components, layout standards) for both web and mobile.\n• Created task flows covering happy & edge cases to clarify product requirements and improve UX clarity.\n• Designed and iterated high-fidelity screens and prototypes for internal alignment and handoff.",
+    },
+    {
       company: "FireGroup",
       href: "",
       badges: [],
       location: "Ho Chi Minh City",
-      title: "Product Design",
+      title: "Product Design Intern",
       logoUrl: "/firegroup.jpeg",
       start: "Nov 2024",
-      end: "Apr 2025",
+      end: "Mar 2025",
       description:
         "• Contributed to improving the landing page to support marketing efforts for [TrueProfit](https://trueprofit.io/), a Shopify dashboard app that helps merchants track their financial performance.\n • Redesigned the onboarding illustrations to enhance user experience and visual consistency.\n • Participated in the product development process following the Sprint methodology.\n",
     },
@@ -91,30 +115,31 @@ export const DATA = {
       description:
         "• Regularly used Figma to design social media posts, enhancing design and layout skills.\n • Understood the user purchasing journey through experience in e-commerce platforms.\n • Conducted competitor research on sales academy flows on Lazada and Shopee, identifying key UX/UI improvements.",
     },
-    {
-      company: "Gufoods",
-      href: "https://www.gufoods.com",
-      badges: [],
-      location: "Remote",
-      title: "Design Intern",
-      logoUrl: "/gufoods.png",
-      start: "Jul 2021",
-      end: "Feb 2022",
-      description:
-        "• Developed the Information Architecture (IA), and completed the high-fidelity wireframe design for Rice Cake Recipes.\n • Designed marketing collateral, including brochures, social media posts, and promotional materials.\n • Edited videos and created interactive stories using CapCut.",
-    },
-    {
-      company: "ELSA Speak",
-      badges: [],
-      href: "https://elsaspeak.com",
-      location: "Remote",
-      title: "Intern",
-      logoUrl: "/elsaspeak.png",
-      start: "Nov 2022",
-      end: "Aug 2023",
-      description:
-        "• Planned and created content across social media channels\n • Designed corresponding images and videos.\n • Supported Influencer Marketing campaign.",
-    },
+  
+    // {
+    //   company: "Gufoods",
+    //   href: "https://www.gufoods.com",
+    //   badges: [],
+    //   location: "Remote",
+    //   title: "Design Intern",
+    //   logoUrl: "/gufoods.png",
+    //   start: "Jul 2021",
+    //   end: "Feb 2022",
+    //   description:
+    //     "• Developed the Information Architecture (IA), and completed the high-fidelity wireframe design for Rice Cake Recipes.\n • Designed marketing collateral, including brochures, social media posts, and promotional materials.\n • Edited videos and created interactive stories using CapCut.",
+    // },
+    // {
+    //   company: "ELSA Speak",
+    //   badges: [],
+    //   href: "https://elsaspeak.com",
+    //   location: "Remote",
+    //   title: "Intern",
+    //   logoUrl: "/elsaspeak.png",
+    //   start: "Nov 2022",
+    //   end: "Aug 2023",
+    //   description:
+    //     "• Planned and created content across social media channels\n • Designed corresponding images and videos.\n • Supported Influencer Marketing campaign.",
+    // },
     //{
       //company: "Innisfree",
       //href: "https://innisfree.vn/",
@@ -186,7 +211,7 @@ export const DATA = {
   ],
   projects: [
     {
-  title: "Language Learning Apps — UI & Motion Enhancement Showcase",
+  title: "Language Learning Apps — UI Enhancement Showcase",
   href: "/blog/edtechapp",
   dates: "Feb 2025",
   active: true,
