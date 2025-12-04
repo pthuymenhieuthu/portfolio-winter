@@ -257,7 +257,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764848423/2abe5d31-c309-4796-853d-ec6a0e614eba_lv5upz.png",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764849886/2abe5d31-c309-4796-853d-ec6a0e614eba_1_nx3gl7.png",
     },
     {
       title: "Zoan AI – Design System & Product Redesign",
