@@ -211,6 +211,29 @@ export const DATA = {
   ],
   projects: [
     {
+      title: "Zoan AI – AI Workflow Management",
+      href: "/blog/zoan",
+      dates: "May 2025",
+      active: true,
+      description:
+        "From fearing AI to designing for it.",
+      technologies: [
+        "UI Design",
+        "Product Design",
+        "Rive Motion Design",
+        "AI Product",
+      ],
+      links: [
+        {
+          type: "Project Linkedin",
+          href: "https://www.linkedin.com/company/zoanai/posts/?feedView=all",
+          icon: <Icons.linkedin className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764167274/Timeline_1_4_h2grpq.gif",
+    },
+    {
       title: "TrueProfit - Landing Page & Onboarding Illustrations",
       href: "/blog/trueprofit",
       dates: "Jan 2025",
@@ -235,54 +258,8 @@ export const DATA = {
       ],
       image: "",
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
-    },{
-      title: "Marketing Graphics — Campaign & Social Design",
-      href: "/blog/graphics",
-      dates: "2023-2025",
-      active: true,
-      description:
-        "- Social & promotional visuals for TikTok Shop campaigns\n- Product highlight & seasonal banners for language learning apps",
-      technologies: [
-        "Marketing Design",
-        "Visual Communication",
-        "Campaign Graphics",
-        "App Promotion",
-        "E-commerce",
-      ],
-      links: [
-        {
-          type: "Behance",
-          href: "https://www.behance.net/gallery/206146695/Seller-Engagement-Design-TikTok-Shop",
-          icon: <Icons.behance className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764849886/2abe5d31-c309-4796-853d-ec6a0e614eba_1_nx3gl7.png",
     },
-    {
-      title: "Zoan AI – Design System & Product Redesign",
-      href: "/blog/zoan",
-      dates: "May 2025",
-      active: true,
-      description:
-        "From fearing AI to designing for it.",
-      technologies: [
-        "UI Design",
-        "Product Design",
-        "Rive Motion Design",
-        "AI Product",
-      ],
-      links: [
         {
-          type: "Project Linkedin",
-          href: "https://www.linkedin.com/company/zoanai/posts/?feedView=all",
-          icon: <Icons.linkedin className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764167274/Timeline_1_4_h2grpq.gif",
-    },
-    {
     title: "Language Learning Apps — UI & Motion Enhancement Showcase",
     href: "/blog/edtechapp",
     dates: "Feb 2025",
@@ -306,6 +283,30 @@ export const DATA = {
     video:
       "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764751725/Phone_shocase_lxj9ih.gif",
   },
+  {
+      title: "Marketing Graphics — Campaign & Social Design",
+      href: "/blog/graphics",
+      dates: "2023-2025",
+      active: true,
+      description:
+        "- Social & promotional visuals for TikTok Shop campaigns\n- Product highlight & seasonal banners for language learning apps",
+      technologies: [
+        "Marketing Design",
+        "Visual Communication",
+        "Campaign Graphics",
+        "App Promotion",
+        "E-commerce",
+      ],
+      links: [
+        {
+          type: "Behance",
+          href: "https://www.behance.net/gallery/206146695/Seller-Engagement-Design-TikTok-Shop",
+          icon: <Icons.behance className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764849886/2abe5d31-c309-4796-853d-ec6a0e614eba_1_nx3gl7.png",
+    },
     {
       title: "Pizzy - Finance Management App",
       href: "/blog/pizzy",
