@@ -72,7 +72,7 @@ export const DATA = {
       href: "https://www.linkedin.com/company/dpox/about/",
       badges: [],
       location: "Ho Chi Minh City",
-      title: "UI & Graphic Designer",
+      title: "Freelance UI & Graphic Designer (Part-time)",
       logoUrl: "/dpox.jpeg",
       start: "Dec 2025",
       end: "Present",
