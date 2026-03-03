@@ -211,6 +211,35 @@ export const DATA = {
   ],
   projects: [
     {
+  title: "Affina – Brand & Product Transformation",
+  href: "/blog/affina",
+  dates: "Mar 2026",
+  active: true,
+  description:
+    "Unified Affina’s brand, product design, and digital presence with a scalable design system and AI-enhanced creative workflow.",
+  technologies: [
+    "Brand Identity",
+    "Design System",
+    "UI/UX Design",
+    "Website Redesign",
+    "AI-Enhanced Workflow",
+  ],
+  links: [
+    {
+      type: "Website",
+      href: "https://affina.com.vn/",
+      icon: <Icons.globe className="size-3" />,
+    },
+    {
+      type: "Brand LinkedIn",
+      href: "https://www.linkedin.com/company/affina-vn/",
+      icon: <Icons.linkedin className="size-3" />,
+    },
+  ],
+  image: "",
+  video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1772544692/Untitled_design_51_ssxezn.gif",
+},
+    {
       title: "Zoan AI – AI Workflow Management",
       href: "/blog/zoan",
       dates: "May 2025",
