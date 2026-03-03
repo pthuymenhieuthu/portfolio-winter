@@ -68,16 +68,28 @@ export const DATA = {
 
   work: [
     {
-      company: "Language App Studio",
-      href: "",
+      company: "DpoX",
+      href: "https://www.linkedin.com/company/dpox/about/",
       badges: [],
       location: "Ho Chi Minh City",
-      title: "Freelance UI/UX Designer",
-      logoUrl: "/speakchinese.png",
-      start: "Oct 2025",
+      title: "UI & Graphic Designer",
+      logoUrl: "/dpox.jpeg",
+      start: "Dec 2025",
       end: "Present",
       description:
-        "• Improved UI clarity and motivation for public EdTech apps (4.9–5★ ratings).\n• Designed onboarding, splash screens, and micro-interactions using Rive and After Effects.\n• Created App Store visuals aligned with branding to support user conversion.\n• Iterated UI based on usability feedback and design reviews with the studio team.",
+        "• Designed UI for the DpoX website and product interfaces, ensuring a cohesive and engaging user experience.\n• Created marketing graphics for social media campaigns, enhancing brand visibility and engagement.\n• Collaborated with the development team to implement design solutions effectively.",
+    },
+    {
+      company: "Affina",
+      href: "https://affina.com.vn/",
+      badges: [],
+      location: "Ho Chi Minh City",
+      title: "UX/UI Designer",
+      logoUrl: "/affina.png",
+      start: "Dec 2025",
+      end: "Present",
+      description:
+        "• Led UX/UI transformation across website and product ecosystem. • Redesigned user flows and improved information hierarchy. • Built a scalable design system and optimized developer handoff. • Contributed to AI integration in creative and product workflows",
     },
     {
       company: "Zoan AI",
@@ -211,7 +223,7 @@ export const DATA = {
   ],
   projects: [
     {
-  title: "Affina – Brand & Product Transformation",
+  title: "Affina — UX/UI-Led Brand & Product Transformation",
   href: "/blog/affina",
   dates: "Mar 2026",
   active: true,
