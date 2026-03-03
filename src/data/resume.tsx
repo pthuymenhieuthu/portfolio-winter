@@ -243,7 +243,7 @@ export const DATA = {
       icon: <Icons.globe className="size-3" />,
     },
     {
-      type: "Brand LinkedIn",
+      type: "LinkedIn",
       href: "https://www.linkedin.com/company/affina-vn/",
       icon: <Icons.linkedin className="size-3" />,
     },
@@ -266,7 +266,12 @@ export const DATA = {
       ],
       links: [
         {
-          type: "Project Linkedin",
+      type: "Website",
+      href: "https://zoan.network/",
+      icon: <Icons.globe className="size-3" />,
+        },
+        {
+          type: "Linkedin",
           href: "https://www.linkedin.com/company/zoanai/posts/?feedView=all",
           icon: <Icons.linkedin className="size-3" />,
         },
