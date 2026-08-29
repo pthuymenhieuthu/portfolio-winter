@@ -249,7 +249,7 @@ export const DATA = {
     },
   ],
   image: "",
-  video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1772544692/Untitled_design_51_ssxezn.gif",
+  video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1788018154/RECOMMEND_AI_-_AFFINA_rpsfyb.gif",
 },
     {
       title: "Zoan AI – AI Workflow Management",
@@ -277,7 +277,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764167274/Timeline_1_4_h2grpq.gif",
+      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787913142/zoan_1_t2snqa.gif",
     },
     {
       title: "TrueProfit - Landing Page & Onboarding Illustrations",
@@ -423,57 +423,6 @@ export const DATA = {
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759915810/Untitled_design_43_ymcl3e.gif",
     },
     {
-      title: "Wedlify - Digital Wedding Invitation Platform",
-      href: "/blog/wedlify",
-      dates: "Mar 2025",
-      active: true,
-      description:
-        "Wedlify is an online platform for digital wedding invitations, planning, and budgeting.",
-      technologies: [
-        "UI Design",
-        "Web Design",
-        "Prototype",
-      ],
-      links: [
-        {
-          type: "Self-developed demo site",
-          href: "https://wedlify-client.vercel.app/",
-          icon: <Icons.link className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759319611/Untitled_design_38_jamjj1.gif",
-    },
-    {
-      title: "Innisfree Landing Page Redesign",
-      href: "/blog/innisfree",
-      dates: "Sep 2024",
-      active: true,
-      description:
-        "Leveraging my experience managing the innisfree.vn brand site, I led a redesign project to enhance interaction through prototypes and optimize the user flow.",
-      technologies: [
-        "Web Design",
-        "UI/UX Design",
-        "Prototype",
-        "E-commerce",
-        "Beauty"
-      ],
-      links: [
-        {
-          type: "Behance",
-          href: "https://www.behance.net/gallery/210091149/Innisfree-Beauty-Ecommerce-Page-Redesign",
-          icon: <Icons.behance className="size-3" />,
-        },
-        {
-          type: "Dribble",
-          href: "https://dribbble.com/shots/24978397-Innisfree-vn-Redesign-Landing-Page",
-          icon: <Icons.dribble className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518717/innisfree_u2qocu.gif",
-    },
-    {
       title: "ZanZan",
       href: "/blog/lollypop",
       dates: "Sep 2024",
@@ -524,33 +473,5 @@ export const DATA = {
 //   image: "",
 //   video: "/talkpiggy.gif",
 // },
-    {
-      title: "Accesstrade | Affiliate Marketing Business Website",
-      href: "https://www.behance.net/gallery/210240561/Accesstrade-Affiliate-Marketing-Business-Website",
-      dates: "Oct 2024",
-      active: true,
-      description:
-        "A mini-project on designing a corporate business website for affiliate marketing service",
-      technologies: [
-        "Web Design",
-        "UI Design",
-        "Corporate",
-        "Affiliate Marketing"
-      ],
-      links: [
-        {
-          type: "Behance",
-          href: "https://www.behance.net/gallery/210240561/Accesstrade-Affiliate-Marketing-Business-Website",
-          icon: <Icons.behance className="size-3" />,
-        },
-        {
-          type: "Dribble",
-          href: "https://dribbble.com/shots/25031962-Affiliate-Marketing-Corporate-Business-Website-Redesign",
-          icon: <Icons.dribble className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518716/accesstrade_t987ah.gif",
-    },
   ],
 } as const;

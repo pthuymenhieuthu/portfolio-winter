@@ -1,158 +1,68 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
+import { BringOnBoard } from "@/components/bring-on-board";
 import { ProjectCard } from "@/components/project-card";
-import { ResumeCard } from "@/components/resume-card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { DATA } from "@/data/resume";
+import Image from "next/image";
 import Link from "next/link";
-import Markdown from "react-markdown";
-import { IconCloudDemo } from "@/components/icon-cloud-demo";
 import GoogleTracking from "@/components/google-tracking";
 
 const BLUR_FADE_DELAY = 0.04;
 
 export default function Page() {
   return (
-    <div> {/* Ẩn chuột mặc định */}
+    <div className="bg-background">
       <GoogleTracking />
-      <main className="flex flex-col min-h-[100dvh] space-y-10">
-        <section id="hero">
-          <div className="mx-auto w-full max-w-2xl space-y-8">
-            <div className="gap-2 flex justify-between">
-              <div className="flex-col flex flex-1 space-y-1.5">
-                <BlurFadeText
-                  delay={BLUR_FADE_DELAY}
-                  className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none"
-                  yOffset={8}
-                  text={`Hi, I'm ${DATA.name.split(" ")[0]} ✨`}
-                />
-                <BlurFadeText
-                  className="max-w-[600px] md:text-xl"
-                  delay={BLUR_FADE_DELAY}
-                  text={DATA.description}
-                />
-              </div>
-              <BlurFade delay={BLUR_FADE_DELAY}>
-                <Avatar className="size-28 border">
-                  <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
-                  <AvatarFallback>{DATA.initials}</AvatarFallback>
-                </Avatar>
-              </BlurFade>
-            </div>
-          </div>
-        </section>
+      <main className="flex min-h-[100dvh] flex-col">
+        <section
+          id="hero"
+          className="relative isolate flex min-h-[820px] w-full items-center justify-center overflow-visible px-6 md:min-h-[940px] lg:min-h-[1000px]"
+        >
+          <Image
+            src="/assets/home/hero-blob-top.svg"
+            alt=""
+            width={1440}
+            height={422}
+            priority
+            className="pointer-events-none absolute left-1/2 top-0 -z-10 w-[max(1500px,112vw)] max-w-none -translate-x-1/2 select-none"
+          />
+          <Image
+            src="/assets/home/hero-blob-bottom.svg"
+            alt=""
+            width={1440}
+            height={702}
+            priority
+            className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1500px,112vw)] max-w-none -translate-x-1/2 select-none"
+          />
 
-        <section id="about">
-          <BlurFade delay={BLUR_FADE_DELAY * 3}>
-            <h2 className="text-xl font-bold">About</h2>
-          </BlurFade>
-          <BlurFade delay={BLUR_FADE_DELAY * 4}>
-            <Markdown className="prose max-w-full text-pretty font-sans text-sm text-muted-foreground dark:prose-invert">
-              {DATA.summary}
-            </Markdown>
-          </BlurFade>
-        </section>
-
-        <section id="work">
-          <div className="flex min-h-0 flex-col gap-y-3">
-            <BlurFade delay={BLUR_FADE_DELAY * 5}>
-              <h2 className="text-xl font-bold">Work Experience</h2>
+          <div className="mx-auto flex w-full max-w-[560px] -translate-y-10 flex-col items-center text-center sm:-translate-y-14 lg:-translate-y-16">
+            <BlurFadeText
+              delay={BLUR_FADE_DELAY}
+              className="font-[var(--font-heading)] text-[48px] font-bold leading-[0.95] tracking-normal text-[hsl(var(--ink))] sm:text-[64px]"
+              yOffset={8}
+              text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
+            />
+            <BlurFade delay={BLUR_FADE_DELAY * 2}>
+              <p className="mt-5 text-base leading-[1.35] text-[#171717]">
+                Proactive Product Designer
+                <br />
+                <span className="text-[hsl(var(--ink-soft))]">
+                  · Passionate about learning and growth
+                </span>
+              </p>
             </BlurFade>
-            {DATA.work.map((work, id) => (
-              <BlurFade
-                key={work.company}
-                delay={BLUR_FADE_DELAY * 6 + id * 0.05}
-              >
-                <ResumeCard
-                  key={work.company}
-                  logoUrl={work.logoUrl}
-                  altText={work.company}
-                  title={work.company}
-                  subtitle={work.title}
-                  href={work.href}
-                  badges={work.badges}
-                  period={`${work.start} - ${work.end ?? "Present"}`}
-                  description={work.description}
-                />
-              </BlurFade>
-            ))}
           </div>
         </section>
 
-        <section id="education">
-          <div className="flex min-h-0 flex-col gap-y-3">
-            <BlurFade delay={BLUR_FADE_DELAY * 7}>
-              <h2 className="text-xl font-bold">Education</h2>
-            </BlurFade>
-            {DATA.education.map((education, id) => (
-              <BlurFade
-                key={education.school}
-                delay={BLUR_FADE_DELAY * 8 + id * 0.05}
-              >
-                <ResumeCard
-                  key={education.school}
-                  href={education.href}
-                  logoUrl={education.logoUrl}
-                  altText={education.school}
-                  title={education.school}
-                  subtitle={education.degree}
-                  period={`${education.start} - ${education.end}`}
-                />
-              </BlurFade>
-            ))}
-          </div>
-        </section>
-
-        <section id="certifications">
-          <div className="flex min-h-0 flex-col gap-y-3">
-            <BlurFade delay={BLUR_FADE_DELAY * 5}>
-              <h2 className="text-xl font-bold">Certificates</h2>
-            </BlurFade>
-            {DATA.certifications.map((certifications, id) => (
-              <BlurFade
-                key={certifications.name}
-                delay={BLUR_FADE_DELAY * 6 + id * 0.05}
-              >
-                <ResumeCard
-                  key={certifications.name}
-                  href={certifications.href}
-                  logoUrl={certifications.logoUrl}
-                  altText={certifications.name}
-                  title={certifications.name}
-                  subtitle={certifications.org}
-                  period={`${certifications.start}`}
-                  description={certifications.description}
-                />
-              </BlurFade>
-            ))}
-          </div>
-        </section>
-
-        <section id="skills">
-          <div className="flex min-h-0 flex-col gap-y-3">
-            <BlurFade delay={BLUR_FADE_DELAY * 9}>
-              <h2 className="text-xl font-bold">Skills</h2>
-            </BlurFade>
-            <div className="flex flex-wrap gap-1">
-              {DATA.skills.map((skill, id) => (
-                <BlurFade key={skill} delay={BLUR_FADE_DELAY * 10 + id * 0.05}>
-                  <Badge key={skill}>{skill}</Badge>
-                </BlurFade>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="projects">
-          <div className="space-y-12 w-full py-12">
+        <section id="projects" className="relative z-10 pt-44 sm:pt-52 lg:pt-60">
+          <div className="w-full space-y-20 pb-20">
             <BlurFade delay={BLUR_FADE_DELAY * 11}>
               <div className="flex flex-col items-center justify-center space-y-4 text-center">
                 <div className="space-y-2">
                   <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
                     My Projects
                   </div>
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.08] tracking-normal sm:text-[44px] lg:text-[52px]">
                     Check out my latest work
                   </h2>
                   <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -192,32 +102,16 @@ export default function Page() {
           </div>
         </section>
 
-        <section id="icon-cloud-demo">
-          <div className="grid items-center justify-center gap-4 px-4 text-center md:px-6 w-full py-6">
-            <BlurFade delay={BLUR_FADE_DELAY * 16}>
-              <div className="space-y-3">
-                <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
-                  My Tech Stack
-                </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  A list of my skills and technologies used in projects.
-                </h2>
-              </div>
-              <div className="mt-12 flex justify-center col-span-full">
-                <IconCloudDemo />
-              </div>
-            </BlurFade>
-          </div>
-        </section>
+        <BringOnBoard />
 
-        <section id="contact">
-          <div className="grid items-center justify-center gap-4 px-4 text-center md:px-6 w-full py-6">
+        <section id="contact" className="pb-80 pt-20">
+          <div className="grid w-full items-center justify-center gap-4 px-4 text-center md:px-6">
             <BlurFade delay={BLUR_FADE_DELAY * 16}>
               <div className="space-y-3">
                 <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
                   Contact
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.08] tracking-normal sm:text-[44px] lg:text-[52px]">
                   Get in Touch
                 </h2>
                 <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">

@@ -1,19 +1,33 @@
-import Navbar from "@/components/navbar";
-import { ThemeProvider } from "@/components/theme-provider";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import { ScrollProgress } from "@/components/ui/scroll-progress"; 
-import { GridBackground } from "@/components/ui/grid-background";
 import LayoutClient from "./layout-client"; 
-import Script from "next/script"; // 👈 import Script
+import Script from "next/script";
 
-const fontSans = FontSans({
-  subsets: ["latin"],
+const fontSans = localFont({
+  src: "../../public/fonts/MomoTrustSans-VariableFont_wght.ttf",
   variable: "--font-sans",
+  weight: "100 900",
+  display: "swap",
+});
+
+const fontHeading = localFont({
+  src: [
+    {
+      path: "../../public/fonts/AlteHaasGroteskRegular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/AlteHaasGroteskBold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-heading",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -23,6 +37,11 @@ export const metadata: Metadata = {
     template: `%s | ${DATA.name}`,
   },
   description: DATA.description,
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
   openGraph: {
     title: DATA.name,
     description: DATA.description,
@@ -73,14 +92,11 @@ export default function RootLayout({
       <body
         className={cn(
           "relative min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          fontSans.variable,
+          fontHeading.variable
         )}
       >
-        <GridBackground className="absolute inset-0 -z-10 opacity-20 dark:opacity-10" />
-
-        <div className="max-w-2xl mx-auto py-12 sm:py-24 px-6">
-          <LayoutClient>{children}</LayoutClient>
-        </div>
+        <LayoutClient>{children}</LayoutClient>
       </body>
     </html>
   );

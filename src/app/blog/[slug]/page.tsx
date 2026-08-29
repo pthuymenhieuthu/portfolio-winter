@@ -5,12 +5,59 @@ import { Suspense } from "react";
 import { TableOfContents } from "@/components/table-of-contents";
 import ClientBlog from "@/components/client-blog";
 import { PasswordGate } from "@/components/password-gate";
+import { AffinaCaseStudy } from "@/components/affina-case-study";
+import { ZoanCaseStudy } from "@/components/zoan-case-study";
+import { TrueProfitCaseStudy } from "@/components/trueprofit-case-study";
+import { EdTechCaseStudy } from "@/components/edtech-case-study";
+import { UiDesignSeriesCaseStudy } from "@/components/ui-design-series-case-study";
+import {
+  CakeCaseStudy,
+  GraphicsCaseStudy,
+  PizzyCaseStudy,
+  ZanZanCaseStudy,
+} from "@/components/legacy-project-case-studies";
 
 export default async function BlogPage({
   params,
 }: {
   params: { slug: string };
 }) {
+  if (params.slug === "affina") {
+    return <AffinaCaseStudy />;
+  }
+
+  if (params.slug === "zoan") {
+    return <ZoanCaseStudy />;
+  }
+
+  if (params.slug === "trueprofit") {
+    return <TrueProfitCaseStudy />;
+  }
+
+  if (params.slug === "edtechapp") {
+    return <EdTechCaseStudy />;
+  }
+
+  if (params.slug === "chande") {
+    return <UiDesignSeriesCaseStudy />;
+  }
+
+  if (params.slug === "graphics") {
+    return <GraphicsCaseStudy />;
+  }
+
+  if (params.slug === "pizzy") {
+    return <PizzyCaseStudy />;
+  }
+
+  if (params.slug === "cake") {
+    return <CakeCaseStudy />;
+  }
+
+  if (params.slug === "lollypop") {
+    return <ZanZanCaseStudy />;
+  }
+
   const post = await getPost(params.slug);
 
   if (!post) {
