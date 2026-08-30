@@ -12,12 +12,12 @@ const BLUR_FADE_DELAY = 0.04;
 
 export default function Page() {
   return (
-    <div className="bg-[#08090a]">
+    <div className="w-full max-w-full overflow-x-hidden bg-[#08090a]">
       <GoogleTracking />
-      <main className="relative z-10 mb-[64dvh] flex min-h-[100dvh] flex-col overflow-hidden rounded-b-[40px] bg-background">
+      <main className="relative z-10 mb-[64dvh] flex min-h-[100dvh] w-full max-w-full flex-col overflow-hidden rounded-b-[40px] bg-background">
         <section
           id="hero"
-          className="relative isolate flex min-h-[820px] w-full items-center justify-center overflow-visible px-6 md:min-h-[940px] lg:min-h-[1000px]"
+          className="relative isolate flex min-h-[650px] w-full max-w-full items-center justify-center overflow-hidden px-6 sm:min-h-[760px] md:min-h-[900px] lg:min-h-[1000px]"
         >
           <Image
             src="/assets/home/hero-blob-top.svg"
@@ -36,7 +36,7 @@ export default function Page() {
             className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1500px,112vw)] max-w-none -translate-x-1/2 select-none"
           />
 
-          <div className="mx-auto flex w-full max-w-[560px] -translate-y-10 flex-col items-center text-center sm:-translate-y-14 lg:-translate-y-16">
+          <div className="mx-auto flex w-full max-w-[560px] -translate-y-6 flex-col items-center text-center sm:-translate-y-14 lg:-translate-y-16">
             <HeroTitleReveal
               className="font-[var(--font-heading)] text-[48px] font-bold leading-[0.95] tracking-normal text-[hsl(var(--ink))] sm:text-[64px]"
               delay={BLUR_FADE_DELAY}
@@ -54,15 +54,15 @@ export default function Page() {
           </div>
         </section>
 
-        <section id="projects" className="relative z-10 pt-44 sm:pt-52 lg:pt-60">
-          <div className="w-full space-y-20 pb-20">
+        <section id="projects" className="relative z-10 w-full max-w-full overflow-hidden pt-16 sm:pt-36 lg:pt-52">
+          <div className="w-full space-y-12 pb-20 sm:space-y-16 lg:space-y-20">
             <BlurFade delay={BLUR_FADE_DELAY * 11}>
-              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="flex w-full flex-col items-center justify-center space-y-4 px-4 text-center">
                 <div className="space-y-2">
                   <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
                     My Projects
                   </div>
-                  <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.08] tracking-normal sm:text-[44px] lg:text-[52px]">
+                  <h2 className="mx-auto max-w-[360px] font-[var(--font-heading)] text-[28px] font-bold leading-[1.08] tracking-normal sm:max-w-none sm:text-[44px] lg:text-[52px]">
                     Check out my latest work
                   </h2>
                   <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -79,7 +79,7 @@ export default function Page() {
                 </div>
               </div>
             </BlurFade>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-[800px] mx-auto">
+            <div className="mx-auto grid w-full max-w-[800px] grid-cols-1 gap-3 px-4 sm:grid-cols-2 sm:px-0">
               {DATA.projects.map((project, id) => (
                 <BlurFade
                   key={project.title}
