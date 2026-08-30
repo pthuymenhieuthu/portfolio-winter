@@ -248,7 +248,7 @@ function NextProjectCard({
 
 export function UiDesignSeriesCaseStudy() {
   return (
-    <main className="min-h-screen font-sans text-[#21120a]" style={{ backgroundColor: theme.page }}>
+    <main className="min-h-screen w-full max-w-full overflow-x-hidden font-sans text-[#21120a]" style={{ backgroundColor: theme.page }}>
       <SeriesStickyIndicator />
 
       <section
@@ -289,7 +289,7 @@ export function UiDesignSeriesCaseStudy() {
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 before:absolute before:inset-x-[-50vw] before:inset-y-0 before:-z-10 before:bg-[#fff8ec] sm:gap-32 sm:px-8 lg:gap-36 lg:py-36">
+      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 sm:gap-32 sm:px-8 lg:gap-36 lg:py-36">
         <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="series-context">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1.5 text-sm text-white">

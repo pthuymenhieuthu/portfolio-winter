@@ -386,12 +386,12 @@ function CaseShell({
 }) {
   return (
     <main
-      className="min-h-screen font-sans"
+      className="min-h-screen w-full max-w-full overflow-x-hidden font-sans"
       style={{ backgroundColor: theme.page, color: theme.ink }}
     >
       <CaseHero date={date} summary={summary} theme={theme} title={title} />
       <section
-        className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 before:absolute before:inset-x-[-50vw] before:inset-y-0 before:-z-10 sm:gap-32 sm:px-8 lg:gap-36 lg:py-36"
+        className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 sm:gap-32 sm:px-8 lg:gap-36 lg:py-36"
         style={{ backgroundColor: theme.page } as React.CSSProperties}
       >
         {children}
