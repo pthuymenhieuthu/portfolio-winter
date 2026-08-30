@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { GridBackground } from "@/components/ui/grid-background";
+import { PageTransition } from "@/components/page-transition";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { BackToTopButton } from "@/components/back-to-top-button";
@@ -47,6 +48,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
           </div>
           {isCaseStudy && <BackToTopButton />}
           <Navbar />
+          <PageTransition />
         </TooltipProvider>
       </ThemeProvider>
     </>

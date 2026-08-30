@@ -69,9 +69,9 @@ const themes = {
     page: "#fff3fb",
     ink: "#23072d",
     muted: "#76546f",
-    accent: "#e034a9",
+    accent: "#7451cf",
     hero:
-      "linear-gradient(135deg, #e034a9 0%, #991767 59%, #2f0373 100%)",
+      "linear-gradient(135deg, #7451cf 0%, #2f0374 100%)",
   },
 } satisfies Record<string, Theme>;
 

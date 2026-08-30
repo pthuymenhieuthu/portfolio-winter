@@ -643,7 +643,7 @@ export function AffinaCaseStudy() {
             </h2>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-[1fr_1fr]">
+          <div className="grid gap-6">
             <article className="border-t border-black/10 pt-6">
               <p className={styles.accentLabel}>
                 Business context
@@ -652,11 +652,11 @@ export function AffinaCaseStudy() {
                 Affina wanted to move more of its insurance journey online.
               </p>
             </article>
-            <article className="rounded-xl bg-[#08090a] p-6 text-white shadow-sm sm:p-8">
+            <article className="rounded-xl bg-[#08090a] p-6 text-white shadow-sm sm:p-8 lg:p-10">
               <p className="text-sm font-bold uppercase text-[#ffd360]">
                 Our solution
               </p>
-              <p className="mt-4 text-lg leading-8 text-white/85">
+              <p className="mt-4 max-w-[900px] text-lg leading-8 text-white/85 sm:text-xl sm:leading-9">
                 Instead of simply digitising the sales form, we built an
                 AI-assisted journey that narrowed choices, recommended suitable
                 plans, and made comparison easier.
@@ -690,7 +690,7 @@ export function AffinaCaseStudy() {
             </div>
           </div>
 
-          <div className="grid items-start gap-8 self-center py-2 lg:w-[min(1120px,calc(100vw-48px))] lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)]">
+          <div className="py-2">
             <div>
               <p className="text-sm font-bold uppercase leading-none tracking-normal text-[#08090a]">
                 What I worked on
@@ -700,7 +700,11 @@ export function AffinaCaseStudy() {
                 closely with Product, business stakeholders and developers to make
                 complex insurance flows clearer, smoother and easier to complete.
               </p>
-              <div className="mt-8 divide-y divide-black/10 border-t border-black/10">
+            </div>
+
+            <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)]">
+              <div className="min-w-0">
+                <div className="divide-y divide-black/10 border-t border-black/10">
                 {workedOnItems.map((item) => (
                   <div className="py-7 first:pt-7 sm:py-8" key={item.title}>
                     <h3 className="text-base font-bold leading-6 tracking-normal text-[#08090a]">
@@ -712,31 +716,33 @@ export function AffinaCaseStudy() {
                   </div>
                 ))}
               </div>
-            </div>
-            <div className="flex flex-col gap-5 lg:mt-[224px]">
-              <div className="overflow-hidden rounded-2xl bg-[#08090a] shadow-sm">
-                <ImageZoom>
-                  <Image
-                    src="/assets/affina/user-flow-image.png"
-                    alt="Affina insurance purchase user flow"
-                    width={1920}
-                    height={912}
-                    className="aspect-[1920/912] w-full rounded-2xl object-contain"
-                    sizes="(max-width: 1024px) 90vw, 560px"
-                  />
-                </ImageZoom>
               </div>
-              <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
-                <ImageZoom>
-                  <Image
-                    src="/assets/affina/gitlab-code-repo-blur.png"
-                    alt="Affina GitLab code repository overview"
-                    width={1792}
-                    height={920}
-                    className="aspect-[1792/920] w-full rounded-2xl object-contain"
-                    sizes="(max-width: 1024px) 90vw, 560px"
-                  />
-                </ImageZoom>
+
+              <div className="grid min-w-0 gap-5 lg:grid-rows-2">
+                <div className="min-h-0 overflow-hidden rounded-2xl bg-[#08090a] shadow-sm">
+                  <ImageZoom className="h-full w-full [&_[data-rmiz-content]]:h-full [&_[data-rmiz-content]]:w-full">
+                    <Image
+                      src="/assets/affina/user-flow-image.png"
+                      alt="Affina insurance purchase user flow"
+                      width={1920}
+                      height={912}
+                      className="aspect-[1920/912] w-full rounded-2xl object-cover object-top lg:h-full"
+                      sizes="(max-width: 1024px) 90vw, 560px"
+                    />
+                  </ImageZoom>
+                </div>
+                <div className="min-h-0 overflow-hidden rounded-2xl bg-white shadow-sm">
+                  <ImageZoom className="h-full w-full [&_[data-rmiz-content]]:h-full [&_[data-rmiz-content]]:w-full">
+                    <Image
+                      src="/assets/affina/gitlab-code-repo-blur.png"
+                      alt="Affina GitLab code repository overview"
+                      width={1792}
+                      height={920}
+                      className="aspect-[1792/920] w-full rounded-2xl object-cover object-top lg:h-full"
+                      sizes="(max-width: 1024px) 90vw, 560px"
+                    />
+                  </ImageZoom>
+                </div>
               </div>
             </div>
           </div>
