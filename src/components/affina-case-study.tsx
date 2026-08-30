@@ -690,7 +690,7 @@ export function AffinaCaseStudy() {
             </div>
           </div>
 
-          <div className="grid items-start gap-8 py-2 lg:grid-cols-2">
+          <div className="grid items-start gap-8 self-center py-2 lg:w-[min(1120px,calc(100vw-48px))] lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)]">
             <div>
               <p className="text-sm font-bold uppercase leading-none tracking-normal text-[#08090a]">
                 What I worked on
@@ -713,17 +713,31 @@ export function AffinaCaseStudy() {
                 ))}
               </div>
             </div>
-            <div className="overflow-hidden rounded-2xl bg-[#08090a] shadow-sm lg:mt-[224px]">
-              <ImageZoom>
-                <Image
-                  src="/assets/affina/user-flow-image.png"
-                  alt="Affina insurance purchase user flow"
-                  width={1920}
-                  height={912}
-                  className="aspect-[1920/912] w-full rounded-2xl object-contain"
-                  sizes="(max-width: 1024px) 90vw, 420px"
-                />
-              </ImageZoom>
+            <div className="flex flex-col gap-5 lg:mt-[224px]">
+              <div className="overflow-hidden rounded-2xl bg-[#08090a] shadow-sm">
+                <ImageZoom>
+                  <Image
+                    src="/assets/affina/user-flow-image.png"
+                    alt="Affina insurance purchase user flow"
+                    width={1920}
+                    height={912}
+                    className="aspect-[1920/912] w-full rounded-2xl object-contain"
+                    sizes="(max-width: 1024px) 90vw, 560px"
+                  />
+                </ImageZoom>
+              </div>
+              <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
+                <ImageZoom>
+                  <Image
+                    src="/assets/affina/gitlab-code-repo-blur.png"
+                    alt="Affina GitLab code repository overview"
+                    width={1792}
+                    height={920}
+                    className="aspect-[1792/920] w-full rounded-2xl object-contain"
+                    sizes="(max-width: 1024px) 90vw, 560px"
+                  />
+                </ImageZoom>
+              </div>
             </div>
           </div>
 

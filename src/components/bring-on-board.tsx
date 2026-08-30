@@ -87,7 +87,7 @@ export function BringOnBoard() {
         >
           <motion.div
             style={{ x: planeX, y: planeY }}
-            className="absolute bottom-[24%] left-[-94%] w-[712px] sm:bottom-[17%] sm:left-[-42%] sm:w-[832px] lg:bottom-[18%] lg:left-[-17%] lg:w-[928px] xl:left-[-10%] xl:w-[992px]"
+            className="absolute bottom-[24%] left-[-94%] z-10 w-[712px] sm:bottom-[17%] sm:left-[-42%] sm:w-[832px] lg:bottom-[18%] lg:left-[-17%] lg:w-[928px] xl:left-[-10%] xl:w-[992px]"
           >
             <Image
               src="/assets/home/bring-plane.png"
@@ -95,6 +95,7 @@ export function BringOnBoard() {
               width={2080}
               height={716}
               priority
+              unoptimized
               className="w-full max-w-none select-none object-contain"
               sizes="(max-width: 768px) 712px, 928px"
             />
@@ -102,7 +103,7 @@ export function BringOnBoard() {
 
           <motion.div
             style={{ x: itemsX }}
-            className="absolute inset-x-0 bottom-[10%] h-[280px] sm:bottom-[6%] sm:h-[390px] lg:bottom-[4%] lg:h-[460px]"
+            className="absolute inset-x-0 bottom-[10%] z-20 h-[280px] sm:bottom-[6%] sm:h-[390px] lg:bottom-[4%] lg:h-[460px]"
           >
             {smallAssets.map((asset) => (
               <Image
@@ -111,6 +112,8 @@ export function BringOnBoard() {
                 alt={asset.alt}
                 width={asset.width}
                 height={asset.height}
+                priority
+                unoptimized
                 className={`absolute max-w-none select-none object-contain drop-shadow-[0_24px_50px_rgba(8,9,10,0.10)] ${asset.className}`}
                 sizes="(max-width: 768px) 36vw, 220px"
               />
