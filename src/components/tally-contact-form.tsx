@@ -35,16 +35,18 @@ export function TallyContactForm() {
 
   return (
     <>
-      <iframe
-        data-tally-src={embedUrl}
-        height="284"
-        loading="lazy"
-        scrolling="no"
-        title="Contact form"
-        width="100%"
-        className="mx-auto w-full max-w-[600px] overflow-hidden bg-transparent"
-        style={{ border: 0, margin: 0 }}
-      />
+      <div className="mx-auto h-[252px] w-full max-w-[600px] overflow-visible sm:h-[284px]">
+        <iframe
+          data-tally-src={embedUrl}
+          height="284"
+          loading="lazy"
+          scrolling="no"
+          title="Contact form"
+          width="100%"
+          className="mx-auto w-[112%] max-w-none origin-top -translate-x-[5.35%] scale-[0.89] overflow-hidden bg-transparent sm:w-full sm:translate-x-0 sm:scale-100"
+          style={{ border: 0, margin: 0 }}
+        />
+      </div>
       <Script
         id="tally-embed"
         src="https://tally.so/widgets/embed.js"

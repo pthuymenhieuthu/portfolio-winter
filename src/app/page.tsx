@@ -109,7 +109,7 @@ export default function Page() {
         id="contact"
         className="fixed inset-x-0 bottom-0 z-0 flex h-[100svh] min-h-[760px] items-center justify-center overflow-hidden bg-[#08090a] px-5 pb-[calc(8rem+env(safe-area-inset-bottom))] pt-14 text-center text-white sm:h-[64dvh] sm:min-h-[560px] sm:px-8 sm:pb-40 sm:pt-[72px]"
       >
-        <div className="mx-auto grid w-full max-w-[1080px] -translate-y-3 items-center justify-items-center gap-4 text-center sm:translate-y-14 sm:gap-6 md:grid-cols-2 md:gap-8 md:text-left lg:translate-y-12 lg:gap-10">
+        <div className="mx-auto grid w-full max-w-[1080px] -translate-y-10 items-center justify-items-center gap-3 text-center sm:translate-y-14 sm:gap-6 md:grid-cols-2 md:gap-8 md:text-left lg:translate-y-12 lg:gap-10">
           <div className="flex w-full max-w-[520px] flex-col items-center md:items-start">
             <div className="inline-block rounded-lg bg-white px-3 py-1 text-sm font-medium text-[#08090a]">
               Contact
