@@ -253,7 +253,7 @@ export function UiDesignSeriesCaseStudy() {
 
       <section
         id="series-overview"
-        className="relative isolate flex min-h-[760px] items-center justify-center overflow-visible bg-[radial-gradient(circle_at_18%_18%,#ff6313_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#ebdfaf_0%,transparent_30%),linear-gradient(135deg,#21120a_0%,#ff6313_52%,#ebdfaf_100%)] px-6 text-center text-white sm:min-h-[800px]"
+        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_18%_18%,#ff6313_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#ebdfaf_0%,transparent_30%),linear-gradient(135deg,#21120a_0%,#ff6313_52%,#ebdfaf_100%)] px-6 text-center text-white sm:min-h-[800px]"
       >
         <Image
           src="/assets/ui-design-series/series-hero-blob-top.svg"

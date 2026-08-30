@@ -525,7 +525,7 @@ export function AffinaCaseStudy() {
 
       <section
         id="affina-overview"
-        className="relative isolate flex min-h-[760px] items-center justify-center overflow-visible bg-[radial-gradient(circle_at_18%_18%,#ffd360_0%,transparent_28%),radial-gradient(circle_at_82%_24%,#ff51ff_0%,transparent_30%),linear-gradient(135deg,#ff6831_0%,#ff51ff_48%,#7a35ff_100%)] px-6 text-center text-white sm:min-h-[800px]"
+        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_18%_18%,#ffd360_0%,transparent_28%),radial-gradient(circle_at_82%_24%,#ff51ff_0%,transparent_30%),linear-gradient(135deg,#ff6831_0%,#ff51ff_48%,#7a35ff_100%)] px-6 text-center text-white sm:min-h-[800px]"
       >
         <Image
           src="/assets/affina/affina-hero-blob-top.svg"

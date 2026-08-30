@@ -237,7 +237,7 @@ export function TrueProfitCaseStudy() {
 
       <section
         id="trueprofit-overview"
-        className="relative isolate flex min-h-[760px] items-center justify-center overflow-visible bg-[radial-gradient(circle_at_18%_18%,#0f8f5b_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#2dd4bf_0%,transparent_30%),linear-gradient(135deg,#071b14_0%,#15803d_50%,#34d399_100%)] px-6 text-center text-white sm:min-h-[800px]"
+        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_18%_18%,#0f8f5b_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#2dd4bf_0%,transparent_30%),linear-gradient(135deg,#071b14_0%,#15803d_50%,#34d399_100%)] px-6 text-center text-white sm:min-h-[800px]"
       >
         <Image
           src="/assets/trueprofit/trueprofit-hero-blob-top.svg"

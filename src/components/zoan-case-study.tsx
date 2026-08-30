@@ -246,7 +246,7 @@ export function ZoanCaseStudy() {
 
       <section
         id="zoan-overview"
-        className="relative isolate flex min-h-[760px] items-center justify-center overflow-visible bg-[radial-gradient(circle_at_18%_18%,#ffffff_0%,transparent_30%),radial-gradient(circle_at_84%_18%,#15CABE_0%,transparent_32%),linear-gradient(135deg,#ffffff_0%,#B0F1ED_58%,#15CABE_100%)] px-6 text-center text-[#07111f] sm:min-h-[800px]"
+        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_18%_18%,#ffffff_0%,transparent_30%),radial-gradient(circle_at_84%_18%,#15CABE_0%,transparent_32%),linear-gradient(135deg,#ffffff_0%,#B0F1ED_58%,#15CABE_100%)] px-6 text-center text-[#07111f] sm:min-h-[800px]"
       >
         <Image
           src="/assets/zoan/zoan-hero-blob-top.svg"

@@ -123,7 +123,7 @@ function CaseHero({
 }) {
   return (
     <section
-      className="relative isolate flex min-h-[760px] items-center justify-center overflow-visible px-6 text-center text-white sm:min-h-[800px]"
+      className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden px-6 text-center text-white sm:min-h-[800px]"
       style={{ background: theme.hero }}
     >
       <BlobCutout fill={theme.page} position="top" />

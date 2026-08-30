@@ -38,7 +38,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
           )}
           <div
             className={cn(
-              "relative min-h-[100dvh]",
+              "relative min-h-[100dvh] max-w-full overflow-x-hidden",
               isFullBleed
                 ? "w-full"
                 : "mx-auto w-full max-w-2xl px-6 py-12 sm:py-24"

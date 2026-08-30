@@ -107,9 +107,9 @@ export default function Page() {
       </main>
       <footer
         id="contact"
-        className="fixed inset-x-0 bottom-0 z-0 flex h-[64dvh] min-h-[540px] items-center justify-center overflow-hidden bg-[#08090a] px-5 pb-28 pt-10 text-center text-white sm:px-8 sm:pb-32 sm:pt-12"
+        className="fixed inset-x-0 bottom-0 z-0 flex h-[64dvh] min-h-[560px] items-center justify-center overflow-hidden bg-[#08090a] px-5 pb-36 pt-16 text-center text-white sm:px-8 sm:pb-40 sm:pt-[72px]"
       >
-        <div className="mx-auto grid w-full max-w-[1080px] translate-y-10 items-center justify-items-center gap-6 text-center sm:translate-y-12 md:grid-cols-2 md:gap-8 md:text-left lg:translate-y-14 lg:gap-10">
+        <div className="mx-auto grid w-full max-w-[1080px] translate-y-16 items-center justify-items-center gap-6 text-center sm:translate-y-14 md:grid-cols-2 md:gap-8 md:text-left lg:translate-y-12 lg:gap-10">
           <div className="flex w-full max-w-[520px] flex-col items-center md:items-start">
             <div className="inline-block rounded-lg bg-white px-3 py-1 text-sm font-medium text-[#08090a]">
               Contact
