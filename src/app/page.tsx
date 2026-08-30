@@ -25,7 +25,7 @@ export default function Page() {
             width={1440}
             height={422}
             priority
-            className="pointer-events-none absolute left-1/2 top-0 -z-10 w-[max(1500px,112vw)] max-w-none -translate-x-1/2 select-none"
+            className="pointer-events-none absolute left-1/2 top-[-120px] -z-10 w-[max(1500px,112vw)] max-w-none -translate-x-1/2 select-none sm:top-[-60px] lg:top-0"
           />
           <Image
             src="/assets/home/hero-blob-bottom.svg"
@@ -33,7 +33,7 @@ export default function Page() {
             width={1440}
             height={702}
             priority
-            className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1500px,112vw)] max-w-none -translate-x-1/2 select-none"
+            className="pointer-events-none absolute bottom-[-260px] left-1/2 -z-10 w-[max(1500px,112vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-190px] lg:bottom-[-120px]"
           />
 
           <div className="mx-auto flex w-full max-w-[560px] -translate-y-6 flex-col items-center text-center sm:-translate-y-14 lg:-translate-y-16">
