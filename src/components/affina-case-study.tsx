@@ -719,29 +719,23 @@ export function AffinaCaseStudy() {
               </div>
 
               <div className="grid min-w-0 gap-5 lg:grid-rows-2">
-                <div className="min-h-0 overflow-hidden rounded-2xl bg-[#08090a] shadow-sm">
-                  <ImageZoom className="h-full w-full [&_[data-rmiz-content]]:h-full [&_[data-rmiz-content]]:w-full">
-                    <Image
-                      src="/assets/affina/user-flow-image.png"
-                      alt="Affina insurance purchase user flow"
-                      width={1920}
-                      height={912}
-                      className="aspect-[1920/912] w-full rounded-2xl object-cover object-top lg:h-full"
-                      sizes="(max-width: 1024px) 90vw, 560px"
-                    />
-                  </ImageZoom>
+                <div className="relative aspect-[1920/912] min-h-0 overflow-hidden rounded-2xl shadow-sm lg:aspect-auto lg:h-full">
+                  <Image
+                    src="/assets/affina/user-flow-image.png"
+                    alt="Affina insurance purchase user flow"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1024px) 90vw, 560px"
+                  />
                 </div>
-                <div className="min-h-0 overflow-hidden rounded-2xl bg-white shadow-sm">
-                  <ImageZoom className="h-full w-full [&_[data-rmiz-content]]:h-full [&_[data-rmiz-content]]:w-full">
-                    <Image
-                      src="/assets/affina/gitlab-code-repo-blur.png"
-                      alt="Affina GitLab code repository overview"
-                      width={1792}
-                      height={920}
-                      className="aspect-[1792/920] w-full rounded-2xl object-cover object-top lg:h-full"
-                      sizes="(max-width: 1024px) 90vw, 560px"
-                    />
-                  </ImageZoom>
+                <div className="relative aspect-[1792/920] min-h-0 overflow-hidden rounded-2xl shadow-sm lg:aspect-auto lg:h-full">
+                  <Image
+                    src="/assets/affina/gitlab-code-repo-blur.png"
+                    alt="Affina GitLab code repository overview"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1024px) 90vw, 560px"
+                  />
                 </div>
               </div>
             </div>
