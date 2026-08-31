@@ -4,6 +4,7 @@ import { BringOnBoard } from "@/components/bring-on-board";
 import { ProjectCard } from "@/components/project-card";
 import { TallyContactForm } from "@/components/tally-contact-form";
 import { DATA } from "@/data/resume";
+import { FileText } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import GoogleTracking from "@/components/google-tracking";
@@ -25,7 +26,7 @@ export default function Page() {
             width={1440}
             height={422}
             priority
-            className="pointer-events-none absolute left-1/2 top-[-120px] -z-10 w-[max(1500px,112vw)] max-w-none -translate-x-1/2 select-none sm:top-[-60px] lg:top-0"
+            className="pointer-events-none absolute left-1/2 top-[-180px] z-0 w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:top-[-132px] md:top-[-104px] lg:top-[-72px]"
           />
           <Image
             src="/assets/home/hero-blob-bottom.svg"
@@ -33,23 +34,39 @@ export default function Page() {
             width={1440}
             height={702}
             priority
-            className="pointer-events-none absolute bottom-[-260px] left-1/2 -z-10 w-[max(1500px,112vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-190px] lg:bottom-[-120px]"
+            className="pointer-events-none absolute bottom-[-230px] left-1/2 z-0 w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-220px] md:bottom-[-210px] lg:bottom-[-190px]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-28 bg-gradient-to-b from-transparent via-background/55 to-background"
           />
 
-          <div className="mx-auto flex w-full max-w-[560px] -translate-y-6 flex-col items-center text-center sm:-translate-y-14 lg:-translate-y-16">
+          <div className="relative z-10 mx-auto flex w-full max-w-[560px] -translate-y-6 flex-col items-center text-center sm:-translate-y-14 lg:-translate-y-16">
             <HeroTitleReveal
-              className="font-[var(--font-heading)] text-[48px] font-bold leading-[0.95] tracking-normal text-[hsl(var(--ink))] sm:text-[64px]"
+              className="max-w-full font-[var(--font-heading)] text-[34px] font-bold leading-[0.95] tracking-normal text-[hsl(var(--ink))] min-[390px]:text-[36px] sm:text-[64px]"
               delay={BLUR_FADE_DELAY}
               text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
             />
             <BlurFade delay={1.28}>
-              <p className="mt-5 text-base leading-[1.35] text-[#171717]">
-                Proactive Product Designer
-                <br />
-                <span className="text-[hsl(var(--ink-soft))]">
-                  · Passionate about learning and growth
-                </span>
-              </p>
+              <div className="mt-5 flex w-full flex-col items-center gap-5">
+                <p className="mx-auto max-w-[290px] text-[15px] leading-[1.35] text-[#171717] min-[390px]:max-w-[320px] min-[390px]:text-base">
+                  Proactive Product Designer
+                  <br />
+                  <span className="text-[hsl(var(--ink-soft))]">
+                    · Passionate about learning
+                    <br className="sm:hidden" /> and growth
+                  </span>
+                </p>
+                <Link
+                  href={DATA.contact.social.LinkedIn.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-[#171717]/12 bg-white/80 px-5 text-sm font-medium text-[#171717] shadow-[0_12px_30px_rgba(23,23,23,0.08)] backdrop-blur transition hover:-translate-y-0.5 hover:bg-white"
+                >
+                  <FileText className="size-4" aria-hidden="true" />
+                  Read my CV
+                </Link>
+              </div>
             </BlurFade>
           </div>
         </section>
@@ -62,7 +79,7 @@ export default function Page() {
                   <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
                     My Projects
                   </div>
-                  <h2 className="mx-auto max-w-[360px] font-[var(--font-heading)] text-[28px] font-bold leading-[1.08] tracking-normal sm:max-w-none sm:text-[44px] lg:text-[52px]">
+                  <h2 className="mx-auto max-w-[300px] font-[var(--font-heading)] text-[26px] font-bold leading-[1.08] tracking-normal sm:max-w-none sm:text-[44px] lg:text-[52px]">
                     Check out my latest work
                   </h2>
                   <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">

@@ -245,7 +245,7 @@ export function TrueProfitCaseStudy() {
           width={1440}
           height={422}
           priority
-          className="pointer-events-none absolute left-1/2 top-[-80px] -z-10 w-[1200px] max-w-none -translate-x-1/2 sm:w-[1640px]"
+          className="pointer-events-none absolute left-1/2 top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none"
         />
         <Image
           src="/assets/trueprofit/trueprofit-hero-blob-bottom.svg"
@@ -253,18 +253,19 @@ export function TrueProfitCaseStudy() {
           width={1440}
           height={702}
           priority
-          className="pointer-events-none absolute bottom-[-220px] left-1/2 -z-10 w-[1200px] max-w-none -translate-x-1/2 sm:bottom-[-260px] sm:w-[1640px]"
+          className="pointer-events-none absolute bottom-[-360px] left-1/2 -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-420px]"
         />
 
-        <div className="relative z-10 mx-auto flex max-w-[560px] flex-col items-center gap-5">
+        <div className="relative z-10 mx-auto flex w-full max-w-[560px] flex-col items-center gap-5">
           <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm backdrop-blur">
             E-commerce Finance · Jan 2025
           </p>
-          <h1 className="font-[var(--font-heading)] text-[48px] font-bold leading-[1.05] tracking-normal sm:text-[64px]">
+          <h1 className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]">
             TrueProfit
           </h1>
-          <p className="text-base leading-[1.35] text-white">
-            Landing Page & Onboarding Illustrations
+          <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-white">
+            Landing Page & Onboarding
+            <br className="sm:hidden" /> Illustrations
             <br />
             <span className="text-white/75">
               · Visual storytelling for product clarity

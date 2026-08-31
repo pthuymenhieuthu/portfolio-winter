@@ -10,7 +10,7 @@ type TallyWindow = Window & {
 };
 
 const embedUrl =
-  "https://tally.so/embed/QKQ281?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1";
+  "https://tally.so/embed/QKQ281?alignLeft=1&hideTitle=1&hideFooter=1&transparentBackground=1&dynamicHeight=1";
 
 export function TallyContactForm() {
   const loadTally = useCallback(() => {
@@ -35,7 +35,7 @@ export function TallyContactForm() {
 
   return (
     <>
-      <div className="mx-auto h-[252px] w-full max-w-[600px] overflow-visible sm:h-[284px]">
+      <div className="mx-auto h-[300px] w-full max-w-[600px] overflow-hidden sm:h-[284px]">
         <iframe
           data-tally-src={embedUrl}
           height="284"
@@ -43,7 +43,7 @@ export function TallyContactForm() {
           scrolling="no"
           title="Contact form"
           width="100%"
-          className="mx-auto w-[112%] max-w-none origin-top -translate-x-[5.35%] scale-[0.89] overflow-hidden bg-transparent sm:w-full sm:translate-x-0 sm:scale-100"
+          className="block h-full w-full overflow-hidden bg-transparent"
           style={{ border: 0, margin: 0 }}
         />
       </div>

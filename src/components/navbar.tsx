@@ -105,7 +105,7 @@ export default function Navbar() {
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 mx-auto mb-4 flex h-14 origin-bottom">
-      <div className="fixed inset-x-0 bottom-0 h-20 w-full bg-background/80 backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_top,black,transparent)] dark:bg-background/80" />
+      <div className="fixed inset-x-0 bottom-0 h-32 w-full bg-background/70 backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_top,black_0%,rgba(0,0,0,.9)_26%,rgba(0,0,0,.55)_56%,rgba(0,0,0,.22)_78%,transparent_100%)] [mask-image:linear-gradient(to_top,black_0%,rgba(0,0,0,.9)_26%,rgba(0,0,0,.55)_56%,rgba(0,0,0,.22)_78%,transparent_100%)] dark:bg-background/70" />
       <motion.nav
         animate={{ width: isExpanded ? 258 : 48 }}
         className="pointer-events-auto relative z-50 mx-auto flex h-12 min-h-0 items-center justify-center overflow-hidden rounded-full border border-[#e5e5e5] bg-white/90 px-1 py-1 shadow-[0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)] backdrop-blur-md transform-gpu dark:border-white/10 dark:bg-background/90"
