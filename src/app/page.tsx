@@ -15,7 +15,7 @@ export default function Page() {
   return (
     <div className="w-full max-w-full overflow-x-hidden bg-[#08090a]">
       <GoogleTracking />
-      <main className="relative z-10 mb-[100svh] flex min-h-[100dvh] w-full max-w-full flex-col overflow-hidden rounded-b-[40px] bg-background sm:mb-[64dvh]">
+      <main className="relative z-10 flex min-h-[100dvh] w-full max-w-full flex-col overflow-hidden rounded-b-[32px] bg-background md:mb-[64dvh] md:rounded-b-[40px]">
         <section
           id="hero"
           className="relative isolate flex min-h-[650px] w-full max-w-full items-center justify-center overflow-hidden px-6 sm:min-h-[760px] md:min-h-[900px] lg:min-h-[1000px]"
@@ -26,7 +26,7 @@ export default function Page() {
             width={1440}
             height={422}
             priority
-            className="pointer-events-none absolute left-1/2 top-[-180px] z-0 w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:top-[-132px] md:top-[-104px] lg:top-[-72px]"
+            className="pointer-events-none absolute left-1/2 top-[-96px] z-0 w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:top-[-132px] md:top-[-104px] lg:top-[-72px]"
           />
           <Image
             src="/assets/home/hero-blob-bottom.svg"
@@ -124,9 +124,9 @@ export default function Page() {
       </main>
       <footer
         id="contact"
-        className="fixed inset-x-0 bottom-0 z-0 flex h-[100svh] min-h-[760px] items-center justify-center overflow-hidden bg-[#08090a] px-5 pb-[calc(8rem+env(safe-area-inset-bottom))] pt-14 text-center text-white sm:h-[64dvh] sm:min-h-[560px] sm:px-8 sm:pb-40 sm:pt-[72px]"
+        className="relative z-10 flex min-h-[720px] items-center justify-center overflow-hidden bg-[#08090a] px-5 pb-[calc(8rem+env(safe-area-inset-bottom))] pt-20 text-center text-white md:fixed md:inset-x-0 md:bottom-0 md:z-0 md:h-[64dvh] md:min-h-[560px] md:px-8 md:pb-40 md:pt-[72px]"
       >
-        <div className="mx-auto grid w-full max-w-[1080px] -translate-y-10 items-center justify-items-center gap-3 text-center sm:translate-y-14 sm:gap-6 md:grid-cols-2 md:gap-8 md:text-left lg:translate-y-12 lg:gap-10">
+        <div className="mx-auto grid w-full max-w-[1080px] items-center justify-items-center gap-4 text-center md:translate-y-14 md:grid-cols-2 md:gap-8 md:text-left lg:translate-y-12 lg:gap-10">
           <div className="flex w-full max-w-[520px] flex-col items-center md:items-start">
             <div className="inline-block rounded-lg bg-white px-3 py-1 text-sm font-medium text-[#08090a]">
               Contact

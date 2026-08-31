@@ -27,6 +27,21 @@ const columns = [
   },
 ] as const;
 
+const mobileColumns = [
+  {
+    color: "#BE89FF",
+    delay: 0.16,
+  },
+  {
+    color: "#FFE1FE",
+    delay: 0,
+  },
+  {
+    color: "#BE89FF",
+    delay: 0.16,
+  },
+] as const;
+
 function getInternalHref(anchor: HTMLAnchorElement) {
   if (
     anchor.target === "_blank" ||
@@ -152,26 +167,31 @@ export function PageTransition() {
         initial={{ scaleX: 0, opacity: 0 }}
         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
       />
-      <div className="absolute inset-x-[-2vw] bottom-0 flex h-[116dvh]">
-        {columns.map((column, index) => (
-          <motion.div
-            className="relative -mx-[0.3vw] h-full flex-1 origin-bottom overflow-hidden"
-            key={`${column.color}-${index}`}
-            animate={{ y: phase === "cover" ? "0%" : "-112%" }}
-            initial={{ y: "100%" }}
-            transition={{
-              delay: phase === "cover" ? column.delay : 0.1 - Math.min(column.delay, 0.1),
-              duration: phase === "cover" ? 0.68 : 0.74,
-              ease: phase === "cover" ? [0.76, 0, 0.24, 1] : [0.22, 1, 0.36, 1],
-            }}
-          >
-            <div
-              className="absolute inset-0 h-full w-full"
-              style={{ backgroundColor: column.color }}
-            />
-          </motion.div>
-        ))}
-      </div>
+      {[
+        { className: "flex sm:hidden", items: mobileColumns },
+        { className: "hidden sm:flex", items: columns },
+      ].map(({ className, items }) => (
+        <div className={`absolute inset-x-[-2vw] bottom-0 h-[116dvh] ${className}`} key={className}>
+          {items.map((column, index) => (
+            <motion.div
+              className="relative -mx-[0.3vw] h-full flex-1 origin-bottom overflow-hidden"
+              key={`${column.color}-${index}`}
+              animate={{ y: phase === "cover" ? "0%" : "-112%" }}
+              initial={{ y: "100%" }}
+              transition={{
+                delay: phase === "cover" ? column.delay : 0.1 - Math.min(column.delay, 0.1),
+                duration: phase === "cover" ? 0.68 : 0.74,
+                ease: phase === "cover" ? [0.76, 0, 0.24, 1] : [0.22, 1, 0.36, 1],
+              }}
+            >
+              <div
+                className="absolute inset-0 h-full w-full"
+                style={{ backgroundColor: column.color }}
+              />
+            </motion.div>
+          ))}
+        </div>
+      ))}
       <motion.div
         animate={{ opacity: phase === "cover" ? 1 : 0 }}
         className="absolute inset-x-[-8vw] bottom-[-8vh] h-[55vh] bg-[#d4b1ff]/40 blur-[48px]"

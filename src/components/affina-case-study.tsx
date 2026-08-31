@@ -1038,13 +1038,6 @@ export function AffinaCaseStudy() {
         id="affina-contact"
         className="relative overflow-hidden px-5 pb-80 pt-32 text-center sm:pb-96 sm:pt-36"
       >
-        <Image
-          src="/assets/affina/affina-hero-blob-bottom.svg"
-          alt=""
-          width={1440}
-          height={702}
-          className="pointer-events-none absolute bottom-[-260px] left-1/2 w-[1200px] max-w-none -translate-x-1/2 opacity-80"
-        />
         <div className="relative mx-auto max-w-[560px]">
           <span className={cn("inline-flex", styles.sectionPill)}>
             Contact

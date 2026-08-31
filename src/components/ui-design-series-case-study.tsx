@@ -443,7 +443,6 @@ export function UiDesignSeriesCaseStudy() {
       </section>
 
       <section id="series-contact" className="relative overflow-hidden px-5 pb-80 pt-32 text-center sm:pb-96 sm:pt-36">
-        <div className="pointer-events-none absolute bottom-[-260px] left-1/2 h-[420px] w-[1200px] max-w-none -translate-x-1/2 rounded-[100%] bg-white/80" />
         <div className="relative mx-auto max-w-[560px]">
           <span className="inline-flex rounded-lg bg-[#21120a] px-3 py-1.5 text-sm text-white">
             Contact
