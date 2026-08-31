@@ -30,7 +30,7 @@ const columns = [
 const mobileColumns = [
   {
     color: "#BE89FF",
-    delay: 0.16,
+    delay: 0.08,
   },
   {
     color: "#FFE1FE",
@@ -38,9 +38,20 @@ const mobileColumns = [
   },
   {
     color: "#BE89FF",
-    delay: 0.16,
+    delay: 0.08,
   },
 ] as const;
+
+function getTransitionTiming() {
+  const isMobile = window.matchMedia("(max-width: 639px)").matches;
+
+  return {
+    coverDuration: isMobile ? 0.48 : 0.68,
+    revealDuration: isMobile ? 0.56 : 0.74,
+    routeDelay: isMobile ? 430 : 760,
+    cleanupDelay: isMobile ? 720 : 980,
+  };
+}
 
 function getInternalHref(anchor: HTMLAnchorElement) {
   if (
@@ -122,12 +133,14 @@ export function PageTransition() {
 
       event.preventDefault();
       pendingPath.current = new URL(href, window.location.origin).pathname;
+      router.prefetch(href);
       setPhase("cover");
       setIsActive(true);
 
+      const timing = getTransitionTiming();
       routeTimer.current = window.setTimeout(() => {
         router.push(href);
-      }, 880);
+      }, timing.routeDelay);
     }
 
     document.addEventListener("click", handleClick, true);
@@ -141,10 +154,11 @@ export function PageTransition() {
 
     const frame = window.requestAnimationFrame(() => {
       setPhase("reveal");
+      const timing = getTransitionTiming();
       cleanupTimer.current = window.setTimeout(() => {
         pendingPath.current = null;
         setIsActive(false);
-      }, 980);
+      }, timing.cleanupDelay);
     });
 
     return () => window.cancelAnimationFrame(frame);
@@ -180,7 +194,14 @@ export function PageTransition() {
               initial={{ y: "100%" }}
               transition={{
                 delay: phase === "cover" ? column.delay : 0.1 - Math.min(column.delay, 0.1),
-                duration: phase === "cover" ? 0.68 : 0.74,
+                duration:
+                  phase === "cover"
+                    ? className.includes("sm:hidden")
+                      ? 0.48
+                      : 0.68
+                    : className.includes("sm:hidden")
+                      ? 0.56
+                      : 0.74,
                 ease: phase === "cover" ? [0.76, 0, 0.24, 1] : [0.22, 1, 0.36, 1],
               }}
             >
@@ -194,7 +215,7 @@ export function PageTransition() {
       ))}
       <motion.div
         animate={{ opacity: phase === "cover" ? 1 : 0 }}
-        className="absolute inset-x-[-8vw] bottom-[-8vh] h-[55vh] bg-[#d4b1ff]/40 blur-[48px]"
+        className="absolute inset-x-[-8vw] bottom-[-8vh] h-[38vh] bg-[#d4b1ff]/28 blur-[24px] sm:h-[55vh] sm:bg-[#d4b1ff]/40 sm:blur-[48px]"
         initial={{ opacity: 0 }}
         transition={{ duration: 0.35 }}
       />
