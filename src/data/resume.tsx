@@ -441,7 +441,7 @@ export const DATA = {
           icon: <Icons.figma className="size-3" />,
         },
       ],
-      image: "",
+      image: "/lollypop.jpg",
       video: "/zanzan.gif",
     },
     // {

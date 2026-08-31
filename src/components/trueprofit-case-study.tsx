@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
+import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 
 const theme = {
   page: "#f3fbf7",
@@ -99,7 +100,7 @@ function CaseImage({
   return (
     <div className="overflow-hidden rounded-2xl shadow-sm">
       <ImageZoom>
-        <Image
+        <ResponsiveMotionImage
           src={src}
           alt={alt}
           width={1440}

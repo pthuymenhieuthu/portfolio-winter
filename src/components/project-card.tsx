@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import Link from "next/link";
 import Markdown from "react-markdown";
 
@@ -45,20 +45,20 @@ export function ProjectCard({
       <Link href={href || "#"} className={cn("block cursor-pointer", className)}>
         {/* Ưu tiên hiển thị 'video' nếu có (thường là GIF); dùng Image để tránh lint warning */}
         {video && (
-          <Image
+          <ResponsiveMotionImage
             src={video}
             alt={title}
             width={1200}
             height={384} // ~ h-40 (160px) responsive scale; đặt lớn để downscale đẹp
+            mobilePosterSrc={image || undefined}
             className="pointer-events-none mx-auto h-40 w-full object-cover object-top"
             unoptimized // giữ nguyên GIF/ảnh động
-            priority={false}
             sizes="(max-width: 768px) 100vw, 600px"
           />
         )}
 
         {!video && image && (
-          <Image
+          <ResponsiveMotionImage
             src={image}
             alt={title}
             width={1200}

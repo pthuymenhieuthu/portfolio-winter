@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
+import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 
 const sections = [
   { id: "affina-overview", label: "Making insurance feel simple" },
@@ -257,9 +258,11 @@ function JourneyMacBook({
 }) {
   return (
     <div className="relative flex aspect-[2010/1325] w-[300px] shrink-0 items-center justify-center sm:w-[400px]">
-      <img
+      <ResponsiveMotionImage
         src={src}
         alt={alt}
+        width={2010}
+        height={1325}
         className="h-full w-full object-contain"
       />
     </div>

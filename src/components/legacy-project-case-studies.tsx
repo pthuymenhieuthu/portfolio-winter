@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
+import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 
 type Theme = {
   page: string;
@@ -20,6 +21,7 @@ type ImageItem = {
   alt: string;
   ratio?: string;
   fit?: "cover" | "contain";
+  mobilePosterSrc?: string;
 };
 
 type CaseProject = {
@@ -208,16 +210,18 @@ function CaseImage({
   alt,
   ratio = "aspect-[16/9]",
   fit = "cover",
+  mobilePosterSrc,
 }: ImageItem) {
   return (
     <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <ImageZoom>
-        <Image
+        <ResponsiveMotionImage
           src={src}
           alt={alt}
           width={1440}
           height={900}
           unoptimized
+          mobilePosterSrc={mobilePosterSrc}
           className={cn(
             "w-full rounded-2xl object-top",
             ratio,
@@ -518,7 +522,13 @@ export function PizzyCaseStudy() {
       theme={theme}
       title="Pizzy - Finance Management App"
     >
-      <CaseImage alt="Pizzy intro gif" fit="contain" ratio="h-auto" src="/pizzy.gif" />
+      <CaseImage
+        alt="Pizzy intro gif"
+        fit="contain"
+        mobilePosterSrc="https://res.cloudinary.com/dqtfjvkok/image/upload/v1758339821/Frame_427318364_qvmrbo.png"
+        ratio="h-auto"
+        src="/pizzy.gif"
+      />
 
       {[
         [
