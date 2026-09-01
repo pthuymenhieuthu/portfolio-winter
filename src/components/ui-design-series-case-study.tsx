@@ -37,7 +37,7 @@ const sections = [
 ];
 
 const assets = {
-  hero: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758519116/Untitled_design_34_ooq2kc.gif",
+  hero: "/chande.gif",
   direction: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758356378/298bd9ed-f325-48c0-aaf8-e76058112339_o7fhaf.png",
   draft: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758356379/DRAFTTT_wwrvbt.png",
   week1: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758357035/1IEUZ7Fhxsal69TkPP3bhjHfljw_e3c6vh.avif",
@@ -121,6 +121,7 @@ function CaseImage({
           alt={alt}
           width={1440}
           height={810}
+          mobilePosterSrc={src === assets.hero ? "/uidesignseries-mobile-poster.jpg" : undefined}
           unoptimized
           className={cn("w-full rounded-2xl object-cover object-top", ratio)}
           sizes="(max-width: 768px) 90vw, 934px"
@@ -207,11 +208,12 @@ function NextProjectCard({
         )}
       >
         {(project.video || project.image) && (
-          <Image
+          <ResponsiveMotionImage
             src={project.video || project.image || ""}
             alt={project.title}
             width={1200}
             height={675}
+            mobilePosterSrc={project.image || undefined}
             className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
             unoptimized
             sizes={featured ? "(max-width: 768px) 90vw, 560px" : "(max-width: 768px) 90vw, 440px"}

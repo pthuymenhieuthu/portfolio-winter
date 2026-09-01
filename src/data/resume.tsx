@@ -248,7 +248,7 @@ export const DATA = {
       icon: <Icons.linkedin className="size-3" />,
     },
   ],
-  image: "",
+  image: "/affina-mobile-poster.jpg",
   video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1788018154/RECOMMEND_AI_-_AFFINA_rpsfyb.gif",
 },
     {
@@ -276,7 +276,7 @@ export const DATA = {
           icon: <Icons.linkedin className="size-3" />,
         },
       ],
-      image: "",
+      image: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787904374/Frame_2147225273_isnnjf.png",
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787913142/zoan_1_t2snqa.gif",
     },
     {
@@ -302,8 +302,8 @@ export const DATA = {
           icon: <Icons.link className="size-3" />,
         },
       ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
+      image: "/trueprofit-mobile-poster.jpg",
+      video: "/trueprofit.gif",
     },
         {
     title: "Language Learning Apps — UI & Motion Enhancement Showcase",
@@ -325,7 +325,7 @@ export const DATA = {
         icon: <Icons.appstore className="size-3" />,
       },
     ],
-    image: "",
+    image: "/speakchinese-mobile-poster.jpg",
     video:
       "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764751725/Phone_shocase_lxj9ih.gif",
   },
@@ -374,7 +374,7 @@ export const DATA = {
           icon: <Icons.behance className="size-3" />,
         },
       ],
-      image: "",
+      image: "/pizzy-mobile-poster.jpg",
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518716/pizzy_k1m4ci.gif",
     },
     {
@@ -397,8 +397,8 @@ export const DATA = {
           icon: <Icons.behance className="size-3" />,
         },
       ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758519116/Untitled_design_34_ooq2kc.gif",
+      image: "/uidesignseries-mobile-poster.jpg",
+      video: "/chande.gif",
     },
     {
       title: "CakeBank Case Study - Rounded-Up Savings Feature",
@@ -441,7 +441,7 @@ export const DATA = {
           icon: <Icons.figma className="size-3" />,
         },
       ],
-      image: "/lollypop.jpg",
+      image: "/zanzan-mobile-poster.jpg",
       video: "/zanzan.gif",
     },
     // {

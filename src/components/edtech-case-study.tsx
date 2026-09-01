@@ -101,6 +101,7 @@ function CaseImage({
           alt={alt}
           width={1440}
           height={810}
+          mobilePosterSrc={src === assets.hero ? "/speakchinese-mobile-poster.jpg" : undefined}
           unoptimized
           className={cn("w-full rounded-2xl object-cover object-top", ratio)}
           sizes="(max-width: 768px) 90vw, 934px"
@@ -187,11 +188,12 @@ function NextProjectCard({
         )}
       >
         {(project.video || project.image) && (
-          <Image
+          <ResponsiveMotionImage
             src={project.video || project.image || ""}
             alt={project.title}
             width={1200}
             height={675}
+            mobilePosterSrc={project.image || undefined}
             className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
             unoptimized
             sizes={featured ? "(max-width: 768px) 90vw, 560px" : "(max-width: 768px) 90vw, 440px"}

@@ -38,7 +38,7 @@ const sections = [
 ];
 
 const assets = {
-  hero: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518915/Untitled_design_32_pf1vgx.gif",
+  hero: "/trueprofit.gif",
   keywords: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758739200/truepro-01_hcnk3e.png",
   feeling: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758739200/truepro-02_xul57w.png",
   landingOutcome: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758739200/truepro-03_a32knn.png",
@@ -105,6 +105,7 @@ function CaseImage({
           alt={alt}
           width={1440}
           height={810}
+          mobilePosterSrc={src === assets.hero ? "/trueprofit-mobile-poster.jpg" : undefined}
           unoptimized
           className={cn("w-full rounded-2xl object-cover object-top", ratio)}
           sizes="(max-width: 768px) 90vw, 934px"
@@ -191,11 +192,12 @@ function NextProjectCard({
         )}
       >
         {(project.video || project.image) && (
-          <Image
+          <ResponsiveMotionImage
             src={project.video || project.image || ""}
             alt={project.title}
             width={1200}
             height={675}
+            mobilePosterSrc={project.image || undefined}
             className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
             unoptimized
             sizes={featured ? "(max-width: 768px) 90vw, 560px" : "(max-width: 768px) 90vw, 440px"}

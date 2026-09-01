@@ -455,11 +455,12 @@ function NextProjectCard({
         )}
       >
         {project.video ? (
-          <Image
+          <ResponsiveMotionImage
             src={project.video}
             alt={project.title}
             width={1200}
             height={675}
+            mobilePosterSrc={project.image || undefined}
             className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
             unoptimized
             sizes={
@@ -469,7 +470,7 @@ function NextProjectCard({
             }
           />
         ) : project.image ? (
-          <Image
+          <ResponsiveMotionImage
             src={project.image}
             alt={project.title}
             width={1200}

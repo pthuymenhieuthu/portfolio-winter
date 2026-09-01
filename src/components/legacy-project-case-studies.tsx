@@ -297,11 +297,12 @@ function NextProjectCard({
         style={{ backgroundColor: `${theme.accent}18` }}
       >
         {(project.video || project.image) && (
-          <Image
+          <ResponsiveMotionImage
             src={project.video || project.image || ""}
             alt={project.title}
             width={1200}
             height={675}
+            mobilePosterSrc={project.image || undefined}
             className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
             unoptimized
             sizes={
@@ -525,7 +526,7 @@ export function PizzyCaseStudy() {
       <CaseImage
         alt="Pizzy intro gif"
         fit="contain"
-        mobilePosterSrc="https://res.cloudinary.com/dqtfjvkok/image/upload/v1758339821/Frame_427318364_qvmrbo.png"
+        mobilePosterSrc="/pizzy-mobile-poster.jpg"
         ratio="h-auto"
         src="/pizzy.gif"
       />

@@ -58,7 +58,7 @@ export default function Page() {
                   </span>
                 </p>
                 <Link
-                  href={DATA.contact.social.LinkedIn.url}
+                  href="https://drive.google.com/file/d/1gLkY5mOFYf0NKvDU5oKwIqxyRtvT8PPt/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-[#171717]/12 bg-white/80 px-5 text-sm font-medium text-[#171717] shadow-[0_12px_30px_rgba(23,23,23,0.08)] backdrop-blur transition hover:-translate-y-0.5 hover:bg-white"
