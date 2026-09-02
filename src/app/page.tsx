@@ -49,11 +49,11 @@ export default function Page() {
             />
             <BlurFade delay={1.28}>
               <div className="mt-5 flex w-full flex-col items-center gap-[36px]">
-                <p className="mx-auto max-w-[520px] text-[18px] leading-[1.35] text-[#171717]">
+                <p className="mx-auto max-w-[520px] text-base leading-[1.35] text-[#171717]">
                   Proactive Product Designer
                   <br />
                   <span className="text-[hsl(var(--ink-soft))]">
-                    · Passionate about learning and growth
+                    Bridging user needs, business goals, and product outcomes
                   </span>
                 </p>
                 <HeroCtaButtons />
@@ -73,7 +73,7 @@ export default function Page() {
                   <h2 className="mx-auto max-w-[300px] font-[var(--font-heading)] text-[26px] font-bold leading-[1.08] tracking-normal sm:max-w-none sm:text-[44px] lg:text-[52px]">
                     Check out my latest work
                   </h2>
-                  <p className="text-[18px] leading-[1.35] text-[#737373]">
+                  <p className="text-base leading-[1.35] text-[#737373]">
                     Find out more on my{" "}
                     <a
                       href="https://www.behance.net/thuynguyen175"
