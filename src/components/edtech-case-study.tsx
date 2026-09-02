@@ -7,6 +7,10 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
+import BlurFade from "@/components/magicui/blur-fade";
+import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
+
+const PROJECT_HERO_DELAY = 0.36;
 
 type CaseProject = {
   title: string;
@@ -259,16 +263,20 @@ export function EdTechCaseStudy() {
           <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm backdrop-blur">
             Mobile App · Feb 2025
           </p>
-          <h1 className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]">
-            Speak Chinese
-          </h1>
-          <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-white">
-            UI & Motion Enhancement Showcase
-            <br />
-            <span className="text-white/75">
-              · Friendly interaction for daily learning
-            </span>
-          </p>
+          <HeroTitleReveal
+            className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]"
+            delay={PROJECT_HERO_DELAY}
+            text="Speak Chinese"
+          />
+          <BlurFade delay={1.12}>
+            <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-white">
+              UI & Motion Enhancement Showcase
+              <br />
+              <span className="text-white/75">
+                · Friendly interaction for daily learning
+              </span>
+            </p>
+          </BlurFade>
         </div>
       </section>
 

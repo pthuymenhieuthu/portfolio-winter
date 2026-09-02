@@ -7,6 +7,10 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
+import BlurFade from "@/components/magicui/blur-fade";
+import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
+
+const PROJECT_HERO_DELAY = 0.36;
 
 const theme = {
   page: "#f3f7ff",
@@ -272,16 +276,20 @@ export function ZoanCaseStudy() {
           <p className="rounded-full border border-[#07111f]/10 bg-white/45 px-4 py-1.5 text-sm text-[#07111f] backdrop-blur">
             AI Product · May 2025
           </p>
-          <h1 className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]">
-            Zoan AI
-          </h1>
-          <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-[#07111f]">
-            AI Workflow Management
-            <br />
-            <span className="text-[#07111f]/65">
-              · From fearing AI to designing for it
-            </span>
-          </p>
+          <HeroTitleReveal
+            className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]"
+            delay={PROJECT_HERO_DELAY}
+            text="Zoan AI"
+          />
+          <BlurFade delay={1.12}>
+            <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-[#07111f]">
+              AI Workflow Management
+              <br />
+              <span className="text-[#07111f]/65">
+                · From fearing AI to designing for it
+              </span>
+            </p>
+          </BlurFade>
         </div>
       </section>
 

@@ -7,6 +7,10 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
+import BlurFade from "@/components/magicui/blur-fade";
+import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
+
+const PROJECT_HERO_DELAY = 0.36;
 
 type CaseProject = {
   title: string;
@@ -279,17 +283,21 @@ export function UiDesignSeriesCaseStudy() {
           <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm backdrop-blur">
             Web Design · Jul 2025
           </p>
-          <h1 className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]">
-            UI Design Series
-          </h1>
-          <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-white">
-            6-week landing page competition
-            <br />
-            <span className="text-white/75">
-              · Weekly briefs, Framer prototypes,
-              <br className="sm:hidden" /> and Top 6 finalist work
-            </span>
-          </p>
+          <HeroTitleReveal
+            className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]"
+            delay={PROJECT_HERO_DELAY}
+            text="UI Design Series"
+          />
+          <BlurFade delay={1.12}>
+            <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-white">
+              6-week landing page competition
+              <br />
+              <span className="text-white/75">
+                · Weekly briefs, Framer prototypes,
+                <br className="sm:hidden" /> and Top 6 finalist work
+              </span>
+            </p>
+          </BlurFade>
         </div>
       </section>
 

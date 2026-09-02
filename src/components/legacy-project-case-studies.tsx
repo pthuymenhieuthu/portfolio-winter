@@ -6,6 +6,10 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
+import BlurFade from "@/components/magicui/blur-fade";
+import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
+
+const PROJECT_HERO_DELAY = 0.36;
 
 type Theme = {
   page: string;
@@ -134,13 +138,17 @@ function CaseHero({
         <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm backdrop-blur">
           {date}
         </p>
-        <h1 className="font-[var(--font-heading)] text-[44px] font-bold leading-[1.05] tracking-normal sm:text-[64px]">
-          {title}
-        </h1>
+        <HeroTitleReveal
+          className="font-[var(--font-heading)] text-[44px] font-bold leading-[1.05] tracking-normal sm:text-[64px]"
+          delay={PROJECT_HERO_DELAY}
+          text={title}
+        />
         {summary && (
-          <p className="max-w-[620px] text-base leading-7 text-white/80 sm:text-lg">
-            {summary}
-          </p>
+          <BlurFade delay={1.12}>
+            <p className="max-w-[620px] text-base leading-7 text-white/80 sm:text-lg">
+              {summary}
+            </p>
+          </BlurFade>
         )}
       </div>
     </section>

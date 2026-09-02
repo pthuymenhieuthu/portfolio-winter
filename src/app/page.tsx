@@ -3,8 +3,8 @@ import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
 import { BringOnBoard } from "@/components/bring-on-board";
 import { ProjectCard } from "@/components/project-card";
 import { TallyContactForm } from "@/components/tally-contact-form";
+import { HeroCtaButtons } from "@/components/hero-cta-buttons";
 import { DATA } from "@/data/resume";
-import { FileText } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import GoogleTracking from "@/components/google-tracking";
@@ -48,24 +48,15 @@ export default function Page() {
               text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
             />
             <BlurFade delay={1.28}>
-              <div className="mt-5 flex w-full flex-col items-center gap-5">
-                <p className="mx-auto max-w-[290px] text-[15px] leading-[1.35] text-[#171717] min-[390px]:max-w-[320px] min-[390px]:text-base">
+              <div className="mt-5 flex w-full flex-col items-center gap-[36px]">
+                <p className="mx-auto max-w-[520px] text-[18px] leading-[1.35] text-[#171717]">
                   Proactive Product Designer
                   <br />
                   <span className="text-[hsl(var(--ink-soft))]">
-                    · Passionate about learning
-                    <br className="sm:hidden" /> and growth
+                    · Passionate about learning and growth
                   </span>
                 </p>
-                <Link
-                  href="https://drive.google.com/file/d/1gLkY5mOFYf0NKvDU5oKwIqxyRtvT8PPt/view?usp=sharing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-[#171717]/12 bg-white/80 px-5 text-sm font-medium text-[#171717] shadow-[0_12px_30px_rgba(23,23,23,0.08)] backdrop-blur transition hover:-translate-y-0.5 hover:bg-white"
-                >
-                  <FileText className="size-4" aria-hidden="true" />
-                  Read my CV
-                </Link>
+                <HeroCtaButtons />
               </div>
             </BlurFade>
           </div>
@@ -82,13 +73,13 @@ export default function Page() {
                   <h2 className="mx-auto max-w-[300px] font-[var(--font-heading)] text-[26px] font-bold leading-[1.08] tracking-normal sm:max-w-none sm:text-[44px] lg:text-[52px]">
                     Check out my latest work
                   </h2>
-                  <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  <p className="text-[18px] leading-[1.35] text-[#737373]">
                     Find out more on my{" "}
                     <a
                       href="https://www.behance.net/thuynguyen175"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="underline"
+                      className="text-[#a855f7] underline underline-offset-4 transition hover:text-[#ff51ff]"
                     >
                       Behance
                     </a>

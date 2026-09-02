@@ -72,12 +72,10 @@ export function BringOnBoard() {
           <h2 className="mt-5 font-[var(--font-heading)] text-[32px] font-bold leading-[1.08] tracking-normal text-[#08090a] sm:text-[44px] lg:text-[52px]">
             What I bring on board
           </h2>
-          <p className="mx-auto mt-5 max-w-[500px] text-sm leading-6 text-[#737373] sm:text-base sm:leading-7">
-            I work across product, UI, design systems,
+          <p className="mx-auto mt-5 max-w-[720px] text-[18px] leading-[1.35] text-[#737373]">
+            I work across product, UI, design systems, motion, and AI -
             <br className="hidden sm:block" />
-            motion, and AI - depending on
-            <br className="hidden sm:block" />
-            what the project needs
+            depending on what the project needs
           </p>
         </div>
 

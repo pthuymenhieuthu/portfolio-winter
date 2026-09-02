@@ -7,6 +7,10 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
+import BlurFade from "@/components/magicui/blur-fade";
+import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
+
+const PROJECT_HERO_DELAY = 0.36;
 
 const sections = [
   { id: "affina-overview", label: "Making insurance feel simple" },
@@ -164,6 +168,20 @@ const workedOnItems = [
     title: "Implemented selected front-end UI refinements with HTML/CSS",
     body: "Worked within the existing WordPress and plugin foundation while partnering with developers on backend or plugin-level changes",
   },
+];
+
+const measuredBehaviorStats = [
+  { value: "1,567", label: "Users" },
+  { value: "2,046", label: "Sessions" },
+  { value: "3,078", label: "Page views" },
+  { value: "29", label: "Leads" },
+  { value: "1.42%", label: "Lead conversion" },
+];
+
+const nextMeasurementSteps = [
+  "Increase survey entry from organic traffic.",
+  "Reduce drop-off across key survey steps.",
+  "Improve recommendation relevance to support conversion.",
 ];
 
 const styles = {
@@ -553,17 +571,21 @@ export function AffinaCaseStudy() {
           <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm backdrop-blur">
             Web & Mobile · Oct 2025 - Present
           </p>
-          <h1 className="max-w-[340px] font-[var(--font-affina-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]">
-            Affina
-          </h1>
-          <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-white">
-            Brand & Product Transformation
-            <br />
-            <span className="text-white/75">
-              · Scalable design system and
-              <br className="sm:hidden" /> AI-enhanced workflow
-            </span>
-          </p>
+          <HeroTitleReveal
+            className="max-w-[340px] font-[var(--font-affina-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]"
+            delay={PROJECT_HERO_DELAY}
+            text="Affina"
+          />
+          <BlurFade delay={1.12}>
+            <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-white">
+              Brand & Product Transformation
+              <br />
+              <span className="text-white/75">
+                · Scalable design system and
+                <br className="sm:hidden" /> AI-enhanced workflow
+              </span>
+            </p>
+          </BlurFade>
         </div>
       </section>
 
@@ -708,41 +730,49 @@ export function AffinaCaseStudy() {
               </p>
             </div>
 
-            <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)]">
+            <div className="mt-8">
               <div className="min-w-0">
                 <div className="divide-y divide-black/10 border-t border-black/10">
-                {workedOnItems.map((item) => (
-                  <div className="py-7 first:pt-7 sm:py-8" key={item.title}>
-                    <h3 className="text-base font-bold leading-6 tracking-normal text-[#08090a]">
-                      {item.title}
-                    </h3>
-                    <p className="mt-1 text-base leading-7 text-[#08090a]">
-                      {item.body}
-                    </p>
-                  </div>
-                ))}
+                  {workedOnItems.map((item) => (
+                    <div className="py-7 first:pt-7 sm:py-8" key={item.title}>
+                      <h3 className="text-base font-bold leading-6 tracking-normal text-[#08090a]">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1 text-base leading-7 text-[#08090a]">
+                        {item.body}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-              </div>
+            </div>
 
-              <div className="grid min-w-0 gap-5 lg:grid-rows-2">
-                <div className="relative aspect-[1920/912] min-h-0 overflow-hidden rounded-2xl shadow-sm lg:aspect-auto lg:h-full">
+            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+              <div className="overflow-hidden rounded-2xl shadow-sm">
+                <ImageZoom zoomImg={{ src: "/assets/affina/user-flow-image.png" }}>
                   <Image
                     src="/assets/affina/user-flow-image.png"
                     alt="Affina insurance purchase user flow"
-                    fill
-                    className="object-cover object-top"
-                    sizes="(max-width: 1024px) 90vw, 560px"
+                    width={1920}
+                    height={912}
+                    unoptimized
+                    className="h-auto w-full object-cover object-top"
+                    sizes="(max-width: 640px) 90vw, 450px"
                   />
-                </div>
-                <div className="relative aspect-[1792/920] min-h-0 overflow-hidden rounded-2xl shadow-sm lg:aspect-auto lg:h-full">
+                </ImageZoom>
+              </div>
+              <div className="overflow-hidden rounded-2xl shadow-sm">
+                <ImageZoom zoomImg={{ src: "/assets/affina/gitlab-code-repo-blur.png" }}>
                   <Image
                     src="/assets/affina/gitlab-code-repo-blur.png"
                     alt="Affina GitLab code repository overview"
-                    fill
-                    className="object-cover object-top"
-                    sizes="(max-width: 1024px) 90vw, 560px"
+                    width={1792}
+                    height={920}
+                    unoptimized
+                    className="h-auto w-full object-cover object-top"
+                    sizes="(max-width: 640px) 90vw, 450px"
                   />
-                </div>
+                </ImageZoom>
               </div>
             </div>
           </div>
@@ -850,6 +880,65 @@ export function AffinaCaseStudy() {
                 sizes="(max-width: 1024px) 90vw, 934px"
               />
             </ImageZoom>
+          </div>
+
+          <div className="rounded-2xl bg-[#08090a] p-6 text-white shadow-sm sm:p-8 lg:p-10">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">
+                  Measured behavior
+                </p>
+                <h3 className="mt-4 font-[var(--font-affina-heading)] text-2xl font-bold leading-[1.2] tracking-normal sm:text-4xl">
+                  30-day snapshot after launch
+                </h3>
+              </div>
+              <p className="max-w-[300px] text-sm leading-6 text-white/55 sm:text-right">
+                Traffic during this period was primarily organic and internal
+                testing, with no paid acquisition campaigns.
+              </p>
+            </div>
+
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-5">
+              {measuredBehaviorStats.map((stat) => (
+                <div
+                  className="rounded-xl border border-white/10 bg-white/[0.06] p-4"
+                  key={stat.label}
+                >
+                  <p className="font-[var(--font-affina-heading)] text-[30px] font-bold leading-none tracking-normal text-white sm:text-[34px]">
+                    {stat.value}
+                  </p>
+                  <p className="mt-3 text-xs font-bold uppercase tracking-[0.08em] text-white/55">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+              <div className="rounded-xl bg-white p-5 text-[#08090a]">
+                <p className="font-[var(--font-affina-heading)] text-[44px] font-bold leading-none tracking-normal text-[#ff51ff]">
+                  61.4%
+                </p>
+                <p className="mt-4 text-base leading-7 text-[#454545]">
+                  of sessions that reached recommendations continued to{" "}
+                  <span className="font-bold text-[#08090a]">Buy Now</span>.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-white/10 p-5">
+                <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ff93f1]">
+                  What&apos;s next
+                </p>
+                <ul className="mt-4 flex flex-col gap-3 text-base leading-7 text-white/75">
+                  {nextMeasurementSteps.map((item) => (
+                    <li className="flex gap-3" key={item}>
+                      <span className="mt-[0.72em] size-1.5 shrink-0 rounded-full bg-[#ff93f1]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
