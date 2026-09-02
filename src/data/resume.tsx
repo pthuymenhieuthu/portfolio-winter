@@ -8,7 +8,7 @@ export const DATA = {
   location: "Ho Chi Minh City, Vietnam",
   locationLink: "https://www.google.com/maps/place/hochiminh",
   description:
-    "Proactive UI/UX Designer · Passionate about learning and growth",
+    "Proactive UI/UX Designer · Bridging user needs, business goals, and product outcomes",
   summary:
     "Hi, I’m Thuy Nguyen — UI/UX Designer with experience in **EdTech, AI products, and E-commerce**. Skilled in **Figma, Design Systems, and Motion Design (Rive & After Effects)**. Currently looking for a full-time UI/UX or Product design role. ",
   avatarUrl: "/me.jpg",
