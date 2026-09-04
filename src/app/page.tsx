@@ -67,7 +67,7 @@ export default function Page() {
             <BlurFade delay={BLUR_FADE_DELAY * 11}>
               <div className="flex w-full flex-col items-center justify-center space-y-4 px-4 text-center">
                 <div className="space-y-2">
-                  <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
+                  <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-base">
                     My Projects
                   </div>
                   <h2 className="mx-auto max-w-[300px] font-[var(--font-heading)] text-[26px] font-bold leading-[1.08] tracking-normal sm:max-w-none sm:text-[44px] lg:text-[52px]">
@@ -119,7 +119,7 @@ export default function Page() {
       >
         <div className="mx-auto grid w-full max-w-[1080px] items-center justify-items-center gap-4 text-center md:translate-y-14 md:grid-cols-2 md:gap-8 md:text-left lg:translate-y-12 lg:gap-10">
           <div className="flex w-full max-w-[520px] flex-col items-center md:items-start">
-            <div className="inline-block rounded-lg bg-white px-3 py-1 text-sm font-medium text-[#08090a]">
+            <div className="inline-block rounded-lg bg-white px-3 py-1 text-base font-medium text-[#08090a]">
               Contact
             </div>
             <h2 className="mt-3 max-w-[520px] font-[var(--font-heading)] text-[26px] font-bold leading-[1.06] tracking-normal sm:mt-4 sm:text-[38px] lg:text-[44px]">

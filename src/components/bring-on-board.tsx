@@ -66,13 +66,13 @@ export function BringOnBoard() {
     >
       <div className="mx-auto flex min-h-[620px] w-full max-w-[1173px] flex-col items-center sm:min-h-[700px] lg:min-h-[760px]">
         <div className="relative z-20 mx-auto max-w-[620px] text-center">
-          <p className="inline-block rounded-lg bg-[#08090a] px-3 py-1 text-sm font-medium text-white">
+          <p className="inline-block rounded-lg bg-[#08090a] px-3 py-1 text-base font-medium text-white">
             Creative toolkit
           </p>
           <h2 className="mt-5 font-[var(--font-heading)] text-[32px] font-bold leading-[1.08] tracking-normal text-[#08090a] sm:text-[44px] lg:text-[52px]">
             What I bring on board
           </h2>
-          <p className="mx-auto mt-5 max-w-[720px] text-[18px] leading-[1.35] text-[#737373]">
+          <p className="mx-auto mt-5 max-w-[720px] text-base leading-[1.35] text-[#737373]">
             I work across product, UI, design systems, motion, and AI -
             <br className="hidden sm:block" />
             depending on what the project needs

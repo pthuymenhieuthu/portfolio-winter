@@ -71,7 +71,7 @@ export function PasswordGate({ slug, title, children }: PasswordGateProps) {
 
     <button
       type="submit"
-      className="inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium border bg-primary text-primary-foreground"
+      className="inline-flex items-center rounded-lg px-4 py-2 text-base font-medium border bg-primary text-primary-foreground"
     >
       Unlock
     </button>

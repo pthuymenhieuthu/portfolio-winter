@@ -260,7 +260,7 @@ export function EdTechCaseStudy() {
         />
 
         <div className="relative z-10 mx-auto flex w-full max-w-[560px] flex-col items-center gap-5">
-          <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm backdrop-blur">
+          <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-base backdrop-blur">
             Mobile App · Feb 2025
           </p>
           <HeroTitleReveal
@@ -283,7 +283,7 @@ export function EdTechCaseStudy() {
       <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 sm:gap-32 sm:px-8 lg:gap-36 lg:py-36">
         <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="edtech-work">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-sm text-white">
+            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
               My Projects
             </span>
             <h2 className="max-w-[760px] font-[var(--font-heading)] text-[34px] font-bold leading-[1.28] tracking-normal sm:text-5xl sm:leading-[1.24]">
@@ -328,7 +328,7 @@ export function EdTechCaseStudy() {
 
         <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="edtech-motion">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-sm text-white">
+            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
               Motion Showcase
             </span>
             <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
@@ -359,7 +359,7 @@ export function EdTechCaseStudy() {
 
         <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="edtech-speak">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-sm text-white">
+            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
               UI Showcase
             </span>
             <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
@@ -373,7 +373,7 @@ export function EdTechCaseStudy() {
 
         <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="edtech-graphics">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-sm text-white">
+            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
               App Store Graphics
             </span>
             <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
@@ -415,7 +415,7 @@ export function EdTechCaseStudy() {
 
         <section className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="edtech-next">
           <div className="flex flex-col gap-5">
-            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-sm text-white">
+            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
               Next projects
             </span>
             <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
@@ -435,7 +435,7 @@ export function EdTechCaseStudy() {
 
       <section id="edtech-contact" className="relative overflow-hidden px-5 pb-80 pt-32 text-center sm:pb-96 sm:pt-36">
         <div className="relative mx-auto max-w-[560px]">
-          <span className="inline-flex rounded-lg bg-[#092014] px-3 py-1.5 text-sm text-white">
+          <span className="inline-flex rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
             Contact
           </span>
           <h2 className="mt-5 font-[var(--font-heading)] text-4xl font-bold leading-[1.18] tracking-normal">

@@ -135,7 +135,7 @@ function CaseHero({
       <BlobCutout fill={theme.page} position="top" />
       <BlobCutout fill={theme.page} position="bottom" />
       <div className="relative z-10 mx-auto flex max-w-[720px] flex-col items-center gap-5">
-        <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm backdrop-blur">
+        <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-base backdrop-blur">
           {date}
         </p>
         <HeroTitleReveal
@@ -164,7 +164,7 @@ function SectionLabel({
 }) {
   return (
     <span
-      className="w-fit rounded-lg px-3 py-1.5 text-sm text-white"
+      className="w-fit rounded-lg px-3 py-1.5 text-base text-white"
       style={{ backgroundColor: theme.ink }}
     >
       {children}

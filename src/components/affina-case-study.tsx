@@ -185,7 +185,7 @@ const nextMeasurementSteps = [
 ];
 
 const styles = {
-  sectionPill: "w-fit rounded-lg bg-[#08090a] px-3 py-1.5 text-sm text-white",
+  sectionPill: "w-fit rounded-lg bg-[#08090a] px-3 py-1.5 text-base text-white",
   accentLabel: "text-sm font-bold uppercase tracking-[0.12em] text-[#ff51ff]",
   mutedLabel: "text-sm uppercase tracking-[0.08em] text-[#737373] sm:text-base",
   sectionTitle:
@@ -568,7 +568,7 @@ export function AffinaCaseStudy() {
         />
 
         <div className="relative z-10 mx-auto flex w-full max-w-[560px] flex-col items-center gap-5">
-          <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm backdrop-blur">
+          <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-base backdrop-blur">
             Web & Mobile · Oct 2025 - Present
           </p>
           <HeroTitleReveal
