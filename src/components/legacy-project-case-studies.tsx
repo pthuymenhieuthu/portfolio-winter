@@ -90,12 +90,14 @@ function BlobCutout({
 }) {
   const isTop = position === "top";
 
+  if (!isTop) return null;
+
   return (
     <svg
       aria-hidden="true"
       className={
         isTop
-          ? "pointer-events-none absolute left-1/2 top-[-80px] -z-10 w-[1200px] max-w-none -translate-x-1/2 sm:w-[1640px]"
+          ? "pointer-events-none absolute left-1/2 top-[-80px] -z-10 w-[1200px] max-w-none origin-center -translate-x-1/2 scale-x-[1.7] sm:w-[1640px]"
           : "pointer-events-none absolute bottom-[-220px] left-1/2 -z-10 w-[1200px] max-w-none -translate-x-1/2 sm:bottom-[-260px] sm:w-[1640px]"
       }
       fill="none"
@@ -108,7 +110,7 @@ function BlobCutout({
         d={
           isTop
             ? "M1085.09 250.287C1215.46 436.116 1645.28 428.276 1690.52 416.582L1635.97 -282L-346 -127.227L-308.024 359.076C-75.943 427.41 420.709 482.913 550.666 158.254C941.969 194.444 1012.09 47.8557 1074.47 -20.4985C1029.03 65.5779 1023.56 162.589 1085.09 250.287Z"
-            : "M316.649 214.217C201.136 18.8014 -227.988 -6.84558 -274 1.29169V702H1714V214.217C1487.94 128.022 997.12 34.0215 842.281 347.577C454.983 281.033 373.663 421.717 306.146 485.006C358.159 402.73 371.162 306.439 316.649 214.217Z"
+            : "M-180 642C40 558 225 500 420 535C605 568 745 646 946 552C1166 449 1262 304 1620 246V702H-180V642Z"
         }
         fill={fill}
       />
