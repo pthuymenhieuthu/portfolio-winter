@@ -46,7 +46,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
           >
             {children}
           </div>
-          {isCaseStudy && <BackToTopButton />}
+          {isFullBleed && <BackToTopButton />}
           <Navbar />
           <PageTransition />
         </TooltipProvider>
