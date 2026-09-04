@@ -54,7 +54,7 @@ export default async function BlogPage({
     return <CakeCaseStudy />;
   }
 
-  if (params.slug === "lollypop") {
+  if (params.slug === "lollypop" || params.slug === "zanzan") {
     return <ZanZanCaseStudy />;
   }
 

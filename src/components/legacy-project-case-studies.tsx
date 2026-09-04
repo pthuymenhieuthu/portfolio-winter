@@ -90,19 +90,17 @@ function BlobCutout({
 }) {
   const isTop = position === "top";
 
-  if (!isTop) return null;
-
   return (
     <svg
       aria-hidden="true"
       className={
         isTop
           ? "pointer-events-none absolute left-1/2 top-[-80px] -z-10 w-[1200px] max-w-none origin-center -translate-x-1/2 scale-x-[1.7] sm:w-[1640px]"
-          : "pointer-events-none absolute bottom-[-220px] left-1/2 -z-10 w-[1200px] max-w-none -translate-x-1/2 sm:bottom-[-260px] sm:w-[1640px]"
+          : "pointer-events-none absolute bottom-[-260px] left-1/2 -z-10 w-[1200px] max-w-none origin-center -translate-x-1/2 scale-x-[1.7] sm:bottom-[-300px] sm:w-[1640px]"
       }
       fill="none"
-      height={isTop ? 422 : 702}
-      viewBox={isTop ? "0 0 1440 422" : "0 0 1440 702"}
+      height={isTop ? 422 : 526}
+      viewBox={isTop ? "0 0 1440 422" : "0 0 1440 526"}
       width={1440}
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -110,7 +108,7 @@ function BlobCutout({
         d={
           isTop
             ? "M1085.09 250.287C1215.46 436.116 1645.28 428.276 1690.52 416.582L1635.97 -282L-346 -127.227L-308.024 359.076C-75.943 427.41 420.709 482.913 550.666 158.254C941.969 194.444 1012.09 47.8557 1074.47 -20.4985C1029.03 65.5779 1023.56 162.589 1085.09 250.287Z"
-            : "M-180 642C40 558 225 500 420 535C605 568 745 646 946 552C1166 449 1262 304 1620 246V702H-180V642Z"
+            : "M376 150.651C260.488 -44.7637 -227.988 2.80591 -274 10.9432V711.651H1714V223.868L1709.16 222.022C1481.84 135.325 1055.37 -27.3193 901.632 284.012C620.5 205.651 456.5 297.651 412 343.651C421.5 284.651 427.131 237.151 376 150.651Z"
         }
         fill={fill}
       />
