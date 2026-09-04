@@ -6,6 +6,7 @@ import { TableOfContents } from "@/components/table-of-contents";
 import ClientBlog from "@/components/client-blog";
 import { PasswordGate } from "@/components/password-gate";
 import { AffinaCaseStudy } from "@/components/affina-case-study";
+import { AffinaPartnerFlowCaseStudy } from "@/components/affina-partner-flow-case-study";
 import { ZoanCaseStudy } from "@/components/zoan-case-study";
 import { TrueProfitCaseStudy } from "@/components/trueprofit-case-study";
 import { EdTechCaseStudy } from "@/components/edtech-case-study";
@@ -24,6 +25,10 @@ export default async function BlogPage({
 }) {
   if (params.slug === "affina") {
     return <AffinaCaseStudy />;
+  }
+
+  if (params.slug === "affina-partner-flow") {
+    return <AffinaPartnerFlowCaseStudy />;
   }
 
   if (params.slug === "zoan") {
