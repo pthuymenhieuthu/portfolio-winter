@@ -252,30 +252,6 @@ export const DATA = {
   video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1788018154/RECOMMEND_AI_-_AFFINA_rpsfyb.gif",
 },
     {
-      title: "Affina Partner Flow — Multi-Person Insurance Journey",
-      href: "/blog/affina-partner-flow",
-      dates: "Mar 2026",
-      active: true,
-      description:
-        "Designed a scalable purchase flow for partners, translating complex insurance rules into clearer UI, states, and handoff logic.",
-      technologies: [
-        "Product Design",
-        "Insurance Flow",
-        "Business Rules",
-        "BA Collaboration",
-        "Handoff",
-      ],
-      links: [
-        {
-          type: "Website",
-          href: "https://affina.com.vn/",
-          icon: <Icons.globe className="size-3" />,
-        },
-      ],
-      image: "/affina-mobile-poster.jpg",
-      video: "",
-    },
-    {
       title: "Zoan AI – AI Workflow Management",
       href: "/blog/zoan",
       dates: "May 2025",
