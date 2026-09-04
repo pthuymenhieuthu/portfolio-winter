@@ -134,18 +134,21 @@ function CaseHero({
     >
       <BlobCutout fill={theme.page} position="top" />
       <BlobCutout fill={theme.page} position="bottom" />
-      <div className="relative z-10 mx-auto flex max-w-[720px] flex-col items-center gap-5">
+      <div className="relative z-10 mx-auto flex w-full max-w-[720px] flex-col items-center gap-5">
         <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-base backdrop-blur">
           {date}
         </p>
-        <HeroTitleReveal
-          className="font-[var(--font-heading)] text-[44px] font-bold leading-[1.05] tracking-normal sm:text-[64px]"
-          delay={PROJECT_HERO_DELAY}
-          text={title}
-        />
+        <div style={{ width: "min(720px, calc(100vw - 48px))" }}>
+          <HeroTitleReveal
+            className="font-[var(--font-heading)] text-[28px] font-bold leading-[1.1] tracking-normal sm:text-[64px] sm:leading-[1.05]"
+            delay={PROJECT_HERO_DELAY}
+            text={title}
+            wrap
+          />
+        </div>
         {summary && (
           <BlurFade delay={1.12}>
-            <p className="max-w-[620px] text-base leading-7 text-white/80 sm:text-lg">
+            <p className="max-w-[calc(100vw-40px)] text-base leading-7 text-white/80 sm:max-w-[620px] sm:text-lg">
               {summary}
             </p>
           </BlurFade>
@@ -420,9 +423,9 @@ export function GraphicsCaseStudy() {
   return (
     <CaseShell
       date="2023-2025"
-      summary="Marketing visuals for e-commerce & education products."
+      summary="Campaign and product visuals."
       theme={theme}
-      title="Marketing Graphics — Campaign & Social Design"
+      title="Marketing Graphics"
     >
       <CaseSection label="Overview" theme={theme} title="Overview">
         <BodyText theme={theme}>
@@ -527,9 +530,9 @@ export function PizzyCaseStudy() {
   return (
     <CaseShell
       date="2025-08"
-      summary="Pizzy is a mobile application that helps users manage shared budgets with friends in a simple, engaging, and social way"
+      summary="A social budgeting app for shared spending."
       theme={theme}
-      title="Pizzy - Finance Management App"
+      title="Pizzy"
     >
       <CaseImage
         alt="Pizzy intro gif"
@@ -629,9 +632,9 @@ export function CakeCaseStudy() {
   return (
     <CaseShell
       date="2025-05"
-      summary="A take-home assignment for the Product Designer position at Cake, focusing on creating a rounded-up savings feature that helps users save effortlessly while keeping their balances neat."
+      summary="Round-up savings concept."
       theme={theme}
-      title="CakeBank - Rounded-Up Savings Feature"
+      title="CakeBank"
     >
       <CaseSection label="Overview" theme={theme} title="Overview">
         <BodyText theme={theme}>
@@ -963,9 +966,9 @@ export function ZanZanCaseStudy() {
   return (
     <CaseShell
       date="2024-09-20"
-      summary="Digital innovation to preserve and reimagine folk games through an interactive and culturally meaningful platform."
+      summary="A digital platform for Vietnamese folk games."
       theme={theme}
-      title="Lollypop Designathon 2024 | UX/UX Challenge"
+      title="ZanZan"
     >
       <CaseImage
         alt="ZanZan intro"
