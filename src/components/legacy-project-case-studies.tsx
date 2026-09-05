@@ -37,7 +37,7 @@ function LegacyStickyIndicator() {
     <div className="pointer-events-none fixed inset-x-0 top-0 z-40 bg-transparent">
       <div
         className={cn(
-          "pointer-events-auto flex h-8 w-full items-center justify-center border-b border-white/70 bg-white/45 px-4 text-[13px] tracking-normal text-black shadow-[0_8px_30px_rgba(22,5,31,0.08)] backdrop-blur-xl backdrop-saturate-150 transition-transform duration-500 ease-out sm:text-sm",
+          "pointer-events-auto flex h-8 w-full items-center justify-center border-b border-black/10 bg-white/65 px-4 text-[13px] tracking-normal text-black shadow-[0_8px_30px_rgba(22,5,31,0.12)] backdrop-blur-xl backdrop-saturate-150 transition-transform duration-500 ease-out sm:text-sm",
           isVisible ? "translate-y-0" : "-translate-y-full"
         )}
       >
@@ -131,7 +131,7 @@ function BlobCutout({
       aria-hidden="true"
       className={
         isTop
-          ? "pointer-events-none absolute left-1/2 top-[-80px] -z-10 w-[1200px] max-w-none origin-center -translate-x-1/2 scale-x-[1.7] sm:w-[1640px]"
+          ? "pointer-events-none absolute left-1/2 top-[-80px] -z-10 w-[1200px] max-w-none origin-top -translate-x-1/2 scale-x-[1.7] scale-y-[0.72] sm:w-[1640px]"
           : "pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 sm:bottom-[-150px]"
       }
       fill="none"
