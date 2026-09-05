@@ -8,8 +8,44 @@ import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
+import { useEffect, useState } from "react";
 
 const PROJECT_HERO_DELAY = 0.36;
+
+function LegacyStickyIndicator() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const hero = document.getElementById("legacy-project-overview");
+
+    const updateVisibility = () => {
+      if (!hero) return;
+      setIsVisible(window.scrollY > hero.offsetHeight - 48);
+    };
+
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    window.addEventListener("resize", updateVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", updateVisibility);
+      window.removeEventListener("resize", updateVisibility);
+    };
+  }, []);
+
+  return (
+    <div className="pointer-events-none fixed inset-x-0 top-0 z-40 bg-transparent">
+      <div
+        className={cn(
+          "pointer-events-auto flex h-8 w-full items-center justify-center border-b border-white/70 bg-white/45 px-4 text-[13px] tracking-normal text-black shadow-[0_8px_30px_rgba(22,5,31,0.08)] backdrop-blur-xl backdrop-saturate-150 transition-transform duration-500 ease-out sm:text-sm",
+          isVisible ? "translate-y-0" : "-translate-y-full"
+        )}
+      >
+        The work
+      </div>
+    </div>
+  );
+}
 
 type Theme = {
   page: string;
@@ -129,6 +165,7 @@ function CaseHero({
 }) {
   return (
     <section
+      id="legacy-project-overview"
       className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden px-6 text-center text-white sm:min-h-[800px]"
       style={{ background: theme.hero }}
     >
@@ -405,6 +442,7 @@ function CaseShell({
       className="min-h-screen w-full max-w-full overflow-x-hidden font-sans"
       style={{ backgroundColor: theme.page, color: theme.ink }}
     >
+      <LegacyStickyIndicator />
       <CaseHero date={date} summary={summary} theme={theme} title={title} />
       <section
         className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 sm:gap-32 sm:px-8 lg:gap-36 lg:py-36"
