@@ -248,7 +248,7 @@ export function EdTechCaseStudy() {
           width={1440}
           height={422}
           priority
-          className="pointer-events-none absolute left-1/2 top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none origin-center -translate-x-1/2 scale-x-[1.7] select-none"
+          className="pointer-events-none absolute left-1/2 top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none"
         />
         <Image
           src="/assets/edtech/edtech-hero-blob-bottom.svg"

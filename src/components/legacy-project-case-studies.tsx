@@ -131,7 +131,7 @@ function BlobCutout({
       aria-hidden="true"
       className={
         isTop
-          ? "pointer-events-none absolute left-1/2 top-[-80px] -z-10 w-[1200px] max-w-none origin-center -translate-x-1/2 scale-x-[1.7] sm:w-[1640px]"
+          ? "pointer-events-none absolute left-1/2 top-[-80px] -z-10 w-[1200px] max-w-none -translate-x-1/2 sm:w-[1640px]"
           : "pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 sm:bottom-[-150px]"
       }
       fill="none"
