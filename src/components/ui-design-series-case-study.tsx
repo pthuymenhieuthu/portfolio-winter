@@ -276,7 +276,7 @@ export function UiDesignSeriesCaseStudy() {
           width={1440}
           height={526}
           priority
-          className="pointer-events-none absolute bottom-[-300px] left-1/2 -z-10 w-[max(1800px,115vw)] max-w-none origin-center -translate-x-1/2 scale-x-[1.7] select-none sm:bottom-[-340px]"
+          className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]"
         />
         <div className="relative z-10 mx-auto flex w-full max-w-[560px] flex-col items-center gap-5">
           <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-base backdrop-blur">
