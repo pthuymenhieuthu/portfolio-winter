@@ -2,9 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { ChevronRight, ExternalLink } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
+import {
+  CaseStudyRevealSection,
+  CaseStudyScrollReveal,
+} from "@/components/case-study-scroll-reveal";
+import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
@@ -13,17 +20,17 @@ import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
 const PROJECT_HERO_DELAY = 0.36;
 
 const sections = [
-  { id: "affina-overview", label: "Making insurance feel simple" },
-  { id: "affina-work", label: "Designing clearer healthcare journeys" },
+  { id: "affina-work", label: "The work" },
+  { id: "affina-system", label: "Product foundation" },
   {
     id: "affina-challenge-01",
-    label: "Challenge 01: AI-assisted online insurance journey",
+    label: "AI journey",
   },
   {
     id: "affina-challenge-02",
-    label: "Challenge 02: Healthcare-oriented design system",
+    label: "Healthcare system",
   },
-  { id: "affina-brand", label: "Challenge 03: Rebuilding the brand foundation" },
+  { id: "affina-brand", label: "Brand foundation" },
   { id: "affina-next", label: "Next projects" },
   { id: "affina-contact", label: "Get in touch" },
 ];
@@ -147,29 +154,6 @@ const processSteps = [
   { label: "Purchase", active: false },
 ];
 
-const workedOnItems = [
-  {
-    title: "Designed and reworked key user flows",
-    body: "Simplified steps, content hierarchy and interactions across existing web journeys",
-  },
-  {
-    title: "Collaborated across Product, business and development",
-    body: "Aligned user needs, business requirements and technical constraints before bringing flows into production",
-  },
-  {
-    title: "Translated the design system into consistent web experiences",
-    body: "Defined responsive behavior, interaction states and reusable UI patterns across screens",
-  },
-  {
-    title: "Tested real flows and iterated after implementation",
-    body: "Reviewed usability, visual consistency and edge cases, then refined the experience with developers",
-  },
-  {
-    title: "Implemented selected front-end UI refinements with HTML/CSS",
-    body: "Worked within the existing WordPress and plugin foundation while partnering with developers on backend or plugin-level changes",
-  },
-];
-
 const measuredBehaviorStats = [
   { value: "1,567", label: "Users" },
   { value: "2,046", label: "Sessions" },
@@ -185,14 +169,14 @@ const nextMeasurementSteps = [
 ];
 
 const styles = {
-  sectionPill: "w-fit rounded-lg bg-[#08090a] px-3 py-1.5 text-base text-white",
-  accentLabel: "text-sm font-bold uppercase tracking-[0.12em] text-[#ff51ff]",
-  mutedLabel: "text-sm uppercase tracking-[0.08em] text-[#737373] sm:text-base",
+  sectionPill: "w-fit rounded-lg bg-[#08090a] px-3 py-1 text-sm text-white",
+  accentLabel: "text-sm font-bold uppercase tracking-[0.12em] text-[#737373]",
+  mutedLabel: "text-sm uppercase tracking-[0.08em] text-[#737373]",
   sectionTitle:
-    "font-[var(--font-affina-heading)] text-[32px] font-bold leading-[1.2] tracking-normal sm:text-4xl",
-  leadText: "text-lg leading-8 text-[#737373] sm:text-xl sm:leading-[1.6]",
-  bodyText: "text-base leading-7 text-[#454545] sm:text-lg",
-  compactBody: "text-base leading-7 text-[#454545]",
+    "font-[var(--font-affina-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]",
+  leadText: "text-base leading-[1.6] text-[#737373] sm:text-[17px]",
+  bodyText: "text-base leading-[1.6] text-[#08090a] sm:text-[17px]",
+  compactBody: "text-base leading-[1.6] text-[#08090a]",
 };
 
 type CaseProject = {
@@ -287,6 +271,72 @@ function JourneyMacBook({
   );
 }
 
+function JourneyMediaTicker({
+  media,
+  title,
+}: {
+  media: readonly string[];
+  title: string;
+}) {
+  const shouldReduceMotion = useReducedMotion();
+  const tickerGroups = shouldReduceMotion ? [media] : [media, media];
+
+  return (
+    <div
+      className={cn(
+        "py-1",
+        shouldReduceMotion
+          ? "scrollbar-none overflow-x-auto"
+          : "overflow-hidden"
+      )}
+      style={{
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+        maskImage:
+          "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+      }}
+    >
+      <motion.div
+        className="flex w-max items-center"
+        animate={
+          shouldReduceMotion
+            ? undefined
+            : {
+                x: ["0%", "-50%"],
+              }
+        }
+        transition={{
+          duration: Math.max(16, media.length * 9),
+          ease: "linear",
+          repeat: Number.POSITIVE_INFINITY,
+        }}
+      >
+        {tickerGroups.map((group, groupIndex) => (
+          <div
+            aria-hidden={groupIndex > 0}
+            className={cn(
+              "flex shrink-0 items-center",
+              groupIndex > 0 && "pointer-events-none"
+            )}
+            key={groupIndex}
+          >
+            {group.map((src, index) => (
+              <div className="shrink-0 pr-8 sm:pr-10" key={`${src}-${index}`}>
+                <ImageZoom>
+                  <JourneyMacBook
+                    src={src}
+                    alt={`${title} screen ${index + 1}`}
+                  />
+                </ImageZoom>
+              </div>
+            ))}
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
 function AffinaDeviceShowcase() {
   return (
     <div className="grid items-center gap-10 py-4 sm:py-6 lg:grid-cols-[0.9fr_1.25fr]">
@@ -310,12 +360,13 @@ function AffinaHealthcareRow({
         <div className="flex size-[29px] items-center justify-center rounded-full bg-[#08090a] text-base font-bold leading-none text-white">
           {row.number}
         </div>
-        <h3 className="font-[var(--font-affina-body)] text-xl uppercase leading-[1.2] tracking-normal text-[#08090a] sm:text-2xl">
+        <h3 className="font-[var(--font-affina-body)] text-lg uppercase leading-[1.2] tracking-normal text-[#08090a] sm:text-xl">
           {row.title}
         </h3>
         <p className={cn("pt-4", styles.bodyText)}>
           {row.before && <>{row.before} </>}
-          <strong>{row.bold}</strong> {row.after}
+          <CaseStudyScrollHighlight>{row.bold}</CaseStudyScrollHighlight>{" "}
+          {row.after}
         </p>
       </div>
 
@@ -382,7 +433,7 @@ function ComparisonRow({
 }) {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-black/[0.04]">
-      <div className="absolute left-1/2 top-5 z-10 -translate-x-1/2 rounded-xl bg-[#0d0d0d] px-4 py-1.5 text-sm font-bold text-white sm:text-base">
+      <div className="absolute left-1/2 top-5 z-10 -translate-x-1/2 rounded-xl bg-[#0d0d0d] px-4 py-1.5 text-center text-sm font-normal text-white sm:text-base">
         {title}
       </div>
       <div className="grid sm:grid-cols-2">
@@ -396,58 +447,11 @@ function ComparisonRow({
 }
 
 function AffinaStickyIndicator() {
-  const [activeLabel, setActiveLabel] = useState(sections[0].label);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const hero = document.getElementById("affina-overview");
-
-    const updateVisibility = () => {
-      if (!hero) return;
-
-      setIsVisible(window.scrollY > hero.offsetHeight - 48);
-    };
-
-    updateVisibility();
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-    window.addEventListener("resize", updateVisibility);
-
-    const observers = sections
-      .map((section) => document.getElementById(section.id))
-      .filter((element): element is HTMLElement => Boolean(element))
-      .map((element) => {
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              const section = sections.find((item) => item.id === element.id);
-              if (section) setActiveLabel(section.label);
-            }
-          },
-          { rootMargin: "-18% 0px -62% 0px", threshold: 0.01 }
-        );
-
-        observer.observe(element);
-        return observer;
-      });
-
-    return () => {
-      window.removeEventListener("scroll", updateVisibility);
-      window.removeEventListener("resize", updateVisibility);
-      observers.forEach((observer) => observer.disconnect());
-    };
-  }, []);
-
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-40 bg-transparent">
-      <div
-        className={cn(
-          "pointer-events-auto flex h-8 w-full items-center justify-center border-b border-black/10 bg-white/65 px-4 text-[13px] tracking-normal text-black shadow-[0_8px_30px_rgba(22,5,31,0.12)] backdrop-blur-xl backdrop-saturate-150 transition-transform duration-500 ease-out sm:text-sm",
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        )}
-      >
-        {activeLabel}
-      </div>
-    </div>
+    <CaseStudySectionNavigation
+      heroId="affina-overview"
+      sections={sections}
+    />
   );
 }
 
@@ -528,7 +532,7 @@ function NextProjectCard({
         <div className="flex flex-wrap gap-2">
           {project.technologies.slice(0, featured ? 4 : 3).map((tag) => (
             <span
-              className="rounded-full bg-[#f9f4ff] px-3 py-1.5 text-xs text-[#454545]"
+              className="rounded-full bg-[#eeeff1] px-3 py-1.5 text-xs text-[#454545]"
               key={tag}
             >
               {tag}
@@ -542,12 +546,12 @@ function NextProjectCard({
 
 export function AffinaCaseStudy() {
   return (
-    <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f9f4ff] font-[var(--font-affina-body)] text-[#08090a]">
+    <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-[var(--font-affina-body)] text-[#08090a]">
       <AffinaStickyIndicator />
 
       <section
         id="affina-overview"
-        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#f9f4ff] px-6 text-center text-white sm:min-h-[800px]"
+        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#f7f7f8] px-6 text-center text-white sm:min-h-[800px]"
       >
         <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#ffd360_0%,transparent_28%),radial-gradient(circle_at_82%_24%,#ff51ff_0%,transparent_30%),linear-gradient(135deg,#ff6831_0%,#ff51ff_48%,#7a35ff_100%)]" />
         <Image
@@ -588,13 +592,13 @@ export function AffinaCaseStudy() {
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 sm:gap-32 sm:px-8 lg:gap-36 lg:py-36">
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-work">
+      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-work">
           <div className="flex flex-col gap-7">
             <span className={styles.sectionPill}>
               My Projects
             </span>
-            <h2 className="max-w-[760px] font-[var(--font-affina-heading)] text-[34px] font-bold leading-[1.28] tracking-normal sm:text-5xl sm:leading-[1.24]">
+            <h2 className="max-w-[760px] font-[var(--font-affina-heading)] text-[30px] font-normal leading-[1.22] tracking-normal sm:text-[40px] sm:leading-[1.2]">
               Designing clearer insurance and healthcare experiences
             </h2>
             <p className={styles.leadText}>
@@ -608,25 +612,44 @@ export function AffinaCaseStudy() {
 
           <AffinaDeviceShowcase />
 
-          <div className="grid gap-6 sm:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
               ["Role", "UI/UX, product system, brand foundation"],
               ["Scope", "Web, mobile, design system, AI workflow"],
+              ["Status", "Live"],
               ["Outcome", "Clearer journeys and stronger brand consistency"],
             ].map(([title, body]) => (
               <div className="border-t border-black/10 pt-5" key={title}>
                 <p className={styles.accentLabel}>
                   {title}
                 </p>
-                <p className={cn("mt-3", styles.compactBody)}>
-                  {body}
-                </p>
+                {title === "Status" ? (
+                  <span className="mt-3 inline-flex w-fit rounded-full bg-[#dcfce7] px-3 py-1 text-sm font-medium leading-5 text-[#166534]">
+                    {body}
+                  </span>
+                ) : (
+                  <p className={cn("mt-3", styles.compactBody)}>
+                    {body}
+                  </p>
+                )}
               </div>
             ))}
+            <div className="border-t border-black/10 pt-5">
+              <p className={styles.accentLabel}>Live project</p>
+              <a
+                className="mt-3 inline-flex items-center gap-2 text-base leading-[1.6] text-[#08090a] underline decoration-black/30 underline-offset-4 transition hover:decoration-black"
+                href="https://www.affina.com.vn/ai/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                affina.com.vn/ai
+                <ExternalLink aria-hidden="true" className="size-4 shrink-0" />
+              </a>
+            </div>
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-system">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-system">
           <div className="flex flex-col gap-6 sm:gap-7">
             <span className={styles.sectionPill}>
               The work
@@ -636,31 +659,49 @@ export function AffinaCaseStudy() {
             </h2>
             <p className={cn("max-w-[720px]", styles.leadText)}>
               The project moved across product flow, UI implementation, brand
-              foundation, and system consistency. I framed the work around four
-              design challenges so the case study can show what changed and why.
+              foundation, and system consistency. I framed the work around four{" "}
+              <CaseStudyScrollHighlight>
+                design challenges
+              </CaseStudyScrollHighlight>{" "}
+              so the case study can show what changed and why.
             </p>
           </div>
 
-          <div className="grid gap-6">
-            {challenges.map((item) => (
-              <article
-                className="border-t border-black/10 pt-6"
-                key={item.label}
-              >
-                <p className={styles.accentLabel}>{item.label}</p>
-                <h3 className="mt-3 font-[var(--font-affina-heading)] text-2xl font-bold leading-[1.2] tracking-normal">
-                  {item.title}
-                </h3>
-                <p className={cn("mt-4", styles.compactBody)}>
-                  {item.question}
-                </p>
-              </article>
-            ))}
-          </div>
-        </section>
+          <CaseStudyScrollReveal>
+            <div className="grid overflow-hidden rounded-xl border border-[#e4e4e7] bg-white px-6 lg:grid-cols-4 lg:gap-x-[51px]">
+              {challenges.map((item, index) => (
+                <article
+                  className="relative flex min-w-0 flex-col gap-5 border-b border-[#e4e4e7] py-6 last:border-b-0 lg:border-b-0"
+                  key={item.label}
+                >
+                  <div className="flex w-full items-center gap-4">
+                    <p className="whitespace-nowrap rounded-full bg-[#e8edf4] px-5 py-3 text-base font-bold leading-none text-[#18181b]">
+                      {item.label}
+                    </p>
+                    {index < challenges.length - 1 && (
+                      <ChevronRight
+                        aria-hidden="true"
+                        className="size-4 shrink-0 rotate-90 text-[#a1a1aa] lg:rotate-0"
+                        strokeWidth={2.5}
+                      />
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    <h3 className="font-[var(--font-affina-heading)] text-xl font-normal leading-normal tracking-normal text-[#18181b]">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm leading-[1.5] text-[#71717a]">
+                      {item.question}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </CaseStudyScrollReveal>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-challenge-01">
-          <div className="flex flex-col gap-6 sm:gap-7">
+        <section className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="affina-challenge-01">
+          <CaseStudyScrollReveal className="flex flex-col gap-6 sm:gap-7">
             <span className={styles.sectionPill}>
               Challenge 01
             </span>
@@ -668,10 +709,10 @@ export function AffinaCaseStudy() {
               Turning an offline sales journey into an AI-assisted online
               experience
             </h2>
-          </div>
+          </CaseStudyScrollReveal>
 
-          <div className="grid gap-6">
-            <article className="border-t border-black/10 pt-6">
+          <CaseStudyScrollReveal className="grid gap-8 sm:gap-10">
+            <article className="border-t border-black/10 pt-8">
               <p className={styles.accentLabel}>
                 Business context
               </p>
@@ -683,17 +724,20 @@ export function AffinaCaseStudy() {
               <p className="text-sm font-bold uppercase text-[#ffd360]">
                 Our solution
               </p>
-              <p className="mt-4 max-w-[900px] text-lg leading-8 text-white/85 sm:text-xl sm:leading-9">
-                Instead of simply digitising the sales form, we built an
-                AI-assisted journey that narrowed choices, recommended suitable
-                plans, and made comparison easier.
+              <p className="mt-4 max-w-[900px] text-base leading-[1.6] text-white/85 sm:text-[17px]">
+                Instead of simply digitising the sales form, we built an{" "}
+                <CaseStudyScrollHighlight inverted>
+                  AI-assisted journey
+                </CaseStudyScrollHighlight>{" "}
+                that narrowed choices, recommended suitable plans, and made
+                comparison easier.
               </p>
             </article>
-          </div>
+          </CaseStudyScrollReveal>
 
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div className="border-t border-black/10 pt-6">
-              <p className="font-[var(--font-affina-heading)] text-[52px] font-bold leading-none tracking-[-0.05em] text-[#ff51ff]">
+          <CaseStudyScrollReveal className="grid gap-8 sm:grid-cols-2">
+            <div className="border-t border-black/10 pt-8">
+              <p className="font-[var(--font-affina-heading)] text-[52px] font-medium leading-none tracking-[-0.05em] text-[#08090a]">
                 46%
               </p>
               <p className={cn("mt-4", styles.compactBody)}>
@@ -703,8 +747,8 @@ export function AffinaCaseStudy() {
                 Source: IXT by OneDegree, 2022
               </p>
             </div>
-            <div className="border-t border-black/10 pt-6">
-              <p className="font-[var(--font-affina-heading)] text-[52px] font-bold leading-none tracking-[-0.05em] text-[#7a35ff]">
+            <div className="border-t border-black/10 pt-8">
+              <p className="font-[var(--font-affina-heading)] text-[52px] font-medium leading-none tracking-[-0.05em] text-[#08090a]">
                 43%+
               </p>
               <p className={cn("mt-4", styles.compactBody)}>
@@ -715,38 +759,44 @@ export function AffinaCaseStudy() {
                 Source: Swiss Re Institute, 2021
               </p>
             </div>
-          </div>
+          </CaseStudyScrollReveal>
 
-          <div className="py-2">
-            <div>
-              <p className="text-sm font-bold uppercase leading-none tracking-normal text-[#08090a]">
+          <CaseStudyScrollReveal>
+            <div className="border-y border-black/10 py-10 sm:py-12">
+              <p className={styles.accentLabel}>
                 What I worked on
               </p>
-              <p className="mt-4 max-w-[980px] text-base font-bold leading-7 text-[#08090a] sm:text-lg sm:leading-8">
-                I redesigned and refined key web journeys across Affina, working
-                closely with Product, business stakeholders and developers to make
-                complex insurance flows clearer, smoother and easier to complete.
+              <p className="mt-6 max-w-[760px] text-base font-normal leading-[1.6] text-[#18181b] sm:text-[17px]">
+                I implemented and refined the UI across Affina&apos;s web
+                experiences using{" "}
+                <CaseStudyScrollHighlight>
+                  HTML/CSS
+                </CaseStudyScrollHighlight>{" "}
+                on top of the existing WordPress and plugin foundation{" "}
+                built by developers.
               </p>
+              <ul className="mt-8 flex max-w-[760px] list-disc flex-col gap-2 pl-6 text-base font-normal leading-[1.6] text-[#18181b] marker:text-[#18181b] sm:text-[17px]">
+                <li>Reworked UI across key web flows and existing WordPress plugins</li>
+                <li>
+                  Translated the design system into production UI, including{" "}
+                  <CaseStudyScrollHighlight>
+                    responsive behavior and states
+                  </CaseStudyScrollHighlight>
+                </li>
+                <li>
+                  <CaseStudyScrollHighlight>
+                    Tested flows myself
+                  </CaseStudyScrollHighlight>{" "}
+                  and fixed visual, responsive and interaction issues
+                </li>
+                <li>
+                  Worked with developers when changes required plugin or backend
+                  logic
+                </li>
+              </ul>
             </div>
 
-            <div className="mt-8">
-              <div className="min-w-0">
-                <div className="divide-y divide-black/10 border-t border-black/10">
-                  {workedOnItems.map((item) => (
-                    <div className="py-7 first:pt-7 sm:py-8" key={item.title}>
-                      <h3 className="text-base font-bold leading-6 tracking-normal text-[#08090a]">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1 text-base leading-7 text-[#08090a]">
-                        {item.body}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+            <div className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2">
               <div className="overflow-hidden rounded-2xl shadow-sm">
                 <ImageZoom zoomImg={{ src: "/assets/affina/user-flow-image.png" }}>
                   <Image
@@ -774,13 +824,13 @@ export function AffinaCaseStudy() {
                 </ImageZoom>
               </div>
             </div>
-          </div>
+          </CaseStudyScrollReveal>
 
-          <div className="rounded-2xl bg-white p-6 shadow-sm sm:p-8">
+          <CaseStudyScrollReveal className="rounded-2xl bg-white p-6 shadow-sm sm:p-8">
             <p className={styles.accentLabel}>
               How I solved it
             </p>
-            <h3 className="mt-4 font-[var(--font-affina-heading)] text-2xl font-bold leading-[1.2] tracking-normal">
+            <h3 className="mt-4 font-[var(--font-affina-heading)] text-lg font-normal leading-[1.25] tracking-normal sm:text-xl">
               I broke the decision into smaller, clearer steps.
             </h3>
             <div className="scrollbar-none mt-8 overflow-x-auto pb-2">
@@ -794,7 +844,7 @@ export function AffinaCaseStudy() {
                       "relative z-10 rounded-full px-5 py-3 text-sm leading-none",
                       step.active
                         ? "bg-[#08090a] text-white"
-                        : "bg-[#e8edf4] text-[#18181b]"
+                        : "bg-[#e6e6e8] text-[#18181b]"
                     )}
                     key={step.label}
                   >
@@ -803,9 +853,9 @@ export function AffinaCaseStudy() {
                 ))}
               </div>
             </div>
-          </div>
+          </CaseStudyScrollReveal>
 
-          <div className="flex flex-col gap-0">
+          <CaseStudyScrollReveal className="flex flex-col gap-0">
             {journeySteps.map((step) => (
               <article className="grid grid-cols-[29px_1fr] gap-5" key={step.number}>
                 <div className="flex flex-col items-center">
@@ -817,9 +867,14 @@ export function AffinaCaseStudy() {
                   )}
                 </div>
 
-                <div className="flex min-w-0 flex-col gap-5 pb-12 last:pb-0 sm:gap-6 sm:pb-14">
+                <div
+                  className={cn(
+                    "flex min-w-0 flex-col gap-5 sm:gap-6",
+                    step.number !== "3" && "pb-16 sm:pb-20"
+                  )}
+                >
                   <div className="font-[var(--font-affina-body)]">
-                    <h3 className="text-xl uppercase leading-[1.2] tracking-normal text-[#08090a] sm:text-2xl">
+                    <h3 className="text-lg uppercase leading-[1.2] tracking-normal text-[#08090a] sm:text-xl">
                       {step.title}
                     </h3>
                     <div className="mt-5 flex flex-col gap-5">
@@ -851,43 +906,49 @@ export function AffinaCaseStudy() {
                     </div>
                   </div>
 
-                  <div className="scrollbar-none overflow-x-auto pb-5 pt-1">
-                    <div className="flex w-max items-center gap-8 sm:gap-10">
-                      {step.media.map((src, index) => (
-                        <ImageZoom key={`${step.number}-${src}`}>
-                          <JourneyMacBook
-                            src={src}
-                            alt={`${step.title} screen ${index + 1}`}
-                          />
-                        </ImageZoom>
-                      ))}
-                    </div>
-                  </div>
+                  <JourneyMediaTicker media={step.media} title={step.title} />
                 </div>
               </article>
             ))}
-          </div>
+          </CaseStudyScrollReveal>
 
-          <div className="overflow-hidden rounded-2xl">
-            <ImageZoom>
-              <Image
-                src="/assets/affina/affina-care-journey-scene.png"
-                alt="Affina healthcare journey scene"
-                width={1680}
-                height={940}
-                className="h-auto w-full object-cover"
-                sizes="(max-width: 1024px) 90vw, 934px"
-              />
-            </ImageZoom>
-          </div>
+          <CaseStudyScrollReveal className="flex flex-col gap-8 sm:gap-10">
+            <div className="aspect-video overflow-hidden rounded-2xl bg-black shadow-sm">
+              <video
+                aria-label="Affina AI recommendation flow demo"
+                className="h-full w-full object-contain"
+                controls
+                playsInline
+                preload="metadata"
+              >
+                <source
+                  src="https://res.cloudinary.com/dqtfjvkok/video/upload/RECOMMEND_AI_-_AFFINA_mhcmbb.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
 
-          <div className="rounded-2xl bg-[#08090a] p-6 text-white shadow-sm sm:p-8 lg:p-10">
+            <div className="overflow-hidden rounded-2xl">
+              <ImageZoom>
+                <Image
+                  src="/assets/affina/affina-care-journey-scene.png"
+                  alt="Affina healthcare journey scene"
+                  width={1680}
+                  height={940}
+                  className="h-auto w-full object-cover"
+                  sizes="(max-width: 1024px) 90vw, 934px"
+                />
+              </ImageZoom>
+            </div>
+          </CaseStudyScrollReveal>
+
+          <CaseStudyScrollReveal className="rounded-2xl bg-[#08090a] p-6 text-white shadow-sm sm:p-8 lg:p-10">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">
+                <p className="text-sm font-bold uppercase tracking-[0.12em] text-white/60">
                   Measured behavior
                 </p>
-                <h3 className="mt-4 font-[var(--font-affina-heading)] text-2xl font-bold leading-[1.2] tracking-normal sm:text-4xl">
+                <h3 className="mt-4 font-[var(--font-affina-heading)] text-lg font-normal leading-[1.25] tracking-normal sm:text-xl">
                   30-day snapshot after launch
                 </h3>
               </div>
@@ -915,33 +976,33 @@ export function AffinaCaseStudy() {
 
             <div className="mt-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
               <div className="rounded-xl bg-white p-5 text-[#08090a]">
-                <p className="font-[var(--font-affina-heading)] text-[44px] font-bold leading-none tracking-normal text-[#ff51ff]">
+                <p className="font-[var(--font-affina-heading)] text-[44px] font-bold leading-none tracking-normal text-[#08090a]">
                   61.4%
                 </p>
                 <p className="mt-4 text-base leading-7 text-[#454545]">
                   of sessions that reached recommendations continued to{" "}
-                  <span className="font-bold text-[#08090a]">Buy Now</span>.
+                  <CaseStudyScrollHighlight>Buy Now</CaseStudyScrollHighlight>.
                 </p>
               </div>
 
               <div className="rounded-xl border border-white/10 p-5">
-                <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ff93f1]">
+                <p className="text-sm font-bold uppercase tracking-[0.12em] text-white/65">
                   What&apos;s next
                 </p>
                 <ul className="mt-4 flex flex-col gap-3 text-base leading-7 text-white/75">
                   {nextMeasurementSteps.map((item) => (
                     <li className="flex gap-3" key={item}>
-                      <span className="mt-[0.72em] size-1.5 shrink-0 rounded-full bg-[#ff93f1]" />
+                      <span className="mt-[0.72em] size-1.5 shrink-0 rounded-full bg-white/50" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
-          </div>
+          </CaseStudyScrollReveal>
         </section>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-challenge-02">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="affina-challenge-02">
           <div className="flex flex-col gap-4">
             <span className={styles.sectionPill}>
               Challenge 02
@@ -951,14 +1012,14 @@ export function AffinaCaseStudy() {
             </h2>
           </div>
 
-          <div className="flex flex-col gap-16 sm:gap-[66px]">
+          <div className="flex flex-col gap-16 sm:gap-20">
             {healthcareRows.map((row) => (
               <AffinaHealthcareRow row={row} key={row.number} />
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-brand">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="affina-brand">
           <div className="flex flex-col gap-6 sm:gap-7">
             <span className={styles.sectionPill}>
               Challenge 03
@@ -977,7 +1038,7 @@ export function AffinaCaseStudy() {
             </p>
           </div>
 
-          <div className="border-y border-black/10 py-8">
+          <div className="border-y border-black/10 py-10 sm:py-12">
             <p className={styles.accentLabel}>
               Founder direction -&gt; Solution
             </p>
@@ -989,7 +1050,7 @@ export function AffinaCaseStudy() {
             </p>
           </div>
 
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-16 sm:gap-20">
             <ComparisonRow
               title="Logo usage"
               before={
@@ -1102,9 +1163,9 @@ export function AffinaCaseStudy() {
               }
             />
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="affina-next">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="affina-next">
           <div className="flex flex-col gap-5">
             <span className={styles.sectionPill}>
               Next projects
@@ -1123,7 +1184,7 @@ export function AffinaCaseStudy() {
               <NextProjectCard project={project} key={project.href || project.title} />
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
       </section>
 
       <section
@@ -1134,16 +1195,16 @@ export function AffinaCaseStudy() {
           <span className={cn("inline-flex", styles.sectionPill)}>
             Contact
           </span>
-          <h2 className="mt-5 font-[var(--font-affina-heading)] text-4xl font-bold leading-[1.18] tracking-normal">
+          <h2 className="mt-5 font-[var(--font-affina-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
             Get in Touch
           </h2>
           <p className={cn("mt-5", styles.leadText)}>
             Excited to collaborate! Email me at{" "}
-            <a className="text-[#3b82f6]" href="mailto:phuongthuy101222@gmail.com">
+            <a className="text-[#08090a] underline underline-offset-4" href="mailto:phuongthuy101222@gmail.com">
               phuongthuy101222@gmail.com
             </a>{" "}
             or DM me on{" "}
-            <a className="text-[#3b82f6]" href={DATA.contact.social.LinkedIn.url}>
+            <a className="text-[#08090a] underline underline-offset-4" href={DATA.contact.social.LinkedIn.url}>
               Linkedin
             </a>
           </p>

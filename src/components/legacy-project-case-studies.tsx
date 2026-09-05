@@ -6,46 +6,16 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
+import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
+import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
+import {
+  CaseStudySectionNavigation,
+  type CaseStudySection,
+} from "@/components/case-study-section-navigation";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
-import { useEffect, useState } from "react";
 
 const PROJECT_HERO_DELAY = 0.36;
-
-function LegacyStickyIndicator() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const hero = document.getElementById("legacy-project-overview");
-
-    const updateVisibility = () => {
-      if (!hero) return;
-      setIsVisible(window.scrollY > hero.offsetHeight - 48);
-    };
-
-    updateVisibility();
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-    window.addEventListener("resize", updateVisibility);
-
-    return () => {
-      window.removeEventListener("scroll", updateVisibility);
-      window.removeEventListener("resize", updateVisibility);
-    };
-  }, []);
-
-  return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-40 bg-transparent">
-      <div
-        className={cn(
-          "pointer-events-auto flex h-8 w-full items-center justify-center border-b border-black/10 bg-white/65 px-4 text-[13px] tracking-normal text-black shadow-[0_8px_30px_rgba(22,5,31,0.12)] backdrop-blur-xl backdrop-saturate-150 transition-transform duration-500 ease-out sm:text-sm",
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        )}
-      >
-        The work
-      </div>
-    </div>
-  );
-}
 
 type Theme = {
   page: string;
@@ -84,38 +54,83 @@ const nextProjects = ["Affina", "Zoan AI", "TrueProfit"]
 
 const themes = {
   graphics: {
-    page: "#f2fffb",
-    ink: "#06272d",
-    muted: "#527071",
+    page: "#f7f7f8",
+    ink: "#08090a",
+    muted: "#737373",
     accent: "#01c9e0",
     hero:
       "radial-gradient(circle at 18% 18%, #5ff2c9 0%, transparent 30%), radial-gradient(circle at 82% 24%, #2798d3 0%, transparent 30%), linear-gradient(135deg, #06272d 0%, #01c9e0 58%, #5ff2c9 100%)",
   },
   pizzy: {
-    page: "#faf5ff",
-    ink: "#24133f",
-    muted: "#756386",
+    page: "#f7f7f8",
+    ink: "#08090a",
+    muted: "#737373",
     accent: "#c1b5f8",
     hero:
       "radial-gradient(circle at 18% 18%, #c1b5f8 0%, transparent 30%), radial-gradient(circle at 82% 24%, #eadcff 0%, transparent 28%), linear-gradient(135deg, #24133f 0%, #c1b5f8 42%, #f1bdfc 78%, #eadcff 100%)",
   },
   cake: {
-    page: "#fff6fb",
-    ink: "#2b1425",
-    muted: "#76586f",
+    page: "#f7f7f8",
+    ink: "#08090a",
+    muted: "#737373",
     accent: "#ff56cf",
     hero:
       "radial-gradient(circle at 18% 18%, #ff56cf 0%, transparent 30%), radial-gradient(circle at 82% 24%, #ecd974 0%, transparent 30%), linear-gradient(135deg, #2b1425 0%, #ff56cf 50%, #ecd974 100%)",
   },
   zanzan: {
-    page: "#fff3fb",
-    ink: "#23072d",
-    muted: "#76546f",
+    page: "#f7f7f8",
+    ink: "#08090a",
+    muted: "#737373",
     accent: "#7451cf",
     hero:
       "linear-gradient(135deg, #7451cf 0%, #2f0374 100%)",
   },
 } satisfies Record<string, Theme>;
+
+const graphicsSections = [
+  { id: "graphics-overview", label: "Overview" },
+  { id: "graphics-tiktok", label: "TikTok Shop" },
+  { id: "graphics-seasonal", label: "Seasonal campaigns" },
+  { id: "graphics-learning", label: "Learning apps" },
+  { id: "graphics-next", label: "Next projects" },
+] satisfies CaseStudySection[];
+
+const pizzySections = [
+  { id: "pizzy-about", label: "About" },
+  { id: "pizzy-research", label: "Research" },
+  { id: "pizzy-how-might-we", label: "How Might We" },
+  { id: "pizzy-information-architecture", label: "Information architecture" },
+  { id: "pizzy-how-it-works", label: "How it works" },
+  { id: "pizzy-showcase", label: "Showcase" },
+  { id: "pizzy-prototype", label: "Prototype" },
+  { id: "pizzy-next", label: "Next projects" },
+] satisfies CaseStudySection[];
+
+const cakeSections = [
+  { id: "cake-overview", label: "Overview" },
+  { id: "cake-how-might-we", label: "How Might We" },
+  { id: "cake-research", label: "Research" },
+  { id: "cake-goals", label: "Goals" },
+  { id: "cake-key-screens", label: "Key screens" },
+  { id: "cake-user-flow", label: "User flow" },
+  { id: "cake-visual-design", label: "Visual design" },
+  { id: "cake-testing", label: "Usability testing" },
+  { id: "cake-results", label: "Results" },
+  { id: "cake-reflection", label: "Reflection" },
+  { id: "cake-next", label: "Next projects" },
+] satisfies CaseStudySection[];
+
+const zanzanSections = [
+  { id: "zanzan-context", label: "Context" },
+  { id: "zanzan-problem", label: "Problem" },
+  { id: "zanzan-research", label: "Research" },
+  { id: "zanzan-persona", label: "Persona" },
+  { id: "zanzan-ideation", label: "Ideation" },
+  { id: "zanzan-solution", label: "Solution" },
+  { id: "zanzan-design-system", label: "Design system" },
+  { id: "zanzan-prototype", label: "Prototype" },
+  { id: "zanzan-next", label: "Next projects" },
+] satisfies CaseStudySection[];
 
 function BlobCutout({
   fill,
@@ -204,7 +219,7 @@ function SectionLabel({
 }) {
   return (
     <span
-      className="w-fit rounded-lg px-3 py-1.5 text-base text-white"
+      className="w-fit rounded-lg px-3 py-1 text-sm text-white"
       style={{ backgroundColor: theme.ink }}
     >
       {children}
@@ -213,26 +228,28 @@ function SectionLabel({
 }
 
 function CaseSection({
+  id,
   title,
   label,
   children,
   theme,
 }: {
+  id: string;
   title: string;
   label?: string;
   children: React.ReactNode;
   theme: Theme;
 }) {
   return (
-    <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12">
+    <CaseStudyRevealSection id={id} className="flex scroll-mt-24 flex-col gap-16 sm:gap-20">
       <div className="flex flex-col gap-7">
         {label && <SectionLabel theme={theme}>{label}</SectionLabel>}
-        <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+        <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
           {title}
         </h2>
       </div>
       {children}
-    </section>
+    </CaseStudyRevealSection>
   );
 }
 
@@ -245,7 +262,7 @@ function BodyText({
 }) {
   return (
     <div
-      className="space-y-5 text-lg leading-8 sm:text-xl sm:leading-[1.6]"
+      className="space-y-5 text-base leading-[1.6] sm:text-[17px]"
       style={{ color: theme.muted }}
     >
       {children}
@@ -309,7 +326,7 @@ function BulletList({
     <div className="grid gap-4">
       {items.map((item, index) => (
         <div
-          className="border-t py-4 text-base leading-7"
+          className="border-t py-8 text-base leading-[1.6] sm:py-10"
           key={index}
           style={{ borderColor: `${theme.ink}1a`, color: theme.ink }}
         >
@@ -342,7 +359,7 @@ function NextProjectCard({
           "relative overflow-hidden",
           featured ? "aspect-[16/9] md:aspect-auto md:min-h-[320px]" : "aspect-[16/9]"
         )}
-        style={{ backgroundColor: `${theme.accent}18` }}
+        style={{ backgroundColor: "#eeeff1" }}
       >
         {(project.video || project.image) && (
           <ResponsiveMotionImage
@@ -365,7 +382,7 @@ function NextProjectCard({
         <div>
           <p
             className="text-sm font-bold uppercase tracking-[0.12em]"
-            style={{ color: theme.accent }}
+            style={{ color: theme.muted }}
           >
             {featured ? "Next project" : project.dates}
           </p>
@@ -386,7 +403,7 @@ function NextProjectCard({
             <span
               className="rounded-full px-3 py-1.5 text-xs"
               key={tag}
-              style={{ backgroundColor: `${theme.accent}14`, color: theme.ink }}
+              style={{ backgroundColor: "#eeeff1", color: theme.ink }}
             >
               {tag}
             </span>
@@ -397,12 +414,12 @@ function NextProjectCard({
   );
 }
 
-function NextProjectsSection({ theme }: { theme: Theme }) {
+function NextProjectsSection({ id, theme }: { id: string; theme: Theme }) {
   return (
-    <section className="flex scroll-mt-24 flex-col gap-8 sm:gap-10">
+    <section id={id} className="flex scroll-mt-24 flex-col gap-8 sm:gap-10">
       <div className="flex flex-col gap-5">
         <SectionLabel theme={theme}>Next projects</SectionLabel>
-        <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+        <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
           Keep exploring the work
         </h2>
       </div>
@@ -429,12 +446,14 @@ function CaseShell({
   date,
   summary,
   theme,
+  sections,
   children,
 }: {
   title: string;
   date: string;
   summary?: string;
   theme: Theme;
+  sections: readonly CaseStudySection[];
   children: React.ReactNode;
 }) {
   return (
@@ -442,14 +461,17 @@ function CaseShell({
       className="min-h-screen w-full max-w-full overflow-x-hidden font-sans"
       style={{ backgroundColor: theme.page, color: theme.ink }}
     >
-      <LegacyStickyIndicator />
+      <CaseStudySectionNavigation
+        heroId="legacy-project-overview"
+        sections={sections}
+      />
       <CaseHero date={date} summary={summary} theme={theme} title={title} />
       <section
-        className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 sm:gap-32 sm:px-8 lg:gap-36 lg:py-36"
+        className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36"
         style={{ backgroundColor: theme.page } as React.CSSProperties}
       >
         {children}
-        <NextProjectsSection theme={theme} />
+        <NextProjectsSection id={sections[sections.length - 1].id} theme={theme} />
       </section>
     </main>
   );
@@ -461,11 +483,12 @@ export function GraphicsCaseStudy() {
   return (
     <CaseShell
       date="2023-2025"
+      sections={graphicsSections}
       summary="Campaign and product visuals."
       theme={theme}
       title="Marketing Graphics"
     >
-      <CaseSection label="Overview" theme={theme} title="Overview">
+      <CaseSection id="graphics-overview" label="Overview" theme={theme} title="Overview">
         <BodyText theme={theme}>
           <p>A collection of marketing graphics for:</p>
           <p>
@@ -474,11 +497,16 @@ export function GraphicsCaseStudy() {
             2️⃣ <strong>Language Learning Apps</strong> — Product highlight &
             seasonal banners
           </p>
-          <p>Focused on clarity, conversion, and eye-catching storytelling.</p>
+          <p>
+            Focused on <CaseStudyScrollHighlight>
+              clarity, conversion, and eye-catching storytelling
+            </CaseStudyScrollHighlight>.
+          </p>
         </BodyText>
       </CaseSection>
 
       <CaseSection
+        id="graphics-tiktok"
         label="01"
         theme={theme}
         title="TikTok Shop — Social & Community Visuals"
@@ -501,7 +529,12 @@ export function GraphicsCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Seasonal" theme={theme} title="Seasonal Campaign Assets">
+      <CaseSection
+        id="graphics-seasonal"
+        label="Seasonal"
+        theme={theme}
+        title="Seasonal Campaign Assets"
+      >
         <ImageGrid
           images={[
             {
@@ -529,6 +562,7 @@ export function GraphicsCaseStudy() {
       </CaseSection>
 
       <CaseSection
+        id="graphics-learning"
         label="02"
         theme={theme}
         title="Language Learning Apps — Promotional Visuals"
@@ -568,6 +602,7 @@ export function PizzyCaseStudy() {
   return (
     <CaseShell
       date="2025-08"
+      sections={pizzySections}
       summary="A social budgeting app for shared spending."
       theme={theme}
       title="Pizzy"
@@ -584,30 +619,35 @@ export function PizzyCaseStudy() {
         [
           "About",
           "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758327371/04_isp8w7.png",
+          "pizzy-about",
         ],
         [
           "Research",
           "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758327371/03_zyelt0.png",
+          "pizzy-research",
         ],
         [
           "How Might We",
           "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758342172/02_snxsdc.png",
+          "pizzy-how-might-we",
         ],
         [
           "Information Architecture",
           "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758332011/01_coe1qv.png",
+          "pizzy-information-architecture",
         ],
         [
           "How it works",
           "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758339821/Frame_427318364_qvmrbo.png",
+          "pizzy-how-it-works",
         ],
-      ].map(([title, src]) => (
-        <CaseSection key={title} label={title} theme={theme} title={title}>
+      ].map(([title, src, id]) => (
+        <CaseSection id={id} key={title} label={title} theme={theme} title={title}>
           <CaseImage alt={title} fit="contain" ratio="h-auto" src={src} />
         </CaseSection>
       ))}
 
-      <CaseSection label="Showcase" theme={theme} title="Showcase">
+      <CaseSection id="pizzy-showcase" label="Showcase" theme={theme} title="Showcase">
         <ImageGrid
           columns="md:grid-cols-1"
           images={[
@@ -645,7 +685,7 @@ export function PizzyCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Prototype" theme={theme} title="Prototype">
+      <CaseSection id="pizzy-prototype" label="Prototype" theme={theme} title="Prototype">
         <BodyText theme={theme}>
           <p>Click below to see YouTube link:</p>
         </BodyText>
@@ -670,11 +710,12 @@ export function CakeCaseStudy() {
   return (
     <CaseShell
       date="2025-05"
+      sections={cakeSections}
       summary="Round-up savings concept."
       theme={theme}
       title="CakeBank"
     >
-      <CaseSection label="Overview" theme={theme} title="Overview">
+      <CaseSection id="cake-overview" label="Overview" theme={theme} title="Overview">
         <BodyText theme={theme}>
           <p>
             <strong>CakeBank</strong> is a take-home assignment I completed
@@ -690,13 +731,13 @@ export function CakeCaseStudy() {
         </BodyText>
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="border-t pt-5" style={{ borderColor: `${theme.ink}1a` }}>
-            <p className="text-sm uppercase tracking-[0.12em]" style={{ color: theme.accent }}>
+            <p className="text-sm uppercase tracking-[0.12em]" style={{ color: theme.muted }}>
               My role
             </p>
             <p className="mt-3 text-base leading-6">Product Designer</p>
           </div>
           <div className="border-t pt-5" style={{ borderColor: `${theme.ink}1a` }}>
-            <p className="text-sm uppercase tracking-[0.12em]" style={{ color: theme.accent }}>
+            <p className="text-sm uppercase tracking-[0.12em]" style={{ color: theme.muted }}>
               Timeline
             </p>
             <p className="mt-3 text-base leading-6">May 2025 (3 weeks)</p>
@@ -711,6 +752,7 @@ export function CakeCaseStudy() {
       </CaseSection>
 
       <CaseSection
+        id="cake-how-might-we"
         label="How Might We"
         theme={theme}
         title="How might we help users feel more satisfied and in control by making their account balance look “clean” while also encouraging effortless savings?"
@@ -723,7 +765,12 @@ export function CakeCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Research" theme={theme} title="Understanding the Context">
+      <CaseSection
+        id="cake-research"
+        label="Research"
+        theme={theme}
+        title="Understanding the Context"
+      >
         <BodyText theme={theme}>
           <p>
             Due to the limited time frame of the take-home assignment, I{" "}
@@ -755,11 +802,13 @@ export function CakeCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Goals" theme={theme} title="Design Goals">
+      <CaseSection id="cake-goals" label="Goals" theme={theme} title="Design Goals">
         <BulletList
           items={[
             <>
-              Help users <strong>save without friction</strong> through
+              Help users <strong><CaseStudyScrollHighlight>
+                save without friction
+              </CaseStudyScrollHighlight></strong> through
               automatic round-ups.
             </>,
             <>
@@ -777,6 +826,7 @@ export function CakeCaseStudy() {
       </CaseSection>
 
       <CaseSection
+        id="cake-key-screens"
         label="Key Screens"
         theme={theme}
         title="Prioritizing Auto Round-Up Across Key Screens"
@@ -826,7 +876,7 @@ export function CakeCaseStudy() {
         </BodyText>
       </CaseSection>
 
-      <CaseSection label="User Flow" theme={theme} title="User Flow">
+      <CaseSection id="cake-user-flow" label="User Flow" theme={theme} title="User Flow">
         <BodyText theme={theme}>
           <p>The flow focuses on minimal friction and high clarity:</p>
         </BodyText>
@@ -867,7 +917,12 @@ export function CakeCaseStudy() {
         </Link>
       </CaseSection>
 
-      <CaseSection label="Visual Design" theme={theme} title="Visual Design">
+      <CaseSection
+        id="cake-visual-design"
+        label="Visual Design"
+        theme={theme}
+        title="Visual Design"
+      >
         <BodyText theme={theme}>
           <p>
             The interface uses Cake’s signature playful tone, with rounded
@@ -909,7 +964,12 @@ export function CakeCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Usability Testing" theme={theme} title="Usability Testing">
+      <CaseSection
+        id="cake-testing"
+        label="Usability Testing"
+        theme={theme}
+        title="Usability Testing"
+      >
         <BodyText theme={theme}>
           <p>
             Since this was a solo assignment, I conducted a{" "}
@@ -950,7 +1010,7 @@ export function CakeCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Results" theme={theme} title="Results">
+      <CaseSection id="cake-results" label="Results" theme={theme} title="Results">
         <BodyText theme={theme}>
           <p>
             Even though this was a conceptual assignment, it helped me
@@ -978,7 +1038,12 @@ export function CakeCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Reflection" theme={theme} title="Reflection">
+      <CaseSection
+        id="cake-reflection"
+        label="Reflection"
+        theme={theme}
+        title="Reflection"
+      >
         <BodyText theme={theme}>
           <p>
             This challenge taught me how small design decisions — like rounding
@@ -987,8 +1052,10 @@ export function CakeCaseStudy() {
           <p>
             It also reinforced my belief that{" "}
             <strong>
-              good design is not about adding features, but about removing
-              friction and inspiring action
+              <CaseStudyScrollHighlight>
+                good design is not about adding features, but about removing
+                friction and inspiring action
+              </CaseStudyScrollHighlight>
             </strong>
             .
           </p>
@@ -1004,6 +1071,7 @@ export function ZanZanCaseStudy() {
   return (
     <CaseShell
       date="2024-09-20"
+      sections={zanzanSections}
       summary="A digital platform for Vietnamese folk games."
       theme={theme}
       title="ZanZan"
@@ -1015,20 +1083,27 @@ export function ZanZanCaseStudy() {
         src="https://res.cloudinary.com/dqtfjvkok/image/upload/v1758358132/1ZaN0fd1UHesnkGpQ5TxYCoJbo_v9qdeo.avif"
       />
 
-      <CaseSection label="Context" theme={theme} title="Context">
+      <CaseSection id="zanzan-context" label="Context" theme={theme} title="Context">
         <BodyText theme={theme}>
           <p>
             Vietnam’s traditional culture faces the risk of fading due to
             globalization, modern entertainment, and declining youth interest. At
             the same time, folk games still hold strong nostalgic and social
             value, attracting young people when presented in engaging ways. This
-            creates both an urgent need and opportunity to preserve and
-            reimagine folk games through digital innovation.
+            creates both an urgent need and opportunity to{" "}
+            <CaseStudyScrollHighlight>
+              preserve and reimagine folk games through digital innovation
+            </CaseStudyScrollHighlight>.
           </p>
         </BodyText>
       </CaseSection>
 
-      <CaseSection label="Problem" theme={theme} title="Problem Statement">
+      <CaseSection
+        id="zanzan-problem"
+        label="Problem"
+        theme={theme}
+        title="Problem Statement"
+      >
         <BodyText theme={theme}>
           <p>
             Young people today are drawn to digital-first, interactive, and
@@ -1037,8 +1112,10 @@ export function ZanZanCaseStudy() {
             disconnected from modern life.
           </p>
           <p>
-            Design Challenge: Build a solution that both preserves and
-            revitalizes folk games, making them accessible, engaging, and
+            Design Challenge: Build a solution that both{" "}
+            <CaseStudyScrollHighlight>
+              preserves and revitalizes folk games
+            </CaseStudyScrollHighlight>, making them accessible, engaging, and
             meaningful in today’s digital ecosystem.
           </p>
         </BodyText>
@@ -1050,7 +1127,7 @@ export function ZanZanCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Research" theme={theme} title="Research">
+      <CaseSection id="zanzan-research" label="Research" theme={theme} title="Research">
         <BodyText theme={theme}>
           <p>We conducted desk research and user surveys to validate needs:</p>
         </BodyText>
@@ -1066,7 +1143,12 @@ export function ZanZanCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Persona" theme={theme} title="User Persona & Journey">
+      <CaseSection
+        id="zanzan-persona"
+        label="Persona"
+        theme={theme}
+        title="User Persona & Journey"
+      >
         <BodyText theme={theme}>
           <p>
             <strong>Persona:</strong>
@@ -1090,7 +1172,7 @@ export function ZanZanCaseStudy() {
         </BodyText>
       </CaseSection>
 
-      <CaseSection label="Ideation" theme={theme} title="Ideation">
+      <CaseSection id="zanzan-ideation" label="Ideation" theme={theme} title="Ideation">
         <BodyText theme={theme}>
           <p>
             We generated ideas using “How Might We” questions and prioritized
@@ -1114,7 +1196,12 @@ export function ZanZanCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Solution" theme={theme} title="Solution: Zân Zan Platform">
+      <CaseSection
+        id="zanzan-solution"
+        label="Solution"
+        theme={theme}
+        title="Solution: Zân Zan Platform"
+      >
         <BodyText theme={theme}>
           <p>
             Designed a digital platform dedicated to Vietnamese folk games. Core
@@ -1150,7 +1237,12 @@ export function ZanZanCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Design System" theme={theme} title="Design System">
+      <CaseSection
+        id="zanzan-design-system"
+        label="Design System"
+        theme={theme}
+        title="Design System"
+      >
         <BulletList
           items={[
             <>
@@ -1170,7 +1262,12 @@ export function ZanZanCaseStudy() {
         />
       </CaseSection>
 
-      <CaseSection label="Prototype" theme={theme} title="UI Design & Prototype">
+      <CaseSection
+        id="zanzan-prototype"
+        label="Prototype"
+        theme={theme}
+        title="UI Design & Prototype"
+      >
         <Link
           className="w-fit font-medium underline underline-offset-4"
           href="https://www.figma.com/"

@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
+import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
+import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
@@ -23,7 +25,7 @@ type CaseProject = {
 };
 
 const theme = {
-  page: "#f7fff3",
+  page: "#f7f7f8",
   accent: "#23c55e",
   dark: "#092014",
   hero:
@@ -31,7 +33,6 @@ const theme = {
 };
 
 const sections = [
-  { id: "edtech-overview", label: "Friendly learning experiences" },
   { id: "edtech-work", label: "Overview" },
   { id: "edtech-motion", label: "Motion showcase" },
   { id: "edtech-speak", label: "Speak Chinese UI showcase" },
@@ -116,57 +117,8 @@ function CaseImage({
 }
 
 function EdTechStickyIndicator() {
-  const [activeLabel, setActiveLabel] = useState(sections[0].label);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const hero = document.getElementById("edtech-overview");
-
-    const updateVisibility = () => {
-      if (!hero) return;
-      setIsVisible(window.scrollY > hero.offsetHeight - 48);
-    };
-
-    updateVisibility();
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-    window.addEventListener("resize", updateVisibility);
-
-    const observers = sections
-      .map((section) => document.getElementById(section.id))
-      .filter((element): element is HTMLElement => Boolean(element))
-      .map((element) => {
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              const section = sections.find((item) => item.id === element.id);
-              if (section) setActiveLabel(section.label);
-            }
-          },
-          { rootMargin: "-18% 0px -62% 0px", threshold: 0.01 }
-        );
-
-        observer.observe(element);
-        return observer;
-      });
-
-    return () => {
-      window.removeEventListener("scroll", updateVisibility);
-      window.removeEventListener("resize", updateVisibility);
-      observers.forEach((observer) => observer.disconnect());
-    };
-  }, []);
-
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-40 bg-transparent">
-      <div
-        className={cn(
-          "pointer-events-auto flex h-8 w-full items-center justify-center border-b border-black/10 bg-white/65 px-4 text-[13px] tracking-normal text-black shadow-[0_8px_30px_rgba(22,5,31,0.12)] backdrop-blur-xl backdrop-saturate-150 transition-transform duration-500 ease-out sm:text-sm",
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        )}
-      >
-        {activeLabel}
-      </div>
-    </div>
+    <CaseStudySectionNavigation heroId="edtech-overview" sections={sections} />
   );
 }
 
@@ -206,7 +158,7 @@ function NextProjectCard({
       </div>
       <div className="flex flex-col justify-between gap-10 p-7 sm:p-8">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#16a34a]">
+          <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#737373]">
             {featured ? "Next project" : project.dates}
           </p>
           <h3
@@ -217,13 +169,13 @@ function NextProjectCard({
           >
             {project.title}
           </h3>
-          <p className="mt-4 text-base leading-7 text-[#607068]">
+          <p className="mt-4 text-base leading-[1.6] text-[#737373]">
             {project.description}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
           {project.technologies.slice(0, featured ? 4 : 3).map((tag) => (
-            <span className="rounded-full bg-[#effbe9] px-3 py-1.5 text-xs text-[#274333]" key={tag}>
+            <span className="rounded-full bg-[#eeeff1] px-3 py-1.5 text-xs text-[#08090a]" key={tag}>
               {tag}
             </span>
           ))}
@@ -235,7 +187,7 @@ function NextProjectCard({
 
 export function EdTechCaseStudy() {
   return (
-    <main className="min-h-screen w-full max-w-full overflow-x-hidden font-sans text-[#092014]" style={{ backgroundColor: theme.page }}>
+    <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-sans text-[#08090a]">
       <EdTechStickyIndicator />
 
       <section
@@ -279,18 +231,20 @@ export function EdTechCaseStudy() {
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 sm:gap-32 sm:px-8 lg:gap-36 lg:py-36">
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="edtech-work">
+      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="edtech-work">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1 text-sm text-white">
               My Projects
             </span>
-            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[34px] font-bold leading-[1.28] tracking-normal sm:text-5xl sm:leading-[1.24]">
+            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">
               UI improvements for Chinese and Japanese learning apps
             </h2>
-            <p className="text-lg leading-8 text-[#607068] sm:text-xl sm:leading-[1.6]">
-              This showcase focuses on clarity, motivation, and friendly
-              interaction for language learning apps that are publicly available
+            <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+              This showcase focuses on <CaseStudyScrollHighlight>
+                clarity, motivation, and friendly interaction
+              </CaseStudyScrollHighlight>{" "}
+              for language learning apps that are publicly available
               on the App Store and used by global learners every day.
             </p>
           </div>
@@ -304,8 +258,8 @@ export function EdTechCaseStudy() {
               ["Tools", "Figma, Rive, After Effects"],
             ].map(([title, body]) => (
               <div className="border-t border-[#092014]/10 pt-5" key={title}>
-                <p className="text-sm uppercase tracking-[0.12em] text-[#16a34a]">{title}</p>
-                <p className="mt-3 text-base leading-6 text-[#092014]">{body}</p>
+                <p className="text-sm uppercase tracking-[0.12em] text-[#737373]">{title}</p>
+                <p className="mt-3 text-base leading-[1.6] text-[#08090a]">{body}</p>
               </div>
             ))}
           </div>
@@ -323,19 +277,21 @@ export function EdTechCaseStudy() {
               </Link>
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="edtech-motion">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="edtech-motion">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1 text-sm text-white">
               Motion Showcase
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Motion that motivates progress and supports learning
             </h2>
-            <p className="max-w-[720px] text-lg leading-8 text-[#607068]">
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
               Motion was not added only for delight. It helped reinforce the
-              feeling that learners continuously level up as they practice.
+              feeling that learners <CaseStudyScrollHighlight>
+                continuously level up as they practice
+              </CaseStudyScrollHighlight>.
             </p>
           </div>
 
@@ -347,35 +303,35 @@ export function EdTechCaseStudy() {
           <div className="grid gap-6 md:grid-cols-2">
             {motionPoints.map((item, index) => (
               <article className="border-t border-[#092014]/10 pt-6" key={item}>
-                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#16a34a]">
+                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#08090a]">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <p className="mt-5 text-base leading-7 text-[#274333]">{item}</p>
+                <p className="mt-5 text-base leading-[1.6] text-[#08090a]">{item}</p>
               </article>
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="edtech-speak">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="edtech-speak">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1 text-sm text-white">
               UI Showcase
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Speak Chinese - Learn Mandarin
             </h2>
           </div>
 
           <CaseImage src={assets.speakChinese} alt="Speak Chinese app UI screens" />
           <CaseImage src={assets.sensei} alt="Sensei Japanese learning app UI screens" />
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="edtech-graphics">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="edtech-graphics">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1 text-sm text-white">
               App Store Graphics
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Promotional visuals for product value and conversion
             </h2>
           </div>
@@ -383,7 +339,7 @@ export function EdTechCaseStudy() {
           <div className="grid gap-6 md:grid-cols-3">
             {graphicsPoints.map((item) => (
               <article className="border-t border-[#092014]/10 pt-6" key={item}>
-                <p className="text-base leading-7 text-[#274333]">{item}</p>
+                <p className="text-base leading-[1.6] text-[#08090a]">{item}</p>
               </article>
             ))}
           </div>
@@ -394,30 +350,30 @@ export function EdTechCaseStudy() {
             <CaseImage src={assets.graphics1} alt="App store promotional graphic" ratio="aspect-[4/3]" />
             <CaseImage src={assets.graphics2} alt="App store promotional graphic" ratio="aspect-[4/3]" />
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="edtech-tools">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="edtech-tools">
           <div className="rounded-2xl bg-[#092014] p-7 text-white shadow-sm sm:p-10">
-            <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#bef264]">
+            <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">
               Tools
             </p>
-            <h2 className="mt-5 font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Figma, Rive, and After Effects
             </h2>
-            <p className="mt-6 text-lg leading-8 text-white/80">
+            <p className="mt-6 text-base leading-[1.6] text-white/80 sm:text-[17px]">
               The final work connected UI polish, motion-ready mascot behavior,
               and App Store visuals so the learning experience felt clearer,
               friendlier, and more motivating.
             </p>
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="edtech-next">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="edtech-next">
           <div className="flex flex-col gap-5">
-            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1 text-sm text-white">
               Next projects
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Keep exploring the work
             </h2>
           </div>
@@ -429,24 +385,24 @@ export function EdTechCaseStudy() {
               <NextProjectCard project={project} key={project.href || project.title} />
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
       </section>
 
       <section id="edtech-contact" className="relative overflow-hidden px-5 pb-80 pt-32 text-center sm:pb-96 sm:pt-36">
         <div className="relative mx-auto max-w-[560px]">
-          <span className="inline-flex rounded-lg bg-[#092014] px-3 py-1.5 text-base text-white">
+          <span className="inline-flex rounded-lg bg-[#092014] px-3 py-1 text-sm text-white">
             Contact
           </span>
-          <h2 className="mt-5 font-[var(--font-heading)] text-4xl font-bold leading-[1.18] tracking-normal">
+          <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
             Get in Touch
           </h2>
-          <p className="mt-5 text-lg leading-8 text-[#607068]">
+          <p className="mt-5 text-base leading-[1.6] text-[#737373] sm:text-[17px]">
             Excited to collaborate! Email me at{" "}
-            <a className="text-[#16a34a]" href="mailto:phuongthuy101222@gmail.com">
+            <a className="text-[#08090a] underline underline-offset-4" href="mailto:phuongthuy101222@gmail.com">
               phuongthuy101222@gmail.com
             </a>{" "}
             or DM me on{" "}
-            <a className="text-[#16a34a]" href={DATA.contact.social.LinkedIn.url}>
+            <a className="text-[#08090a] underline underline-offset-4" href={DATA.contact.social.LinkedIn.url}>
               Linkedin
             </a>
           </p>

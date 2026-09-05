@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
+import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
+import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
@@ -23,7 +25,7 @@ type CaseProject = {
 };
 
 const theme = {
-  page: "#fff8ec",
+  page: "#f7f7f8",
   accent: "#ff6313",
   dark: "#21120a",
   hero:
@@ -31,7 +33,6 @@ const theme = {
 };
 
 const sections = [
-  { id: "series-overview", label: "Interface Design Series" },
   { id: "series-context", label: "Series overview" },
   { id: "series-brief", label: "Week 4 brief" },
   { id: "series-process", label: "Design process" },
@@ -136,57 +137,8 @@ function CaseImage({
 }
 
 function SeriesStickyIndicator() {
-  const [activeLabel, setActiveLabel] = useState(sections[0].label);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const hero = document.getElementById("series-overview");
-
-    const updateVisibility = () => {
-      if (!hero) return;
-      setIsVisible(window.scrollY > hero.offsetHeight - 48);
-    };
-
-    updateVisibility();
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-    window.addEventListener("resize", updateVisibility);
-
-    const observers = sections
-      .map((section) => document.getElementById(section.id))
-      .filter((element): element is HTMLElement => Boolean(element))
-      .map((element) => {
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              const section = sections.find((item) => item.id === element.id);
-              if (section) setActiveLabel(section.label);
-            }
-          },
-          { rootMargin: "-18% 0px -62% 0px", threshold: 0.01 }
-        );
-
-        observer.observe(element);
-        return observer;
-      });
-
-    return () => {
-      window.removeEventListener("scroll", updateVisibility);
-      window.removeEventListener("resize", updateVisibility);
-      observers.forEach((observer) => observer.disconnect());
-    };
-  }, []);
-
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-40 bg-transparent">
-      <div
-        className={cn(
-          "pointer-events-auto flex h-8 w-full items-center justify-center border-b border-black/10 bg-white/65 px-4 text-[13px] tracking-normal text-black shadow-[0_8px_30px_rgba(22,5,31,0.12)] backdrop-blur-xl backdrop-saturate-150 transition-transform duration-500 ease-out sm:text-sm",
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        )}
-      >
-        {activeLabel}
-      </div>
-    </div>
+    <CaseStudySectionNavigation heroId="series-overview" sections={sections} />
   );
 }
 
@@ -226,7 +178,7 @@ function NextProjectCard({
       </div>
       <div className="flex flex-col justify-between gap-10 p-7 sm:p-8">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ff6313]">
+          <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#737373]">
             {featured ? "Next project" : project.dates}
           </p>
           <h3
@@ -237,13 +189,13 @@ function NextProjectCard({
           >
             {project.title}
           </h3>
-          <p className="mt-4 text-base leading-7 text-[#78645b]">
+          <p className="mt-4 text-base leading-[1.6] text-[#737373]">
             {project.description}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
           {project.technologies.slice(0, featured ? 4 : 3).map((tag) => (
-            <span className="rounded-full bg-[#fff8ec] px-3 py-1.5 text-xs text-[#4b2e1f]" key={tag}>
+            <span className="rounded-full bg-[#eeeff1] px-3 py-1.5 text-xs text-[#08090a]" key={tag}>
               {tag}
             </span>
           ))}
@@ -255,7 +207,7 @@ function NextProjectCard({
 
 export function UiDesignSeriesCaseStudy() {
   return (
-    <main className="min-h-screen w-full max-w-full overflow-x-hidden font-sans text-[#21120a]" style={{ backgroundColor: theme.page }}>
+    <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-sans text-[#08090a]">
       <SeriesStickyIndicator />
 
       <section
@@ -300,19 +252,21 @@ export function UiDesignSeriesCaseStudy() {
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 sm:gap-32 sm:px-8 lg:gap-36 lg:py-36">
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="series-context">
+      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="series-context">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1 text-sm text-white">
               Interface Design Series
             </span>
-            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[34px] font-bold leading-[1.28] tracking-normal sm:text-5xl sm:leading-[1.24]">
+            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">
               Six weekly landing pages from brief to interactive prototype
             </h2>
-            <p className="text-lg leading-8 text-[#78645b] sm:text-xl sm:leading-[1.6]">
+            <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
               Mingg UI Design Challenge was a 6-week UI design competition where
-              participants created one landing page per week based on a given
-              brief.
+              participants created <CaseStudyScrollHighlight>
+                one landing page per week
+              </CaseStudyScrollHighlight>{" "}
+              based on a given brief.
             </p>
           </div>
 
@@ -321,24 +275,26 @@ export function UiDesignSeriesCaseStudy() {
           <div className="grid gap-6 sm:grid-cols-3">
             {gains.map((item) => (
               <div className="border-t border-[#21120a]/10 pt-5" key={item}>
-                <p className="text-sm uppercase tracking-[0.12em] text-[#ff6313]">What I gained</p>
-                <p className="mt-3 text-base leading-6 text-[#21120a]">{item}</p>
+                <p className="text-sm uppercase tracking-[0.12em] text-[#737373]">What I gained</p>
+                <p className="mt-3 text-base leading-[1.6] text-[#08090a]">{item}</p>
               </div>
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="series-brief">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="series-brief">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1 text-sm text-white">
               Week 4 Brief
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Design faster, think smarter with an AI design partner
             </h2>
-            <p className="max-w-[720px] text-lg leading-8 text-[#78645b]">
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
               The brief asked for a website that could show off an early product
-              idea, support fundraising, attract community attention, and improve
+              idea, <CaseStudyScrollHighlight>
+                support fundraising and attract community attention
+              </CaseStudyScrollHighlight>, and improve
               content, fonts, colors, and first-glance wow factor.
             </p>
           </div>
@@ -346,7 +302,7 @@ export function UiDesignSeriesCaseStudy() {
           <div className="grid gap-6 md:grid-cols-2">
             {briefFeatures.map((item, index) => (
               <article className="border-t border-[#21120a]/10 pt-6" key={item}>
-                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#ff6313]">
+                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#08090a]">
                   {String(index + 1).padStart(2, "0")}
                 </p>
                 <h3 className="mt-5 font-[var(--font-heading)] text-2xl font-bold leading-[1.2] tracking-normal">
@@ -355,14 +311,14 @@ export function UiDesignSeriesCaseStudy() {
               </article>
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="series-process">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="series-process">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1 text-sm text-white">
               Design Process
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               From brief analysis to Framer prototype
             </h2>
           </div>
@@ -370,13 +326,13 @@ export function UiDesignSeriesCaseStudy() {
           <div className="grid gap-6 md:grid-cols-2">
             {processSteps.map((item, index) => (
               <article className="border-t border-[#21120a]/10 pt-6" key={item.title}>
-                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#ff6313]">
+                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#08090a]">
                   {String(index + 1).padStart(2, "0")}
                 </p>
                 <h3 className="mt-5 font-[var(--font-heading)] text-2xl font-bold leading-[1.2] tracking-normal">
                   {item.title}
                 </h3>
-                <p className="mt-4 text-base leading-7 text-[#4b2e1f]">{item.body}</p>
+                <p className="mt-4 text-base leading-[1.6] text-[#08090a]">{item.body}</p>
               </article>
             ))}
           </div>
@@ -385,17 +341,17 @@ export function UiDesignSeriesCaseStudy() {
             <CaseImage src={assets.direction} alt="UI Design Series direction setting" ratio="aspect-[4/3]" />
             <CaseImage src={assets.draft} alt="UI Design Series draft hero and layout" ratio="aspect-[4/3]" />
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="series-picks">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="series-picks">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1 text-sm text-white">
               Top Picks
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Selected landing pages from the series
             </h2>
-            <p className="max-w-[720px] text-lg leading-8 text-[#78645b]">
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
               These are selected screens from the weekly challenge. Some were
               optimized for specific desktop widths due to the competition
               timeline.
@@ -430,14 +386,14 @@ export function UiDesignSeriesCaseStudy() {
               </Link>
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="series-next">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="series-next">
           <div className="flex flex-col gap-5">
-            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1 text-sm text-white">
               Next projects
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Keep exploring the work
             </h2>
           </div>
@@ -449,24 +405,24 @@ export function UiDesignSeriesCaseStudy() {
               <NextProjectCard project={project} key={project.href || project.title} />
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
       </section>
 
       <section id="series-contact" className="relative overflow-hidden px-5 pb-80 pt-32 text-center sm:pb-96 sm:pt-36">
         <div className="relative mx-auto max-w-[560px]">
-          <span className="inline-flex rounded-lg bg-[#21120a] px-3 py-1.5 text-base text-white">
+          <span className="inline-flex rounded-lg bg-[#21120a] px-3 py-1 text-sm text-white">
             Contact
           </span>
-          <h2 className="mt-5 font-[var(--font-heading)] text-4xl font-bold leading-[1.18] tracking-normal">
+          <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
             Get in Touch
           </h2>
-          <p className="mt-5 text-lg leading-8 text-[#78645b]">
+          <p className="mt-5 text-base leading-[1.6] text-[#737373] sm:text-[17px]">
             Excited to collaborate! Email me at{" "}
-            <a className="text-[#ff6313]" href="mailto:phuongthuy101222@gmail.com">
+            <a className="text-[#08090a] underline underline-offset-4" href="mailto:phuongthuy101222@gmail.com">
               phuongthuy101222@gmail.com
             </a>{" "}
             or DM me on{" "}
-            <a className="text-[#ff6313]" href={DATA.contact.social.LinkedIn.url}>
+            <a className="text-[#08090a] underline underline-offset-4" href={DATA.contact.social.LinkedIn.url}>
               Linkedin
             </a>
           </p>

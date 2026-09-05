@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
+import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
+import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
@@ -13,20 +15,19 @@ import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
 const PROJECT_HERO_DELAY = 0.36;
 
 const theme = {
-  page: "#f3f7ff",
-  ink: "#07111f",
-  muted: "#64748b",
+  page: "#f7f7f8",
+  ink: "#08090a",
+  muted: "#737373",
   accent: "#15CABE",
   accent2: "#B0F1ED",
   dark: "#07111f",
 };
 
 const sections = [
-  { id: "zoan-overview", label: "Designing the interface for an AI platform" },
   { id: "zoan-work", label: "The work" },
-  { id: "zoan-challenge-01", label: "Challenge 01: Rebuilding product foundations" },
-  { id: "zoan-challenge-02", label: "Challenge 02: Cross-platform workflow design" },
-  { id: "zoan-motion", label: "Challenge 03: Motion and micro-interactions" },
+  { id: "zoan-challenge-01", label: "Product foundations" },
+  { id: "zoan-challenge-02", label: "Cross-platform workflow" },
+  { id: "zoan-motion", label: "Motion" },
   { id: "zoan-outcome", label: "Outcome" },
   { id: "zoan-next", label: "Next projects" },
   { id: "zoan-contact", label: "Get in touch" },
@@ -129,57 +130,8 @@ function CaseImage({
 }
 
 function ZoanStickyIndicator() {
-  const [activeLabel, setActiveLabel] = useState(sections[0].label);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const hero = document.getElementById("zoan-overview");
-
-    const updateVisibility = () => {
-      if (!hero) return;
-      setIsVisible(window.scrollY > hero.offsetHeight - 48);
-    };
-
-    updateVisibility();
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-    window.addEventListener("resize", updateVisibility);
-
-    const observers = sections
-      .map((section) => document.getElementById(section.id))
-      .filter((element): element is HTMLElement => Boolean(element))
-      .map((element) => {
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              const section = sections.find((item) => item.id === element.id);
-              if (section) setActiveLabel(section.label);
-            }
-          },
-          { rootMargin: "-18% 0px -62% 0px", threshold: 0.01 }
-        );
-
-        observer.observe(element);
-        return observer;
-      });
-
-    return () => {
-      window.removeEventListener("scroll", updateVisibility);
-      window.removeEventListener("resize", updateVisibility);
-      observers.forEach((observer) => observer.disconnect());
-    };
-  }, []);
-
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-40 bg-transparent">
-      <div
-        className={cn(
-          "pointer-events-auto flex h-8 w-full items-center justify-center border-b border-black/10 bg-white/65 px-4 text-[13px] tracking-normal text-black shadow-[0_8px_30px_rgba(22,5,31,0.12)] backdrop-blur-xl backdrop-saturate-150 transition-transform duration-500 ease-out sm:text-sm",
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        )}
-      >
-        {activeLabel}
-      </div>
-    </div>
+    <CaseStudySectionNavigation heroId="zoan-overview" sections={sections} />
   );
 }
 
@@ -219,7 +171,7 @@ function NextProjectCard({
       </div>
       <div className="flex flex-col justify-between gap-10 p-7 sm:p-8">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#15CABE]">
+          <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#737373]">
             {featured ? "Next project" : project.dates}
           </p>
           <h3
@@ -230,13 +182,13 @@ function NextProjectCard({
           >
             {project.title}
           </h3>
-          <p className="mt-4 text-base leading-7 text-[#64748b]">
+          <p className="mt-4 text-base leading-[1.6] text-[#737373]">
             {project.description}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
           {project.technologies.slice(0, featured ? 4 : 3).map((tag) => (
-            <span className="rounded-full bg-[#eef3ff] px-3 py-1.5 text-xs text-[#334155]" key={tag}>
+            <span className="rounded-full bg-[#eeeff1] px-3 py-1.5 text-xs text-[#08090a]" key={tag}>
               {tag}
             </span>
           ))}
@@ -248,7 +200,7 @@ function NextProjectCard({
 
 export function ZoanCaseStudy() {
   return (
-    <main className="min-h-screen w-full max-w-full overflow-x-hidden font-sans text-[#07111f]" style={{ backgroundColor: theme.page }}>
+    <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-sans text-[#08090a]">
       <ZoanStickyIndicator />
 
       <section
@@ -292,19 +244,21 @@ export function ZoanCaseStudy() {
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 sm:gap-32 sm:px-8 lg:gap-36 lg:py-36">
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="zoan-work">
+      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-work">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
               My Projects
             </span>
-            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[34px] font-bold leading-[1.28] tracking-normal sm:text-5xl sm:leading-[1.24]">
+            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">
               Designing the interface an AI engine relies on
             </h2>
-            <p className="text-lg leading-8 text-[#64748b] sm:text-xl sm:leading-[1.6]">
+            <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
               Before joining Zoan AI, I wondered if AI would replace designers.
               This project showed me something else: I was designing the
-              interface for an AI platform.
+              {" "}<CaseStudyScrollHighlight>
+                interface for an AI platform
+              </CaseStudyScrollHighlight>.
             </p>
           </div>
 
@@ -317,25 +271,26 @@ export function ZoanCaseStudy() {
               ["Outcome", "A scalable foundation for launch and go-to-market"],
             ].map(([title, body]) => (
               <div className="border-t border-[#07111f]/10 pt-5" key={title}>
-                <p className="text-sm uppercase tracking-[0.12em] text-[#15CABE]">{title}</p>
-                <p className="mt-3 text-base leading-6 text-[#07111f]">{body}</p>
+                <p className="text-sm uppercase tracking-[0.12em] text-[#737373]">{title}</p>
+                <p className="mt-3 text-base leading-[1.6] text-[#08090a]">{body}</p>
               </div>
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
               The work
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               From loose interface pieces to a scalable AI product system
             </h2>
-            <p className="max-w-[720px] text-lg leading-8 text-[#64748b]">
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
               Zoan enables teams and partners to build AI-generated interactive
-              content through unified desktop workflows and a mobile
-              chat-to-creation experience.
+              content through <CaseStudyScrollHighlight>
+                unified desktop workflows and a mobile chat-to-creation experience
+              </CaseStudyScrollHighlight>.
             </p>
           </div>
 
@@ -355,24 +310,24 @@ export function ZoanCaseStudy() {
           <div className="grid gap-6">
             {challenges.map((item) => (
               <article className="border-t border-[#07111f]/10 pt-6" key={item.label}>
-                <p className="text-sm text-[#15CABE]">{item.label}</p>
-                <h3 className="mt-3 font-[var(--font-heading)] text-2xl font-bold leading-[1.2] tracking-normal">
+                <p className="text-sm uppercase tracking-[0.12em] text-[#737373]">{item.label}</p>
+                <h3 className="mt-3 font-[var(--font-heading)] text-lg font-normal leading-[1.25] tracking-normal sm:text-xl">
                   {item.title}
                 </h3>
-                <p className="mt-4 text-base leading-7 text-[#64748b]">
+                <p className="mt-4 text-base leading-[1.6] text-[#08090a] sm:text-[17px]">
                   {item.question}
                 </p>
               </article>
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="zoan-challenge-01">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-challenge-01">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
               Challenge 01
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Rebuilding product foundations for an early-stage AI platform
             </h2>
           </div>
@@ -386,23 +341,23 @@ export function ZoanCaseStudy() {
           <div className="grid gap-6 md:grid-cols-2">
             {foundationSteps.map((item, index) => (
               <article className="border-t border-[#07111f]/10 pt-6" key={item}>
-                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#15CABE]">
+                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#08090a]">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <p className="mt-5 text-base leading-7 text-[#334155]">{item}</p>
+                <p className="mt-5 text-base leading-[1.6] text-[#08090a]">{item}</p>
               </article>
             ))}
           </div>
 
           <CaseImage src={zoanAssets.components} alt="Zoan component system" />
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="zoan-challenge-02">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-challenge-02">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
               Challenge 02
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Designing one workflow across desktop and mobile
             </h2>
           </div>
@@ -410,7 +365,7 @@ export function ZoanCaseStudy() {
           <div className="grid gap-6 md:grid-cols-2">
             {platformSteps.map((item) => (
               <article className="border-t border-[#07111f]/10 pt-6" key={item}>
-                <p className="text-base leading-7 text-[#334155]">{item}</p>
+                <p className="text-base leading-[1.6] text-[#08090a]">{item}</p>
               </article>
             ))}
           </div>
@@ -419,17 +374,17 @@ export function ZoanCaseStudy() {
             <CaseImage src={zoanAssets.platformShowcase1} alt="Zoan desktop workflow showcase" />
             <CaseImage src={zoanAssets.platformShowcase2} alt="Zoan mobile workflow showcase" />
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="zoan-motion">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-motion">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
               Challenge 03
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Motion and micro-interactions for guided AI workflows
             </h2>
-            <p className="max-w-[720px] text-lg leading-8 text-[#64748b]">
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
               Motion was introduced to guide attention, clarify transitions,
               reinforce hierarchy, and make the experience feel more responsive
               than static UI.
@@ -440,30 +395,30 @@ export function ZoanCaseStudy() {
             <CaseImage src={zoanAssets.timelineMotion} alt="Zoan timeline motion" />
             <CaseImage src={zoanAssets.appMotion} alt="Zoan app transition motion" />
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="zoan-outcome">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-outcome">
           <div className="rounded-2xl bg-[#07111f] p-7 text-white shadow-sm sm:p-10">
-            <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#15CABE]">
+            <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">
               Outcome
             </p>
-            <h2 className="mt-5 font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Designers shape how humans interact with AI
             </h2>
-            <p className="mt-6 text-lg leading-8 text-white/80">
+            <p className="mt-6 text-base leading-[1.6] text-white/80 sm:text-[17px]">
               The renewed system provided a scalable foundation for future
               development, reduced design-engineering friction, and established
               a stronger visual identity for fundraising and go-to-market.
             </p>
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="zoan-next">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="zoan-next">
           <div className="flex flex-col gap-5">
-            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
               Next projects
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Keep exploring the work
             </h2>
           </div>
@@ -475,24 +430,24 @@ export function ZoanCaseStudy() {
               <NextProjectCard project={project} key={project.href || project.title} />
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
       </section>
 
       <section id="zoan-contact" className="relative overflow-hidden px-5 pb-80 pt-32 text-center sm:pb-96 sm:pt-36">
         <div className="relative mx-auto max-w-[560px]">
-          <span className="inline-flex rounded-lg bg-[#07111f] px-3 py-1.5 text-base text-white">
+          <span className="inline-flex rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
             Contact
           </span>
-          <h2 className="mt-5 font-[var(--font-heading)] text-4xl font-bold leading-[1.18] tracking-normal">
+          <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
             Get in Touch
           </h2>
-          <p className="mt-5 text-lg leading-8 text-[#64748b]">
+          <p className="mt-5 text-base leading-[1.6] text-[#737373] sm:text-[17px]">
             Excited to collaborate! Email me at{" "}
-            <a className="text-[#15CABE]" href="mailto:phuongthuy101222@gmail.com">
+            <a className="text-[#08090a] underline underline-offset-4" href="mailto:phuongthuy101222@gmail.com">
               phuongthuy101222@gmail.com
             </a>{" "}
             or DM me on{" "}
-            <a className="text-[#15CABE]" href={DATA.contact.social.LinkedIn.url}>
+            <a className="text-[#08090a] underline underline-offset-4" href={DATA.contact.social.LinkedIn.url}>
               Linkedin
             </a>
           </p>

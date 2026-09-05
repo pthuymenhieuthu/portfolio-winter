@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
+import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
+import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
@@ -13,7 +15,7 @@ import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
 const PROJECT_HERO_DELAY = 0.36;
 
 const theme = {
-  page: "#f3fbf7",
+  page: "#f7f7f8",
   accent: "#16a34a",
   accent2: "#34d399",
   dark: "#071b14",
@@ -32,10 +34,9 @@ type CaseProject = {
 };
 
 const sections = [
-  { id: "trueprofit-overview", label: "Clear visual storytelling for e-commerce finance" },
   { id: "trueprofit-work", label: "Overview" },
-  { id: "trueprofit-task-01", label: "Task 1: Landing page support" },
-  { id: "trueprofit-task-02", label: "Task 2: Onboarding illustrations" },
+  { id: "trueprofit-task-01", label: "Landing page" },
+  { id: "trueprofit-task-02", label: "Onboarding" },
   { id: "trueprofit-outcome", label: "Outcome" },
   { id: "trueprofit-next", label: "Next projects" },
   { id: "trueprofit-contact", label: "Get in touch" },
@@ -120,57 +121,11 @@ function CaseImage({
 }
 
 function TrueProfitStickyIndicator() {
-  const [activeLabel, setActiveLabel] = useState(sections[0].label);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const hero = document.getElementById("trueprofit-overview");
-
-    const updateVisibility = () => {
-      if (!hero) return;
-      setIsVisible(window.scrollY > hero.offsetHeight - 48);
-    };
-
-    updateVisibility();
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-    window.addEventListener("resize", updateVisibility);
-
-    const observers = sections
-      .map((section) => document.getElementById(section.id))
-      .filter((element): element is HTMLElement => Boolean(element))
-      .map((element) => {
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              const section = sections.find((item) => item.id === element.id);
-              if (section) setActiveLabel(section.label);
-            }
-          },
-          { rootMargin: "-18% 0px -62% 0px", threshold: 0.01 }
-        );
-
-        observer.observe(element);
-        return observer;
-      });
-
-    return () => {
-      window.removeEventListener("scroll", updateVisibility);
-      window.removeEventListener("resize", updateVisibility);
-      observers.forEach((observer) => observer.disconnect());
-    };
-  }, []);
-
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-40 bg-transparent">
-      <div
-        className={cn(
-          "pointer-events-auto flex h-8 w-full items-center justify-center border-b border-black/10 bg-white/65 px-4 text-[13px] tracking-normal text-black shadow-[0_8px_30px_rgba(22,5,31,0.12)] backdrop-blur-xl backdrop-saturate-150 transition-transform duration-500 ease-out sm:text-sm",
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        )}
-      >
-        {activeLabel}
-      </div>
-    </div>
+    <CaseStudySectionNavigation
+      heroId="trueprofit-overview"
+      sections={sections}
+    />
   );
 }
 
@@ -210,7 +165,7 @@ function NextProjectCard({
       </div>
       <div className="flex flex-col justify-between gap-10 p-7 sm:p-8">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#16a34a]">
+          <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#737373]">
             {featured ? "Next project" : project.dates}
           </p>
           <h3
@@ -221,13 +176,13 @@ function NextProjectCard({
           >
             {project.title}
           </h3>
-          <p className="mt-4 text-base leading-7 text-[#64746a]">
+          <p className="mt-4 text-base leading-[1.6] text-[#737373]">
             {project.description}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
           {project.technologies.slice(0, featured ? 4 : 3).map((tag) => (
-            <span className="rounded-full bg-[#edf8f1] px-3 py-1.5 text-xs text-[#254236]" key={tag}>
+            <span className="rounded-full bg-[#eeeff1] px-3 py-1.5 text-xs text-[#08090a]" key={tag}>
               {tag}
             </span>
           ))}
@@ -239,7 +194,7 @@ function NextProjectCard({
 
 export function TrueProfitCaseStudy() {
   return (
-    <main className="min-h-screen w-full max-w-full overflow-x-hidden font-sans text-[#071b14]" style={{ backgroundColor: theme.page }}>
+    <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-sans text-[#08090a]">
       <TrueProfitStickyIndicator />
 
       <section
@@ -284,18 +239,20 @@ export function TrueProfitCaseStudy() {
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-28 px-5 py-24 sm:gap-32 sm:px-8 lg:gap-36 lg:py-36">
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="trueprofit-work">
+      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-work">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1 text-sm text-white">
               My Projects
             </span>
-            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[34px] font-bold leading-[1.28] tracking-normal sm:text-5xl sm:leading-[1.24]">
+            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">
               Turning product goals into clearer visual stories
             </h2>
-            <p className="text-lg leading-8 text-[#64746a] sm:text-xl sm:leading-[1.6]">
+            <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
               During my internship, I worked on two design tasks tied closely to
-              user experience and brand consistency: supporting the marketing
+              <CaseStudyScrollHighlight>
+                user experience and brand consistency
+              </CaseStudyScrollHighlight>: supporting the marketing
               website launch and redesigning onboarding illustrations.
             </p>
           </div>
@@ -309,63 +266,65 @@ export function TrueProfitCaseStudy() {
               ["Outcome", "More cohesive visuals across marketing and product"],
             ].map(([title, body]) => (
               <div className="border-t border-[#071b14]/10 pt-5" key={title}>
-                <p className="text-sm uppercase tracking-[0.12em] text-[#16a34a]">{title}</p>
-                <p className="mt-3 text-base leading-6 text-[#071b14]">{body}</p>
+                <p className="text-sm uppercase tracking-[0.12em] text-[#737373]">{title}</p>
+                <p className="mt-3 text-base leading-[1.6] text-[#08090a]">{body}</p>
               </div>
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1 text-sm text-white">
               The work
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               From brand-aligned visuals to a smoother onboarding journey
             </h2>
-            <p className="max-w-[720px] text-lg leading-8 text-[#64746a]">
-              Both tasks required translating abstract product goals into clear
-              visual storytelling while staying aligned with the existing design
-              system and marketing direction.
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+              Both tasks required <CaseStudyScrollHighlight>
+                translating abstract product goals into clear visual storytelling
+              </CaseStudyScrollHighlight>{" "}
+              while staying aligned with the existing design system and marketing
+              direction.
             </p>
           </div>
 
           <div className="grid gap-6">
             {focusAreas.map((item) => (
               <article className="border-t border-[#071b14]/10 pt-6" key={item.label}>
-                <p className="text-sm text-[#16a34a]">{item.label}</p>
+                <p className="text-sm uppercase tracking-[0.12em] text-[#737373]">{item.label}</p>
                 <h3 className="mt-3 font-[var(--font-heading)] text-2xl font-bold leading-[1.2] tracking-normal">
                   {item.title}
                 </h3>
-                <p className="mt-4 text-base leading-7 text-[#64746a]">
+                <p className="mt-4 text-base leading-[1.6] text-[#08090a]">
                   {item.body}
                 </p>
               </article>
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="trueprofit-task-01">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-task-01">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1 text-sm text-white">
               Task 1
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Landing Page Support
             </h2>
           </div>
 
           <div className="grid gap-6 md:grid-cols-[1fr_1fr]">
             <article className="border-t border-[#071b14]/10 pt-6">
-              <p className="text-sm font-bold uppercase text-[#16a34a]">Problem</p>
-              <p className="mt-4 text-lg leading-8 text-[#071b14]">
+              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#737373]">Problem</p>
+              <p className="mt-4 text-base leading-[1.6] text-[#08090a] sm:text-[17px]">
                 The website needed additional visuals to better showcase product
                 value across its main pages.
               </p>
             </article>
             <article className="rounded-xl bg-[#071b14] p-6 text-white shadow-sm sm:p-8">
-              <p className="text-sm font-bold uppercase text-[#34d399]">My contribution</p>
+              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">My contribution</p>
               <p className="mt-4 text-lg leading-8 text-white/85">
                 From November until launch in January, I created illustrations
                 for Home and Features, then drafted layout and visual concepts
@@ -382,10 +341,10 @@ export function TrueProfitCaseStudy() {
           <div className="grid gap-6 md:grid-cols-2">
             {landingSteps.map((item, index) => (
               <article className="border-t border-[#071b14]/10 pt-6" key={item}>
-                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#16a34a]">
+                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#08090a]">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <p className="mt-5 text-base leading-7 text-[#254236]">{item}</p>
+                <p className="mt-5 text-base leading-[1.6] text-[#08090a]">{item}</p>
               </article>
             ))}
           </div>
@@ -394,17 +353,17 @@ export function TrueProfitCaseStudy() {
             <CaseImage src={assets.landingOutcome} alt="TrueProfit landing illustration outcome" ratio="aspect-[4/3]" />
             <CaseImage src={assets.landingResult} alt="TrueProfit landing page result" ratio="aspect-[4/3]" />
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="trueprofit-task-02">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-task-02">
           <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1 text-sm text-white">
               Task 2
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Onboarding Illustrations
             </h2>
-            <p className="max-w-[720px] text-lg leading-8 text-[#64746a]">
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
               The existing onboarding felt disconnected from the brand, had high
               skip behavior, and used visuals more as decoration than guidance.
             </p>
@@ -419,10 +378,10 @@ export function TrueProfitCaseStudy() {
           <div className="grid gap-6 md:grid-cols-2">
             {onboardingSteps.map((item, index) => (
               <article className="border-t border-[#071b14]/10 pt-6" key={item}>
-                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#16a34a]">
+                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#08090a]">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <p className="mt-5 text-base leading-7 text-[#254236]">{item}</p>
+                <p className="mt-5 text-base leading-[1.6] text-[#08090a]">{item}</p>
               </article>
             ))}
           </div>
@@ -439,14 +398,14 @@ export function TrueProfitCaseStudy() {
             alt="TrueProfit onboarding illustration outcome"
             ratio="h-auto"
           />
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="trueprofit-outcome">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-outcome">
           <div className="rounded-2xl bg-[#071b14] p-7 text-white shadow-sm sm:p-10">
-            <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#34d399]">
+            <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">
               Outcome
             </p>
-            <h2 className="mt-5 font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               A more cohesive bridge between website and product onboarding
             </h2>
             <p className="mt-6 text-lg leading-8 text-white/80">
@@ -455,14 +414,14 @@ export function TrueProfitCaseStudy() {
               and connected to TrueProfit&apos;s product story.
             </p>
           </div>
-        </section>
+        </CaseStudyRevealSection>
 
-        <section className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="trueprofit-next">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="trueprofit-next">
           <div className="flex flex-col gap-5">
-            <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1.5 text-base text-white">
+            <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1 text-sm text-white">
               Next projects
             </span>
-            <h2 className="font-[var(--font-heading)] text-[32px] font-bold leading-[1.18] tracking-normal sm:text-4xl">
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Keep exploring the work
             </h2>
           </div>
@@ -474,24 +433,24 @@ export function TrueProfitCaseStudy() {
               <NextProjectCard project={project} key={project.href || project.title} />
             ))}
           </div>
-        </section>
+        </CaseStudyRevealSection>
       </section>
 
       <section id="trueprofit-contact" className="relative overflow-hidden px-5 pb-80 pt-32 text-center sm:pb-96 sm:pt-36">
         <div className="relative mx-auto max-w-[560px]">
-          <span className="inline-flex rounded-lg bg-[#071b14] px-3 py-1.5 text-base text-white">
+          <span className="inline-flex rounded-lg bg-[#071b14] px-3 py-1 text-sm text-white">
             Contact
           </span>
-          <h2 className="mt-5 font-[var(--font-heading)] text-4xl font-bold leading-[1.18] tracking-normal">
+          <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
             Get in Touch
           </h2>
-          <p className="mt-5 text-lg leading-8 text-[#64746a]">
+          <p className="mt-5 text-base leading-[1.6] text-[#737373] sm:text-[17px]">
             Excited to collaborate! Email me at{" "}
-            <a className="text-[#16a34a]" href="mailto:phuongthuy101222@gmail.com">
+            <a className="text-[#08090a] underline underline-offset-4" href="mailto:phuongthuy101222@gmail.com">
               phuongthuy101222@gmail.com
             </a>{" "}
             or DM me on{" "}
-            <a className="text-[#16a34a]" href={DATA.contact.social.LinkedIn.url}>
+            <a className="text-[#08090a] underline underline-offset-4" href={DATA.contact.social.LinkedIn.url}>
               Linkedin
             </a>
           </p>
