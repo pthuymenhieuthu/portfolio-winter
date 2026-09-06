@@ -128,7 +128,7 @@ export function CaseStudySectionNavigation({
 
       <div
         className={cn(
-          "pointer-events-none fixed inset-x-0 top-0 z-40 transition-transform duration-500 ease-out md:hidden",
+          "pointer-events-none fixed inset-x-0 top-0 z-40 flex flex-col items-center pt-2 transition-transform duration-500 ease-out md:hidden",
           isVisible ? "translate-y-0" : "-translate-y-full"
         )}
       >
@@ -137,7 +137,7 @@ export function CaseStudySectionNavigation({
           aria-expanded={isMenuOpen}
           aria-controls={`${heroId}-mobile-section-menu`}
           onClick={() => setIsMenuOpen((open) => !open)}
-          className="pointer-events-auto flex h-10 w-full items-center justify-center gap-1.5 border-b border-black/10 bg-white/70 px-4 text-[13px] text-black shadow-[0_8px_30px_rgba(22,5,31,0.12)] backdrop-blur-xl backdrop-saturate-150"
+          className="pointer-events-auto flex h-10 min-w-[180px] items-center justify-center gap-1.5 rounded-full border border-black/10 bg-white/85 px-5 text-[13px] text-black shadow-[0_8px_30px_rgba(22,5,31,0.12)] backdrop-blur-xl backdrop-saturate-150"
         >
           <span>{activeSection.label}</span>
           <ChevronDown
@@ -153,7 +153,7 @@ export function CaseStudySectionNavigation({
           aria-hidden={!isMenuOpen}
           id={`${heroId}-mobile-section-menu`}
           className={cn(
-            "pointer-events-auto mx-3 mt-2 max-h-[min(70vh,520px)] overflow-y-auto rounded-lg border border-black/10 bg-white/80 p-1.5 shadow-[0_12px_36px_rgba(22,5,31,0.16)] backdrop-blur-xl backdrop-saturate-150 transition duration-200",
+            "pointer-events-auto mt-2 max-h-[min(70vh,520px)] w-[calc(100%_-_24px)] max-w-sm overflow-y-auto rounded-2xl border border-black/10 bg-white/85 p-1.5 shadow-[0_12px_36px_rgba(22,5,31,0.16)] backdrop-blur-xl backdrop-saturate-150 transition duration-200",
             isMenuOpen
               ? "visible translate-y-0 opacity-100"
               : "invisible pointer-events-none -translate-y-2 opacity-0"

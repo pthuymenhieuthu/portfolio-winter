@@ -11,6 +11,7 @@ import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
+import { HeroBlobMotion } from "@/components/hero-blob-motion";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -53,6 +54,17 @@ const assets = {
   graphics2: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764756721/Frame_2147225634_auzyip.png",
 };
 
+const assetDimensions: Record<string, [number, number]> = {
+  [assets.hero]: [1920, 1080],
+  [assets.leftRight]: [1920, 1080],
+  [assets.speakChinese]: [4167, 2326],
+  [assets.sensei]: [4167, 2035],
+  [assets.hsk]: [5501, 2686],
+  [assets.androidBanner]: [5486, 2679],
+  [assets.graphics1]: [5736, 3118],
+  [assets.graphics2]: [8825, 3072],
+};
+
 const appLinks = [
   {
     label: "Speak Chinese - Learn Mandarin",
@@ -92,23 +104,23 @@ const nextProjects = ["Marketing Graphics", "TrueProfit", "Zoan AI"]
 function CaseImage({
   src,
   alt,
-  ratio = "aspect-[16/9]",
 }: {
   src: string;
   alt: string;
-  ratio?: string;
 }) {
+  const [width, height] = assetDimensions[src] ?? [1440, 810];
+
   return (
-    <div className="overflow-hidden rounded-2xl shadow-sm">
+    <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
       <ImageZoom>
         <ResponsiveMotionImage
           src={src}
           alt={alt}
-          width={1440}
-          height={810}
+          width={width}
+          height={height}
           mobilePosterSrc={src === assets.hero ? "/speakchinese-mobile-poster.jpg" : undefined}
           unoptimized
-          className={cn("w-full rounded-2xl object-cover object-top", ratio)}
+          className="h-auto w-full object-contain"
           sizes="(max-width: 768px) 90vw, 934px"
         />
       </ImageZoom>
@@ -163,8 +175,8 @@ function NextProjectCard({
           </p>
           <h3
             className={cn(
-              "mt-3 font-[var(--font-heading)] font-bold leading-[1.18] tracking-normal",
-              featured ? "text-3xl sm:text-4xl" : "text-2xl"
+              "mt-3 font-[var(--font-heading)] font-normal leading-[1.2] tracking-normal",
+              featured ? "text-[26px] sm:text-[30px]" : "text-xl sm:text-[22px]"
             )}
           >
             {project.title}
@@ -194,28 +206,18 @@ export function EdTechCaseStudy() {
         id="edtech-overview"
         className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_18%_18%,#12CD83_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#BCECDB_0%,transparent_30%),linear-gradient(135deg,#092014_0%,#12CD83_42%,#15D590_100%)] px-6 text-center text-white sm:min-h-[800px]"
       >
-        <Image
-          src="/assets/edtech/edtech-hero-blob-top.svg"
-          alt=""
-          width={1440}
-          height={422}
-          priority
-          className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none"
-        />
-        <Image
-          src="/assets/edtech/edtech-hero-blob-bottom.svg"
-          alt=""
-          width={1440}
-          height={526}
-          priority
-          className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]"
-        />
+        <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
+          <Image src="/assets/edtech/edtech-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
+        </HeroBlobMotion>
+        <HeroBlobMotion className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]" position="bottom">
+          <Image src="/assets/edtech/edtech-hero-blob-bottom.svg" alt="" width={1440} height={526} priority className="block h-auto w-full" />
+        </HeroBlobMotion>
         <div className="relative z-10 mx-auto flex w-full max-w-[560px] flex-col items-center gap-5">
           <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-base backdrop-blur">
             Mobile App · Feb 2025
           </p>
           <HeroTitleReveal
-            className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]"
+            className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)] sm:max-w-none sm:text-[64px]"
             delay={PROJECT_HERO_DELAY}
             text="Speak Chinese"
           />
@@ -296,8 +298,8 @@ export function EdTechCaseStudy() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2">
-            <CaseImage src={assets.hero} alt="Splash and mascot motion" ratio="aspect-[4/5]" />
-            <CaseImage src={assets.leftRight} alt="Interactive left and right mascot motion" ratio="aspect-[4/5]" />
+            <CaseImage src={assets.hero} alt="Splash and mascot motion" />
+            <CaseImage src={assets.leftRight} alt="Interactive left and right mascot motion" />
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -345,22 +347,22 @@ export function EdTechCaseStudy() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2">
-            <CaseImage src={assets.hsk} alt="HSK app store graphics" ratio="aspect-[4/3]" />
-            <CaseImage src={assets.androidBanner} alt="Language app feature banner" ratio="aspect-[4/3]" />
-            <CaseImage src={assets.graphics1} alt="App store promotional graphic" ratio="aspect-[4/3]" />
-            <CaseImage src={assets.graphics2} alt="App store promotional graphic" ratio="aspect-[4/3]" />
+            <CaseImage src={assets.hsk} alt="HSK app store graphics" />
+            <CaseImage src={assets.androidBanner} alt="Language app feature banner" />
+            <CaseImage src={assets.graphics1} alt="App store promotional graphic" />
+            <CaseImage src={assets.graphics2} alt="App store promotional graphic" />
           </div>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="edtech-tools">
-          <div className="rounded-2xl bg-[#092014] p-7 text-white shadow-sm sm:p-10">
+          <div className="rounded-xl bg-[#092014] p-6 text-white shadow-sm sm:p-8 lg:p-10">
             <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">
               Tools
             </p>
             <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Figma, Rive, and After Effects
             </h2>
-            <p className="mt-6 text-base leading-[1.6] text-white/80 sm:text-[17px]">
+            <p className="mt-6 text-base leading-[1.6] text-white/85 sm:text-[17px]">
               The final work connected UI polish, motion-ready mascot behavior,
               and App Store visuals so the learning experience felt clearer,
               friendlier, and more motivating.

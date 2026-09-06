@@ -1,55 +1,25 @@
 "use client";
 
-import { useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-const columns = [
-  {
-    color: "#BE89FF",
-    delay: 0.2,
-  },
-  {
-    color: "#D4B1FF",
-    delay: 0.1,
-  },
-  {
-    color: "#FFE1FE",
-    delay: 0,
-  },
-  {
-    color: "#D4B1FF",
-    delay: 0.1,
-  },
-  {
-    color: "#BE89FF",
-    delay: 0.2,
-  },
-] as const;
-
-const mobileColumns = [
-  {
-    color: "#BE89FF",
-    delay: 0.08,
-  },
-  {
-    color: "#FFE1FE",
-    delay: 0,
-  },
-  {
-    color: "#BE89FF",
-    delay: 0.08,
-  },
-] as const;
+const RIBBON_PATHS = {
+  back: "M 0 12 Q 50 0 100 12 V 116 Q 50 128 0 116 Z",
+  front: "M 0 16 Q 50 3 100 16 V 112 Q 50 128 0 112 Z",
+} as const;
 
 function getTransitionTiming() {
   const isMobile = window.matchMedia("(max-width: 639px)").matches;
 
   return {
-    coverDuration: isMobile ? 0.48 : 0.68,
-    revealDuration: isMobile ? 0.56 : 0.74,
-    routeDelay: isMobile ? 610 : 940,
-    cleanupDelay: isMobile ? 720 : 980,
+    backDuration: isMobile ? 0.58 : 0.64,
+    frontDuration: isMobile ? 0.6 : 0.68,
+    frontDelay: isMobile ? 0.05 : 0.06,
+    backRevealDuration: isMobile ? 0.38 : 0.42,
+    frontRevealDuration: isMobile ? 0.44 : 0.48,
+    routeDelay: isMobile ? 690 : 770,
+    cleanupDelay: isMobile ? 500 : 540,
   };
 }
 
@@ -168,113 +138,83 @@ export function PageTransition() {
     return null;
   }
 
+  const timing = getTransitionTiming();
+
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-[80] overflow-hidden"
+      className="pointer-events-auto fixed inset-0 z-[100] overflow-hidden"
     >
-      <div
-        className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#be89ff] via-[#d4b1ff] to-[#ffe1fe]"
-        data-phase={phase}
-        style={{ animation: `transition-line-${phase} 280ms cubic-bezier(0.22, 1, 0.36, 1) both` }}
-      />
-      {[
-        { className: "flex sm:hidden", items: mobileColumns },
-        { className: "hidden sm:flex", items: columns },
-      ].map(({ className, items }) => (
-        <div className={`absolute inset-x-[-2vw] bottom-0 h-[116dvh] ${className}`} key={className}>
-          {items.map((column, index) => (
-            <div
-              className="relative -mx-[0.3vw] h-full flex-1 origin-bottom overflow-hidden"
-              key={`${column.color}-${index}`}
-              style={{
-                animation: `transition-column-${phase} ${
-                  phase === "cover"
-                    ? className.includes("sm:hidden")
-                      ? 480
-                      : 680
-                    : className.includes("sm:hidden")
-                      ? 560
-                      : 740
-                }ms ${phase === "cover" ? "cubic-bezier(0.76, 0, 0.24, 1)" : "cubic-bezier(0.22, 1, 0.36, 1)"} both`,
-                animationDelay: `${
-                  phase === "cover" ? column.delay : 0.1 - Math.min(column.delay, 0.1)
-                }s`,
-                transform: phase === "cover" ? "translate3d(0, 100%, 0)" : "translate3d(0, 0, 0)",
-                willChange: "transform",
-              }}
-            >
-              <div
-                className="absolute inset-0 h-full w-full"
-                style={{ backgroundColor: column.color }}
-              />
-            </div>
-          ))}
-        </div>
-      ))}
-      <div
-        className="absolute inset-x-[-8vw] bottom-[-8vh] h-[28vh] bg-[#d4b1ff]/16 blur-[16px] sm:h-[55vh] sm:bg-[#d4b1ff]/40 sm:blur-[48px]"
-        style={{ animation: `transition-glow-${phase} 320ms ease-out both` }}
-      />
-      <style>{`
-        @keyframes transition-column-cover {
-          from {
-            transform: translate3d(0, 100%, 0);
-          }
-          to {
-            transform: translate3d(0, 0, 0);
-          }
-        }
+      <motion.div
+        animate={{
+          y: phase === "cover" ? ["100dvh", "-12dvh"] : "-128dvh",
+        }}
+        className="absolute inset-x-0 top-0 h-[128dvh] transform-gpu"
+        initial={{ y: "100dvh" }}
+        style={{ willChange: "transform" }}
+        transition={{
+          duration:
+            phase === "cover"
+              ? timing.backDuration
+              : timing.backRevealDuration,
+          ease: [0.65, 0, 0.35, 1],
+        }}
+      >
+        <svg
+          className="block h-full w-full"
+          preserveAspectRatio="none"
+          viewBox="0 0 100 128"
+        >
+          <path d={RIBBON_PATHS.back} fill="#FFE1FE" />
+        </svg>
+      </motion.div>
 
-        @keyframes transition-column-reveal {
-          from {
-            transform: translate3d(0, 0, 0);
-          }
-          to {
-            transform: translate3d(0, -112%, 0);
-          }
-        }
-
-        @keyframes transition-line-cover {
-          from {
-            opacity: 0;
-            transform: scaleX(0);
-          }
-          to {
-            opacity: 1;
-            transform: scaleX(1);
-          }
-        }
-
-        @keyframes transition-line-reveal {
-          from {
-            opacity: 1;
-            transform: scaleX(1);
-          }
-          to {
-            opacity: 0;
-            transform: scaleX(0);
-          }
-        }
-
-        @keyframes transition-glow-cover {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        @keyframes transition-glow-reveal {
-          from {
-            opacity: 1;
-          }
-          to {
-            opacity: 0;
-          }
-        }
-      `}</style>
+      <motion.div
+        animate={{
+          y: phase === "cover" ? ["100dvh", "-16dvh"] : "-128dvh",
+        }}
+        className="absolute inset-x-0 top-0 h-[128dvh] transform-gpu"
+        initial={{ y: "100dvh" }}
+        style={{
+          WebkitMaskImage:
+            phase === "reveal"
+              ? "linear-gradient(to bottom, black 0%, black 86%, transparent 100%)"
+              : "none",
+          maskImage:
+            phase === "reveal"
+              ? "linear-gradient(to bottom, black 0%, black 86%, transparent 100%)"
+              : "none",
+          willChange: "transform",
+        }}
+        transition={{
+          delay: phase === "cover" ? timing.frontDelay : 0,
+          duration:
+            phase === "cover"
+              ? timing.frontDuration
+              : timing.frontRevealDuration,
+          ease: [0.65, 0, 0.35, 1],
+        }}
+      >
+        <svg
+          className="block h-full w-full"
+          preserveAspectRatio="none"
+          style={{
+            filter: phase === "reveal" ? "blur(4px)" : "blur(0px)",
+            transform: "scaleX(1.015)",
+            transition: "filter 180ms ease-out",
+          }}
+          viewBox="0 0 100 128"
+        >
+          <defs>
+            <linearGradient id="page-transition-gradient" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="#BE89FF" />
+              <stop offset="58%" stopColor="#D4B1FF" />
+              <stop offset="100%" stopColor="#F7F7F8" />
+            </linearGradient>
+          </defs>
+          <path d={RIBBON_PATHS.front} fill="url(#page-transition-gradient)" />
+        </svg>
+      </motion.div>
     </div>
   );
 }

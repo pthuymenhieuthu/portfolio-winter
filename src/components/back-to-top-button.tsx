@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export function BackToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isOverFooter, setIsOverFooter] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const updateVisibility = () => {
@@ -14,6 +16,24 @@ export function BackToTopButton() {
       const distanceFromBottom = fullHeight - (scrollTop + viewportHeight);
 
       setIsVisible(scrollTop > viewportHeight && distanceFromBottom < viewportHeight * 1.35);
+
+      const button = buttonRef.current;
+      if (button) {
+        const rect = button.getBoundingClientRect();
+        const elementsBelow = document.elementsFromPoint(
+          rect.left + rect.width / 2,
+          rect.top + rect.height / 2
+        );
+        const surface = elementsBelow.find(
+          (element) =>
+            element !== button &&
+            !button.contains(element) &&
+            element !== document.body &&
+            element !== document.documentElement
+        );
+
+        setIsOverFooter(Boolean(surface?.closest("footer#contact")));
+      }
     };
 
     updateVisibility();
@@ -29,8 +49,12 @@ export function BackToTopButton() {
   return (
     <button
       aria-label="Back to top"
+      ref={buttonRef}
       className={cn(
-        "fixed bottom-28 right-5 z-50 flex h-[68px] w-12 items-center justify-center bg-transparent text-[#1E1E1E] transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E1E1E]/30 sm:right-8",
+        "fixed bottom-28 right-5 z-50 flex h-[68px] w-12 items-center justify-center bg-transparent transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 sm:right-8",
+        isOverFooter
+          ? "text-white focus-visible:ring-white/40"
+          : "text-[#1E1E1E] focus-visible:ring-[#1E1E1E]/30",
         isVisible
           ? "pointer-events-auto translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0"

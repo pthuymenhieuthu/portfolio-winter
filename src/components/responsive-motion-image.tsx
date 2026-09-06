@@ -25,7 +25,7 @@ function getCloudinaryPosterSrc(src: string) {
     return null;
   }
 
-  return src.replace("/image/upload/", "/image/upload/f_jpg,q_auto,w_720,pg_1/");
+  return src.replace("/image/upload/", "/image/upload/f_webp,q_auto,w_720,pg_1/");
 }
 
 export function ResponsiveMotionImage({

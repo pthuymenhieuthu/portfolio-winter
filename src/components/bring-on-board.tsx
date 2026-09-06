@@ -69,7 +69,7 @@ export function BringOnBoard() {
           <p className="inline-block rounded-lg bg-[#08090a] px-3 py-1 text-base font-medium text-white">
             Creative toolkit
           </p>
-          <h2 className="mt-5 font-[var(--font-heading)] text-[32px] font-bold leading-[1.08] tracking-normal text-[#08090a] sm:text-[44px] lg:text-[52px]">
+          <h2 className="mt-5 font-[var(--font-heading)] text-[32px] font-semibold leading-[1.08] tracking-normal text-[#08090a] sm:text-[44px] lg:text-[52px]">
             What I bring on board
           </h2>
           <p className="mx-auto mt-5 max-w-[720px] text-base leading-[1.35] text-[#737373]">

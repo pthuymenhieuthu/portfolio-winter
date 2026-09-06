@@ -14,6 +14,7 @@ import {
 } from "@/components/case-study-section-navigation";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
+import { HeroBlobMotion } from "@/components/hero-blob-motion";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -142,28 +143,33 @@ function BlobCutout({
   const isTop = position === "top";
 
   return (
-    <svg
-      aria-hidden="true"
+    <HeroBlobMotion
       className={
         isTop
           ? "pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[1200px] max-w-none -translate-x-1/2 sm:w-[1640px]"
           : "pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 sm:bottom-[-150px]"
       }
-      fill="none"
-      height={isTop ? 422 : 526}
-      viewBox={isTop ? "0 0 1440 422" : "0 0 1440 526"}
-      width={1440}
-      xmlns="http://www.w3.org/2000/svg"
+      position={position}
     >
-      <path
-        d={
-          isTop
-            ? "M1085.09 250.287C1215.46 436.116 1645.28 428.276 1690.52 416.582L1635.97 -282L-346 -127.227L-308.024 359.076C-75.943 427.41 420.709 482.913 550.666 158.254C941.969 194.444 1012.09 47.8557 1074.47 -20.4985C1029.03 65.5779 1023.56 162.589 1085.09 250.287Z"
-            : "M376 150.651C260.488 -44.7637 -227.988 2.80591 -274 10.9432V711.651H1714V223.868L1709.16 222.022C1481.84 135.325 1055.37 -27.3193 901.632 284.012C620.5 205.651 456.5 297.651 412 343.651C421.5 284.651 427.131 237.151 376 150.651Z"
-        }
-        fill={fill}
-      />
-    </svg>
+      <svg
+        aria-hidden="true"
+        className="block h-auto w-full"
+        fill="none"
+        height={isTop ? 422 : 526}
+        viewBox={isTop ? "0 0 1440 422" : "0 0 1440 526"}
+        width={1440}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d={
+            isTop
+              ? "M1085.09 250.287C1215.46 436.116 1645.28 428.276 1690.52 416.582L1635.97 -282L-346 -127.227L-308.024 359.076C-75.943 427.41 420.709 482.913 550.666 158.254C941.969 194.444 1012.09 47.8557 1074.47 -20.4985C1029.03 65.5779 1023.56 162.589 1085.09 250.287Z"
+              : "M376 150.651C260.488 -44.7637 -227.988 2.80591 -274 10.9432V711.651H1714V223.868L1709.16 222.022C1481.84 135.325 1055.37 -27.3193 901.632 284.012C620.5 205.651 456.5 297.651 412 343.651C421.5 284.651 427.131 237.151 376 150.651Z"
+          }
+          fill={fill}
+        />
+      </svg>
+    </HeroBlobMotion>
   );
 }
 
@@ -192,7 +198,7 @@ function CaseHero({
         </p>
         <div style={{ width: "min(720px, calc(100vw - 48px))" }}>
           <HeroTitleReveal
-            className="font-[var(--font-heading)] text-[28px] font-bold leading-[1.1] tracking-normal sm:text-[64px] sm:leading-[1.05]"
+            className="font-[var(--font-heading)] text-[28px] font-medium leading-[1.1] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)] sm:text-[64px] sm:leading-[1.05]"
             delay={PROJECT_HERO_DELAY}
             text={title}
             wrap
@@ -273,12 +279,12 @@ function BodyText({
 function CaseImage({
   src,
   alt,
-  ratio = "aspect-[16/9]",
-  fit = "cover",
+  ratio = "h-auto",
+  fit = "contain",
   mobilePosterSrc,
 }: ImageItem) {
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
+    <div className="overflow-hidden rounded-xl border border-[#cfd0d4] bg-white shadow-sm">
       <ImageZoom>
         <ResponsiveMotionImage
           src={src}
@@ -288,7 +294,7 @@ function CaseImage({
           unoptimized
           mobilePosterSrc={mobilePosterSrc}
           className={cn(
-            "w-full rounded-2xl object-top",
+            "w-full object-top",
             ratio,
             fit === "contain" ? "object-contain" : "object-cover"
           )}
@@ -388,8 +394,8 @@ function NextProjectCard({
           </p>
           <h3
             className={cn(
-              "mt-3 font-[var(--font-heading)] font-bold leading-[1.18] tracking-normal",
-              featured ? "text-3xl sm:text-4xl" : "text-2xl"
+              "mt-3 font-[var(--font-heading)] font-normal leading-[1.2] tracking-normal",
+              featured ? "text-[26px] sm:text-[30px]" : "text-xl sm:text-[22px]"
             )}
           >
             {project.title}
@@ -540,22 +546,18 @@ export function GraphicsCaseStudy() {
             {
               src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764845920/tet_2_hqhp3d.png",
               alt: "Tet campaign graphic",
-              ratio: "aspect-[4/3]",
             },
             {
               src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764845920/tet_1_gxxab9.png",
               alt: "Tet campaign graphic",
-              ratio: "aspect-[4/3]",
             },
             {
               src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764845922/tet_03_yzwbio.png",
               alt: "Tet campaign graphic",
-              ratio: "aspect-[4/3]",
             },
             {
               src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764845953/02_ens8yq.jpg",
               alt: "Zalo OA campaign graphic",
-              ratio: "aspect-[4/3]",
             },
           ]}
         />
@@ -572,22 +574,18 @@ export function GraphicsCaseStudy() {
             {
               src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764755849/HSK_soiciu.png",
               alt: "HSK app promotional visual",
-              ratio: "aspect-[4/3]",
             },
             {
               src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764755845/android_banner-tr%C3%B9m_japanese_cyfugx.png",
               alt: "Japanese app promotional visual",
-              ratio: "aspect-[4/3]",
             },
             {
               src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764756721/Frame_2147225634_auzyip.png",
               alt: "Language app product highlight",
-              ratio: "aspect-[4/3]",
             },
             {
               src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764756718/Frame_2147225633_jn2vkl.png",
               alt: "Language app product highlight",
-              ratio: "aspect-[4/3]",
             },
           ]}
         />

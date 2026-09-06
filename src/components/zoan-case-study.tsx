@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
@@ -11,6 +12,7 @@ import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
+import { HeroBlobMotion } from "@/components/hero-blob-motion";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -24,7 +26,7 @@ const theme = {
 };
 
 const sections = [
-  { id: "zoan-work", label: "The work" },
+  { id: "zoan-work", label: "Overview" },
   { id: "zoan-challenge-01", label: "Product foundations" },
   { id: "zoan-challenge-02", label: "Cross-platform workflow" },
   { id: "zoan-motion", label: "Motion" },
@@ -46,6 +48,21 @@ const zoanAssets = {
   platformShowcase2: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989540/Showcase_hehe-01_zbeuze.png",
   timelineMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764161748/Timeline_5-macd_dosrrf.gif",
   appMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764161236/app_vvjcwd.gif",
+};
+
+const zoanAssetDimensions: Record<string, [number, number]> = {
+  [zoanAssets.hero]: [1152, 648],
+  [zoanAssets.overview]: [5469, 3264],
+  [zoanAssets.workMockup1]: [3693, 2760],
+  [zoanAssets.workMockup2]: [3604, 2760],
+  [zoanAssets.color]: [1400, 612],
+  [zoanAssets.typography]: [1400, 683],
+  [zoanAssets.tokens]: [703, 686],
+  [zoanAssets.components]: [692, 678],
+  [zoanAssets.platformShowcase1]: [3646, 1876],
+  [zoanAssets.platformShowcase2]: [3646, 2176],
+  [zoanAssets.timelineMotion]: [702, 480],
+  [zoanAssets.appMotion]: [702, 480],
 };
 
 const challenges = [
@@ -104,24 +121,24 @@ function CaseImage({
   src,
   alt,
   className,
-  ratio = "aspect-[16/9]",
 }: {
   src: string;
   alt: string;
   className?: string;
-  ratio?: string;
 }) {
+  const [width, height] = zoanAssetDimensions[src] ?? [1440, 810];
+
   return (
-    <div className={cn("overflow-hidden rounded-2xl shadow-sm", className)}>
+    <div className={cn("overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm", className)}>
       <ImageZoom>
         <ResponsiveMotionImage
           src={src}
           alt={alt}
-          width={1440}
-          height={810}
+          width={width}
+          height={height}
           mobilePosterSrc={src === zoanAssets.hero ? zoanAssets.workMockup2 : undefined}
           unoptimized
-          className={cn("w-full rounded-2xl object-cover object-top", ratio)}
+          className="h-auto w-full object-contain"
           sizes="(max-width: 768px) 90vw, 934px"
         />
       </ImageZoom>
@@ -176,8 +193,8 @@ function NextProjectCard({
           </p>
           <h3
             className={cn(
-              "mt-3 font-[var(--font-heading)] font-bold leading-[1.18] tracking-normal",
-              featured ? "text-3xl sm:text-4xl" : "text-2xl"
+              "mt-3 font-[var(--font-heading)] font-normal leading-[1.2] tracking-normal",
+              featured ? "text-[26px] sm:text-[30px]" : "text-xl sm:text-[22px]"
             )}
           >
             {project.title}
@@ -207,28 +224,18 @@ export function ZoanCaseStudy() {
         id="zoan-overview"
         className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_18%_18%,#ffffff_0%,transparent_30%),radial-gradient(circle_at_84%_18%,#15CABE_0%,transparent_32%),linear-gradient(135deg,#ffffff_0%,#B0F1ED_58%,#15CABE_100%)] px-6 text-center text-[#07111f] sm:min-h-[800px]"
       >
-        <Image
-          src="/assets/zoan/zoan-hero-blob-top.svg"
-          alt=""
-          width={1440}
-          height={422}
-          priority
-          className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none"
-        />
-        <Image
-          src="/assets/zoan/zoan-hero-blob-bottom.svg"
-          alt=""
-          width={1440}
-          height={526}
-          priority
-          className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]"
-        />
+        <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
+          <Image src="/assets/zoan/zoan-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
+        </HeroBlobMotion>
+        <HeroBlobMotion className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]" position="bottom">
+          <Image src="/assets/zoan/zoan-hero-blob-bottom.svg" alt="" width={1440} height={526} priority className="block h-auto w-full" />
+        </HeroBlobMotion>
         <div className="relative z-10 mx-auto flex w-full max-w-[560px] flex-col items-center gap-5">
           <p className="rounded-full border border-[#07111f]/10 bg-white/45 px-4 py-1.5 text-sm text-[#07111f] backdrop-blur">
             AI Product · May 2025
           </p>
           <HeroTitleReveal
-            className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]"
+            className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)] sm:max-w-none sm:text-[64px]"
             delay={PROJECT_HERO_DELAY}
             text="Zoan AI"
           />
@@ -281,7 +288,7 @@ export function ZoanCaseStudy() {
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
-              The work
+              Design scope
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               From loose interface pieces to a scalable AI product system
@@ -298,25 +305,39 @@ export function ZoanCaseStudy() {
             <CaseImage
               src={zoanAssets.workMockup1}
               alt="Zoan AI desktop and mobile product mockup"
-              ratio="aspect-[4/3]"
             />
             <CaseImage
               src={zoanAssets.workMockup2}
               alt="Zoan AI product system mockup"
-              ratio="aspect-[4/3]"
             />
           </div>
 
-          <div className="grid gap-6">
-            {challenges.map((item) => (
-              <article className="border-t border-[#07111f]/10 pt-6" key={item.label}>
-                <p className="text-sm uppercase tracking-[0.12em] text-[#737373]">{item.label}</p>
-                <h3 className="mt-3 font-[var(--font-heading)] text-lg font-normal leading-[1.25] tracking-normal sm:text-xl">
-                  {item.title}
-                </h3>
-                <p className="mt-4 text-base leading-[1.6] text-[#08090a] sm:text-[17px]">
-                  {item.question}
-                </p>
+          <div className="grid overflow-hidden rounded-xl border border-[#e4e4e7] bg-white px-6 lg:grid-cols-3 lg:gap-x-[51px]">
+            {challenges.map((item, index) => (
+              <article
+                className="relative flex min-w-0 flex-col gap-5 border-b border-[#e4e4e7] py-6 last:border-b-0 lg:border-b-0"
+                key={item.label}
+              >
+                <div className="flex w-full items-center gap-4">
+                  <p className="whitespace-nowrap rounded-full bg-[#e8edf4] px-5 py-3 text-base font-bold leading-none text-[#18181b]">
+                    {item.label}
+                  </p>
+                  {index < challenges.length - 1 && (
+                    <ChevronRight
+                      aria-hidden="true"
+                      className="size-4 shrink-0 rotate-90 text-[#a1a1aa] lg:rotate-0"
+                      strokeWidth={2.5}
+                    />
+                  )}
+                </div>
+                <div className="flex flex-col gap-3">
+                  <h3 className="font-[var(--font-heading)] text-xl font-normal leading-normal tracking-normal text-[#18181b]">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm leading-[1.5] text-[#71717a]">
+                    {item.question}
+                  </p>
+                </div>
               </article>
             ))}
           </div>
@@ -333,9 +354,9 @@ export function ZoanCaseStudy() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-3">
-            <CaseImage src={zoanAssets.color} alt="Zoan color foundation" ratio="aspect-[4/3]" />
-            <CaseImage src={zoanAssets.typography} alt="Zoan typography foundation" ratio="aspect-[4/3]" />
-            <CaseImage src={zoanAssets.tokens} alt="Zoan variable token system" ratio="aspect-[4/3]" />
+            <CaseImage src={zoanAssets.color} alt="Zoan color foundation" />
+            <CaseImage src={zoanAssets.typography} alt="Zoan typography foundation" />
+            <CaseImage src={zoanAssets.tokens} alt="Zoan variable token system" />
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -398,14 +419,14 @@ export function ZoanCaseStudy() {
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-outcome">
-          <div className="rounded-2xl bg-[#07111f] p-7 text-white shadow-sm sm:p-10">
+          <div className="rounded-xl bg-[#07111f] p-6 text-white shadow-sm sm:p-8 lg:p-10">
             <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">
               Outcome
             </p>
             <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Designers shape how humans interact with AI
             </h2>
-            <p className="mt-6 text-base leading-[1.6] text-white/80 sm:text-[17px]">
+            <p className="mt-6 text-base leading-[1.6] text-white/85 sm:text-[17px]">
               The renewed system provided a scalable foundation for future
               development, reduced design-engineering friction, and established
               a stronger visual identity for fundraising and go-to-market.

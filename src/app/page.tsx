@@ -43,7 +43,7 @@ export default function Page() {
 
           <div className="relative z-10 mx-auto flex w-full max-w-[560px] -translate-y-6 flex-col items-center text-center sm:-translate-y-14 lg:-translate-y-16">
             <HeroTitleReveal
-              className="max-w-full font-[var(--font-heading)] text-[34px] font-bold leading-[0.95] tracking-normal text-[hsl(var(--ink))] min-[390px]:text-[36px] sm:text-[64px]"
+              className="max-w-full font-[var(--font-heading)] text-[40px] font-bold leading-[0.95] tracking-normal text-[hsl(var(--ink))] min-[390px]:text-[44px] sm:text-[72px]"
               delay={BLUR_FADE_DELAY}
               text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
             />
@@ -70,7 +70,7 @@ export default function Page() {
                   <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-base">
                     My Projects
                   </div>
-                  <h2 className="mx-auto max-w-[300px] font-[var(--font-heading)] text-[26px] font-bold leading-[1.08] tracking-normal sm:max-w-none sm:text-[44px] lg:text-[52px]">
+                  <h2 className="mx-auto max-w-[300px] font-[var(--font-heading)] text-[26px] font-semibold leading-[1.08] tracking-normal sm:max-w-none sm:text-[44px] lg:text-[52px]">
                     Check out my latest work
                   </h2>
                   <p className="text-base leading-[1.35] text-[#737373]">
@@ -122,7 +122,7 @@ export default function Page() {
             <div className="inline-block rounded-lg bg-white px-3 py-1 text-base font-medium text-[#08090a]">
               Contact
             </div>
-            <h2 className="mt-3 max-w-[520px] font-[var(--font-heading)] text-[26px] font-bold leading-[1.06] tracking-normal sm:mt-4 sm:text-[38px] lg:text-[44px]">
+            <h2 className="mt-3 max-w-[520px] font-[var(--font-heading)] text-[26px] font-medium leading-[1.06] tracking-normal sm:mt-4 sm:text-[38px] lg:text-[44px]">
               Tell me about your project
             </h2>
             <p className="mt-3 max-w-[500px] text-sm leading-[1.4] text-white/68 sm:text-base sm:leading-[1.45]">

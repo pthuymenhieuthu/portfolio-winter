@@ -16,12 +16,13 @@ import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
+import { HeroBlobMotion } from "@/components/hero-blob-motion";
 
 const PROJECT_HERO_DELAY = 0.36;
 
 const sections = [
-  { id: "affina-work", label: "The work" },
-  { id: "affina-system", label: "Product foundation" },
+  { id: "affina-work", label: "Overview" },
+  { id: "affina-system", label: "Design challenges" },
   {
     id: "affina-challenge-01",
     label: "AI journey",
@@ -127,7 +128,7 @@ const healthcareRows = [
     bold: "Updated foundation values and extended components",
     after: "with flexible slots to support the new Care direction.",
     image: "/assets/affina/product-screen-2.png",
-    ratio: "aspect-[1213/973]",
+    ratio: "aspect-[1909/973]",
   },
   {
     number: "3",
@@ -135,7 +136,7 @@ const healthcareRows = [
     bold: "Documented naming conventions, exported CSS values",
     after: "for IT, and tracked future changes through a Figma change log.",
     image: "/assets/affina/product-screen-3.png",
-    ratio: "aspect-[1213/924]",
+    ratio: "aspect-[1727/924]",
   },
   {
     number: "4",
@@ -379,7 +380,7 @@ function AffinaHealthcareRow({
           />
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl shadow-sm">
+        <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
           <ImageZoom>
             <Image
               src={row.image || ""}
@@ -387,7 +388,7 @@ function AffinaHealthcareRow({
               width={1213}
               height={894}
               className={cn(
-                "w-full rounded-xl object-cover object-top",
+                "w-full rounded-xl object-contain object-top",
                 row.ratio
               )}
               sizes="(max-width: 768px) 90vw, 500px"
@@ -432,8 +433,8 @@ function ComparisonRow({
   after: React.ReactNode;
 }) {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-black/[0.04]">
-      <div className="absolute left-1/2 top-5 z-10 -translate-x-1/2 rounded-xl bg-[#0d0d0d] px-4 py-1.5 text-center text-sm font-normal text-white sm:text-base">
+    <div className="relative overflow-hidden rounded-xl border border-[#e4e4e7]">
+      <div className="absolute left-1/2 top-5 z-10 -translate-x-1/2 whitespace-nowrap rounded-xl bg-[#0d0d0d] px-4 py-1.5 text-center text-sm font-normal text-white sm:text-base">
         {title}
       </div>
       <div className="grid sm:grid-cols-2">
@@ -519,8 +520,8 @@ function NextProjectCard({
           </p>
           <h3
             className={cn(
-              "mt-3 font-[var(--font-affina-heading)] font-bold leading-[1.18] tracking-normal",
-              featured ? "text-3xl leading-[1.18] sm:text-4xl" : "text-2xl"
+              "mt-3 font-[var(--font-affina-heading)] font-normal leading-[1.2] tracking-normal",
+              featured ? "text-[26px] sm:text-[30px]" : "text-xl sm:text-[22px]"
             )}
           >
             {project.title}
@@ -554,28 +555,38 @@ export function AffinaCaseStudy() {
         className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#f7f7f8] px-6 text-center text-white sm:min-h-[800px]"
       >
         <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#ffd360_0%,transparent_28%),radial-gradient(circle_at_82%_24%,#ff51ff_0%,transparent_30%),linear-gradient(135deg,#ff6831_0%,#ff51ff_48%,#7a35ff_100%)]" />
-        <Image
-          src="/assets/affina/affina-hero-blob-top.svg"
-          alt=""
-          width={1440}
-          height={422}
-          priority
+        <HeroBlobMotion
           className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none"
-        />
-        <Image
-          src="/assets/affina/affina-hero-blob-bottom.svg"
-          alt=""
-          width={1440}
-          height={526}
-          priority
+          position="top"
+        >
+            <Image
+              src="/assets/affina/affina-hero-blob-top.svg"
+              alt=""
+              width={1440}
+              height={422}
+              priority
+              className="block h-auto w-full"
+            />
+        </HeroBlobMotion>
+        <HeroBlobMotion
           className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]"
-        />
+          position="bottom"
+        >
+            <Image
+              src="/assets/affina/affina-hero-blob-bottom.svg"
+              alt=""
+              width={1440}
+              height={526}
+              priority
+              className="block h-auto w-full"
+            />
+        </HeroBlobMotion>
         <div className="relative z-10 mx-auto flex w-full max-w-[560px] flex-col items-center gap-5">
           <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-base backdrop-blur">
             Web & Mobile · Oct 2025 - Present
           </p>
           <HeroTitleReveal
-            className="max-w-[340px] font-[var(--font-affina-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]"
+            className="max-w-[340px] font-[var(--font-affina-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)] sm:max-w-none sm:text-[64px]"
             delay={PROJECT_HERO_DELAY}
             text="Affina"
           />
@@ -652,7 +663,7 @@ export function AffinaCaseStudy() {
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-system">
           <div className="flex flex-col gap-6 sm:gap-7">
             <span className={styles.sectionPill}>
-              The work
+              Design challenges
             </span>
             <h2 className={styles.sectionTitle}>
               From fragmented touchpoints to one scalable system
@@ -721,7 +732,7 @@ export function AffinaCaseStudy() {
               </p>
             </article>
             <article className="rounded-xl bg-[#08090a] p-6 text-white shadow-sm sm:p-8 lg:p-10">
-              <p className="text-sm font-bold uppercase text-[#ffd360]">
+              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">
                 Our solution
               </p>
               <p className="mt-4 max-w-[900px] text-base leading-[1.6] text-white/85 sm:text-[17px]">
@@ -797,7 +808,7 @@ export function AffinaCaseStudy() {
             </div>
 
             <div className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2">
-              <div className="overflow-hidden rounded-2xl shadow-sm">
+              <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
                 <ImageZoom zoomImg={{ src: "/assets/affina/user-flow-image.png" }}>
                   <Image
                     src="/assets/affina/user-flow-image.png"
@@ -810,13 +821,13 @@ export function AffinaCaseStudy() {
                   />
                 </ImageZoom>
               </div>
-              <div className="overflow-hidden rounded-2xl shadow-sm">
+              <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
                 <ImageZoom zoomImg={{ src: "/assets/affina/gitlab-code-repo-blur.png" }}>
                   <Image
                     src="/assets/affina/gitlab-code-repo-blur.png"
                     alt="Affina GitLab code repository overview"
-                    width={1792}
-                    height={920}
+                    width={1774}
+                    height={887}
                     unoptimized
                     className="h-auto w-full object-cover object-top"
                     sizes="(max-width: 640px) 90vw, 450px"
@@ -913,7 +924,7 @@ export function AffinaCaseStudy() {
           </CaseStudyScrollReveal>
 
           <CaseStudyScrollReveal className="flex flex-col gap-8 sm:gap-10">
-            <div className="aspect-video overflow-hidden rounded-2xl bg-black shadow-sm">
+            <div className="aspect-video overflow-hidden rounded-xl border border-[#cfd0d4] bg-black shadow-sm">
               <video
                 aria-label="Affina AI recommendation flow demo"
                 className="h-full w-full object-contain"
@@ -928,31 +939,31 @@ export function AffinaCaseStudy() {
               </video>
             </div>
 
-            <div className="overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-xl border border-[#cfd0d4]">
               <ImageZoom>
                 <Image
                   src="/assets/affina/affina-care-journey-scene.png"
                   alt="Affina healthcare journey scene"
-                  width={1680}
-                  height={940}
-                  className="h-auto w-full object-cover"
+                  width={1672}
+                  height={941}
+                  className="h-auto w-full object-contain"
                   sizes="(max-width: 1024px) 90vw, 934px"
                 />
               </ImageZoom>
             </div>
           </CaseStudyScrollReveal>
 
-          <CaseStudyScrollReveal className="rounded-2xl bg-[#08090a] p-6 text-white shadow-sm sm:p-8 lg:p-10">
+          <CaseStudyScrollReveal className="rounded-xl bg-[#08090a] p-6 text-white shadow-sm sm:p-8 lg:p-10">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-sm font-bold uppercase tracking-[0.12em] text-white/60">
+                <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">
                   Measured behavior
                 </p>
-                <h3 className="mt-4 font-[var(--font-affina-heading)] text-lg font-normal leading-[1.25] tracking-normal sm:text-xl">
+                <h3 className="mt-4 font-[var(--font-affina-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
                   30-day snapshot after launch
                 </h3>
               </div>
-              <p className="max-w-[300px] text-sm leading-6 text-white/55 sm:text-right">
+              <p className="max-w-[300px] text-sm leading-[1.5] text-white/70 sm:text-right">
                 Traffic during this period was primarily organic and internal
                 testing, with no paid acquisition campaigns.
               </p>
@@ -964,7 +975,7 @@ export function AffinaCaseStudy() {
                   className="rounded-xl border border-white/10 bg-white/[0.06] p-4"
                   key={stat.label}
                 >
-                  <p className="font-[var(--font-affina-heading)] text-[30px] font-bold leading-none tracking-normal text-white sm:text-[34px]">
+                  <p className="font-[var(--font-affina-heading)] text-[30px] font-medium leading-none tracking-normal text-white sm:text-[34px]">
                     {stat.value}
                   </p>
                   <p className="mt-3 text-xs font-bold uppercase tracking-[0.08em] text-white/55">
@@ -976,7 +987,7 @@ export function AffinaCaseStudy() {
 
             <div className="mt-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
               <div className="rounded-xl bg-white p-5 text-[#08090a]">
-                <p className="font-[var(--font-affina-heading)] text-[44px] font-bold leading-none tracking-normal text-[#08090a]">
+                <p className="font-[var(--font-affina-heading)] text-[52px] font-medium leading-none tracking-[-0.05em] text-[#08090a]">
                   61.4%
                 </p>
                 <p className="mt-4 text-base leading-7 text-[#454545]">

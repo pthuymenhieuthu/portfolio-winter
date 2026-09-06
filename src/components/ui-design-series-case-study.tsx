@@ -11,6 +11,7 @@ import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
+import { HeroBlobMotion } from "@/components/hero-blob-motion";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -48,6 +49,15 @@ const assets = {
   week1: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758357035/1IEUZ7Fhxsal69TkPP3bhjHfljw_e3c6vh.avif",
   week3: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758357034/lQmZQzSQd5utD8yFPXQpABes44_wse6b2.webp",
   week6: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758357034/KYrmwAQJkJwCYdd5x620BTxlGgo_p08hi9.webp",
+};
+
+const assetDimensions: Record<string, [number, number]> = {
+  [assets.hero]: [400, 225],
+  [assets.direction]: [1500, 1000],
+  [assets.draft]: [2500, 1667],
+  [assets.week1]: [2048, 1536],
+  [assets.week3]: [2048, 1455],
+  [assets.week6]: [2048, 1365],
 };
 
 const gains = [
@@ -112,23 +122,23 @@ const nextProjects = ["CakeBank", "Marketing Graphics", "Speak Chinese"]
 function CaseImage({
   src,
   alt,
-  ratio = "aspect-[16/9]",
 }: {
   src: string;
   alt: string;
-  ratio?: string;
 }) {
+  const [width, height] = assetDimensions[src] ?? [1440, 810];
+
   return (
-    <div className="overflow-hidden rounded-2xl shadow-sm">
+    <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
       <ImageZoom>
         <ResponsiveMotionImage
           src={src}
           alt={alt}
-          width={1440}
-          height={810}
+          width={width}
+          height={height}
           mobilePosterSrc={src === assets.hero ? "/uidesignseries-mobile-poster.jpg" : undefined}
           unoptimized
-          className={cn("w-full rounded-2xl object-cover object-top", ratio)}
+          className="h-auto w-full object-contain"
           sizes="(max-width: 768px) 90vw, 934px"
         />
       </ImageZoom>
@@ -183,8 +193,8 @@ function NextProjectCard({
           </p>
           <h3
             className={cn(
-              "mt-3 font-[var(--font-heading)] font-bold leading-[1.18] tracking-normal",
-              featured ? "text-3xl sm:text-4xl" : "text-2xl"
+              "mt-3 font-[var(--font-heading)] font-normal leading-[1.2] tracking-normal",
+              featured ? "text-[26px] sm:text-[30px]" : "text-xl sm:text-[22px]"
             )}
           >
             {project.title}
@@ -214,28 +224,18 @@ export function UiDesignSeriesCaseStudy() {
         id="series-overview"
         className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_18%_18%,#ff6313_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#ebdfaf_0%,transparent_30%),linear-gradient(135deg,#21120a_0%,#ff6313_52%,#ebdfaf_100%)] px-6 text-center text-white sm:min-h-[800px]"
       >
-        <Image
-          src="/assets/ui-design-series/series-hero-blob-top.svg"
-          alt=""
-          width={1440}
-          height={422}
-          priority
-          className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none"
-        />
-        <Image
-          src="/assets/ui-design-series/series-hero-blob-bottom.svg"
-          alt=""
-          width={1440}
-          height={526}
-          priority
-          className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]"
-        />
+        <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
+          <Image src="/assets/ui-design-series/series-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
+        </HeroBlobMotion>
+        <HeroBlobMotion className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]" position="bottom">
+          <Image src="/assets/ui-design-series/series-hero-blob-bottom.svg" alt="" width={1440} height={526} priority className="block h-auto w-full" />
+        </HeroBlobMotion>
         <div className="relative z-10 mx-auto flex w-full max-w-[560px] flex-col items-center gap-5">
           <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-base backdrop-blur">
             Web Design · Jul 2025
           </p>
           <HeroTitleReveal
-            className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-bold leading-[1.05] tracking-normal sm:max-w-none sm:text-[64px]"
+            className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)] sm:max-w-none sm:text-[64px]"
             delay={PROJECT_HERO_DELAY}
             text="UI Design Series"
           />
@@ -338,8 +338,8 @@ export function UiDesignSeriesCaseStudy() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2">
-            <CaseImage src={assets.direction} alt="UI Design Series direction setting" ratio="aspect-[4/3]" />
-            <CaseImage src={assets.draft} alt="UI Design Series draft hero and layout" ratio="aspect-[4/3]" />
+            <CaseImage src={assets.direction} alt="UI Design Series direction setting" />
+            <CaseImage src={assets.draft} alt="UI Design Series draft hero and layout" />
           </div>
         </CaseStudyRevealSection>
 
@@ -367,15 +367,15 @@ export function UiDesignSeriesCaseStudy() {
                 className="group block border-t border-[#21120a]/10 pt-6 transition duration-300 hover:-translate-y-1"
                 key={item.href}
               >
-                <div className="overflow-hidden rounded-2xl shadow-sm">
+                <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
                   <ImageZoom>
                     <Image
                       src={item.image}
                       alt={item.title}
-                      width={1440}
-                      height={810}
+                      width={assetDimensions[item.image]?.[0] ?? 1440}
+                      height={assetDimensions[item.image]?.[1] ?? 810}
                       unoptimized
-                      className="aspect-[16/9] w-full rounded-2xl object-cover object-top transition duration-500 group-hover:scale-[1.03]"
+                      className="h-auto w-full object-contain transition duration-500 group-hover:scale-[1.03]"
                       sizes="(max-width: 768px) 90vw, 934px"
                     />
                   </ImageZoom>
