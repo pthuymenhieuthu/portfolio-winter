@@ -123,8 +123,8 @@ export function CvMorphIcon({ active = false }: CvMorphIconProps) {
           y1="69"
           y2="431"
         >
-          <stop stopColor="#FF76ED" />
-          <stop offset="1" stopColor="#BE89FF" />
+          <stop stopColor="#65C7FF" />
+          <stop offset="1" stopColor="#0096F7" />
         </linearGradient>
       </defs>
       <path

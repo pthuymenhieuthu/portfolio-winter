@@ -165,7 +165,7 @@ export function PageTransition() {
           preserveAspectRatio="none"
           viewBox="0 0 100 128"
         >
-          <path d={RIBBON_PATHS.back} fill="#FFE1FE" />
+          <path d={RIBBON_PATHS.back} fill="#DFF3FF" />
         </svg>
       </motion.div>
 
@@ -207,8 +207,8 @@ export function PageTransition() {
         >
           <defs>
             <linearGradient id="page-transition-gradient" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#BE89FF" />
-              <stop offset="58%" stopColor="#D4B1FF" />
+              <stop offset="0%" stopColor="#0096F7" />
+              <stop offset="58%" stopColor="#74C8FF" />
               <stop offset="100%" stopColor="#F7F7F8" />
             </linearGradient>
           </defs>

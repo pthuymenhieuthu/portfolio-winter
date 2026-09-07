@@ -1,38 +1,13 @@
-"use client";
-
 import Link from "next/link";
-import { useState } from "react";
-import { CvMorphIcon } from "@/components/cv-morph-icon";
-
-const CV_URL =
-  "https://drive.google.com/file/d/1gLkY5mOFYf0NKvDU5oKwIqxyRtvT8PPt/view?usp=sharing";
 
 export function HeroCtaButtons() {
-  const [isWorksActive, setIsWorksActive] = useState(false);
-
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center">
       <Link
-        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-[#08090a] bg-[#08090a] px-5 text-base font-medium text-white shadow-[0_14px_34px_rgba(23,23,23,0.16)] transition duration-300 hover:-translate-y-0.5 hover:border-[#ff76ed]/65 hover:shadow-[0_16px_38px_rgba(190,137,255,0.32)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#be89ff]/35"
+        className="inline-flex h-11 items-center justify-center overflow-hidden rounded-full bg-[#F7F7FA] px-6 text-base font-medium text-black/60 shadow-[0_0_0_1px_rgba(0,0,0,.06),0_1px_1px_.5px_rgba(0,0,0,.06),0_3px_3px_1.5px_rgba(0,0,0,.06),0_6px_6px_-3px_rgba(0,0,0,.06),0_12px_12px_-6px_rgba(0,0,0,.06),0_24px_24px_-12px_rgba(0,0,0,.06),inset_0_1px_0_#fff] transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:text-black/75 hover:shadow-[0_0_0_1px_rgba(0,0,0,.07),0_2px_2px_rgba(0,0,0,.06),0_8px_12px_-4px_rgba(0,0,0,.1),0_20px_24px_-10px_rgba(0,0,0,.1),inset_0_1px_0_#fff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/35"
         href="#projects"
-        onBlur={() => setIsWorksActive(false)}
-        onFocus={() => setIsWorksActive(true)}
-        onPointerCancel={() => setIsWorksActive(false)}
-        onPointerDown={() => setIsWorksActive(true)}
-        onPointerEnter={() => setIsWorksActive(true)}
-        onPointerLeave={() => setIsWorksActive(false)}
-        onPointerUp={() => setIsWorksActive(false)}
       >
-        <CvMorphIcon active={isWorksActive} />
         View my works
-      </Link>
-      <Link
-        className="text-base font-medium text-[#a855f7] underline-offset-4 transition duration-300 hover:text-[#ff51ff] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#be89ff]/35"
-        href={CV_URL}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        Read my CV
       </Link>
     </div>
   );
