@@ -77,7 +77,7 @@ function NavButton({
           className={cn(
             buttonVariants({ variant: "ghost", size: "icon" }),
             "size-10 rounded-full transition duration-300 focus-visible:ring-2 focus-visible:ring-[#0096F7]/35 focus-visible:ring-offset-2",
-            "text-[#171717] hover:bg-[#e9f6ff] hover:text-[#007ac9] dark:text-foreground dark:hover:bg-[#0096F7]/15"
+            "text-[#29303B] hover:bg-[#e9f6ff] hover:text-[#007ac9] dark:text-foreground dark:hover:bg-[#0096F7]/15"
           )}
         >
           {children}

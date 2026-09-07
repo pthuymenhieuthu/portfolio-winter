@@ -19,7 +19,7 @@ interface Props {
   tags: readonly string[];
   link?: string;
   image?: string; // static/remote image
-  video?: string; // GIF or animated image URL
+  video?: string;
   links?: readonly {
     icon: React.ReactNode;
     type: string;
@@ -41,9 +41,17 @@ export function ProjectCard({
   className,
 }: Props) {
   return (
-    <Card className="flex flex-col overflow-hidden border hover:shadow-lg transition-all duration-300 ease-out h-full">
-      <Link href={href || "#"} className={cn("block cursor-pointer", className)}>
-        {/* Ưu tiên hiển thị 'video' nếu có (thường là GIF); dùng Image để tránh lint warning */}
+    <Card className="group relative flex h-full flex-col overflow-hidden border text-[#29303B] transition-all duration-300 ease-out hover:shadow-lg">
+      <Link
+        aria-label={`View ${title} project`}
+        href={href || "#"}
+        className={cn(
+          "absolute inset-0 z-10 cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/45 focus-visible:ring-inset",
+          className
+        )}
+      />
+
+      <div className="block">
         {video && (
           <ResponsiveMotionImage
             src={video}
@@ -52,7 +60,7 @@ export function ProjectCard({
             height={384} // ~ h-40 (160px) responsive scale; đặt lớn để downscale đẹp
             mobilePosterSrc={image || undefined}
             className="pointer-events-none mx-auto h-40 w-full object-cover object-top"
-            unoptimized // giữ nguyên GIF/ảnh động
+            unoptimized
             sizes="(max-width: 768px) 100vw, 600px"
           />
         )}
@@ -68,11 +76,11 @@ export function ProjectCard({
             sizes="(max-width: 768px) 100vw, 600px"
           />
         )}
-      </Link>
+      </div>
 
       <CardHeader className="px-2">
         <div className="space-y-1">
-          <CardTitle className="mt-1 text-[17px] leading-[1.25] sm:text-lg">
+          <CardTitle className="mt-1 text-[17px] font-medium leading-[1.25] tracking-normal text-[#29303B] sm:text-lg">
             {title}
           </CardTitle>
           <time className="font-sans text-xs">{dates}</time>
@@ -89,7 +97,7 @@ export function ProjectCard({
         {tags && tags.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-1">
             {tags.map((tag) => (
-              <Badge className="px-1 py-0 text-[10px]" variant="secondary" key={tag}>
+              <Badge className="px-1 py-0 text-[10px] text-[#29303B]" variant="secondary" key={tag}>
                 {tag}
               </Badge>
             ))}
@@ -97,7 +105,7 @@ export function ProjectCard({
         )}
       </CardContent>
 
-      <CardFooter className="px-2 pb-2">
+      <CardFooter className="relative z-20 px-2 pb-2">
         {links && links.length > 0 && (
           <div className="flex flex-row flex-wrap items-start gap-1">
             {links.map((l, idx) => (

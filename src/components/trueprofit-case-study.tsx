@@ -45,7 +45,7 @@ const sections = [
 ];
 
 const assets = {
-  hero: "/trueprofit.gif",
+  hero: "/trueprofit-mobile-poster.jpg",
   keywords: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758739200/truepro-01_hcnk3e.png",
   feeling: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758739200/truepro-02_xul57w.png",
   landingOutcome: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758739200/truepro-03_a32knn.png",

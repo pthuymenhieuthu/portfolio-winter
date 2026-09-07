@@ -49,7 +49,7 @@ export function TallyContactForm() {
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute left-0 top-[207px] z-10 inline-flex h-11 min-w-[128px] items-center justify-center gap-2 rounded-full bg-[#F7F7FA] px-5 text-base font-medium text-black/60 shadow-[0_0_0_1px_rgba(0,0,0,.06),0_1px_1px_.5px_rgba(0,0,0,.06),0_3px_3px_1.5px_rgba(0,0,0,.06),0_6px_6px_-3px_rgba(0,0,0,.06),0_12px_12px_-6px_rgba(0,0,0,.06),0_24px_24px_-12px_rgba(0,0,0,.06),inset_0_1px_0_#fff]"
+          className="pointer-events-none absolute left-0 top-[207px] z-10 inline-flex h-11 min-w-[128px] items-center justify-center gap-2 rounded-full bg-white px-5 text-base font-medium text-[#29303B] shadow-[0_0_0_1px_rgba(41,48,59,.06),0_1px_1px_.5px_rgba(41,48,59,.06),0_3px_3px_1.5px_rgba(41,48,59,.06),0_6px_6px_-3px_rgba(41,48,59,.06),0_12px_12px_-6px_rgba(41,48,59,.06),0_24px_24px_-12px_rgba(41,48,59,.06),inset_0_1px_0_#fff]"
         >
           Submit
           <ArrowRight className="size-4" strokeWidth={1.75} />

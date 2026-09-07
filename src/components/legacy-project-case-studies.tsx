@@ -606,11 +606,11 @@ export function PizzyCaseStudy() {
       title="Pizzy"
     >
       <CaseImage
-        alt="Pizzy intro gif"
+        alt="Pizzy project preview"
         fit="contain"
         mobilePosterSrc="/pizzy-mobile-poster.jpg"
         ratio="h-auto"
-        src="/pizzy.gif"
+        src="/pizzy-mobile-poster.jpg"
       />
 
       {[

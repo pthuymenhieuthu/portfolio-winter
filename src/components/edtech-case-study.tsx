@@ -44,8 +44,8 @@ const sections = [
 ];
 
 const assets = {
-  hero: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764751725/Phone_shocase_lxj9ih.gif",
-  leftRight: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764752790/Copy_of_Phone_shocase_e6nh4i.gif",
+  hero: "/speakchinese-mobile-poster.jpg",
+  leftRight: "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_1200,pg_1/v1764752790/Copy_of_Phone_shocase_e6nh4i.webp",
   speakChinese: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764754172/speak_chinese_z1dzwv.png",
   sensei: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764755845/android_banner-tr%C3%B9m_japanese_cyfugx.png",
   hsk: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764755849/HSK_soiciu.png",

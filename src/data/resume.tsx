@@ -249,7 +249,7 @@ export const DATA = {
     },
   ],
   image: "/affina-mobile-poster.jpg",
-  video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1788018154/RECOMMEND_AI_-_AFFINA_rpsfyb.gif",
+  video: "",
 },
     {
       title: "Zoan AI – AI Workflow Management",
@@ -277,7 +277,7 @@ export const DATA = {
         },
       ],
       image: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787904374/Frame_2147225273_isnnjf.png",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787913142/zoan_1_t2snqa.gif",
+      video: "",
     },
     {
       title: "TrueProfit - Landing Page & Onboarding Illustrations",
@@ -303,7 +303,7 @@ export const DATA = {
         },
       ],
       image: "/trueprofit-mobile-poster.jpg",
-      video: "/trueprofit.gif",
+      video: "",
     },
         {
     title: "Language Learning Apps — UI & Motion Enhancement Showcase",
@@ -326,8 +326,7 @@ export const DATA = {
       },
     ],
     image: "/speakchinese-mobile-poster.jpg",
-    video:
-      "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764751725/Phone_shocase_lxj9ih.gif",
+    video: "",
   },
   {
       title: "Marketing Graphics — Campaign & Social Design",
@@ -375,7 +374,7 @@ export const DATA = {
         },
       ],
       image: "/pizzy-mobile-poster.jpg",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758518716/pizzy_k1m4ci.gif",
+      video: "",
     },
     {
       title: "Website UI Design Series",
@@ -398,7 +397,7 @@ export const DATA = {
         },
       ],
       image: "/uidesignseries-mobile-poster.jpg",
-      video: "/chande.gif",
+      video: "",
     },
     {
       title: "CakeBank Case Study - Rounded-Up Savings Feature",
@@ -419,8 +418,8 @@ export const DATA = {
           icon: <Icons.link className="size-3" />,
         },
       ],
-      image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759915810/Untitled_design_43_ymcl3e.gif",
+      image: "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_1200,pg_1/v1759915810/Untitled_design_43_ymcl3e.webp",
+      video: "",
     },
     {
       title: "ZanZan",
@@ -442,7 +441,7 @@ export const DATA = {
         },
       ],
       image: "/zanzan-mobile-poster.jpg",
-      video: "/zanzan.gif",
+      video: "",
     },
     // {
 //   title: "TalkPiggy",
@@ -471,7 +470,6 @@ export const DATA = {
 //     },
 //   ],
 //   image: "",
-//   video: "/talkpiggy.gif",
 // },
   ],
 } as const;

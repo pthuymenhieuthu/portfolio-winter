@@ -1,8 +1,5 @@
-"use client";
-
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 
 type ResponsiveMotionImageProps = {
   src: string;
@@ -39,32 +36,32 @@ export function ResponsiveMotionImage({
   priority = false,
   unoptimized,
 }: ResponsiveMotionImageProps) {
-  const posterSrc = mobilePosterSrc || getCloudinaryPosterSrc(src);
+  const gifPosterSrc = isGif(src)
+    ? mobilePosterSrc || getCloudinaryPosterSrc(src)
+    : null;
+  const displaySrc = gifPosterSrc || src;
 
-  if (isGif(src) && posterSrc) {
+  if (/^https?:\/\//i.test(displaySrc)) {
     return (
-      <picture>
-        <source media="(max-width: 639px)" srcSet={posterSrc} />
-        <img
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          loading="lazy"
-          decoding="async"
-          className={cn("block", className)}
-        />
-      </picture>
+      <img
+        src={displaySrc}
+        alt={alt}
+        width={width}
+        height={height}
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
+        className={className}
+      />
     );
   }
 
   return (
     <Image
-      src={src}
+      src={displaySrc}
       alt={alt}
       width={width}
       height={height}
-      unoptimized={unoptimized || isGif(src)}
+      unoptimized={unoptimized || Boolean(gifPosterSrc)}
       className={className}
       priority={priority}
       sizes={sizes}

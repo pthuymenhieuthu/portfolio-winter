@@ -92,7 +92,7 @@ const journeySteps = [
     ],
     media: [
       "/assets/affina/journey/recommend-loading.png",
-      "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787911198/recommend_3_iqlh41.gif",
+      "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_1200,pg_1/v1787911198/recommend_3_iqlh41.webp",
     ],
   },
   {
@@ -107,7 +107,7 @@ const journeySteps = [
     ],
     media: [
       "/assets/affina/journey/recommend-compare.png",
-      "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787911103/compare_1_ovmofq.gif",
+      "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_1200,pg_1/v1787911103/compare_1_ovmofq.webp",
     ],
   },
 ];

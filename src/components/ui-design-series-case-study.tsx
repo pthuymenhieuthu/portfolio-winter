@@ -43,7 +43,7 @@ const sections = [
 ];
 
 const assets = {
-  hero: "/chande.gif",
+  hero: "/uidesignseries-mobile-poster.jpg",
   direction: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758356378/298bd9ed-f325-48c0-aaf8-e76058112339_o7fhaf.png",
   draft: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758356379/DRAFTTT_wwrvbt.png",
   week1: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758357035/1IEUZ7Fhxsal69TkPP3bhjHfljw_e3c6vh.avif",

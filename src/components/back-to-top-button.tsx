@@ -53,7 +53,7 @@ export function BackToTopButton() {
       className={cn(
         "fixed bottom-28 right-5 z-50 flex h-[68px] w-12 items-center justify-center bg-transparent transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 sm:right-8",
         isOverFooter
-          ? "text-white focus-visible:ring-white/40"
+          ? "text-[#29303B] focus-visible:ring-[#29303B]/30"
           : "text-[#1E1E1E] focus-visible:ring-[#1E1E1E]/30",
         isVisible
           ? "pointer-events-auto translate-y-0 opacity-100"

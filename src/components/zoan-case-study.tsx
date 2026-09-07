@@ -36,7 +36,7 @@ const sections = [
 ];
 
 const zoanAssets = {
-  hero: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787913142/zoan_1_t2snqa.gif",
+  hero: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787904374/Frame_2147225273_isnnjf.png",
   overview: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1766037533/01_sj2voy.png",
   workMockup1: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787904374/Frame_2147225272_dz9vld.png",
   workMockup2: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787904374/Frame_2147225273_isnnjf.png",
@@ -46,8 +46,8 @@ const zoanAssets = {
   components: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1763909689/Screenshot_253_kqzyld.png",
   platformShowcase1: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989538/Showcase_hehe-03_rvw75h.png",
   platformShowcase2: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989540/Showcase_hehe-01_zbeuze.png",
-  timelineMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764161748/Timeline_5-macd_dosrrf.gif",
-  appMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764161236/app_vvjcwd.gif",
+  timelineMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_900,pg_1/v1764161748/Timeline_5-macd_dosrrf.webp",
+  appMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_900,pg_1/v1764161236/app_vvjcwd.webp",
 };
 
 const zoanAssetDimensions: Record<string, [number, number]> = {

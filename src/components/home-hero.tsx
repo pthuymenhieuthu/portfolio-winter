@@ -3,7 +3,7 @@
 import { Water } from "@paper-design/shaders-react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { DATA } from "@/data/resume";
 import BlurFade from "@/components/magicui/blur-fade";
@@ -14,8 +14,16 @@ const BLUR_FADE_DELAY = 0.04;
 
 export function HomeHero() {
   const [isWaterMode, setIsWaterMode] = useState(false);
+  const [supportsWaterShader, setSupportsWaterShader] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const duration = shouldReduceMotion ? 0 : 0.64;
+
+  useEffect(() => {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("webgl2");
+    setSupportsWaterShader(Boolean(context));
+    context?.getExtension("WEBGL_lose_context")?.loseContext();
+  }, []);
 
   return (
     <section
@@ -33,20 +41,22 @@ export function HomeHero() {
           ease: [0.16, 1, 0.3, 1],
         }}
       >
-        <Water
-          colorBack="#e6f6ff"
-          colorHighlight="#ffffff"
-          speed={0.52}
-          size={1.08}
-          caustic={0.16}
-          waves={0.26}
-          layering={0.62}
-          highlights={0.22}
-          edges={0.3}
-          maxPixelCount={1920 * 1080}
-          className="h-full w-full"
-          style={{ height: "100%", width: "100%" }}
-        />
+        {isWaterMode && supportsWaterShader ? (
+          <Water
+            colorBack="#e6f6ff"
+            colorHighlight="#ffffff"
+            speed={0.52}
+            size={1.08}
+            caustic={0.16}
+            waves={0.26}
+            layering={0.62}
+            highlights={0.22}
+            edges={0.3}
+            maxPixelCount={1920 * 1080}
+            className="h-full w-full"
+            style={{ height: "100%", width: "100%" }}
+          />
+        ) : null}
       </motion.div>
 
       <div
@@ -135,7 +145,7 @@ export function HomeHero() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-[640px] -translate-y-6 flex-col items-center text-center sm:-translate-y-14 lg:-translate-y-16">
         <HeroTitleReveal
-          className="max-w-full font-[var(--font-heading)] text-[40px] font-bold leading-[0.95] tracking-normal text-[hsl(var(--ink))] min-[390px]:text-[44px] sm:text-[72px]"
+          className="max-w-full font-[var(--font-heading)] text-[40px] font-medium leading-[0.95] tracking-normal text-[#29303B] min-[390px]:text-[44px] sm:text-[72px]"
           delay={BLUR_FADE_DELAY}
           text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
         />
@@ -145,7 +155,7 @@ export function HomeHero() {
             type="button"
             aria-checked={isWaterMode}
             role="switch"
-            className="mt-4 inline-flex items-center gap-3 bg-transparent p-0 text-sm font-medium text-[#171717] transition-opacity duration-300 hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/35"
+            className="mt-4 inline-flex items-center gap-3 bg-transparent p-0 text-sm font-medium text-[#29303B] transition-opacity duration-300 hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/35"
             onClick={() => setIsWaterMode((active) => !active)}
           >
             <span>Make it more Thuy</span>
@@ -172,7 +182,7 @@ export function HomeHero() {
 
         <BlurFade delay={1.28}>
           <div className="mt-5 flex w-full flex-col items-center gap-[36px]">
-            <p className="mx-auto max-w-[520px] text-base leading-[1.35] text-[#171717]">
+            <p className="mx-auto max-w-[520px] text-base leading-[1.35] text-[#29303B]">
               Proactive Product Designer
               <br />
               <span className="text-[hsl(var(--ink-soft))]">
