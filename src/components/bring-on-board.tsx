@@ -2,10 +2,10 @@
 
 import dynamic from "next/dynamic";
 
-const BringOnBoardSpline = dynamic(
+const BringOnBoardWater = dynamic(
   () =>
-    import("@/components/bring-on-board-spline").then(
-      (module) => module.BringOnBoardSpline
+    import("@/components/bring-on-board-water").then(
+      (module) => module.BringOnBoardWater
     ),
   { ssr: false }
 );
@@ -16,8 +16,8 @@ export function BringOnBoard() {
       id="bring-on-board"
       className="relative isolate w-full overflow-hidden bg-[#f8fcff] px-5 py-[72px] sm:px-6 sm:py-[88px] lg:py-24"
     >
-      <BringOnBoardSpline />
-      <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(180deg,#ffffff_0%,rgba(248,252,255,0.96)_24%,rgba(230,246,255,0.18)_62%,rgba(175,231,252,0.24)_100%)]" />
+      <BringOnBoardWater />
+      <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(180deg,#ffffff_0%,rgba(248,252,255,0.88)_22%,rgba(230,246,255,0.08)_58%,rgba(175,231,252,0.12)_100%)]" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-12 bg-gradient-to-b from-transparent to-[#F2F6FA]" />
 
       <div className="mx-auto flex min-h-[620px] w-full max-w-[1173px] flex-col items-center sm:min-h-[700px] lg:min-h-[760px]">
