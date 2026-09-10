@@ -8,6 +8,9 @@ import Link from "next/link";
 import GoogleTracking from "@/components/google-tracking";
 
 const BLUR_FADE_DELAY = 0.04;
+const HOME_PROJECTS = DATA.projects.filter(
+  (project) => project.title !== "ZanZan"
+);
 
 export default function Page() {
   return (
@@ -42,7 +45,7 @@ export default function Page() {
               </div>
             </BlurFade>
             <div className="mx-auto grid w-full max-w-[800px] grid-cols-1 gap-3 px-4 sm:grid-cols-2 sm:px-0">
-              {DATA.projects.map((project, id) => (
+              {HOME_PROJECTS.map((project, id) => (
                 <BlurFade
                   key={project.title}
                   delay={BLUR_FADE_DELAY * 12 + id * 0.05}

@@ -57,9 +57,9 @@ export function ProjectCard({
             src={video}
             alt={title}
             width={1200}
-            height={384} // ~ h-40 (160px) responsive scale; đặt lớn để downscale đẹp
+            height={900}
             mobilePosterSrc={image || undefined}
-            className="pointer-events-none mx-auto h-40 w-full object-cover object-top"
+            className="pointer-events-none mx-auto aspect-[4/3] h-auto w-full object-cover object-top"
             unoptimized
             sizes="(max-width: 768px) 100vw, 600px"
           />
@@ -70,8 +70,8 @@ export function ProjectCard({
             src={image}
             alt={title}
             width={1200}
-            height={384}
-            className="h-40 w-full overflow-hidden object-cover object-top"
+            height={900}
+            className="aspect-[4/3] h-auto w-full overflow-hidden object-cover object-top"
             priority={false}
             sizes="(max-width: 768px) 100vw, 600px"
           />
