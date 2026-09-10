@@ -2,18 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  type MotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { useEffect, useState } from "react";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { caseStudyStyles } from "@/lib/case-study-styles";
+import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 
 type CaseProject = {
   title: string;
@@ -281,66 +274,9 @@ function SectionHeader({
   );
 }
 
-function RevealWord({
-  word,
-  index,
-  total,
-  progress,
-  reduceMotion,
-}: {
-  word: string;
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-  reduceMotion: boolean;
-}) {
-  const start = index / total;
-  const end = Math.min((index + 1.15) / total, 1);
-  const opacity = useTransform(progress, [start, end], [0.16, 1]);
-  const color = useTransform(progress, [start, end], ["#c8c8c8", "#08090a"]);
-
-  return (
-    <motion.span
-      aria-hidden="true"
-      className="mr-[0.22em] inline-block"
-      style={reduceMotion ? { color: "#08090a", opacity: 1 } : { color, opacity }}
-    >
-      {word}
-    </motion.span>
-  );
-}
-
 function PartnerHowMightWeReveal() {
-  const target = useRef<HTMLQuoteElement>(null);
-  const shouldReduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target,
-    offset: ["start 0.88", "end 0.34"],
-  });
-  const progress = useSpring(scrollYProgress, {
-    stiffness: 110,
-    damping: 28,
-    mass: 0.22,
-  });
-  const words = partnerHowMightWe.split(" ");
-
   return (
-    <motion.blockquote
-      ref={target}
-      aria-label={partnerHowMightWe}
-      className="mt-10 max-w-[1000px] py-2 font-[var(--font-affina-heading)] text-[27px] leading-[1.35] text-[#08090a] sm:text-[30px]"
-    >
-      {words.map((word, index) => (
-        <RevealWord
-          index={index}
-          key={`${word}-${index}`}
-          progress={progress}
-          reduceMotion={Boolean(shouldReduceMotion)}
-          total={words.length}
-          word={word}
-        />
-      ))}
-    </motion.blockquote>
+    <CaseStudyStatementReveal className="mt-10 max-w-[1000px]" text={partnerHowMightWe} />
   );
 }
 
@@ -1280,8 +1216,8 @@ function NextProjectCard({
     <Link
       href={project.href || "#"}
       className={cn(
-        "group overflow-hidden rounded-xl border border-[#e1e6ea] bg-white transition hover:-translate-y-1 hover:shadow-lg",
-        featured && "md:grid md:grid-cols-[1.2fr_0.8fr]"
+        "group overflow-hidden rounded-3xl border border-[#e1e6ea] bg-white/65 transition hover:-translate-y-1 hover:shadow-xl",
+        featured && "md:grid md:grid-cols-[1.15fr_0.85fr]"
       )}
     >
       <div
@@ -1300,8 +1236,8 @@ function NextProjectCard({
           />
         )}
       </div>
-      <div className="p-6 sm:p-8">
-        <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#737373]">
+      <div className="p-7">
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#737373]">
           {featured ? "Featured next" : project.dates}
         </p>
         <h3 className="mt-3 font-[var(--font-affina-heading)] text-2xl leading-tight sm:text-3xl">
@@ -1388,10 +1324,10 @@ export function AffinaPartnerFlowCaseStudy() {
           </div>
           <div>
             <SectionHeader eyebrow="Design Problem" title="Design Goal" />
-            <p className="mt-9 max-w-[1000px] font-[var(--font-affina-heading)] text-[27px] leading-[1.35] text-[#c8c8c8] sm:text-[30px]">
-              Design one scalable family-insurance model that could work across both
-              assisted and self-service journeys.
-            </p>
+            <CaseStudyStatementReveal
+              className="mt-9"
+              text="Design one scalable family-insurance model that could work across both assisted and self-service journeys."
+            />
             <div className="mt-10 space-y-3">
               {[
                 "Make multiple insured members manageable",

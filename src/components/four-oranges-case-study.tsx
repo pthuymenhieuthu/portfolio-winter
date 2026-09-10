@@ -2,14 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   motion,
-  type MotionValue,
   useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
 } from "framer-motion";
 import {
   ArrowDown,
@@ -28,6 +24,7 @@ import { DATA } from "@/data/resume";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
 import { HeroBlobMotion } from "@/components/hero-blob-motion";
+import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { cn } from "@/lib/utils";
 import { caseStudyStyles } from "@/lib/case-study-styles";
 
@@ -264,66 +261,9 @@ function FlowSteps() {
 
 const howMightWeText = "How might we make every code and transaction status immediately understandable?";
 
-function RevealWord({
-  word,
-  index,
-  total,
-  progress,
-  reduceMotion,
-}: {
-  word: string;
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-  reduceMotion: boolean;
-}) {
-  const start = index / total;
-  const end = Math.min((index + 1.15) / total, 1);
-  const opacity = useTransform(progress, [start, end], [0.18, 1]);
-  const color = useTransform(progress, [start, end], ["#c8c8c8", "#351303"]);
-
-  return (
-    <motion.span
-      aria-hidden="true"
-      className="mr-[0.22em] inline-block"
-      style={reduceMotion ? { color: "#351303", opacity: 1 } : { color, opacity }}
-    >
-      {word}
-    </motion.span>
-  );
-}
-
 function HowMightWeReveal() {
-  const target = useRef<HTMLQuoteElement>(null);
-  const shouldReduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target,
-    offset: ["start 0.88", "end 0.34"],
-  });
-  const progress = useSpring(scrollYProgress, {
-    stiffness: 110,
-    damping: 28,
-    mass: 0.22,
-  });
-  const words = howMightWeText.split(" ");
-
   return (
-    <motion.blockquote
-      ref={target}
-      aria-label={howMightWeText}
-      className="max-w-[920px] py-2 font-[var(--font-affina-heading)] text-[30px] leading-[1.2] text-[#351303] sm:text-[46px]"
-    >
-      {words.map((word, index) => (
-        <RevealWord
-          word={word}
-          index={index}
-          total={words.length}
-          progress={progress}
-          reduceMotion={Boolean(shouldReduceMotion)}
-          key={`${word}-${index}`}
-        />
-      ))}
-    </motion.blockquote>
+    <CaseStudyStatementReveal color="#351303" text={howMightWeText} />
   );
 }
 

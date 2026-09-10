@@ -69,11 +69,15 @@ function NavButton({
   href: string;
   label: string;
 }) {
+  const isExternal = /^https?:\/\//.test(href);
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <Link
           href={href}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          target={isExternal ? "_blank" : undefined}
           className={cn(
             buttonVariants({ variant: "ghost", size: "icon" }),
             "size-10 rounded-full transition duration-300 focus-visible:ring-2 focus-visible:ring-[#0096F7]/35 focus-visible:ring-offset-2",
@@ -83,7 +87,7 @@ function NavButton({
           {children}
         </Link>
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent side="top" sideOffset={10}>
         <p>{label}</p>
       </TooltipContent>
     </Tooltip>

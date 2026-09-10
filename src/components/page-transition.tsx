@@ -2,7 +2,8 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { MutableRefObject } from "react";
 
 const RIBBON_PATHS = {
   back: "M 0 12 Q 50 0 100 12 V 116 Q 50 128 0 116 Z",
@@ -51,6 +52,13 @@ function getInternalHref(anchor: HTMLAnchorElement) {
   return `${url.pathname}${url.search}${url.hash}`;
 }
 
+function clearTimer(timer: MutableRefObject<number | null>) {
+  if (timer.current !== null) {
+    window.clearTimeout(timer.current);
+    timer.current = null;
+  }
+}
+
 export function PageTransition() {
   const router = useRouter();
   const pathname = usePathname();
@@ -60,15 +68,26 @@ export function PageTransition() {
   const pendingPath = useRef<string | null>(null);
   const routeTimer = useRef<number | null>(null);
   const cleanupTimer = useRef<number | null>(null);
+  const watchdogTimer = useRef<number | null>(null);
+
+  const revealAndReset = useCallback(() => {
+    clearTimer(watchdogTimer);
+    setPhase("reveal");
+
+    const timing = getTransitionTiming();
+    clearTimer(cleanupTimer);
+    cleanupTimer.current = window.setTimeout(() => {
+      pendingPath.current = null;
+      setIsActive(false);
+      cleanupTimer.current = null;
+    }, timing.cleanupDelay);
+  }, []);
 
   useEffect(() => {
     return () => {
-      if (routeTimer.current) {
-        window.clearTimeout(routeTimer.current);
-      }
-      if (cleanupTimer.current) {
-        window.clearTimeout(cleanupTimer.current);
-      }
+      clearTimer(routeTimer);
+      clearTimer(cleanupTimer);
+      clearTimer(watchdogTimer);
     };
   }, []);
 
@@ -108,14 +127,25 @@ export function PageTransition() {
       setIsActive(true);
 
       const timing = getTransitionTiming();
+      clearTimer(routeTimer);
+      clearTimer(cleanupTimer);
+      clearTimer(watchdogTimer);
       routeTimer.current = window.setTimeout(() => {
         router.push(href);
+        routeTimer.current = null;
       }, timing.routeDelay);
+
+      // A failed/slow route must never leave the full-screen transition mounted.
+      // This also protects local development when Next's incremental cache is rebuilding.
+      watchdogTimer.current = window.setTimeout(
+        revealAndReset,
+        timing.routeDelay + 4000
+      );
     }
 
     document.addEventListener("click", handleClick, true);
     return () => document.removeEventListener("click", handleClick, true);
-  }, [isActive, router, shouldReduceMotion]);
+  }, [isActive, revealAndReset, router, shouldReduceMotion]);
 
   useEffect(() => {
     if (!isActive || pendingPath.current !== pathname) {
@@ -123,16 +153,11 @@ export function PageTransition() {
     }
 
     const frame = window.requestAnimationFrame(() => {
-      setPhase("reveal");
-      const timing = getTransitionTiming();
-      cleanupTimer.current = window.setTimeout(() => {
-        pendingPath.current = null;
-        setIsActive(false);
-      }, timing.cleanupDelay);
+      revealAndReset();
     });
 
     return () => window.cancelAnimationFrame(frame);
-  }, [isActive, pathname]);
+  }, [isActive, pathname, revealAndReset]);
 
   if (shouldReduceMotion || !isActive) {
     return null;

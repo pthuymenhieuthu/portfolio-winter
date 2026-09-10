@@ -6,6 +6,7 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
+import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
@@ -150,8 +151,8 @@ function NextProjectCard({
     <Link
       href={project.href || "#"}
       className={cn(
-        "group block overflow-hidden rounded-2xl bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl",
-        featured && "md:grid md:grid-cols-[1.2fr_0.9fr] md:items-stretch"
+        "group block overflow-hidden rounded-3xl border border-black/10 bg-white/65 transition duration-300 hover:-translate-y-1 hover:shadow-xl",
+        featured && "md:grid md:grid-cols-[1.15fr_0.85fr] md:items-stretch"
       )}
     >
       <div
@@ -173,20 +174,20 @@ function NextProjectCard({
           />
         )}
       </div>
-      <div className="flex flex-col justify-between gap-10 p-7 sm:p-8">
+      <div className="flex flex-col justify-between gap-8 p-7">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#737373]">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#737373]">
             {featured ? "Next project" : project.dates}
           </p>
           <h3
             className={cn(
               "mt-3 font-[var(--font-heading)] font-normal leading-[1.2] tracking-normal",
-              featured ? "text-[26px] sm:text-[30px]" : "text-xl sm:text-[22px]"
+              featured ? "text-3xl" : "text-2xl"
             )}
           >
             {project.title}
           </h3>
-          <p className="mt-4 text-base leading-[1.6] text-[#737373]">
+          <p className="mt-4 text-sm leading-6 text-[#737373]">
             {project.description}
           </p>
         </div>
@@ -218,24 +219,24 @@ export function ZoanCaseStudy() {
         <HeroBlobMotion className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]" position="bottom">
           <Image src="/assets/zoan/zoan-hero-blob-bottom.svg" alt="" width={1440} height={526} priority className="block h-auto w-full" />
         </HeroBlobMotion>
-        <div className="relative z-10 mx-auto flex w-full max-w-[560px] flex-col items-center gap-5">
-          <p className="rounded-full border border-[#07111f]/10 bg-white/45 px-4 py-1.5 text-sm text-[#07111f] backdrop-blur">
+        <div className="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center">
+          <p className="rounded-full border border-[#07111f]/10 bg-white/45 px-4 py-1.5 text-sm font-medium text-[#07111f] backdrop-blur">
             AI Product · May 2025
           </p>
           <HeroTitleReveal
-            className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)] sm:max-w-none sm:text-[64px]"
+            className="mt-7 max-w-[860px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)]"
             delay={PROJECT_HERO_DELAY}
             text="Zoan AI"
           />
           <BlurFade delay={1.12}>
-            <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-[#07111f]">
+            <p className="mx-auto mt-7 max-w-[570px] text-base leading-[1.55] text-[#07111f] sm:text-lg">
               AI Workflow Management
             </p>
           </BlurFade>
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+      <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-work">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
@@ -248,10 +249,11 @@ export function ZoanCaseStudy() {
               Before joining Zoan AI, I used to ask myself that question. But
               leading this project, from system rebuilding and UI redesign to
               shaping cross-platform experiences, made me realize something
-              else: <CaseStudyScrollHighlight>I wasn&apos;t being replaced by AI. I
-              was designing the interface for an AI platform.</CaseStudyScrollHighlight>
+              else.
             </p>
           </div>
+
+          <CaseStudyStatementReveal text="I wasn’t being replaced by AI. I was designing the interface for an AI platform." />
 
           <CaseImage src={zoanAssets.hero} alt="Zoan AI animated workflow preview" />
 
@@ -402,7 +404,7 @@ export function ZoanCaseStudy() {
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-outcome">
           <div className="rounded-xl bg-[#07111f] p-6 text-white shadow-sm sm:p-8 lg:p-10">
-            <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#ffd360]">
               Outcome
             </p>
             <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
@@ -452,7 +454,7 @@ export function ZoanCaseStudy() {
               phuongthuy101222@gmail.com
             </a>{" "}
             or DM me on{" "}
-            <a className="text-[#08090a] underline underline-offset-4" href={DATA.contact.social.LinkedIn.url}>
+            <a className="text-[#08090a] underline underline-offset-4" href={DATA.contact.social.LinkedIn.url} rel="noopener noreferrer" target="_blank">
               Linkedin
             </a>
           </p>

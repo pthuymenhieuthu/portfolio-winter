@@ -101,6 +101,8 @@ export default function Page() {
               <Link
                 href={DATA.contact.social.email.url}
                 className="text-[#0096F7] underline-offset-4 hover:underline"
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 phuongthuy101222@gmail.com
               </Link>
@@ -111,6 +113,8 @@ export default function Page() {
               <Link
                 href={DATA.contact.social.LinkedIn.url}
                 className="text-[#0096F7] underline-offset-4 hover:underline"
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 Linkedin
               </Link>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Water } from "@paper-design/shaders-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -11,12 +11,55 @@ import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
 import { HeroCtaButtons } from "@/components/hero-cta-buttons";
 
 const BLUR_FADE_DELAY = 0.04;
+const WATER_MODE_LABEL = "My name means “water” in Vietnamese 😉";
+const DEFAULT_MODE_LABEL = "Make it more “Thủy”";
+
+function WaterModeLabel({
+  active,
+  reduceMotion,
+}: {
+  active: boolean;
+  reduceMotion: boolean;
+}) {
+  const label = active ? WATER_MODE_LABEL : DEFAULT_MODE_LABEL;
+
+  return (
+    <span
+      aria-hidden="true"
+      className="grid h-[1.25em] items-center overflow-hidden [perspective:180px]"
+    >
+      <AnimatePresence initial={false} mode="popLayout">
+        <motion.span
+          key={label}
+          className="origin-center whitespace-nowrap [grid-area:1/1]"
+          initial={
+            reduceMotion
+              ? { opacity: 0 }
+              : { opacity: 0, rotateX: -64, y: "72%" }
+          }
+          animate={{ opacity: 1, rotateX: 0, y: "0%" }}
+          exit={
+            reduceMotion
+              ? { opacity: 0 }
+              : { opacity: 0, rotateX: 64, y: "-72%" }
+          }
+          transition={{
+            duration: reduceMotion ? 0 : 0.78,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+        >
+          {label}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
 
 export function HomeHero() {
   const [isWaterMode, setIsWaterMode] = useState(false);
+  const [isWaterLabelActive, setIsWaterLabelActive] = useState(false);
   const [supportsWaterShader, setSupportsWaterShader] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-  const duration = shouldReduceMotion ? 0 : 0.64;
 
   useEffect(() => {
     const canvas = document.createElement("canvas");
@@ -24,6 +67,12 @@ export function HomeHero() {
     setSupportsWaterShader(Boolean(context));
     context?.getExtension("WEBGL_lose_context")?.loseContext();
   }, []);
+
+  const toggleWaterMode = () => {
+    const nextWaterMode = !isWaterMode;
+    setIsWaterLabelActive(nextWaterMode);
+    setIsWaterMode(nextWaterMode);
+  };
 
   return (
     <section
@@ -36,7 +85,6 @@ export function HomeHero() {
         className="pointer-events-none absolute inset-0 z-[2]"
         initial={false}
         transition={{
-          delay: 0,
           duration: shouldReduceMotion ? 0 : 0.52,
           ease: [0.16, 1, 0.3, 1],
         }}
@@ -61,7 +109,7 @@ export function HomeHero() {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[-96px] z-[1] w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:top-[-132px] md:top-[-104px] lg:top-[-72px]"
+        className="pointer-events-none absolute left-1/2 top-[-128px] z-[1] w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:top-[-152px] md:top-[-140px] lg:top-[-140px]"
       >
         <motion.div
           animate={
@@ -144,41 +192,38 @@ export function HomeHero() {
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[640px] -translate-y-4 flex-col items-center text-center sm:-translate-y-8 lg:-translate-y-10">
-        <HeroTitleReveal
-          className="max-w-full font-[var(--font-heading)] text-[40px] font-medium leading-[0.95] tracking-normal text-[#29303B] min-[390px]:text-[44px] sm:text-[72px]"
-          delay={BLUR_FADE_DELAY}
-          text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
-        />
-
-        <BlurFade delay={1.08}>
-          <button
+        <BlurFade delay={BLUR_FADE_DELAY}>
+          <motion.button
+            layout
             type="button"
-            aria-checked={isWaterMode}
+            aria-label={
+              isWaterLabelActive ? WATER_MODE_LABEL : DEFAULT_MODE_LABEL
+            }
+            aria-checked={isWaterLabelActive}
             role="switch"
-            className="mt-4 inline-flex items-center gap-3 bg-transparent p-0 text-sm font-medium text-[#29303B] transition-opacity duration-300 hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/35"
-            onClick={() => setIsWaterMode((active) => !active)}
+            className="relative isolate mb-5 inline-flex items-center justify-center overflow-hidden rounded-full border border-[#B9E2FB] bg-white/70 px-3.5 py-2 text-xs font-medium text-[#7892A3] shadow-[0_5px_18px_rgba(59,160,255,0.10)] backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/30 sm:mb-6 sm:text-[13px]"
+            onClick={toggleWaterMode}
+            transition={{
+              layout: {
+                duration: shouldReduceMotion ? 0 : 0.72,
+                ease: [0.16, 1, 0.3, 1],
+              },
+            }}
           >
-            <span>Make it more Thuy</span>
-            <span
-              aria-hidden="true"
-              className={`relative h-7 w-12 shrink-0 rounded-full border transition-colors duration-300 ${
-                isWaterMode
-                  ? "border-[#8CCFFF] bg-[#A7DAFC]"
-                  : "border-black/[0.06] bg-black/10"
-              }`}
-            >
-              <motion.span
-                animate={{ x: isWaterMode ? 22 : 2 }}
-                className="absolute left-0 top-[2px] block size-[22px] rounded-full bg-white"
-                initial={false}
-                transition={{
-                  duration: shouldReduceMotion ? 0 : 0.28,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
+            <span className="relative z-10">
+              <WaterModeLabel
+                active={isWaterLabelActive}
+                reduceMotion={Boolean(shouldReduceMotion)}
               />
             </span>
-          </button>
+          </motion.button>
         </BlurFade>
+
+        <HeroTitleReveal
+          className="max-w-full font-[var(--font-heading)] text-[40px] font-medium leading-[0.95] tracking-normal text-[#29303B] min-[390px]:text-[44px] sm:text-[72px]"
+          delay={BLUR_FADE_DELAY * 3}
+          text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
+        />
 
         <BlurFade delay={1.28}>
           <div className="mt-5 flex w-full flex-col items-center gap-[36px]">

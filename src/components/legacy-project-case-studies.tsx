@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
+import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
 import {
   CaseStudySectionNavigation,
@@ -192,13 +193,13 @@ function CaseHero({
     >
       <BlobCutout fill={theme.page} position="top" />
       <BlobCutout fill={theme.page} position="bottom" />
-      <div className="relative z-10 mx-auto flex w-full max-w-[720px] flex-col items-center gap-5">
-        <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-base backdrop-blur">
+      <div className="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center">
+        <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur">
           {date}
         </p>
         <div style={{ width: "min(720px, calc(100vw - 48px))" }}>
           <HeroTitleReveal
-            className="font-[var(--font-heading)] text-[28px] font-medium leading-[1.1] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)] sm:text-[64px] sm:leading-[1.05]"
+            className="mt-7 font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)]"
             delay={PROJECT_HERO_DELAY}
             text={title}
             wrap
@@ -206,7 +207,7 @@ function CaseHero({
         </div>
         {summary && (
           <BlurFade delay={1.12}>
-            <p className="max-w-[calc(100vw-40px)] text-base leading-7 text-white/80 sm:max-w-[620px] sm:text-lg">
+            <p className="mt-7 max-w-[calc(100vw-40px)] text-base leading-[1.55] text-white/80 sm:max-w-[620px] sm:text-lg">
               {summary}
             </p>
           </BlurFade>
@@ -241,7 +242,7 @@ function CaseSection({
   theme,
 }: {
   id: string;
-  title: string;
+  title?: string;
   label?: string;
   children: React.ReactNode;
   theme: Theme;
@@ -250,9 +251,11 @@ function CaseSection({
     <CaseStudyRevealSection id={id} className="flex scroll-mt-24 flex-col gap-16 sm:gap-20">
       <div className="flex flex-col gap-7">
         {label && <SectionLabel theme={theme}>{label}</SectionLabel>}
-        <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-          {title}
-        </h2>
+        {title && (
+          <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
+            {title}
+          </h2>
+        )}
       </div>
       {children}
     </CaseStudyRevealSection>
@@ -356,9 +359,10 @@ function NextProjectCard({
     <Link
       href={project.href || "#"}
       className={cn(
-        "group block overflow-hidden rounded-2xl bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl",
-        featured && "md:grid md:grid-cols-[1.2fr_0.9fr] md:items-stretch"
+        "group block overflow-hidden rounded-3xl border bg-white/65 transition duration-300 hover:-translate-y-1 hover:shadow-xl",
+        featured && "md:grid md:grid-cols-[1.15fr_0.85fr] md:items-stretch"
       )}
+      style={{ borderColor: `${theme.ink}1a` }}
     >
       <div
         className={cn(
@@ -384,10 +388,10 @@ function NextProjectCard({
           />
         )}
       </div>
-      <div className="flex flex-col justify-between gap-10 p-7 sm:p-8">
+      <div className="flex flex-col justify-between gap-8 p-7">
         <div>
           <p
-            className="text-sm font-bold uppercase tracking-[0.12em]"
+            className="text-xs font-semibold uppercase tracking-[0.12em]"
             style={{ color: theme.muted }}
           >
             {featured ? "Next project" : project.dates}
@@ -395,12 +399,12 @@ function NextProjectCard({
           <h3
             className={cn(
               "mt-3 font-[var(--font-heading)] font-normal leading-[1.2] tracking-normal",
-              featured ? "text-[26px] sm:text-[30px]" : "text-xl sm:text-[22px]"
+              featured ? "text-3xl" : "text-2xl"
             )}
           >
             {project.title}
           </h3>
-          <p className="mt-4 text-base leading-7" style={{ color: theme.muted }}>
+          <p className="mt-4 text-sm leading-6" style={{ color: theme.muted }}>
             {project.description}
           </p>
         </div>
@@ -473,7 +477,7 @@ function CaseShell({
       />
       <CaseHero date={date} summary={summary} theme={theme} title={title} />
       <section
-        className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36"
+        className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36"
         style={{ backgroundColor: theme.page } as React.CSSProperties}
       >
         {children}
@@ -641,6 +645,12 @@ export function PizzyCaseStudy() {
         ],
       ].map(([title, src, id]) => (
         <CaseSection id={id} key={title} label={title} theme={theme} title={title}>
+          {id === "pizzy-how-might-we" && (
+            <CaseStudyStatementReveal
+              color={theme.ink}
+              text="A social budgeting app for shared spending."
+            />
+          )}
           <CaseImage alt={title} fit="contain" ratio="h-auto" src={src} />
         </CaseSection>
       ))}
@@ -729,13 +739,13 @@ export function CakeCaseStudy() {
         </BodyText>
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="border-t pt-5" style={{ borderColor: `${theme.ink}1a` }}>
-            <p className="text-sm uppercase tracking-[0.12em]" style={{ color: theme.muted }}>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em]" style={{ color: theme.muted }}>
               My role
             </p>
             <p className="mt-3 text-base leading-6">Product Designer</p>
           </div>
           <div className="border-t pt-5" style={{ borderColor: `${theme.ink}1a` }}>
-            <p className="text-sm uppercase tracking-[0.12em]" style={{ color: theme.muted }}>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em]" style={{ color: theme.muted }}>
               Timeline
             </p>
             <p className="mt-3 text-base leading-6">May 2025 (3 weeks)</p>
@@ -753,8 +763,12 @@ export function CakeCaseStudy() {
         id="cake-how-might-we"
         label="How Might We"
         theme={theme}
-        title="How might we help users feel more satisfied and in control by making their account balance look “clean” while also encouraging effortless savings?"
+        title=""
       >
+        <CaseStudyStatementReveal
+          color={theme.ink}
+          text="How might we help users feel more satisfied and in control by making their account balance look “clean” while also encouraging effortless savings?"
+        />
         <CaseImage
           alt="CakeBank how might we"
           fit="contain"
