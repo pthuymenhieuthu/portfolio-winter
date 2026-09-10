@@ -248,9 +248,56 @@ export const DATA = {
       icon: <Icons.linkedin className="size-3" />,
     },
   ],
-  image: "/affina-mobile-poster.jpg",
+  image: "/assets/project-thumbnails/affina.png",
   video: "",
 },
+    {
+      title: "Affina Partner Flow — Multi-Person Insurance Journey",
+      href: "/blog/affina-partner-flow",
+      dates: "Mar 2026",
+      active: true,
+      description:
+        "Designed a scalable purchase flow for partners, translating complex insurance rules into clearer UI, states, and handoff logic.",
+      technologies: [
+        "Product Design",
+        "Insurance Flow",
+        "Business Rules",
+        "BA Collaboration",
+        "Handoff",
+      ],
+      links: [
+        {
+          type: "Website",
+          href: "https://affina.com.vn/",
+          icon: <Icons.globe className="size-3" />,
+        },
+      ],
+      image: "/assets/project-thumbnails/affina-partner-flow.png",
+      video: "",
+    },
+    {
+      title: "4Oranges — QR Rewards App & UI Kit",
+      href: "/blog/4oranges",
+      dates: "2026",
+      active: true,
+      description:
+        "Mobile reward experience for 4Oranges — the company behind MYKOLOR, SPEC, SONBOSS, EXPO, OEXPO, and SUPORSEAL.",
+      technologies: [
+        "Product Design",
+        "Mobile App",
+        "UI/UX Design",
+        "UI Kit",
+      ],
+      links: [
+        {
+          type: "Website",
+          href: "https://4oranges.com/",
+          icon: <Icons.globe className="size-3" />,
+        },
+      ],
+      image: "/assets/project-thumbnails/4oranges.png",
+      video: "",
+    },
     {
       title: "Zoan AI – AI Workflow Management",
       href: "/blog/zoan",
@@ -276,7 +323,7 @@ export const DATA = {
           icon: <Icons.linkedin className="size-3" />,
         },
       ],
-      image: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787904374/Frame_2147225273_isnnjf.png",
+      image: "/assets/project-thumbnails/zoan.png",
       video: "",
     },
     {

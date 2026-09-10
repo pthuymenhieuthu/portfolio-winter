@@ -26,7 +26,9 @@ export function BringOnBoard() {
             Creative flow
           </p>
           <h2 className="mt-5 font-[var(--font-heading)] text-[32px] font-medium leading-[1.08] tracking-normal text-[#29303B] sm:text-[44px] lg:text-[52px]">
-            What I bring into the flow
+            What I bring
+            <br />
+            into the flow
           </h2>
           <p className="mx-auto mt-5 max-w-[660px] text-base leading-[1.45] text-[#737373]">
             Product thinking, UI systems, motion, and AI - different strengths

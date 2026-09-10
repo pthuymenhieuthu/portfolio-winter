@@ -28,7 +28,7 @@ export function HomeHero() {
   return (
     <section
       id="hero"
-      className="relative isolate flex min-h-[650px] w-full max-w-full items-center justify-center overflow-hidden px-6 sm:min-h-[760px] md:min-h-[900px] lg:min-h-[1000px]"
+      className="relative isolate flex min-h-[580px] w-full max-w-full items-center justify-center overflow-hidden px-6 sm:min-h-[670px] md:min-h-[780px] lg:min-h-[860px]"
     >
       <motion.div
         aria-hidden="true"
@@ -143,7 +143,7 @@ export function HomeHero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-28 bg-gradient-to-b from-transparent via-background/55 to-background"
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[640px] -translate-y-6 flex-col items-center text-center sm:-translate-y-14 lg:-translate-y-16">
+      <div className="relative z-10 mx-auto flex w-full max-w-[640px] -translate-y-4 flex-col items-center text-center sm:-translate-y-8 lg:-translate-y-10">
         <HeroTitleReveal
           className="max-w-full font-[var(--font-heading)] text-[40px] font-medium leading-[0.95] tracking-normal text-[#29303B] min-[390px]:text-[44px] sm:text-[72px]"
           delay={BLUR_FADE_DELAY}
@@ -186,7 +186,9 @@ export function HomeHero() {
               Proactive Product Designer
               <br />
               <span className="text-[hsl(var(--ink-soft))]">
-                Bridging user needs, business goals, and product outcomes
+                Bridging user needs, business goals,
+                <br />
+                and product outcomes
               </span>
             </p>
             <HeroCtaButtons />

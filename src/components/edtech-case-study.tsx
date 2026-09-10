@@ -81,16 +81,15 @@ const appLinks = [
 ];
 
 const motionPoints = [
-  "Built using Rive and After Effects.",
-  "Integrated data binding linked to learning states.",
-  "Used the level-up concept to make practice feel progressive.",
-  "Designed interactive left/right hold behavior for mascot movement.",
+  "Built using Rive + After Effects",
+  "Integrated data binding linked to learning states",
+  "Concept: learners continuously level up as they practice",
+  "Users can hold left/right to move the mascot interactively",
 ];
 
 const graphicsPoints = [
-  "App Store UI preview screenshots that highlight the main learning experience.",
-  "Feature banners that communicate key outcomes like speaking, memorizing faster, and tracking progress.",
-  "Promotional visuals shaped to improve conversion while keeping the apps friendly and approachable.",
+  "App Store UI preview screenshots — highlight the main learning experience",
+  "Feature banners — communicate key outcomes (speak, memorize faster, track progress)",
 ];
 
 const nextProjects = ["Marketing Graphics", "TrueProfit", "Zoan AI"]
@@ -204,8 +203,9 @@ export function EdTechCaseStudy() {
 
       <section
         id="edtech-overview"
-        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_18%_18%,#12CD83_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#BCECDB_0%,transparent_30%),linear-gradient(135deg,#092014_0%,#12CD83_42%,#15D590_100%)] px-6 text-center text-white sm:min-h-[800px]"
+        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#092014] px-6 text-center text-white sm:min-h-[800px]"
       >
+        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#12CD83_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#BCECDB_0%,transparent_30%),linear-gradient(135deg,#092014_0%,#12CD83_42%,#15D590_100%)] opacity-50" />
         <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
           <Image src="/assets/edtech/edtech-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
         </HeroBlobMotion>
@@ -219,15 +219,11 @@ export function EdTechCaseStudy() {
           <HeroTitleReveal
             className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)] sm:max-w-none sm:text-[64px]"
             delay={PROJECT_HERO_DELAY}
-            text="Speak Chinese"
+            text="Language Learning Apps"
           />
           <BlurFade delay={1.12}>
             <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-white">
-              UI & Motion Enhancement Showcase
-              <br />
-              <span className="text-white/75">
-                · Friendly interaction for daily learning
-              </span>
+              UI Enhancement Showcase
             </p>
           </BlurFade>
         </div>
@@ -237,7 +233,7 @@ export function EdTechCaseStudy() {
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="edtech-work">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#092014] px-3 py-1 text-sm text-white">
-              My Projects
+              Overview
             </span>
             <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">
               UI improvements for Chinese and Japanese learning apps
@@ -252,19 +248,6 @@ export function EdTechCaseStudy() {
           </div>
 
           <CaseImage src={assets.hero} alt="Speak Chinese splash and mascot motion" />
-
-          <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              ["Role", "UI enhancement, Rive motion, App Store graphics"],
-              ["Scope", "Speak Chinese, HSK Vocab, Sensei JLPT"],
-              ["Tools", "Figma, Rive, After Effects"],
-            ].map(([title, body]) => (
-              <div className="border-t border-[#092014]/10 pt-5" key={title}>
-                <p className="text-sm uppercase tracking-[0.12em] text-[#737373]">{title}</p>
-                <p className="mt-3 text-base leading-[1.6] text-[#08090a]">{body}</p>
-              </div>
-            ))}
-          </div>
 
           <div className="grid gap-4">
             {appLinks.map((app) => (
@@ -287,13 +270,12 @@ export function EdTechCaseStudy() {
               Motion Showcase
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-              Motion that motivates progress and supports learning
+              Motion isn&apos;t just for delight — it motivates progress and supports learning
             </h2>
             <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              Motion was not added only for delight. It helped reinforce the
-              feeling that learners <CaseStudyScrollHighlight>
-                continuously level up as they practice
-              </CaseStudyScrollHighlight>.
+              Splash &amp; Mascot Motion. The level-up concept helps learners feel
+              that they <CaseStudyScrollHighlight>continuously level up as they practice</CaseStudyScrollHighlight>,
+              improving engagement and time-on-task.
             </p>
           </div>
 
@@ -325,6 +307,14 @@ export function EdTechCaseStudy() {
           </div>
 
           <CaseImage src={assets.speakChinese} alt="Speak Chinese app UI screens" />
+          <div className="flex flex-col gap-4">
+            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1 text-sm text-white">
+              UI Showcase
+            </span>
+            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
+              Sensei - Learn Japanese JLPT
+            </h2>
+          </div>
           <CaseImage src={assets.sensei} alt="Sensei Japanese learning app UI screens" />
         </CaseStudyRevealSection>
 
@@ -334,7 +324,7 @@ export function EdTechCaseStudy() {
               App Store Graphics
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-              Promotional visuals for product value and conversion
+              Promotional visuals designed to improve conversion and clarify product value
             </h2>
           </div>
 
@@ -362,11 +352,6 @@ export function EdTechCaseStudy() {
             <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Figma, Rive, and After Effects
             </h2>
-            <p className="mt-6 text-base leading-[1.6] text-white/85 sm:text-[17px]">
-              The final work connected UI polish, motion-ready mascot behavior,
-              and App Store visuals so the learning experience felt clearer,
-              friendlier, and more motivating.
-            </p>
           </div>
         </CaseStudyRevealSection>
 

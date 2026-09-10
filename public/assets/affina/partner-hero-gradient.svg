@@ -1,0 +1,12 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="2477.7" height="1478.21" viewBox="0 0 2477.7 1478.21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g>
+<g filter="url(#a)"><path d="M892.296 589.854C680.197 476.331 339.844 627.557 316.6 627.557V1161.61H1685.9C1701.4 1032.07 1719.02 799.083 1665.56 903.491C1598.74 1034 1185.22 974.229 1139.26 938.293C970.743 806.541 1104.39 703.376 892.296 589.854Z" fill="#5491F2"/></g>
+<g filter="url(#b)"><path d="M1031.8 500.844C819.697 387.322 479.344 538.547 456.1 538.547V1072.6H1825.4C1840.9 943.057 1858.52 710.074 1805.06 814.481C1738.24 944.991 1324.72 885.22 1278.76 849.284C1110.24 717.531 1243.89 614.367 1031.8 500.844Z" fill="#8279FF"/></g>
+<g filter="url(#c)"><path d="M1351.8 358.844C1139.7 245.322 799.344 396.547 776.1 396.547V930.6H2145.4C2160.9 801.057 2178.52 568.074 2125.06 672.481C2058.24 802.991 1644.72 743.22 1598.76 707.284C1430.24 575.531 1563.89 472.367 1351.8 358.844Z" fill="#F953FF"/></g>
+</g>
+<defs>
+<filter id="a" x="0" y="231.01" width="2018.2" height="1247.2" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="158.3"/></filter>
+<filter id="b" x="139.5" y="142" width="2018.2" height="1247.2" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="158.3"/></filter>
+<filter id="c" x="459.5" y="0" width="2018.2" height="1247.2" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="158.3"/></filter>
+</defs>
+</svg>

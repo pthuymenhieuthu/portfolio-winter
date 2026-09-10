@@ -105,9 +105,9 @@ export function CaseStudySectionNavigation({
                 >
                   <span
                     className={cn(
-                      "block size-1.5 shrink-0 rounded-full bg-[#8f47ff] transition-all duration-300 group-hover:scale-150 group-focus-visible:scale-150",
+                      "block size-1.5 shrink-0 rounded-full bg-[#3BA0FF]/90 transition-all duration-300 group-hover:scale-150 group-focus-visible:scale-150",
                       isActive
-                        ? "scale-150 shadow-[0_0_0_4px_rgba(143,71,255,0.14)]"
+                        ? "scale-150 shadow-[0_0_0_4px_rgba(59,160,255,0.14)]"
                         : "opacity-35"
                     )}
                   />
@@ -168,13 +168,13 @@ export function CaseStudySectionNavigation({
               className={cn(
                 "flex min-h-10 w-full items-center gap-3 rounded-md px-3 text-left text-sm transition-colors",
                 section.id === activeId
-                  ? "bg-[#f2e8ff] font-bold text-[#6f24dc]"
+                  ? "bg-[#3BA0FF]/10 font-bold text-[#2188e8]"
                   : "text-black/70 hover:bg-black/[0.04]"
               )}
             >
               <span
                 className={cn(
-                  "size-1.5 shrink-0 rounded-full bg-[#8f47ff]",
+                  "size-1.5 shrink-0 rounded-full bg-[#3BA0FF]/90",
                   section.id === activeId ? "opacity-100" : "opacity-35"
                 )}
               />

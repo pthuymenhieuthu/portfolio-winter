@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
@@ -27,9 +26,9 @@ const theme = {
 
 const sections = [
   { id: "zoan-work", label: "Overview" },
-  { id: "zoan-challenge-01", label: "Product foundations" },
-  { id: "zoan-challenge-02", label: "Cross-platform workflow" },
-  { id: "zoan-motion", label: "Motion" },
+  { id: "zoan-foundations", label: "System foundations" },
+  { id: "zoan-platform", label: "Cross-platform application" },
+  { id: "zoan-motion", label: "Motion & micro-interactions" },
   { id: "zoan-outcome", label: "Outcome" },
   { id: "zoan-next", label: "Next projects" },
   { id: "zoan-contact", label: "Get in touch" },
@@ -65,38 +64,26 @@ const zoanAssetDimensions: Record<string, [number, number]> = {
   [zoanAssets.appMotion]: [702, 480],
 };
 
-const challenges = [
-  {
-    label: "Challenge 01",
-    title: "Rebuilding product foundations for an early-stage AI platform",
-    question:
-      "How could the product feel more structured and trustworthy without slowing down launch momentum?",
-  },
-  {
-    label: "Challenge 02",
-    title: "Designing one workflow across desktop and mobile",
-    question:
-      "How could teams manage AI-generated content on desktop while keeping creation fast and conversational on mobile?",
-  },
-  {
-    label: "Challenge 03",
-    title: "Making AI interactions feel guided, not static",
-    question:
-      "How could motion help users understand transitions, hierarchy, and system feedback?",
-  },
+const responsibilities = [
+  "UI audit and redesign",
+  "Design system foundations & component library",
+  "Web & mobile experience alignment",
 ];
 
-const foundationSteps = [
-  "Audited the interface to identify weak hierarchy, inconsistent spacing, and disconnected component usage.",
-  "Reset the visual language through color, typography, variables, and reusable product primitives.",
-  "Built out component patterns for controls, forms, overlays, cards, lists, tables, and navigation.",
-  "Documented behavior and state variations so design and engineering could move with less friction.",
+const componentSystem = [
+  "Controls, forms, and overlays",
+  "Cards, lists, and tables",
+  "Navigation patterns",
+  "Clear state variations",
 ];
 
 const platformSteps = [
-  "Desktop: dashboard and workflow management for organizing assets, content, reviews, and iterations.",
-  "Mobile: chat-based creation, interactive previews, and faster content iteration on smaller screens.",
-  "Cross-platform: shared design language so users could move between surfaces without relearning the product.",
+  "Dashboard and workflow management",
+  "Asset and content organization",
+  "Review and iteration screens",
+  "Chat-based creation",
+  "Interactive previews",
+  "Quick content iteration",
 ];
 
 const nextProjects = ["TrueProfit", "Language Learning Apps", "Affina"]
@@ -222,8 +209,9 @@ export function ZoanCaseStudy() {
 
       <section
         id="zoan-overview"
-        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_18%_18%,#ffffff_0%,transparent_30%),radial-gradient(circle_at_84%_18%,#15CABE_0%,transparent_32%),linear-gradient(135deg,#ffffff_0%,#B0F1ED_58%,#15CABE_100%)] px-6 text-center text-[#07111f] sm:min-h-[800px]"
+        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#f7f7f8] px-6 text-center text-[#07111f] sm:min-h-[800px]"
       >
+        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#ffffff_0%,transparent_30%),radial-gradient(circle_at_84%_18%,#15CABE_0%,transparent_32%),linear-gradient(135deg,#ffffff_0%,#B0F1ED_58%,#15CABE_100%)] opacity-50" />
         <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
           <Image src="/assets/zoan/zoan-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
         </HeroBlobMotion>
@@ -242,10 +230,6 @@ export function ZoanCaseStudy() {
           <BlurFade delay={1.12}>
             <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-[#07111f]">
               AI Workflow Management
-              <br />
-              <span className="text-[#07111f]/65">
-                · From fearing AI to designing for it
-              </span>
             </p>
           </BlurFade>
         </div>
@@ -255,43 +239,31 @@ export function ZoanCaseStudy() {
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-work">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
-              My Projects
+              Overview
             </span>
             <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">
-              Designing the interface an AI engine relies on
+              Will AI replace UI/UX Designers?
             </h2>
             <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              Before joining Zoan AI, I wondered if AI would replace designers.
-              This project showed me something else: I was designing the
-              {" "}<CaseStudyScrollHighlight>
-                interface for an AI platform
-              </CaseStudyScrollHighlight>.
+              Before joining Zoan AI, I used to ask myself that question. But
+              leading this project, from system rebuilding and UI redesign to
+              shaping cross-platform experiences, made me realize something
+              else: <CaseStudyScrollHighlight>I wasn&apos;t being replaced by AI. I
+              was designing the interface for an AI platform.</CaseStudyScrollHighlight>
             </p>
           </div>
 
           <CaseImage src={zoanAssets.hero} alt="Zoan AI animated workflow preview" />
 
-          <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              ["Role", "UI/UX, product system, Rive motion"],
-              ["Scope", "Desktop, mobile, design system, AI workflow"],
-              ["Outcome", "A scalable foundation for launch and go-to-market"],
-            ].map(([title, body]) => (
-              <div className="border-t border-[#07111f]/10 pt-5" key={title}>
-                <p className="text-sm uppercase tracking-[0.12em] text-[#737373]">{title}</p>
-                <p className="mt-3 text-base leading-[1.6] text-[#08090a]">{body}</p>
-              </div>
-            ))}
-          </div>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
-              Design scope
+              Overview
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-              From loose interface pieces to a scalable AI product system
+              AI-generated interactive content across desktop and mobile
             </h2>
             <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
               Zoan enables teams and partners to build AI-generated interactive
@@ -312,45 +284,35 @@ export function ZoanCaseStudy() {
             />
           </div>
 
-          <div className="grid overflow-hidden rounded-xl border border-[#e4e4e7] bg-white px-6 lg:grid-cols-3 lg:gap-x-[51px]">
-            {challenges.map((item, index) => (
-              <article
-                className="relative flex min-w-0 flex-col gap-5 border-b border-[#e4e4e7] py-6 last:border-b-0 lg:border-b-0"
-                key={item.label}
-              >
-                <div className="flex w-full items-center gap-4">
-                  <p className="whitespace-nowrap rounded-full bg-[#e8edf4] px-5 py-3 text-base font-bold leading-none text-[#18181b]">
-                    {item.label}
-                  </p>
-                  {index < challenges.length - 1 && (
-                    <ChevronRight
-                      aria-hidden="true"
-                      className="size-4 shrink-0 rotate-90 text-[#a1a1aa] lg:rotate-0"
-                      strokeWidth={2.5}
-                    />
-                  )}
-                </div>
-                <div className="flex flex-col gap-3">
-                  <h3 className="font-[var(--font-heading)] text-xl font-normal leading-normal tracking-normal text-[#18181b]">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm leading-[1.5] text-[#71717a]">
-                    {item.question}
-                  </p>
-                </div>
+          <div className="grid gap-6 sm:grid-cols-3">
+            {responsibilities.map((item) => (
+              <article className="border-t border-[#07111f]/10 pt-5" key={item}>
+                <p className="text-base leading-[1.6] text-[#08090a]">{item}</p>
               </article>
             ))}
           </div>
         </CaseStudyRevealSection>
 
-        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-challenge-01">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-foundations">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
-              Challenge 01
+              Phase 1 · Visual Challenges
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-              Rebuilding product foundations for an early-stage AI platform
+              Rebuilding the system from the ground up
             </h2>
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+              As an early-stage product, the interface lacked structure and brand
+              consistency. This became the starting point for rebuilding the
+              system from the ground up.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <p className="text-sm text-[#737373]">Phase 2 · System Foundations</p>
+            <h3 className="font-[var(--font-heading)] text-2xl font-normal leading-[1.2] tracking-normal">
+              Resetting the visual language
+            </h3>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-3">
@@ -359,8 +321,20 @@ export function ZoanCaseStudy() {
             <CaseImage src={zoanAssets.tokens} alt="Zoan variable token system" />
           </div>
 
+          <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+            A scalable token structure ensured consistency across both desktop
+            and mobile platforms.
+          </p>
+
+          <div className="flex flex-col gap-4">
+            <p className="text-sm text-[#737373]">Phase 3 · Component System</p>
+            <h3 className="font-[var(--font-heading)] text-2xl font-normal leading-[1.2] tracking-normal">
+              Building out the component library
+            </h3>
+          </div>
+
           <div className="grid gap-6 md:grid-cols-2">
-            {foundationSteps.map((item, index) => (
+            {componentSystem.map((item, index) => (
               <article className="border-t border-[#07111f]/10 pt-6" key={item}>
                 <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#08090a]">
                   {String(index + 1).padStart(2, "0")}
@@ -371,16 +345,23 @@ export function ZoanCaseStudy() {
           </div>
 
           <CaseImage src={zoanAssets.components} alt="Zoan component system" />
+          <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+            Each component included guidelines for behavior and implementation.
+          </p>
         </CaseStudyRevealSection>
 
-        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-challenge-02">
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-platform">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
-              Challenge 02
+              Phase 4 · Cross-Platform Application
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-              Designing one workflow across desktop and mobile
+              Desktop and mobile experiences
             </h2>
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+              The same system was adapted for smaller screens while supporting
+              dashboard and workflow management on desktop.
+            </p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -400,15 +381,16 @@ export function ZoanCaseStudy() {
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-motion">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
-              Challenge 03
+              Phase 5 · Motion &amp; Micro-Interaction Design
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-              Motion and micro-interactions for guided AI workflows
+              Motion that guides attention and transitions
             </h2>
             <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              Motion was introduced to guide attention, clarify transitions,
-              reinforce hierarchy, and make the experience feel more responsive
-              than static UI.
+              Motion was introduced to guide attention and transitions, reinforce
+              hierarchy and interaction states, and elevate the experience beyond
+              static UI. These animations were designed modularly to scale with
+              future features.
             </p>
           </div>
 
@@ -429,7 +411,9 @@ export function ZoanCaseStudy() {
             <p className="mt-6 text-base leading-[1.6] text-white/85 sm:text-[17px]">
               The renewed system provided a scalable foundation for future
               development, reduced design-engineering friction, and established
-              a stronger visual identity for fundraising and go-to-market.
+              a strong visual identity for fundraising and go-to-market. Working
+              on Zoan AI didn&apos;t show me that AI replaces designers. It showed me
+              that designers shape how humans interact with AI.
             </p>
           </div>
         </CaseStudyRevealSection>

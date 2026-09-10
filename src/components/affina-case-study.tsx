@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, ExternalLink } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
@@ -17,6 +17,7 @@ import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
 import { HeroBlobMotion } from "@/components/hero-blob-motion";
+import { caseStudyStyles } from "@/lib/case-study-styles";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -73,10 +74,31 @@ const journeySteps = [
     detail:
       "Insurance type -> Gender -> Date of birth -> Budget -> Main & additional benefits -> Preferred insurers",
     media: [
-      "/assets/affina/journey/survey-01.png",
-      "/assets/affina/journey/survey-02.png",
-      "/assets/affina/journey/survey-03.png",
-      "/assets/affina/journey/survey-04.png",
+      {
+        src: "/assets/affina/survey-flow/01-insurance-type.png",
+        label: "01 · Insurance type",
+        detail: "Choose the insurance product to explore.",
+      },
+      {
+        src: "/assets/affina/survey-flow/02-insured-person.png",
+        label: "02 · Insured person",
+        detail: "Define who needs coverage and their date of birth.",
+      },
+      {
+        src: "/assets/affina/survey-flow/03-budget-benefits.png",
+        label: "03 · Budget & core benefits",
+        detail: "Set an expected budget and the most important coverage.",
+      },
+      {
+        src: "/assets/affina/survey-flow/04-extra-benefits-insurer.png",
+        label: "04 · Preferences",
+        detail: "Add optional benefits and preferred insurers.",
+      },
+      {
+        src: "/assets/affina/survey-flow/05-loading.png",
+        label: "05 · Matching",
+        detail: "Process the answers before showing suitable plans.",
+      },
     ],
   },
   {
@@ -91,8 +113,11 @@ const journeySteps = [
       "Make differences between plans easy to scan",
     ],
     media: [
-      "/assets/affina/journey/recommend-loading.png",
-      "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_1200,pg_1/v1787911198/recommend_3_iqlh41.webp",
+      {
+        src: "/assets/affina/survey-flow/06-results.png",
+        label: "06 · Recommendations",
+        detail: "Surface three suitable plans with clear price and benefit cues.",
+      },
     ],
   },
   {
@@ -106,8 +131,16 @@ const journeySteps = [
       "Use status and \"Best choice\" cues for faster scanning",
     ],
     media: [
-      "/assets/affina/journey/recommend-compare.png",
-      "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_1200,pg_1/v1787911103/compare_1_ovmofq.webp",
+      {
+        src: "/assets/affina/survey-flow/07-compare-top.png",
+        label: "07 · Compare overview",
+        detail: "Compare plan pricing and providers side by side.",
+      },
+      {
+        src: "/assets/affina/survey-flow/08-compare-details.png",
+        label: "08 · Benefit details",
+        detail: "Review coverage differences before making a final choice.",
+      },
     ],
   },
 ];
@@ -170,13 +203,12 @@ const nextMeasurementSteps = [
 ];
 
 const styles = {
-  sectionPill: "w-fit rounded-lg bg-[#08090a] px-3 py-1 text-sm text-white",
+  sectionPill: caseStudyStyles.eyebrow,
   accentLabel: "text-sm font-bold uppercase tracking-[0.12em] text-[#737373]",
   mutedLabel: "text-sm uppercase tracking-[0.08em] text-[#737373]",
-  sectionTitle:
-    "font-[var(--font-affina-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]",
-  leadText: "text-base leading-[1.6] text-[#737373] sm:text-[17px]",
-  bodyText: "text-base leading-[1.6] text-[#08090a] sm:text-[17px]",
+  sectionTitle: caseStudyStyles.sectionTitle,
+  leadText: caseStudyStyles.body,
+  bodyText: caseStudyStyles.bodyInk,
   compactBody: "text-base leading-[1.6] text-[#08090a]",
 };
 
@@ -252,88 +284,52 @@ function AffinaMacBookMockup() {
   );
 }
 
-function JourneyMacBook({
-  src,
-  alt,
-}: {
+type JourneyFlowScreen = {
   src: string;
-  alt: string;
-}) {
-  return (
-    <div className="relative flex aspect-[2010/1325] w-[300px] shrink-0 items-center justify-center sm:w-[400px]">
-      <ResponsiveMotionImage
-        src={src}
-        alt={alt}
-        width={2010}
-        height={1325}
-        className="h-full w-full object-contain"
-      />
-    </div>
-  );
-}
+  label: string;
+  detail: string;
+};
 
-function JourneyMediaTicker({
-  media,
+function JourneyScreenFlow({
+  screens,
   title,
 }: {
-  media: readonly string[];
+  screens: readonly JourneyFlowScreen[];
   title: string;
 }) {
-  const shouldReduceMotion = useReducedMotion();
-  const tickerGroups = shouldReduceMotion ? [media] : [media, media];
-
   return (
-    <div
-      className={cn(
-        "py-1",
-        shouldReduceMotion
-          ? "scrollbar-none overflow-x-auto"
-          : "overflow-hidden"
-      )}
-      style={{
-        WebkitMaskImage:
-          "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-        maskImage:
-          "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-      }}
-    >
-      <motion.div
-        className="flex w-max items-center"
-        animate={
-          shouldReduceMotion
-            ? undefined
-            : {
-                x: ["0%", "-50%"],
-              }
-        }
-        transition={{
-          duration: Math.max(16, media.length * 9),
-          ease: "linear",
-          repeat: Number.POSITIVE_INFINITY,
-        }}
-      >
-        {tickerGroups.map((group, groupIndex) => (
-          <div
-            aria-hidden={groupIndex > 0}
-            className={cn(
-              "flex shrink-0 items-center",
-              groupIndex > 0 && "pointer-events-none"
-            )}
-            key={groupIndex}
-          >
-            {group.map((src, index) => (
-              <div className="shrink-0 pr-8 sm:pr-10" key={`${src}-${index}`}>
+    <div className="-mx-5 overflow-hidden sm:mx-0">
+      <div className="scrollbar-none overflow-x-auto pb-4">
+        <div className="flex w-max snap-x snap-mandatory items-center px-5 sm:px-0">
+          {screens.map((screen, index) => (
+            <div className="contents" key={screen.src}>
+              <figure className="w-[82vw] max-w-[680px] shrink-0 snap-start">
                 <ImageZoom>
-                  <JourneyMacBook
-                    src={src}
-                    alt={`${title} screen ${index + 1}`}
-                  />
+                  <div className="overflow-hidden rounded-xl border border-[#cfd0d4] bg-white shadow-sm">
+                    <Image
+                      src={screen.src}
+                      alt={`${title}: ${screen.label}`}
+                      width={1920}
+                      height={912}
+                      className="block h-auto w-full"
+                      sizes="(max-width: 768px) 82vw, 680px"
+                    />
+                  </div>
                 </ImageZoom>
-              </div>
-            ))}
-          </div>
-        ))}
-      </motion.div>
+                <figcaption className="mt-5">
+                  <p className="text-sm font-semibold text-[#08090a]">{screen.label}</p>
+                  <p className="mt-1 text-sm leading-6 text-[#737373]">{screen.detail}</p>
+                </figcaption>
+              </figure>
+              {index < screens.length - 1 && (
+                <div className="mx-4 flex size-10 shrink-0 items-center justify-center rounded-full border border-[#0293f4]/20 bg-white text-[#0293f4] shadow-sm sm:mx-6">
+                  <ChevronRight aria-hidden="true" className="size-5" strokeWidth={1.8} />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -554,7 +550,7 @@ export function AffinaCaseStudy() {
         id="affina-overview"
         className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#f7f7f8] px-6 text-center text-white sm:min-h-[800px]"
       >
-        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#ffd360_0%,transparent_28%),radial-gradient(circle_at_82%_24%,#ff51ff_0%,transparent_30%),linear-gradient(135deg,#ff6831_0%,#ff51ff_48%,#7a35ff_100%)]" />
+        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#ffd360_0%,transparent_28%),radial-gradient(circle_at_82%_24%,#ff51ff_0%,transparent_30%),linear-gradient(135deg,#ff6831_0%,#ff51ff_48%,#7a35ff_100%)] opacity-50" />
         <HeroBlobMotion
           className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none"
           position="top"
@@ -603,13 +599,13 @@ export function AffinaCaseStudy() {
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[934px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+      <section className={cn("relative z-10 mx-auto w-full max-w-[934px] px-5 py-24 sm:px-8 lg:py-36", caseStudyStyles.pageStack)}>
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-work">
           <div className="flex flex-col gap-7">
             <span className={styles.sectionPill}>
               My Projects
             </span>
-            <h2 className="max-w-[760px] font-[var(--font-affina-heading)] text-[30px] font-normal leading-[1.22] tracking-normal sm:text-[40px] sm:leading-[1.2]">
+            <h2 className={caseStudyStyles.overviewTitle}>
               Designing clearer insurance and healthcare experiences
             </h2>
             <p className={styles.leadText}>
@@ -917,7 +913,7 @@ export function AffinaCaseStudy() {
                     </div>
                   </div>
 
-                  <JourneyMediaTicker media={step.media} title={step.title} />
+                  <JourneyScreenFlow screens={step.media} title={step.title} />
                 </div>
               </article>
             ))}
@@ -933,7 +929,7 @@ export function AffinaCaseStudy() {
                 preload="metadata"
               >
                 <source
-                  src="https://res.cloudinary.com/dqtfjvkok/video/upload/RECOMMEND_AI_-_AFFINA_mhcmbb.mp4"
+                  src="https://res.cloudinary.com/dqtfjvkok/video/upload/v1789011251/RECOMMEND_AI_-_AFFINA_1_arfukn.mp4"
                   type="video/mp4"
                 />
               </video>

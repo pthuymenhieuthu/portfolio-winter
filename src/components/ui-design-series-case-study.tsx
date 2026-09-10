@@ -67,29 +67,63 @@ const gains = [
 ];
 
 const briefFeatures = [
-  "Prompt to UI",
-  "Smart copy, built-in",
-  "Export to Figma",
-  "Export to Code",
-  "Real-time iteration",
+  {
+    title: "Prompt to UI",
+    body: "Just describe what you need. Our AI instantly generates clean, editable UI layouts tailored to your idea.",
+  },
+  {
+    title: "Smart copy, built-in",
+    body: "Get on-brand headings, CTAs, and microcopy — no need to switch tabs or call your copywriter.",
+  },
+  {
+    title: "Export to Figma",
+    body: "Match your brand's voice, color, or layout system without lifting a finger.",
+  },
+  {
+    title: "Export to Code",
+    body: "Need code? We've got that too. Generate clean HTML/CSS/React code, ready for developers.",
+  },
+  {
+    title: "Real-time iteration",
+    body: "Tweak your prompt. Add a new section. Edit content. All in seconds — with instant visual updates.",
+  },
+];
+
+const howItWorks = [
+  {
+    title: "Write your prompt",
+    body: "Tweak your prompt. Add a new section. Edit content. All in seconds — with instant visual updates.",
+  },
+  {
+    title: "Generate layout, structure & content",
+    body: "Auto-generate a responsive layout based on common UI patterns. Fill in with AI-written copy: titles, descriptions, CTAs. Instantly editable before you export.",
+  },
+  {
+    title: "Customize your design",
+    body: "Tweak layout directly. Replace images, reorder sections. Adjust tone, design intent, or use design tokens (if available).",
+  },
+  {
+    title: "Export to Figma or Code",
+    body: "Send to Figma with one click — fully layered, auto-layout ready. Export as production-ready code (HTML/CSS/React).",
+  },
 ];
 
 const processSteps = [
   {
     title: "Brief Analysis",
-    body: "I started by carefully analyzing the prompt to understand the expected output, constraints, and user needs.",
+    body: "I start by carefully analyzing the challenge prompt to understand the expected output, constraints, and user needs.",
   },
   {
     title: "Direction Setting",
-    body: "I defined the art direction, including layout structure, font pairing, color palette, and shape language.",
+    body: "Next, I define the overall art direction — including layout structure, font pairing, color palette, and shape language that best fit the concept.",
   },
   {
     title: "Drafting Hero Section & Layout",
-    body: "I sketched the layout and designed the hero section first to establish tone and hierarchy.",
+    body: "I sketch out the layout and begin designing the hero section to establish the tone and hierarchy for the rest of the page.",
   },
   {
-    title: "Final Design & Prototyping",
-    body: "Once the layout was locked, I polished the visuals and brought the page to life with Framer and Figma.",
+    title: "Final Design & Prototyping using Figma and Framer",
+    body: "Once the layout is locked in, I polish the visuals and bring everything to life with interactive prototyping in Framer and Figma.",
   },
 ];
 
@@ -100,7 +134,7 @@ const topPicks = [
     image: assets.week1,
   },
   {
-    title: 'Week 3: Culture Theme - "Phong"',
+    title: 'Week 3: Culture Theme – "Phỗng"',
     href: "https://phong-dat.framer.website",
     image: assets.week3,
   },
@@ -222,8 +256,9 @@ export function UiDesignSeriesCaseStudy() {
 
       <section
         id="series-overview"
-        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_18%_18%,#ff6313_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#ebdfaf_0%,transparent_30%),linear-gradient(135deg,#21120a_0%,#ff6313_52%,#ebdfaf_100%)] px-6 text-center text-white sm:min-h-[800px]"
+        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#21120a] px-6 text-center text-white sm:min-h-[800px]"
       >
+        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#ff6313_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#ebdfaf_0%,transparent_30%),linear-gradient(135deg,#21120a_0%,#ff6313_52%,#ebdfaf_100%)] opacity-50" />
         <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
           <Image src="/assets/ui-design-series/series-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
         </HeroBlobMotion>
@@ -237,15 +272,14 @@ export function UiDesignSeriesCaseStudy() {
           <HeroTitleReveal
             className="max-w-[340px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)] sm:max-w-none sm:text-[64px]"
             delay={PROJECT_HERO_DELAY}
-            text="UI Design Series"
+            text="UI Design Challenge"
           />
           <BlurFade delay={1.12}>
             <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-white">
-              6-week landing page competition
+              Interface Design Series
               <br />
               <span className="text-white/75">
-                · Weekly briefs, Framer prototypes,
-                <br className="sm:hidden" /> and Top 6 finalist work
+                · A 6-week UI design competition
               </span>
             </p>
           </BlurFade>
@@ -259,7 +293,7 @@ export function UiDesignSeriesCaseStudy() {
               Interface Design Series
             </span>
             <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">
-              Six weekly landing pages from brief to interactive prototype
+              Mingg UI Design Challenge
             </h2>
             <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
               Mingg UI Design Challenge was a 6-week UI design competition where
@@ -291,23 +325,57 @@ export function UiDesignSeriesCaseStudy() {
               Design faster, think smarter with an AI design partner
             </h2>
             <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              The brief asked for a website that could show off an early product
-              idea, <CaseStudyScrollHighlight>
-                support fundraising and attract community attention
-              </CaseStudyScrollHighlight>, and improve
-              content, fonts, colors, and first-glance wow factor.
+              Dear contestants, aka the people I get to “hire” without paying a
+              dime. I don&apos;t have the budget to hire a branding designer, and the
+              product doesn&apos;t have an MVP yet. I&apos;m looking to build a website that
+              I can show off, use for fundraising, and start drawing attention
+              from the community. I already have a logo — could you suggest some
+              fonts and color palettes that will make the site feel friendly and
+              give off that “wow” factor at first glance? I&apos;m not sure if this
+              content works well. Could you suggest some improvements or
+              alternatives for me?
+            </p>
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+              From wireframes to UI copy, your ideas become interfaces in seconds.
+              No more staring at a blank canvas. Just prompt, tweak, and go.
             </p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
             {briefFeatures.map((item, index) => (
-              <article className="border-t border-[#21120a]/10 pt-6" key={item}>
+              <article className="border-t border-[#21120a]/10 pt-6" key={item.title}>
                 <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#08090a]">
                   {String(index + 1).padStart(2, "0")}
                 </p>
                 <h3 className="mt-5 font-[var(--font-heading)] text-2xl font-bold leading-[1.2] tracking-normal">
-                  {item}
+                  {item.title}
                 </h3>
+                <p className="mt-4 text-base leading-[1.6] text-[#08090a]">{item.body}</p>
+              </article>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-7">
+            <h3 className="font-[var(--font-heading)] text-2xl font-normal leading-[1.2] tracking-normal">
+              How it works
+            </h3>
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+              Go from an idea in your head to a working UI in minutes. We combine
+              smart prompts, structured layout systems, and flexible exports to
+              help you design and deliver at lightning speed.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {howItWorks.map((item, index) => (
+              <article className="border-t border-[#21120a]/10 pt-6" key={item.title}>
+                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#08090a]">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3 className="mt-5 font-[var(--font-heading)] text-2xl font-bold leading-[1.2] tracking-normal">
+                  {item.title}
+                </h3>
+                <p className="mt-4 text-base leading-[1.6] text-[#08090a]">{item.body}</p>
               </article>
             ))}
           </div>
@@ -319,7 +387,7 @@ export function UiDesignSeriesCaseStudy() {
               Design Process
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-              From brief analysis to Framer prototype
+              My Design Process during Chande
             </h2>
           </div>
 
@@ -349,12 +417,10 @@ export function UiDesignSeriesCaseStudy() {
               Top Picks
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-              Selected landing pages from the series
+              Top Picks from the Challenge
             </h2>
             <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              These are selected screens from the weekly challenge. Some were
-              optimized for specific desktop widths due to the competition
-              timeline.
+              Please check the screen size note — there was limited time for full responsiveness.
             </p>
           </div>
 

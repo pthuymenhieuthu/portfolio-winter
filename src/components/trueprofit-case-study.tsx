@@ -77,28 +77,30 @@ const focusAreas = [
     label: "Task 01",
     title: "Landing Page Support",
     body:
-      "The TrueProfit marketing website needed illustration and layout support to better showcase product value across the Home, Features, and Partners pages.",
+      "Supporting the landing page design for trueprofit.io by drafting layout ideas and illustrations aligned with the brand system.",
   },
   {
     label: "Task 02",
     title: "Onboarding Illustrations",
     body:
-      "The onboarding flow needed visuals that felt connected to the brand and guided users through the UX journey instead of acting as decoration.",
+      "Redesigning onboarding illustrations to increase engagement and reduce skip rates.",
   },
 ];
 
 const landingSteps = [
-  "Received in-progress design files and content from the design team, then identified keywords, references, and the feeling each visual needed to communicate.",
-  "Created illustrations for the Home and Features pages based on the established website structure.",
-  "Drafted layout and illustration concepts for the Partners page to support its collaboration story.",
+  "Received the in-progress design file and content from the design team, then identified keywords for reference illustration and feeling.",
+  "Designed illustrations that matched the page structure and emphasized key product highlights.",
+  "Drafted the Partners page layout and produced illustration concepts to support its storytelling.",
   "Iterated with feedback from the design lead and marketing team until final approval.",
 ];
 
 const onboardingSteps = [
-  "Clarified the KPI direction: reduce skips and increase survey completion.",
-  "Mapped the user journey with an empathy lens: what users see, think, feel, and do before, during, and after onboarding.",
-  "Pulled assets from the design system and landing page to keep product touchpoints visually connected.",
-  "Sketched rough flows, refined with references, applied the style guide, and handed off assets in Figma with developer notes.",
+  "Brief & Goal Setting: Clarified KPIs to reduce skips and increase survey completion.",
+  "User Journey Mapping: Used an Empathy Map (Sees / Thinks / Feels / Does) to define what users experience before, during, and after onboarding.",
+  "Brand Alignment: Pulled assets from the design system and landing page to keep visual consistency across touchpoints.",
+  "Sketch → References → Final: Sketched rough flows, refined with references, then applied the style guide to finalize.",
+  "Feedback Loop: Shared drafts with the leader and developers, then iterated quickly on sketches.",
+  "Handoff: Exported assets in Figma with context notes for developers.",
 ];
 
 const nextProjects = ["Language Learning Apps", "Zoan AI", "Affina"]
@@ -215,8 +217,9 @@ export function TrueProfitCaseStudy() {
 
       <section
         id="trueprofit-overview"
-        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_18%_18%,#0f8f5b_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#2dd4bf_0%,transparent_30%),linear-gradient(135deg,#071b14_0%,#15803d_50%,#34d399_100%)] px-6 text-center text-white sm:min-h-[800px]"
+        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#071b14] px-6 text-center text-white sm:min-h-[800px]"
       >
+        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#0f8f5b_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#2dd4bf_0%,transparent_30%),linear-gradient(135deg,#071b14_0%,#15803d_50%,#34d399_100%)] opacity-50" />
         <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
           <Image src="/assets/trueprofit/trueprofit-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
         </HeroBlobMotion>
@@ -236,10 +239,6 @@ export function TrueProfitCaseStudy() {
             <p className="mx-auto max-w-[340px] text-base leading-[1.35] text-white">
               Landing Page & Onboarding
               <br className="sm:hidden" /> Illustrations
-              <br />
-              <span className="text-white/75">
-                · Visual storytelling for product clarity
-              </span>
             </p>
           </BlurFade>
         </div>
@@ -249,51 +248,32 @@ export function TrueProfitCaseStudy() {
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-work">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1 text-sm text-white">
-              My Projects
+              Overview
             </span>
             <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">
-              Turning product goals into clearer visual stories
+              Landing page support and onboarding illustrations
             </h2>
             <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              During my internship, I worked on two design tasks tied closely to
-              <CaseStudyScrollHighlight>
-                user experience and brand consistency
-              </CaseStudyScrollHighlight>: supporting the marketing
-              website launch and redesigning onboarding illustrations.
+              During my internship, I worked on two design tasks closely tied to
+              <CaseStudyScrollHighlight> user experience and brand consistency</CaseStudyScrollHighlight>.
+              Both required me to translate abstract product goals into clear
+              visual storytelling while keeping alignment with the existing
+              design system and marketing direction.
             </p>
           </div>
 
           <CaseImage src={assets.hero} alt="TrueProfit landing page preview" />
 
-          <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              ["Role", "Visual design, illustration, UX support"],
-              ["Scope", "Landing page, partners page, onboarding flow"],
-              ["Outcome", "More cohesive visuals across marketing and product"],
-            ].map(([title, body]) => (
-              <div className="border-t border-[#071b14]/10 pt-5" key={title}>
-                <p className="text-sm uppercase tracking-[0.12em] text-[#737373]">{title}</p>
-                <p className="mt-3 text-base leading-[1.6] text-[#08090a]">{body}</p>
-              </div>
-            ))}
-          </div>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1 text-sm text-white">
-              Two focus areas
+              Project scope
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-              From brand-aligned visuals to a smoother onboarding journey
+              Two design tasks
             </h2>
-            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              Both tasks required <CaseStudyScrollHighlight>
-                translating abstract product goals into clear visual storytelling
-              </CaseStudyScrollHighlight>{" "}
-              while staying aligned with the existing design system and marketing
-              direction.
-            </p>
           </div>
 
           <div className="grid overflow-hidden rounded-xl border border-[#e4e4e7] bg-white px-6 lg:grid-cols-2 lg:gap-x-[51px]">
@@ -341,16 +321,20 @@ export function TrueProfitCaseStudy() {
             <article className="border-t border-[#071b14]/10 pt-6">
               <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#737373]">Problem</p>
               <p className="mt-4 text-base leading-[1.6] text-[#08090a] sm:text-[17px]">
-                The website needed additional visuals to better showcase product
-                value across its main pages.
+                The TrueProfit marketing website required additional visuals to
+                better showcase product value across its main pages. The design
+                system and content were already prepared, but the project needed
+                illustration and layout support to complete the visual design.
               </p>
             </article>
             <article className="rounded-xl bg-[#071b14] p-6 text-white shadow-sm sm:p-8 lg:p-10">
               <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#ffd360]">My contribution</p>
               <p className="mt-4 text-base leading-[1.6] text-white/85 sm:text-[17px]">
-                From November until launch in January, I created illustrations
-                for Home and Features, then drafted layout and visual concepts
-                for the Partners page.
+                From November until the website launch in January, I created
+                illustrations for the Home and Features pages, drafted layout and
+                illustration concepts for the Partners page, and ensured every
+                illustration followed the established brand system and in-app
+                onboarding style.
               </p>
             </article>
           </div>
@@ -386,8 +370,10 @@ export function TrueProfitCaseStudy() {
               Onboarding Illustrations
             </h2>
             <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              The existing onboarding felt disconnected from the brand, had high
-              skip behavior, and used visuals more as decoration than guidance.
+              The existing onboarding flow felt disconnected from the branding
+              on trueprofit.io. A high skip rate and low survey completion gave
+              the internal team less insight, while the illustrations focused too
+              much on UI decoration instead of guiding the UX journey.
             </p>
           </div>
 
@@ -426,12 +412,19 @@ export function TrueProfitCaseStudy() {
               Outcome
             </p>
             <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-              A more cohesive bridge between website and product onboarding
+              Final outcomes
             </h2>
             <p className="mt-6 text-base leading-[1.6] text-white/85 sm:text-[17px]">
-              The final illustrations fit the brand identity, supported the
-              official website launch, and helped onboarding feel more guided
-              and connected to TrueProfit&apos;s product story.
+              Delivered final illustrations for the Home and Features pages,
+              produced layout and visual drafts for the Partners page, and
+              contributed to a cohesive website experience for the January
+              launch. The onboarding illustrations fit the brand identity, guided
+              users through the flow instead of distracting them, and supported
+              the goals of increasing survey completions and reducing skips.
+            </p>
+            <p className="mt-4 text-base leading-[1.6] text-white/70 sm:text-[17px]">
+              Nov 2024 – Jan 2025: marketing landing page. Jan – Feb 2025:
+              in-app onboarding illustrations.
             </p>
           </div>
         </CaseStudyRevealSection>
