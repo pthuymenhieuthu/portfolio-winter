@@ -327,6 +327,53 @@ export const DATA = {
       video: "",
     },
     {
+      title: "Pizzy - Finance Management App",
+      href: "/blog/pizzy",
+      dates: "Aug 2025",
+      active: true,
+      description:
+        "Pizzy is a mobile application that helps users manage shared budgets with friends in a simple, engaging, and social way.",
+      technologies: [
+        "App Design",
+        "UI/UX Design",
+        "Motion",
+        "Prototype",
+        "Finance",
+      ],
+      links: [
+        {
+          type: "Behance",
+          href: "https://www.behance.net/gallery/232892697/Pizzy-Social-Budget-Management-App-UXUI-Design",
+          icon: <Icons.behance className="size-3" />,
+        },
+      ],
+      image: "/pizzy-mobile-poster.jpg",
+      video: "",
+    },
+    {
+      title: "Website UI Design Series",
+      href: "/blog/chande",
+      dates: "Jul 2025",
+      active: true,
+      description:
+        "Mingg UI Design Challenge: A 6-week UI design competition where participants created one landing page per week based on a given brief.",
+      technologies: [
+        "UI Design",
+        "Web Design",
+        "Motion",
+        "Prototype",
+      ],
+      links: [
+        {
+          type: "Behance",
+          href: "https://www.behance.net/thuynguyen175?fbclid=IwY2xjawMnJzZleHRuA2FlbQIxMABicmlkETFiNktNMVpJaTlCWkY4a29RAR5tjrgVNL2qaAfS824pS6_HGMleBwazaQmDA03I71mIIqZ8wBTAGmBR-BSD8A_aem_oQB3E8ApP2trzP5kBapFCA",
+          icon: <Icons.behance className="size-3" />,
+        },
+      ],
+      image: "/assets/project-thumbnails/ui-design-series.png",
+      video: "",
+    },
+    {
       title: "TrueProfit - Landing Page & Onboarding Illustrations",
       href: "/blog/trueprofit",
       dates: "Jan 2025",
@@ -398,53 +445,6 @@ export const DATA = {
       ],
       image: "",
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764849886/2abe5d31-c309-4796-853d-ec6a0e614eba_1_nx3gl7.png",
-    },
-    {
-      title: "Pizzy - Finance Management App",
-      href: "/blog/pizzy",
-      dates: "Aug 2025",
-      active: true,
-      description:
-        "Pizzy is a mobile application that helps users manage shared budgets with friends in a simple, engaging, and social way.",
-      technologies: [
-        "App Design",
-        "UI/UX Design",
-        "Motion",
-        "Prototype",
-        "Finance",
-      ],
-      links: [
-        {
-          type: "Behance",
-          href: "https://www.behance.net/gallery/232892697/Pizzy-Social-Budget-Management-App-UXUI-Design",
-          icon: <Icons.behance className="size-3" />,
-        },
-      ],
-      image: "/pizzy-mobile-poster.jpg",
-      video: "",
-    },
-    {
-      title: "Website UI Design Series",
-      href: "/blog/chande",
-      dates: "Jul 2025",
-      active: true,
-      description:
-        "Mingg UI Design Challenge: A 6-week UI design competition where participants created one landing page per week based on a given brief.",
-      technologies: [
-        "UI Design",
-        "Web Design",
-        "Motion",
-        "Prototype",
-      ],
-      links: [
-        {
-          type: "Behance",
-          href: "https://www.behance.net/thuynguyen175?fbclid=IwY2xjawMnJzZleHRuA2FlbQIxMABicmlkETFiNktNMVpJaTlCWkY4a29RAR5tjrgVNL2qaAfS824pS6_HGMleBwazaQmDA03I71mIIqZ8wBTAGmBR-BSD8A_aem_oQB3E8ApP2trzP5kBapFCA",
-          icon: <Icons.behance className="size-3" />,
-        },
-      ],
-      image: "/uidesignseries-mobile-poster.jpg",
-      video: "",
     },
     {
       title: "CakeBank Case Study - Rounded-Up Savings Feature",

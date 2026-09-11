@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +20,7 @@ export function CaseStudySectionNavigation({
   const [activeId, setActiveId] = useState(sections[0]?.id ?? "");
   const [isVisible, setIsVisible] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const activeSection =
     sections.find((section) => section.id === activeId) ?? sections[0];
@@ -149,39 +151,54 @@ export function CaseStudySectionNavigation({
           />
         </button>
 
-        <div
-          aria-hidden={!isMenuOpen}
-          id={`${heroId}-mobile-section-menu`}
-          className={cn(
-            "pointer-events-auto mt-2 max-h-[min(70vh,520px)] w-[calc(100%_-_24px)] max-w-sm overflow-y-auto rounded-2xl border border-black/10 bg-white/85 p-1.5 shadow-[0_12px_36px_rgba(22,5,31,0.16)] backdrop-blur-xl backdrop-saturate-150 transition duration-200",
-            isMenuOpen
-              ? "visible translate-y-0 opacity-100"
-              : "invisible pointer-events-none -translate-y-2 opacity-0"
-          )}
-        >
-          {sections.map((section) => (
-            <button
-              key={section.id}
-              type="button"
-              aria-current={section.id === activeId ? "location" : undefined}
-              onClick={() => scrollToSection(section.id)}
-              className={cn(
-                "flex min-h-10 w-full items-center gap-3 rounded-md px-3 text-left text-sm transition-colors",
-                section.id === activeId
-                  ? "bg-[#3BA0FF]/10 font-bold text-[#2188e8]"
-                  : "text-black/70 hover:bg-black/[0.04]"
-              )}
+        <AnimatePresence initial={false}>
+          {isMenuOpen && (
+            <motion.div
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 0.97, y: -8 }
+              }
+              id={`${heroId}-mobile-section-menu`}
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 0.97, y: -8 }
+              }
+              className="pointer-events-auto mt-2 max-h-[min(70vh,520px)] w-[calc(100%_-_24px)] max-w-sm origin-top overflow-y-auto rounded-2xl border border-black/10 bg-white/85 p-1.5 shadow-[0_12px_36px_rgba(22,5,31,0.16)] backdrop-blur-xl backdrop-saturate-150"
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : { duration: 0.28, ease: [0.22, 1, 0.36, 1] }
+              }
+              style={{ willChange: "transform, opacity" }}
             >
-              <span
-                className={cn(
-                  "size-1.5 shrink-0 rounded-full bg-[#3BA0FF]/90",
-                  section.id === activeId ? "opacity-100" : "opacity-35"
-                )}
-              />
-              {section.label}
-            </button>
-          ))}
-        </div>
+              {sections.map((section) => (
+                <button
+                  key={section.id}
+                  type="button"
+                  aria-current={section.id === activeId ? "location" : undefined}
+                  onClick={() => scrollToSection(section.id)}
+                  className={cn(
+                    "flex min-h-10 w-full items-center gap-3 rounded-md px-3 text-left text-sm transition-colors",
+                    section.id === activeId
+                      ? "bg-[#3BA0FF]/10 font-bold text-[#2188e8]"
+                      : "text-black/70 hover:bg-black/[0.04]"
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "size-1.5 shrink-0 rounded-full bg-[#3BA0FF]/90",
+                      section.id === activeId ? "opacity-100" : "opacity-35"
+                    )}
+                  />
+                  {section.label}
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );
