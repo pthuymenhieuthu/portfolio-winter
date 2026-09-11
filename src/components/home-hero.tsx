@@ -48,7 +48,9 @@ function WaterModeLabel({
             ease: [0.16, 1, 0.3, 1],
           }}
         >
-          {label}
+          <span className={reduceMotion ? undefined : "water-button-shiny-text"}>
+            {label}
+          </span>
         </motion.span>
       </AnimatePresence>
     </span>
@@ -201,7 +203,7 @@ export function HomeHero() {
             }
             aria-checked={isWaterLabelActive}
             role="switch"
-            className="relative isolate mb-5 inline-flex items-center justify-center overflow-hidden rounded-full border border-[#B9E2FB] bg-white/70 px-3.5 py-2 text-xs font-medium text-[#7892A3] shadow-[0_5px_18px_rgba(59,160,255,0.10)] backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/30 sm:mb-6 sm:text-[13px]"
+            className="water-mode-button group relative isolate mb-5 inline-flex items-center justify-center overflow-hidden rounded-full border border-black/[0.05] bg-[#F7F7FA] px-3.5 py-2 text-xs font-medium text-[#7892A3] shadow-[0_0_0_1px_rgba(0,0,0,.035),0_1px_1px_.5px_rgba(0,0,0,.06),0_3px_3px_1.5px_rgba(0,0,0,.05),0_8px_14px_-5px_rgba(0,0,0,.08),inset_0_1px_0_rgba(255,255,255,.95)] transition-[border-color,background-color,box-shadow,color] duration-500 hover:border-[#3BA0FF]/40 hover:bg-white hover:text-[#557A92] hover:shadow-[0_0_0_1px_rgba(59,160,255,.10),0_2px_3px_rgba(0,0,0,.05),0_8px_18px_-6px_rgba(0,0,0,.10),0_0_18px_-7px_rgba(59,160,255,.55),inset_0_1px_0_#fff,inset_0_-12px_18px_-14px_rgba(59,160,255,.75)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/30 sm:mb-6 sm:text-[13px]"
             onClick={toggleWaterMode}
             transition={{
               layout: {
@@ -210,6 +212,10 @@ export function HomeHero() {
               },
             }}
           >
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#3BA0FF]/20 via-[#3BA0FF]/[0.035] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            />
             <span className="relative z-10">
               <WaterModeLabel
                 active={isWaterLabelActive}

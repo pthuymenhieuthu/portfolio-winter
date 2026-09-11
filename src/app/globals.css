@@ -178,3 +178,45 @@ code[data-line-numbers-max-digits="2"] > [data-line]::before {
 code[data-line-numbers-max-digits="3"] > [data-line]::before {
   width: 3rem;
 }
+
+@keyframes water-button-shiny-text {
+  0%,
+  90%,
+  100% {
+    background-position: calc(-100% - 80px) 0;
+  }
+
+  30%,
+  60% {
+    background-position: calc(100% + 80px) 0;
+  }
+}
+
+.water-button-shiny-text {
+  color: rgba(120, 146, 163, 0.7);
+  background-image: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(41, 48, 59, 0.72) 50%,
+    transparent 70%
+  );
+  background-position: calc(-100% - 80px) 0;
+  background-repeat: no-repeat;
+  background-size: 80px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: water-button-shiny-text 8s infinite;
+  transition: color 300ms ease;
+}
+
+.water-mode-button:hover .water-button-shiny-text {
+  color: #55636d;
+  background-image: none;
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .water-button-shiny-text {
+    animation: none;
+  }
+}
