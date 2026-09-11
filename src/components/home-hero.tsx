@@ -122,7 +122,7 @@ export function HomeHero() {
           initial={
             shouldReduceMotion
               ? false
-              : { filter: "blur(6px)", opacity: 0.62, scale: 1.06, x: "-3vw", y: -88 }
+              : { filter: "blur(6px)", opacity: 0, scale: 1.06, x: "-3vw", y: -88 }
           }
           style={{ willChange: "transform, opacity, filter" }}
           transition={{
@@ -155,7 +155,7 @@ export function HomeHero() {
           initial={
             shouldReduceMotion
               ? false
-              : { filter: "blur(6px)", opacity: 0.62, scale: 1.06, x: "3vw", y: 108 }
+              : { filter: "blur(6px)", opacity: 0, scale: 1.06, x: "3vw", y: 108 }
           }
           style={{ willChange: "transform, opacity, filter" }}
           transition={{
