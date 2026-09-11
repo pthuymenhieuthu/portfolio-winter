@@ -69,7 +69,7 @@ const themes = {
     muted: "#737373",
     accent: "#c1b5f8",
     hero:
-      "radial-gradient(circle at 18% 18%, #c1b5f8 0%, transparent 30%), radial-gradient(circle at 82% 24%, #eadcff 0%, transparent 28%), linear-gradient(135deg, #24133f 0%, #c1b5f8 42%, #f1bdfc 78%, #eadcff 100%)",
+      "radial-gradient(circle at 18% 18%, #c390ff 0%, transparent 30%), radial-gradient(circle at 82% 24%, #f0b8f4 0%, transparent 28%), linear-gradient(135deg, #5f3cbb 0%, #a864dc 42%, #d984ea 78%, #e3c0ff 100%)",
   },
   cake: {
     page: "#f7f7f8",

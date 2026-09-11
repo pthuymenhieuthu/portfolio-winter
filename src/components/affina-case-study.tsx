@@ -549,9 +549,9 @@ export function AffinaCaseStudy() {
 
       <section
         id="affina-overview"
-        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#f7f7f8] px-6 text-center text-[#08090a] sm:min-h-[800px]"
+        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#f7f7f8] px-6 text-center text-white sm:min-h-[800px]"
       >
-        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#ffd360_0%,transparent_28%),radial-gradient(circle_at_82%_24%,#ff51ff_0%,transparent_30%),linear-gradient(135deg,#ff6831_0%,#ff51ff_48%,#7a35ff_100%)] opacity-50" />
+        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#ffd360_0%,transparent_28%),radial-gradient(circle_at_82%_24%,#ff51ff_0%,transparent_30%),linear-gradient(135deg,#ff6831_0%,#ff51ff_48%,#7a35ff_100%)] opacity-80" />
         <HeroBlobMotion
           className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none"
           position="top"
@@ -579,19 +579,19 @@ export function AffinaCaseStudy() {
             />
         </HeroBlobMotion>
         <div className="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center">
-          <p className="rounded-full border border-[#08090a]/15 bg-white/20 px-4 py-1.5 text-sm font-medium text-[#08090a] backdrop-blur">
+          <p className="rounded-full border border-white/30 bg-white/15 px-4 py-1.5 text-sm font-medium text-white backdrop-blur">
             Web & Mobile · Oct 2025 - Present
           </p>
           <HeroTitleReveal
-            className="mt-7 max-w-[860px] font-[var(--font-affina-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal text-[#08090a]"
+            className="mt-7 max-w-[860px] font-[var(--font-affina-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal text-white"
             delay={PROJECT_HERO_DELAY}
             text="Affina"
           />
           <BlurFade delay={1.12}>
-            <p className="mx-auto mt-7 max-w-[570px] text-base leading-[1.55] text-[#08090a] sm:text-lg">
+            <p className="mx-auto mt-7 max-w-[570px] text-base leading-[1.55] text-white sm:text-lg">
               Brand & Product Transformation
               <br />
-              <span className="text-[#08090a]/70">
+              <span className="text-white/75">
                 · Scalable design system and
                 <br className="sm:hidden" /> AI-enhanced workflow
               </span>
