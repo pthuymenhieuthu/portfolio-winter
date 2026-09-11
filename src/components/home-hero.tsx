@@ -13,9 +13,6 @@ import { HeroCtaButtons } from "@/components/hero-cta-buttons";
 const BLUR_FADE_DELAY = 0.04;
 const WATER_MODE_LABEL = "My name means “water” in Vietnamese 😉";
 const DEFAULT_MODE_LABEL = "Make it more “Thủy”";
-const WATER_MODE_EASE = [0.22, 1, 0.36, 1] as const;
-const WATER_MODE_DURATION = 1.08;
-const WATER_SURFACE_DELAY = 0.34;
 
 function WaterModeLabel({
   active,
@@ -47,8 +44,8 @@ function WaterModeLabel({
               : { opacity: 0, rotateX: 64, y: "-72%" }
           }
           transition={{
-            duration: reduceMotion ? 0 : 0.94,
-            ease: WATER_MODE_EASE,
+            duration: reduceMotion ? 0 : 0.78,
+            ease: [0.16, 1, 0.3, 1],
           }}
         >
           {label}
@@ -88,9 +85,8 @@ export function HomeHero() {
         className="pointer-events-none absolute inset-0 z-[2]"
         initial={false}
         transition={{
-          delay: shouldReduceMotion || !isWaterMode ? 0 : WATER_SURFACE_DELAY,
-          duration: shouldReduceMotion ? 0 : 0.82,
-          ease: WATER_MODE_EASE,
+          duration: shouldReduceMotion ? 0 : 0.52,
+          ease: [0.16, 1, 0.3, 1],
         }}
       >
         {isWaterMode && supportsWaterShader ? (
@@ -128,9 +124,9 @@ export function HomeHero() {
           }
           style={{ willChange: "transform, opacity, filter" }}
           transition={{
-            delay: shouldReduceMotion ? 0 : isWaterMode ? 0 : 0.06,
-            duration: shouldReduceMotion ? 0 : WATER_MODE_DURATION,
-            ease: WATER_MODE_EASE,
+            delay: shouldReduceMotion ? 0 : isWaterMode ? 0 : 0.08,
+            duration: shouldReduceMotion ? 0 : isWaterMode ? 0.52 : 0.9,
+            ease: [0.16, 1, 0.3, 1],
           }}
         >
           <Image
@@ -161,9 +157,9 @@ export function HomeHero() {
           }
           style={{ willChange: "transform, opacity, filter" }}
           transition={{
-            delay: shouldReduceMotion ? 0 : isWaterMode ? 0.08 : 0.14,
-            duration: shouldReduceMotion ? 0 : WATER_MODE_DURATION,
-            ease: WATER_MODE_EASE,
+            delay: shouldReduceMotion ? 0 : isWaterMode ? 0.04 : 0.44,
+            duration: shouldReduceMotion ? 0 : isWaterMode ? 0.56 : 0.9,
+            ease: [0.16, 1, 0.3, 1],
           }}
         >
           <Image
@@ -183,9 +179,9 @@ export function HomeHero() {
         className="pointer-events-none absolute inset-0 z-[3] bg-[#0096F7]"
         initial={false}
         transition={{
-          delay: shouldReduceMotion || !isWaterMode ? 0 : WATER_SURFACE_DELAY,
-          duration: shouldReduceMotion ? 0 : 0.82,
-          ease: WATER_MODE_EASE,
+          delay: shouldReduceMotion || !isWaterMode ? 0 : 0.3,
+          duration: shouldReduceMotion ? 0 : 0.48,
+          ease: [0.16, 1, 0.3, 1],
         }}
         style={{ mixBlendMode: "soft-light" }}
       />
@@ -196,24 +192,21 @@ export function HomeHero() {
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[640px] -translate-y-4 flex-col items-center text-center sm:-translate-y-8 lg:-translate-y-10">
-        <BlurFade
-          className="mb-5 flex h-[34px] items-center justify-center sm:mb-6 sm:h-[36px]"
-          delay={BLUR_FADE_DELAY}
-        >
+        <BlurFade delay={BLUR_FADE_DELAY}>
           <motion.button
-            layout="size"
+            layout
             type="button"
             aria-label={
               isWaterLabelActive ? WATER_MODE_LABEL : DEFAULT_MODE_LABEL
             }
             aria-checked={isWaterLabelActive}
             role="switch"
-            className="relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-[#F7F7FA] px-3.5 py-2 text-xs font-medium text-[#7892A3] shadow-[0_0_0_1px_rgba(0,0,0,.06),0_1px_1px_.5px_rgba(0,0,0,.06),0_3px_3px_1.5px_rgba(0,0,0,.06),0_6px_6px_-3px_rgba(0,0,0,.06),0_12px_12px_-6px_rgba(0,0,0,.06),0_24px_24px_-12px_rgba(0,0,0,.06),inset_0_1px_0_#fff] transition-colors duration-300 hover:bg-white hover:text-[#617A8B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/30 sm:text-[13px]"
+            className="relative isolate mb-5 inline-flex items-center justify-center overflow-hidden rounded-full border border-[#B9E2FB] bg-white/70 px-3.5 py-2 text-xs font-medium text-[#7892A3] shadow-[0_5px_18px_rgba(59,160,255,0.10)] backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/30 sm:mb-6 sm:text-[13px]"
             onClick={toggleWaterMode}
             transition={{
               layout: {
-                duration: shouldReduceMotion ? 0 : 0.94,
-                ease: WATER_MODE_EASE,
+                duration: shouldReduceMotion ? 0 : 0.72,
+                ease: [0.16, 1, 0.3, 1],
               },
             }}
           >
