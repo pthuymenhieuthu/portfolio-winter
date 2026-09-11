@@ -208,7 +208,7 @@ export function HomeHero() {
             }
             aria-checked={isWaterLabelActive}
             role="switch"
-            className="relative isolate inline-flex items-center justify-center overflow-hidden rounded-full border border-[#B9E2FB] bg-white/70 px-3.5 py-2 text-xs font-medium text-[#7892A3] shadow-[0_5px_18px_rgba(59,160,255,0.10)] backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/30 sm:text-[13px]"
+            className="relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-[#F7F7FA] px-3.5 py-2 text-xs font-medium text-[#7892A3] shadow-[0_0_0_1px_rgba(0,0,0,.06),0_1px_1px_.5px_rgba(0,0,0,.06),0_3px_3px_1.5px_rgba(0,0,0,.06),0_6px_6px_-3px_rgba(0,0,0,.06),0_12px_12px_-6px_rgba(0,0,0,.06),0_24px_24px_-12px_rgba(0,0,0,.06),inset_0_1px_0_#fff] transition-colors duration-300 hover:bg-white hover:text-[#617A8B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/30 sm:text-[13px]"
             onClick={toggleWaterMode}
             transition={{
               layout: {
