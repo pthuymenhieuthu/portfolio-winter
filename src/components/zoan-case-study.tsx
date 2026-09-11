@@ -46,8 +46,8 @@ const zoanAssets = {
   components: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1763909689/Screenshot_253_kqzyld.png",
   platformShowcase1: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989538/Showcase_hehe-03_rvw75h.png",
   platformShowcase2: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989540/Showcase_hehe-01_zbeuze.png",
-  timelineMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_900,pg_1/v1764161748/Timeline_5-macd_dosrrf.webp",
-  appMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_900,pg_1/v1764161236/app_vvjcwd.webp",
+  timelineMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764161748/Timeline_5-macd_dosrrf.gif",
+  appMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764161236/app_vvjcwd.gif",
 };
 
 const zoanAssetDimensions: Record<string, [number, number]> = {
@@ -109,10 +109,12 @@ function CaseImage({
   src,
   alt,
   className,
+  preserveAnimation = false,
 }: {
   src: string;
   alt: string;
   className?: string;
+  preserveAnimation?: boolean;
 }) {
   const [width, height] = zoanAssetDimensions[src] ?? [1440, 810];
 
@@ -125,6 +127,7 @@ function CaseImage({
           width={width}
           height={height}
           mobilePosterSrc={src === zoanAssets.hero ? zoanAssets.workMockup2 : undefined}
+          preserveAnimation={preserveAnimation}
           unoptimized
           className="h-auto w-full object-contain"
           sizes="(max-width: 768px) 90vw, 934px"
@@ -224,7 +227,7 @@ export function ZoanCaseStudy() {
             AI Product · May 2025
           </p>
           <HeroTitleReveal
-            className="mt-7 max-w-[860px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)]"
+            className="mt-7 max-w-[860px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal"
             delay={PROJECT_HERO_DELAY}
             text="Zoan AI"
           />
@@ -254,8 +257,6 @@ export function ZoanCaseStudy() {
           </div>
 
           <CaseStudyStatementReveal text="I wasn’t being replaced by AI. I was designing the interface for an AI platform." />
-
-          <CaseImage src={zoanAssets.hero} alt="Zoan AI animated workflow preview" />
 
         </CaseStudyRevealSection>
 
@@ -397,8 +398,16 @@ export function ZoanCaseStudy() {
           </div>
 
           <div className="grid gap-6">
-            <CaseImage src={zoanAssets.timelineMotion} alt="Zoan timeline motion" />
-            <CaseImage src={zoanAssets.appMotion} alt="Zoan app transition motion" />
+            <CaseImage
+              src={zoanAssets.timelineMotion}
+              alt="Zoan timeline motion"
+              preserveAnimation
+            />
+            <CaseImage
+              src={zoanAssets.appMotion}
+              alt="Zoan app transition motion"
+              preserveAnimation
+            />
           </div>
         </CaseStudyRevealSection>
 

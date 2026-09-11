@@ -11,6 +11,7 @@ type ResponsiveMotionImageProps = {
   mobilePosterSrc?: string;
   priority?: boolean;
   unoptimized?: boolean;
+  preserveAnimation?: boolean;
 };
 
 function isGif(src: string) {
@@ -35,8 +36,9 @@ export function ResponsiveMotionImage({
   mobilePosterSrc,
   priority = false,
   unoptimized,
+  preserveAnimation = false,
 }: ResponsiveMotionImageProps) {
-  const gifPosterSrc = isGif(src)
+  const gifPosterSrc = isGif(src) && !preserveAnimation
     ? mobilePosterSrc || getCloudinaryPosterSrc(src)
     : null;
   const displaySrc = gifPosterSrc || src;

@@ -199,7 +199,7 @@ function CaseHero({
         </p>
         <div style={{ width: "min(720px, calc(100vw - 48px))" }}>
           <HeroTitleReveal
-            className="mt-7 font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)]"
+            className="mt-7 font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal"
             delay={PROJECT_HERO_DELAY}
             text={title}
             wrap

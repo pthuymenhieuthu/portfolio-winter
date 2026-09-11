@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { caseStudyStyles } from "@/lib/case-study-styles";
+import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 
 type CaseProject = {
@@ -246,11 +247,13 @@ function SectionHeader({
   title,
   description,
   meta,
+  size = "section",
 }: {
   eyebrow: string;
   title: string;
-  description?: string;
+  description?: React.ReactNode;
   meta?: string;
+  size?: "overview" | "section";
 }) {
   return (
     <div className={caseStudyStyles.headerStack}>
@@ -262,7 +265,13 @@ function SectionHeader({
           </p>
         )}
       </div>
-      <h2 className={caseStudyStyles.overviewTitle}>
+      <h2
+        className={
+          size === "overview"
+            ? caseStudyStyles.overviewTitle
+            : caseStudyStyles.sectionTitle
+        }
+      >
         {title}
       </h2>
       {description && (
@@ -552,7 +561,7 @@ function ProductFlowSection({
   eyebrow: string;
   meta: string;
   title: string;
-  description: string;
+  description: React.ReactNode;
   screens: FlowScreen[];
   device: "mobile" | "web";
   tone?: "white" | "soft";
@@ -580,7 +589,13 @@ function RecoveryStatesSection() {
     <section className="scroll-mt-20 bg-[#f2f6fa]" id="partner-rules">
       <div className="mx-auto max-w-[1100px] px-5 py-24 sm:px-8 lg:py-36">
         <SectionHeader
-          description="The happy path stays readable because eligibility, family composition and upload issues are explained as focused recovery states."
+          description={
+            <>
+              The happy path stays readable because eligibility, family composition and
+              upload issues are explained as{" "}
+              <CaseStudyScrollHighlight>focused recovery states</CaseStudyScrollHighlight>.
+            </>
+          }
           eyebrow="Designing beyond the happy path"
           title="Rules become clear next actions"
         />
@@ -1258,17 +1273,21 @@ export function AffinaPartnerFlowCaseStudy() {
         <div className="mx-auto max-w-[1100px] px-5 pb-24 pt-28 sm:px-8 sm:pt-36">
           <SectionHeader
             eyebrow="Overview"
+            size="overview"
             title="Designing a scalable purchase flow for partner-led insurance"
           />
           <div className={cn("mt-10 max-w-[780px] space-y-5", caseStudyStyles.body)}>
             <p>
-              This flow expanded the insurance journey from one insured person to multiple
-              insured people under the same contract across Affina Pro and Web.
+              This flow expanded the insurance journey from one insured person to{" "}
+              <CaseStudyScrollHighlight>
+                multiple insured people under the same contract
+              </CaseStudyScrollHighlight>{" "}
+              across Affina Pro and Web.
             </p>
             <p>
               <b>My role</b> was to work with BA, Business Owner, Product, and IT to clarify
               requirements, translate rules into user flows, design UI states, and prepare
-              implementation-ready handoff.
+              {" "}<CaseStudyScrollHighlight>implementation-ready handoff</CaseStudyScrollHighlight>.
             </p>
           </div>
           <OverviewMockups />
@@ -1283,7 +1302,14 @@ export function AffinaPartnerFlowCaseStudy() {
           <SectionHeader
             eyebrow="User"
             title="Adding one more person changed the logic of the whole journey"
-            description="People were not only buying for themselves. They were buying for a spouse, child, parent, or another family member."
+            description={
+              <>
+                People were not only buying for themselves. They were buying for a{" "}
+                <CaseStudyScrollHighlight>
+                  spouse, child, parent, or another family member
+                </CaseStudyScrollHighlight>.
+              </>
+            }
           />
           <div className="mt-12 grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
             <div className="rounded-xl border border-[#e1e6ea] bg-white p-6">
@@ -1307,14 +1333,21 @@ export function AffinaPartnerFlowCaseStudy() {
           <SectionHeader
             eyebrow="Journey"
             title="One need, two journeys"
-            description="The same family-insurance model had to work for both sales-assisted and self-service channels."
+            description={
+              <>
+                The same family-insurance model had to work for both{" "}
+                <CaseStudyScrollHighlight>
+                  sales-assisted and self-service channels
+                </CaseStudyScrollHighlight>.
+              </>
+            }
           />
           <JourneyDiagram />
         </div>
       </section>
 
       <section className="scroll-mt-20" id="partner-problem">
-        <div className="mx-auto max-w-[1100px] space-y-32 px-5 py-24 sm:space-y-40 sm:px-8 lg:py-36">
+        <div className="mx-auto max-w-[1100px] space-y-20 px-5 py-24 sm:space-y-24 sm:px-8 lg:py-36">
           <div>
             <SectionHeader eyebrow="Design Problem" title="Problem Statement" />
             <PartnerHowMightWeReveal />
@@ -1328,18 +1361,18 @@ export function AffinaPartnerFlowCaseStudy() {
               className="mt-9"
               text="Design one scalable family-insurance model that could work across both assisted and self-service journeys."
             />
-            <div className="mt-10 space-y-3">
+            <div className="mt-8 max-w-[760px] space-y-3">
               {[
                 "Make multiple insured members manageable",
                 "Keep complex insurance rules understandable",
                 "Keep the experience consistent across channels",
               ].map((goal, index) => (
                 <div
-                  className="flex items-center gap-5 rounded-xl bg-[#f7f7f8] p-5"
+                  className="flex items-center gap-4 rounded-2xl border border-[#e1e6ea] bg-white/70 p-4"
                   key={goal}
                 >
-                  <b className="text-3xl">0{index + 1}</b>
-                  <span className="font-[var(--font-affina-heading)] text-xl sm:text-2xl">
+                  <b className="text-sm font-semibold text-[#0293f4]">0{index + 1}</b>
+                  <span className="text-sm font-medium leading-6 sm:text-base">
                     {goal}
                   </span>
                 </div>
@@ -1350,7 +1383,14 @@ export function AffinaPartnerFlowCaseStudy() {
       </section>
 
       <ProductFlowSection
-        description="Sales can move from product discovery to a complete family application while every insured member remains visible and editable."
+        description={
+          <>
+            Sales can move from product discovery to a complete family application while{" "}
+            <CaseStudyScrollHighlight>
+              every insured member remains visible and editable
+            </CaseStudyScrollHighlight>.
+          </>
+        }
         device="mobile"
         eyebrow="Deep Dive 01"
         id="partner-pro"
@@ -1360,7 +1400,14 @@ export function AffinaPartnerFlowCaseStudy() {
         tone="soft"
       />
       <ProductFlowSection
-        description="The same family model is translated to self-service with stronger guidance, explicit progress and a single review surface."
+        description={
+          <>
+            The same family model is translated to self-service with{" "}
+            <CaseStudyScrollHighlight>
+              stronger guidance, explicit progress and a single review surface
+            </CaseStudyScrollHighlight>.
+          </>
+        }
         device="web"
         eyebrow="Deep Dive 02"
         id="partner-web"

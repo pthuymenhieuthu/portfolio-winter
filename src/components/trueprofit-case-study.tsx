@@ -232,7 +232,7 @@ export function TrueProfitCaseStudy() {
             E-commerce Finance · Jan 2025
           </p>
           <HeroTitleReveal
-            className="mt-7 max-w-[860px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal [text-shadow:2px_2px_1px_rgba(0,0,0,0.1)]"
+            className="mt-7 max-w-[860px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal"
             delay={PROJECT_HERO_DELAY}
             text="TrueProfit"
           />
