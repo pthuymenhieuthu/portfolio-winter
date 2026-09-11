@@ -257,9 +257,9 @@ export function UiDesignSeriesCaseStudy() {
 
       <section
         id="series-overview"
-        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#21120a] px-6 text-center text-white sm:min-h-[800px]"
+        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#EAF8FF] px-6 text-center text-[#29303B] sm:min-h-[800px]"
       >
-        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#ff6313_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#ebdfaf_0%,transparent_30%),linear-gradient(135deg,#21120a_0%,#ff6313_52%,#ebdfaf_100%)] opacity-50" />
+        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#A8DDFF_0%,transparent_34%),radial-gradient(circle_at_82%_24%,#D7F3FF_0%,transparent_32%),linear-gradient(135deg,#EAF8FF_0%,#9FD8FF_54%,#DDF5FF_100%)] opacity-90" />
         <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
           <Image src="/assets/ui-design-series/series-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
         </HeroBlobMotion>
@@ -267,7 +267,7 @@ export function UiDesignSeriesCaseStudy() {
           <Image src="/assets/ui-design-series/series-hero-blob-bottom.svg" alt="" width={1440} height={526} priority className="block h-auto w-full" />
         </HeroBlobMotion>
         <div className="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center">
-          <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur">
+          <p className="rounded-full border border-[#29303B]/10 bg-white/45 px-4 py-1.5 text-sm font-medium backdrop-blur">
             Web Design · Jul 2025
           </p>
           <HeroTitleReveal
@@ -276,10 +276,10 @@ export function UiDesignSeriesCaseStudy() {
             text="UI Design Challenge"
           />
           <BlurFade delay={1.12}>
-            <p className="mx-auto mt-7 max-w-[570px] text-base leading-[1.55] text-white sm:text-lg">
+            <p className="mx-auto mt-7 max-w-[570px] text-base leading-[1.55] text-[#29303B] sm:text-lg">
               Interface Design Series
               <br />
-              <span className="text-white/75">
+              <span className="text-[#29303B]/70">
                 · A 6-week UI design competition
               </span>
             </p>
@@ -319,68 +319,56 @@ export function UiDesignSeriesCaseStudy() {
           </div>
         </CaseStudyRevealSection>
 
-        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="series-brief">
-          <div className="flex flex-col gap-7">
+        <CaseStudyRevealSection
+          className="flex scroll-mt-24 flex-col gap-10 rounded-[28px] bg-[#EEEFF1] p-6 sm:p-10 lg:p-12"
+          id="series-brief"
+        >
+          <div className="flex flex-col gap-5">
             <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1 text-sm text-white">
               Week 4 Brief
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Design faster, think smarter with an AI design partner
             </h2>
-            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              Dear contestants, aka the people I get to “hire” without paying a
-              dime. I don&apos;t have the budget to hire a branding designer, and the
-              product doesn&apos;t have an MVP yet. I&apos;m looking to build a website that
-              I can show off, use for fundraising, and start drawing attention
-              from the community. I already have a logo — could you suggest some
-              fonts and color palettes that will make the site feel friendly and
-              give off that “wow” factor at first glance? I&apos;m not sure if this
-              content works well. Could you suggest some improvements or
-              alternatives for me?
-            </p>
-            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              From wireframes to UI copy, your ideas become interfaces in seconds.
-              No more staring at a blank canvas. Just prompt, tweak, and go.
+            <p className="max-w-[760px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+              Create a fundraising-ready landing page for a pre-MVP AI design
+              partner. Build a friendly visual identity around the existing logo,
+              sharpen the messaging, and deliver a strong first impression.
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             {briefFeatures.map((item, index) => (
-              <article className="border-t border-[#21120a]/10 pt-6" key={item.title}>
-                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#08090a]">
+              <article
+                className="rounded-2xl bg-white/70 p-5"
+                key={item.title}
+              >
+                <p className="text-xs font-semibold tracking-[0.12em] text-[#737373]">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h3 className="mt-5 font-[var(--font-heading)] text-2xl font-bold leading-[1.2] tracking-normal">
+                <h3 className="mt-3 font-[var(--font-heading)] text-lg font-medium leading-[1.2] tracking-normal">
                   {item.title}
                 </h3>
-                <p className="mt-4 text-base leading-[1.6] text-[#08090a]">{item.body}</p>
               </article>
             ))}
           </div>
 
-          <div className="flex flex-col gap-7">
-            <h3 className="font-[var(--font-heading)] text-2xl font-normal leading-[1.2] tracking-normal">
+          <div className="flex flex-col gap-5 border-t border-[#21120a]/10 pt-8">
+            <h3 className="font-[var(--font-heading)] text-xl font-medium leading-[1.2] tracking-normal">
               How it works
             </h3>
-            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              Go from an idea in your head to a working UI in minutes. We combine
-              smart prompts, structured layout systems, and flexible exports to
-              help you design and deliver at lightning speed.
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {howItWorks.map((item, index) => (
-              <article className="border-t border-[#21120a]/10 pt-6" key={item.title}>
-                <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#08090a]">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-5 font-[var(--font-heading)] text-2xl font-bold leading-[1.2] tracking-normal">
-                  {item.title}
-                </h3>
-                <p className="mt-4 text-base leading-[1.6] text-[#08090a]">{item.body}</p>
-              </article>
-            ))}
+            <div className="grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
+              {howItWorks.map((item, index) => (
+                <div className="flex items-start gap-3" key={item.title}>
+                  <span className="text-xs font-semibold text-[#737373]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <p className="text-sm font-medium leading-[1.4] text-[#08090a]">
+                    {item.title}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </CaseStudyRevealSection>
 
