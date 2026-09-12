@@ -43,7 +43,7 @@ const challenges = [
     label: "Challenge 01",
     title: "Turning an offline sales journey into an AI-assisted online experience",
     question:
-      "How can users move from many products, benefits and conditions toward a confident next action?",
+      "How might AI narrow complex choices without removing the human support users trust?",
   },
   {
     label: "Challenge 02",
@@ -70,10 +70,25 @@ const journeySteps = [
     number: "1",
     title: "Survey",
     eyebrow: "Start with less friction",
-    body: "I made the survey accessible directly from the homepage. Users can open it in a modal and start without leaving the page.",
-    detailLabel: "The survey asks only what's needed:",
-    detail:
-      "Insurance type → Gender → Date of birth → Budget → Main & additional benefits → Preferred insurers",
+    body: (
+      <>
+        Open the{" "}
+        <CaseStudyScrollHighlight>
+          survey from the homepage
+        </CaseStudyScrollHighlight>{" "}
+        in a modal — no page change.
+      </>
+    ),
+    detailLabel: (
+      <>
+        Ask{" "}
+        <CaseStudyScrollHighlight>
+          only what shapes the match
+        </CaseStudyScrollHighlight>
+        :
+      </>
+    ),
+    detail: "Coverage → Profile → Budget → Benefits → Insurer",
     media: [
       {
         src: "/assets/affina/survey-flow/01-insurance-type.png",
@@ -106,12 +121,19 @@ const journeySteps = [
     number: "2",
     title: "Recommend",
     eyebrow: "Make the best options easy to scan",
-    body: "I surfaced 3 recommended plans.",
+    body: (
+      <>
+        Surface{" "}
+        <CaseStudyScrollHighlight>
+          three best-fit plans
+        </CaseStudyScrollHighlight>{" "}
+        with essential details upfront.
+      </>
+    ),
     bullets: [
-      "Highlight the best-fit plan first",
-      "Show price and key benefits upfront",
-      "Keep \"Why this plan?\" inside the card without taking extra space",
-      "Make differences between plans easy to scan",
+      "Put the best match first",
+      "Show price and core benefits",
+      "Reveal why it fits on demand",
     ],
     media: [
       {
@@ -126,10 +148,10 @@ const journeySteps = [
     title: "Compare",
     eyebrow: "Make complex benefits easier to compare across web and mobile",
     bullets: [
-      "Keep the same 3 plans from recommendation",
+      "Keep the same three plans",
       "Group benefits into clear rows",
-      "Highlight meaningful differences",
-      "Use status and \"Best choice\" cues for faster scanning",
+      "Emphasize meaningful differences",
+      "Add status and best-choice cues",
     ],
     media: [
       {
@@ -145,6 +167,33 @@ const journeySteps = [
     ],
   },
 ];
+
+const mobileComparisonScreens = [
+  {
+    src: "/assets/affina/mobile-flow/06-recommendation.png",
+    label: "01 · Recommend",
+    detail: "Keep the best-fit plan and essential facts easy to scan.",
+    highlightZoom: false,
+  },
+  {
+    src: "/assets/affina/mobile-flow/06-expanded-reasons.png",
+    label: "02 · Reveal reasons",
+    detail: "Expand why a plan fits only when users need the detail.",
+    highlightZoom: false,
+  },
+  {
+    src: "/assets/affina/mobile-flow/07-comparison.png",
+    label: "03 · Compare",
+    detail: "Preserve readable rows within the narrow mobile viewport.",
+    highlightZoom: true,
+  },
+  {
+    src: "/assets/affina/mobile-flow/07-overview.png",
+    label: "04 · Open overview",
+    detail: "Fit the full table on screen for a faster overall comparison.",
+    highlightZoom: false,
+  },
+] as const;
 
 const healthcareRows = [
   {
@@ -329,6 +378,83 @@ function JourneyScreenFlow({
               )}
             </div>
           ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MobileComparisonFlow() {
+  return (
+    <div className="rounded-[28px] border border-[#d9dce2] bg-white/70 p-5 sm:p-8">
+      <div className="mb-10">
+        <p className={styles.accentLabel}>Mobile comparison flow</p>
+        <h3 className="mt-4 max-w-[720px] font-[var(--font-affina-heading)] text-[26px] font-normal leading-[1.2] tracking-normal text-[#08090a] sm:text-[30px]">
+          Keep the detail readable — and the whole picture one tap away
+        </h3>
+        <p className={cn("mt-5 max-w-[720px]", styles.leadText)}>
+          Keep details readable, then use the{" "}
+          <CaseStudyScrollHighlight>
+            expand control
+          </CaseStudyScrollHighlight>{" "}
+          to see the full comparison.
+        </p>
+      </div>
+
+      <div className="-mx-5 overflow-hidden sm:-mx-8 lg:mx-0 lg:overflow-visible">
+        <div className="scrollbar-none overflow-x-auto px-5 pb-4 sm:px-8 lg:overflow-visible lg:px-0">
+          <div className="flex w-max snap-x snap-mandatory items-start gap-4 lg:grid lg:w-full lg:grid-cols-[minmax(0,1fr)_40px_minmax(0,1fr)_40px_minmax(0,1fr)_40px_minmax(0,1fr)] lg:gap-3">
+            {mobileComparisonScreens.map((screen, index) => (
+              <div className="contents" key={screen.src}>
+                <figure className="w-[68vw] max-w-[205px] shrink-0 snap-start justify-self-center lg:w-full">
+                  <div
+                    className={cn(
+                      "relative overflow-hidden rounded-[20px] border bg-[#f6f8fb] shadow-sm",
+                      screen.highlightZoom
+                        ? "border-[#FFD360] ring-2 ring-[#FFD360]/35"
+                        : "border-[#d9dce2]"
+                    )}
+                  >
+                    <Image
+                      src={screen.src}
+                      alt={`Affina mobile flow: ${screen.label}`}
+                      width={828}
+                      height={1792}
+                      unoptimized
+                      className="block h-auto w-full"
+                      sizes="(max-width: 1024px) 68vw, 205px"
+                    />
+                    {screen.highlightZoom && (
+                      <>
+                        <span className="pointer-events-none absolute left-[6.7%] top-[20.5%] h-[3.65%] w-[31.6%] rounded-full border-2 border-[#FFD360] shadow-[0_0_0_4px_rgba(255,211,96,0.20)]" />
+                        <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-[#FFD360] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.08em] text-[#2f270f]">
+                          Zoom control
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <figcaption className="mt-5">
+                    <p className="text-sm font-semibold text-[#08090a]">
+                      {screen.label}
+                    </p>
+                    <p className="mt-1 text-xs leading-5 text-[#737373]">
+                      {screen.detail}
+                    </p>
+                  </figcaption>
+                </figure>
+
+                {index < mobileComparisonScreens.length - 1 && (
+                  <div className="flex size-10 shrink-0 items-center justify-center self-center rounded-full border border-[#0293f4]/20 bg-white text-[#0293f4] shadow-sm">
+                    <ChevronRight
+                      aria-hidden="true"
+                      className="size-5"
+                      strokeWidth={1.8}
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -658,24 +784,9 @@ export function AffinaCaseStudy() {
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-system">
-          <div className="flex flex-col gap-6 sm:gap-7">
-            <span className={styles.sectionPill}>
-              Design challenges
-            </span>
-            <h2 className={styles.sectionTitle}>
-              From fragmented touchpoints to one scalable system
-            </h2>
-            <p className={cn("max-w-[720px]", styles.leadText)}>
-              The project moved across product flow, UI implementation, brand
-              foundation, and system consistency. I framed the work around four{" "}
-              <CaseStudyScrollHighlight>
-                design challenges
-              </CaseStudyScrollHighlight>{" "}
-              so the case study can show what changed and why.
-            </p>
-          </div>
+          <span className={styles.sectionPill}>Design challenges</span>
 
-          <CaseStudyStatementReveal text="How can users move from many products, benefits and conditions toward a confident next action?" />
+          <CaseStudyStatementReveal text="How might we turn a fragmented insurance journey into one clear path forward?" />
 
           <CaseStudyScrollReveal>
             <div className="grid overflow-hidden rounded-xl border border-[#e4e4e7] bg-white px-6 lg:grid-cols-4 lg:gap-x-[51px]">
@@ -745,63 +856,32 @@ export function AffinaCaseStudy() {
             </article>
           </CaseStudyScrollReveal>
 
-          <CaseStudyScrollReveal className="grid gap-8 sm:grid-cols-2">
-            <div className="border-t border-black/10 pt-8">
-              <p className="font-[var(--font-affina-heading)] text-[52px] font-medium leading-none tracking-[-0.05em] text-[#08090a]">
-                46%
-              </p>
-              <p className={cn("mt-4", styles.compactBody)}>
-                were open to buying insurance online.
-              </p>
-              <p className="mt-5 text-sm text-[#737373]">
-                Source: IXT by OneDegree, 2022
-              </p>
-            </div>
-            <div className="border-t border-black/10 pt-8">
-              <p className="font-[var(--font-affina-heading)] text-[52px] font-medium leading-none tracking-[-0.05em] text-[#08090a]">
-                43%+
-              </p>
-              <p className={cn("mt-4", styles.compactBody)}>
-                in Vietnam and Thailand still valued agent support when going
-                digital.
-              </p>
-              <p className="mt-5 text-sm text-[#737373]">
-                Source: Swiss Re Institute, 2021
-              </p>
-            </div>
-          </CaseStudyScrollReveal>
-
           <CaseStudyScrollReveal>
             <div className="border-y border-black/10 py-10 sm:py-12">
               <p className={styles.accentLabel}>
-                What I worked on
+                My product design scope
               </p>
               <p className="mt-6 max-w-[760px] text-base font-normal leading-[1.6] text-[#18181b] sm:text-[17px]">
-                I implemented and refined the UI across Affina&apos;s web
-                experiences using{" "}
-                <CaseStudyScrollHighlight>
-                  HTML/CSS
-                </CaseStudyScrollHighlight>{" "}
-                on top of the existing WordPress and plugin foundation{" "}
-                built by developers.
+                I owned the journey from flow definition to responsive UI delivery.
               </p>
               <ul className="mt-8 flex max-w-[760px] list-disc flex-col gap-2 pl-6 text-base font-normal leading-[1.6] text-[#18181b] marker:text-[#18181b] sm:text-[17px]">
-                <li>Reworked UI across key web flows and existing WordPress plugins</li>
                 <li>
-                  Translated the design system into production UI, including{" "}
+                  Mapped the{" "}
                   <CaseStudyScrollHighlight>
-                    responsive behavior and states
+                    survey-to-comparison flow
+                  </CaseStudyScrollHighlight>
+                </li>
+                <li>
+                  Simplified{" "}
+                  <CaseStudyScrollHighlight>
+                    hierarchy and responsive states
                   </CaseStudyScrollHighlight>
                 </li>
                 <li>
                   <CaseStudyScrollHighlight>
-                    Tested flows myself
+                    Implemented the UI in source code
                   </CaseStudyScrollHighlight>{" "}
-                  and fixed visual, responsive and interaction issues
-                </li>
-                <li>
-                  Worked with developers when changes required plugin or backend
-                  logic
+                  and refined production details
                 </li>
               </ul>
             </div>
@@ -908,8 +988,8 @@ export function AffinaCaseStudy() {
                       )}
                       {step.bullets && (
                         <ul className={cn("list-disc pl-6", styles.bodyText)}>
-                          {step.bullets.map((item) => (
-                            <li key={item}>{item}</li>
+                          {step.bullets.map((item, index) => (
+                            <li key={`${step.number}-${index}`}>{item}</li>
                           ))}
                         </ul>
                       )}
@@ -937,7 +1017,13 @@ export function AffinaCaseStudy() {
                 />
               </video>
             </div>
+          </CaseStudyScrollReveal>
 
+          <CaseStudyScrollReveal>
+            <MobileComparisonFlow />
+          </CaseStudyScrollReveal>
+
+          <CaseStudyScrollReveal>
             <div className="overflow-hidden rounded-xl border border-[#cfd0d4]">
               <ImageZoom>
                 <Image

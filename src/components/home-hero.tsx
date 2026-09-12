@@ -284,7 +284,7 @@ export function HomeHero() {
         <BlurFade delay={1.28}>
           <div className="mt-5 flex w-full flex-col items-center gap-[36px]">
             <p className="mx-auto max-w-[520px] text-base leading-[1.35] text-[#29303B]">
-              Proactive Product Designer
+              Proactive UI/UX Designer
               <br />
               <span className="text-[hsl(var(--ink-soft))]">
                 Bridging user needs, business goals,
