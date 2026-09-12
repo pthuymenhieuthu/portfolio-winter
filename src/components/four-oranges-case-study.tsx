@@ -21,6 +21,7 @@ import {
   X,
 } from "lucide-react";
 import { DATA } from "@/data/resume";
+import { getNextProjects } from "@/lib/next-projects";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
 import { HeroBlobMotion } from "@/components/hero-blob-motion";
@@ -60,13 +61,10 @@ type CaseProject = {
   video?: string;
 };
 
-const nextProjects = ["Zoan AI", "TrueProfit", "Language Learning Apps"]
-  .map((name) =>
-    (DATA.projects as readonly CaseProject[]).find((project) =>
-      project.title.toLowerCase().includes(name.toLowerCase())
-    )
-  )
-  .filter((project): project is CaseProject => Boolean(project));
+const nextProjects = getNextProjects(
+  DATA.projects as readonly CaseProject[],
+  "/blog/4oranges"
+);
 
 function ProjectNavigation() {
   const [activeLabel, setActiveLabel] = useState(sections[0].label);
@@ -587,8 +585,14 @@ export function FourOrangesCaseStudy() {
             </div>
             <p className="text-base leading-[1.65] text-[#754426]">I designed the end-to-end mobile experience and UI kit, turning physical promotional codes into a clear digital reward journey.</p>
           </div>
-          <div className="grid gap-3 sm:grid-cols-4">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             {["Role: Sole UI/UX Designer", "Mobile app", "iOS & Android", "2026"].map((item) => <div className="rounded-2xl border border-[#351303]/10 bg-white/55 p-4 text-sm font-medium" key={item}>{item}</div>)}
+            <div className="rounded-2xl border border-[#351303]/10 bg-white/55 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#9a7057]">Status</p>
+              <span className="mt-3 inline-flex rounded-full bg-[#fff0c2] px-3 py-1 text-sm font-medium text-[#8a4b08]">
+                In testing
+              </span>
+            </div>
           </div>
           <div>
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#9a7057]">Brands by 4Oranges</p>

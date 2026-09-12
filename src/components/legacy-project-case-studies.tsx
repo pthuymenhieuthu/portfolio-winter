@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DATA } from "@/data/resume";
+import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
@@ -45,14 +46,6 @@ type CaseProject = {
   image?: string;
   video?: string;
 };
-
-const nextProjects = ["Affina", "Zoan AI", "TrueProfit"]
-  .map((name) =>
-    (DATA.projects as readonly CaseProject[]).find((project) =>
-      project.title.toLowerCase().includes(name.toLowerCase())
-    )
-  )
-  .filter((project): project is CaseProject => Boolean(project));
 
 const themes = {
   graphics: {
@@ -424,7 +417,20 @@ function NextProjectCard({
   );
 }
 
-function NextProjectsSection({ id, theme }: { id: string; theme: Theme }) {
+function NextProjectsSection({
+  currentHref,
+  id,
+  theme,
+}: {
+  currentHref: string;
+  id: string;
+  theme: Theme;
+}) {
+  const nextProjects = getNextProjects(
+    DATA.projects as readonly CaseProject[],
+    currentHref
+  );
+
   return (
     <section id={id} className="flex scroll-mt-24 flex-col gap-8 sm:gap-10">
       <div className="flex flex-col gap-5">
@@ -452,6 +458,7 @@ function NextProjectsSection({ id, theme }: { id: string; theme: Theme }) {
 }
 
 function CaseShell({
+  currentHref,
   title,
   date,
   summary,
@@ -459,6 +466,7 @@ function CaseShell({
   sections,
   children,
 }: {
+  currentHref: string;
   title: string;
   date: string;
   summary?: string;
@@ -481,7 +489,11 @@ function CaseShell({
         style={{ backgroundColor: theme.page } as React.CSSProperties}
       >
         {children}
-        <NextProjectsSection id={sections[sections.length - 1].id} theme={theme} />
+        <NextProjectsSection
+          currentHref={currentHref}
+          id={sections[sections.length - 1].id}
+          theme={theme}
+        />
       </section>
     </main>
   );
@@ -492,6 +504,7 @@ export function GraphicsCaseStudy() {
 
   return (
     <CaseShell
+      currentHref="/blog/graphics"
       date="2023-2025"
       sections={graphicsSections}
       summary="Campaign and product visuals."
@@ -603,6 +616,7 @@ export function PizzyCaseStudy() {
 
   return (
     <CaseShell
+      currentHref="/blog/pizzy"
       date="2025-08"
       sections={pizzySections}
       summary="A social budgeting app for shared spending."
@@ -717,6 +731,7 @@ export function CakeCaseStudy() {
 
   return (
     <CaseShell
+      currentHref="/blog/cake"
       date="2025-05"
       sections={cakeSections}
       summary="Round-up savings concept."
@@ -1082,6 +1097,7 @@ export function ZanZanCaseStudy() {
 
   return (
     <CaseShell
+      currentHref="/blog/lollypop"
       date="2024-09-20"
       sections={zanzanSections}
       summary="A digital platform for Vietnamese folk games."

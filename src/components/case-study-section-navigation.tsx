@@ -12,9 +12,11 @@ export type CaseStudySection = {
 
 export function CaseStudySectionNavigation({
   heroId,
+  revealAfter,
   sections,
 }: {
   heroId: string;
+  revealAfter?: number;
   sections: readonly CaseStudySection[];
 }) {
   const [activeId, setActiveId] = useState(sections[0]?.id ?? "");
@@ -45,7 +47,10 @@ export function CaseStudySectionNavigation({
       animationFrame = window.requestAnimationFrame(() => {
         if (!hero) return;
 
-        const shouldShow = hero.getBoundingClientRect().bottom <= 48;
+        const shouldShow =
+          revealAfter === undefined
+            ? hero.getBoundingClientRect().bottom <= 48
+            : window.scrollY > revealAfter;
         setIsVisible(shouldShow);
         if (!shouldShow) setIsMenuOpen(false);
 
@@ -76,7 +81,7 @@ export function CaseStudySectionNavigation({
       window.removeEventListener("scroll", updateNavigation);
       window.removeEventListener("resize", updateNavigation);
     };
-  }, [heroId, sections]);
+  }, [heroId, revealAfter, sections]);
 
   if (!activeSection) return null;
 

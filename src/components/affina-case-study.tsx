@@ -3,9 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight, ExternalLink } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { DATA } from "@/data/resume";
+import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import {
@@ -20,6 +21,7 @@ import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
 import { HeroBlobMotion } from "@/components/hero-blob-motion";
 import { caseStudyStyles } from "@/lib/case-study-styles";
+import { Icons } from "@/components/icons";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -273,13 +275,10 @@ type CaseProject = {
   video?: string;
 };
 
-const nextProjects = ["Zoan AI", "TrueProfit", "Language Learning Apps"]
-  .map((name) =>
-    (DATA.projects as readonly CaseProject[]).find((project) =>
-      project.title.toLowerCase().includes(name.toLowerCase())
-    )
-  )
-  .filter((project): project is CaseProject => Boolean(project));
+const nextProjects = getNextProjects(
+  DATA.projects as readonly CaseProject[],
+  "/blog/affina"
+);
 
 function AffinaPhoneMockup({
   className,
@@ -808,13 +807,14 @@ export function AffinaCaseStudy() {
             <div className="rounded-2xl border border-black/10 bg-white/55 p-4">
               <p className={styles.accentLabel}>Live project</p>
               <a
-                className="mt-3 inline-flex items-center gap-2 text-base leading-[1.6] text-[#08090a] underline decoration-black/30 underline-offset-4 transition hover:decoration-black"
+                aria-label="Open Affina website in a new tab"
+                className="mt-3 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm font-medium text-[#08090a] transition hover:border-black/25 hover:bg-[#f7f7f8]"
                 href="https://www.affina.com.vn/ai/"
                 rel="noreferrer"
                 target="_blank"
               >
-                affina.com.vn/ai
-                <ExternalLink aria-hidden="true" className="size-4 shrink-0" />
+                <Icons.globe aria-hidden="true" className="size-4 shrink-0" />
+                Website
               </a>
             </div>
           </div>

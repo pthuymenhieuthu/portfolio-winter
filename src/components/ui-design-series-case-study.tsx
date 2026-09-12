@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DATA } from "@/data/resume";
+import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
@@ -36,7 +37,7 @@ const theme = {
 
 const sections = [
   { id: "series-context", label: "Series overview" },
-  { id: "series-brief", label: "Week 4 brief" },
+  { id: "series-brief", label: "Competition brief" },
   { id: "series-process", label: "Design process" },
   { id: "series-picks", label: "Top picks" },
   { id: "series-next", label: "Next projects" },
@@ -146,13 +147,10 @@ const topPicks = [
   },
 ];
 
-const nextProjects = ["CakeBank", "Marketing Graphics", "Speak Chinese"]
-  .map((name) =>
-    (DATA.projects as readonly CaseProject[]).find((project) =>
-      project.title.toLowerCase().includes(name.toLowerCase())
-    )
-  )
-  .filter((project): project is CaseProject => Boolean(project));
+const nextProjects = getNextProjects(
+  DATA.projects as readonly CaseProject[],
+  "/blog/chande"
+);
 
 function CaseImage({
   src,
@@ -325,15 +323,15 @@ export function UiDesignSeriesCaseStudy() {
         >
           <div className="flex flex-col gap-5">
             <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1 text-sm text-white">
-              Week 4 Brief
+              One-week competition brief
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Design faster, think smarter with an AI design partner
             </h2>
             <p className="max-w-[760px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              Create a fundraising-ready landing page for a pre-MVP AI design
-              partner. Build a friendly visual identity around the existing logo,
-              sharpen the messaging, and deliver a strong first impression.
+              For this one-week challenge, I designed a fundraising-ready landing
+              page for a pre-MVP AI design partner—building a friendly visual
+              identity, clearer messaging, and a strong first impression.
             </p>
           </div>
 

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DATA } from "@/data/resume";
+import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
@@ -87,13 +88,10 @@ const platformSteps = [
   "Quick content iteration",
 ];
 
-const nextProjects = ["TrueProfit", "Language Learning Apps", "Affina"]
-  .map((name) =>
-    (DATA.projects as readonly CaseProject[]).find((project) =>
-      project.title.toLowerCase().includes(name.toLowerCase())
-    )
-  )
-  .filter((project): project is CaseProject => Boolean(project));
+const nextProjects = getNextProjects(
+  DATA.projects as readonly CaseProject[],
+  "/blog/zoan"
+);
 
 type CaseProject = {
   title: string;
@@ -318,10 +316,14 @@ export function ZoanCaseStudy() {
             </h3>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-3">
+          <div className="flex flex-col gap-6">
             <CaseImage src={zoanAssets.color} alt="Zoan color foundation" />
             <CaseImage src={zoanAssets.typography} alt="Zoan typography foundation" />
-            <CaseImage src={zoanAssets.tokens} alt="Zoan variable token system" />
+            <CaseImage
+              src={zoanAssets.tokens}
+              alt="Zoan variable token system"
+              className="mx-auto w-full max-w-[720px]"
+            />
           </div>
 
           <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">

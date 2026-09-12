@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Play } from "lucide-react";
 import { DATA } from "@/data/resume";
+import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
 import { caseStudyStyles } from "@/lib/case-study-styles";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
+import { Icons } from "@/components/icons";
 
 type CaseProject = {
   title: string;
@@ -19,22 +22,20 @@ type CaseProject = {
 };
 
 const sections = [
-  ["partner-overview", "Overview"],
-  ["partner-user", "User"],
-  ["partner-journey", "Journey"],
-  ["partner-problem", "Design Problem"],
-  ["partner-pro", "Affina Pro"],
-  ["partner-web", "Web App"],
-  ["partner-rules", "Edge Cases"],
-  ["partner-handoff", "Handoff"],
+  { id: "partner-overview", label: "Overview" },
+  { id: "partner-user", label: "User" },
+  { id: "partner-journey", label: "Journey" },
+  { id: "partner-problem", label: "Design Problem" },
+  { id: "partner-pro", label: "Affina Pro" },
+  { id: "partner-web", label: "Web App" },
+  { id: "partner-rules", label: "Edge Cases" },
+  { id: "partner-handoff", label: "Handoff" },
 ] as const;
 
-const nextProjects = (DATA.projects as readonly CaseProject[])
-  .filter((project) => project.href !== "/blog/affina-partner-flow")
-  .filter((project) =>
-    ["/blog/affina", "/blog/zoan-ai", "/blog/trueprofit"].includes(project.href || "")
-  )
-  .slice(0, 3);
+const nextProjects = getNextProjects(
+  DATA.projects as readonly CaseProject[],
+  "/blog/affina-partner-flow"
+);
 
 type FlowScreen = {
   src: string;
@@ -197,40 +198,12 @@ const partnerHowMightWe =
   "How might one insurance journey adapt to every family member?";
 
 function ProjectNavigation() {
-  const [activeLabel, setActiveLabel] = useState("Overview");
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 460);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    const observers = sections.map(([id, label]) => {
-      const element = document.getElementById(id);
-      if (!element) return null;
-      const observer = new IntersectionObserver(
-        ([entry]) => entry.isIntersecting && setActiveLabel(label),
-        { rootMargin: "-20% 0px -68% 0px", threshold: 0.01 }
-      );
-      observer.observe(element);
-      return observer;
-    });
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      observers.forEach((observer) => observer?.disconnect());
-    };
-  }, []);
-
   return (
-    <div
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 flex h-9 items-center justify-center border-b border-white/70 bg-white/65 text-[13px] text-[#08090a] shadow-[0_8px_30px_rgba(8,9,10,0.06)] backdrop-blur-xl transition-transform duration-500",
-        visible ? "translate-y-0" : "-translate-y-full"
-      )}
-    >
-      {activeLabel}
-    </div>
+    <CaseStudySectionNavigation
+      heroId="partner-overview"
+      revealAfter={460}
+      sections={sections}
+    />
   );
 }
 
@@ -1291,14 +1264,82 @@ export function AffinaPartnerFlowCaseStudy() {
             </p>
           </div>
           <OverviewMockups />
+
+          <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              ["Role", "UI/UX design, flow architecture, handoff"],
+              ["Scope", "Affina Pro, web app, mobile states, edge cases"],
+              ["Status", "Live"],
+              [
+                "Outcome",
+                "One scalable multi-insured journey across assisted and self-service channels",
+              ],
+            ].map(([title, body]) => (
+              <div
+                className="rounded-2xl border border-black/10 bg-white/55 p-4"
+                key={title}
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#737373]">
+                  {title}
+                </p>
+                {title === "Status" ? (
+                  <span className="mt-3 inline-flex w-fit rounded-full bg-[#dcfce7] px-3 py-1 text-sm font-medium leading-5 text-[#166534]">
+                    {body}
+                  </span>
+                ) : (
+                  <p className="mt-3 text-base leading-[1.6] text-[#18181b]">
+                    {body}
+                  </p>
+                )}
+              </div>
+            ))}
+
+            <div className="rounded-2xl border border-black/10 bg-white/55 p-4 sm:col-span-2 lg:col-span-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#737373]">
+                Live project
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <a
+                  aria-label="Open Affina website in a new tab"
+                  className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm font-medium transition hover:border-black/25 hover:bg-[#f7f7f8]"
+                  href="https://www.affina.com.vn/ai/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <Icons.globe aria-hidden="true" className="size-4" />
+                  Website
+                </a>
+                <a
+                  aria-label="Open Affina Pro on the App Store in a new tab"
+                  className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm font-medium transition hover:border-black/25 hover:bg-[#f7f7f8]"
+                  href="https://apps.apple.com/us/app/affina-pro/id6444879374"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <Icons.appstore aria-hidden="true" className="size-4" />
+                  App Store
+                </a>
+                <a
+                  aria-label="Open Affina Pro on Google Play in a new tab"
+                  className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm font-medium transition hover:border-black/25 hover:bg-[#f7f7f8]"
+                  href="https://play.google.com/store/apps/details?id=com.affina.agency&hl=en"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <Play aria-hidden="true" className="size-4 fill-current" />
+                  Google Play
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section
-        className="scroll-mt-20 border-y border-[#e1e6ea] bg-[#f7f7f8]"
+        className="scroll-mt-20 border-t border-[#e1e6ea] bg-[#f7f7f8]"
         id="partner-user"
       >
-        <div className="mx-auto max-w-[1100px] px-5 py-24 sm:px-8 lg:py-36">
+        <div className="mx-auto max-w-[1100px] px-5 pb-14 pt-24 sm:px-8 lg:pb-20 lg:pt-36">
           <SectionHeader
             eyebrow="User"
             title="Adding one more person changed the logic of the whole journey"
@@ -1328,8 +1369,8 @@ export function AffinaPartnerFlowCaseStudy() {
         </div>
       </section>
 
-      <section className="scroll-mt-20 bg-[#f2f6fa]" id="partner-journey">
-        <div className="mx-auto max-w-[1100px] px-5 py-24 sm:px-8 lg:py-36">
+      <section className="scroll-mt-20 bg-[#f7f7f8]" id="partner-journey">
+        <div className="mx-auto max-w-[1100px] px-5 pb-24 pt-14 sm:px-8 lg:pb-36 lg:pt-20">
           <SectionHeader
             eyebrow="Journey"
             title="One need, two journeys"
@@ -1361,23 +1402,6 @@ export function AffinaPartnerFlowCaseStudy() {
               className="mt-9"
               text="Design one scalable family-insurance model that could work across both assisted and self-service journeys."
             />
-            <div className="mt-8 max-w-[760px] space-y-3">
-              {[
-                "Make multiple insured members manageable",
-                "Keep complex insurance rules understandable",
-                "Keep the experience consistent across channels",
-              ].map((goal, index) => (
-                <div
-                  className="flex items-center gap-4 rounded-2xl border border-[#e1e6ea] bg-white/70 p-4"
-                  key={goal}
-                >
-                  <b className="text-sm font-semibold text-[#0293f4]">0{index + 1}</b>
-                  <span className="text-sm font-medium leading-6 sm:text-base">
-                    {goal}
-                  </span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>

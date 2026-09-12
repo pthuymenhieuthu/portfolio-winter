@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DATA } from "@/data/resume";
+import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
@@ -93,13 +94,10 @@ const graphicsPoints = [
   "Feature banners — communicate key outcomes (speak, memorize faster, track progress)",
 ];
 
-const nextProjects = ["Marketing Graphics", "TrueProfit", "Zoan AI"]
-  .map((name) =>
-    (DATA.projects as readonly CaseProject[]).find((project) =>
-      project.title.toLowerCase().includes(name.toLowerCase())
-    )
-  )
-  .filter((project): project is CaseProject => Boolean(project));
+const nextProjects = getNextProjects(
+  DATA.projects as readonly CaseProject[],
+  "/blog/edtechapp"
+);
 
 function CaseImage({
   src,
