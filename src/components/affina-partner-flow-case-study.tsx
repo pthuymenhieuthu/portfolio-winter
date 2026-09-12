@@ -194,7 +194,7 @@ const recoveryStates: FlowScreen[] = [
 ];
 
 const partnerHowMightWe =
-  "How might we make one insurance purchase work for multiple family members with different needs and rules, while keeping the experience consistent across sales-assisted and self-service channels?";
+  "How might one insurance journey adapt to every family member?";
 
 function ProjectNavigation() {
   const [activeLabel, setActiveLabel] = useState("Overview");
