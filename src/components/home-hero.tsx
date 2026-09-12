@@ -109,9 +109,59 @@ export function HomeHero() {
         ) : null}
       </motion.div>
 
+      <motion.div
+        aria-hidden="true"
+        animate={
+          isWaterMode
+            ? { filter: "blur(10px)", opacity: 0, scale: 1.04, x: -70, y: -120 }
+            : { filter: "blur(0px)", opacity: 1, scale: 1, x: 0, y: 0 }
+        }
+        className="pointer-events-none absolute left-1/2 top-[-72px] z-[1] h-[210px] w-[410px] -translate-x-[58%] -rotate-[7deg] sm:hidden"
+        initial={
+          shouldReduceMotion
+            ? false
+            : { filter: "blur(8px)", opacity: 0, scale: 0.96, x: -28, y: -54 }
+        }
+        style={{ willChange: "transform, opacity, filter" }}
+        transition={{
+          delay: shouldReduceMotion ? 0 : isWaterMode ? 0 : 0.08,
+          duration: shouldReduceMotion ? 0 : isWaterMode ? 0.52 : 0.9,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+      >
+        <div className="absolute inset-[18px] translate-x-12 translate-y-12 rounded-[62px_112px_92px_76px] bg-[#7DC8F5]/25 blur-[28px]" />
+        <div className="absolute inset-[10px] translate-x-7 translate-y-7 rounded-[58px_108px_88px_72px] bg-[#8FD4FB]/40 blur-[16px]" />
+        <div className="absolute inset-0 rounded-[54px_104px_84px_68px] bg-gradient-to-br from-[#DDF5FF] via-[#BDE8FF] to-[#A9D2FF]" />
+      </motion.div>
+
+      <motion.div
+        aria-hidden="true"
+        animate={
+          isWaterMode
+            ? { filter: "blur(10px)", opacity: 0, scale: 1.04, x: 72, y: 130 }
+            : { filter: "blur(0px)", opacity: 1, scale: 1, x: 0, y: 0 }
+        }
+        className="pointer-events-none absolute bottom-[-142px] left-1/2 z-[1] h-[250px] w-[440px] -translate-x-[43%] rotate-[8deg] sm:hidden"
+        initial={
+          shouldReduceMotion
+            ? false
+            : { filter: "blur(8px)", opacity: 0, scale: 0.96, x: 30, y: 72 }
+        }
+        style={{ willChange: "transform, opacity, filter" }}
+        transition={{
+          delay: shouldReduceMotion ? 0 : isWaterMode ? 0.04 : 0.36,
+          duration: shouldReduceMotion ? 0 : isWaterMode ? 0.56 : 0.9,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+      >
+        <div className="absolute inset-[20px] -translate-x-12 -translate-y-12 rounded-[106px_70px_62px_98px] bg-[#7DC8F5]/25 blur-[30px]" />
+        <div className="absolute inset-[11px] -translate-x-7 -translate-y-7 rounded-[102px_66px_58px_94px] bg-[#8FD4FB]/40 blur-[17px]" />
+        <div className="absolute inset-0 rounded-[98px_62px_54px_90px] bg-gradient-to-tl from-[#DDF5FF] via-[#BDE8FF] to-[#A9D2FF]" />
+      </motion.div>
+
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[-128px] z-[1] w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:top-[-152px] md:top-[-140px] lg:top-[-140px]"
+        className="pointer-events-none absolute left-1/2 top-[-128px] z-[1] hidden w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:top-[-152px] sm:block md:top-[-140px] lg:top-[-140px]"
       >
         <motion.div
           animate={
@@ -144,7 +194,7 @@ export function HomeHero() {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-[-230px] left-1/2 z-[1] w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-220px] md:bottom-[-210px] lg:bottom-[-190px]"
+        className="pointer-events-none absolute bottom-[-230px] left-1/2 z-[1] hidden w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-220px] sm:block md:bottom-[-210px] lg:bottom-[-190px]"
       >
         <motion.div
           animate={
