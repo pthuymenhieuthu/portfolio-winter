@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, ExternalLink } from "lucide-react";
@@ -535,8 +536,8 @@ function ComparisonPanel({
   return (
     <div
       className={cn(
-        "flex min-h-[300px] flex-col items-center justify-center gap-6 p-6 text-center",
-        "pt-[72px] sm:p-8 sm:pt-20",
+        "flex h-full min-h-0 flex-col items-center justify-center gap-6 p-6 text-center",
+        "sm:p-8",
         tone === "before" ? "bg-[#e6e6e6]" : "bg-white"
       )}
     >
@@ -555,16 +556,52 @@ function ComparisonRow({
   before: React.ReactNode;
   after: React.ReactNode;
 }) {
+  const [isRevealed, setIsRevealed] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const showAfter = isRevealed || isHovered;
+
   return (
-    <div className="relative overflow-hidden rounded-xl border border-[#e4e4e7]">
-      <div className="absolute left-1/2 top-5 z-10 -translate-x-1/2 whitespace-nowrap rounded-xl bg-[#0d0d0d] px-4 py-1.5 text-center text-sm font-normal text-white sm:text-base">
-        {title}
+    <div>
+      <div className="mb-4 flex justify-center">
+        <div className="whitespace-nowrap rounded-xl bg-[#0d0d0d] px-4 py-1.5 text-center text-sm font-normal text-white sm:text-base">
+          {title}
+        </div>
       </div>
-      <div className="grid sm:grid-cols-2">
-        <ComparisonPanel label="Before">{before}</ComparisonPanel>
-        <ComparisonPanel label="After" tone="after">
-          {after}
-        </ComparisonPanel>
+      <div className="overflow-hidden rounded-xl border border-[#e4e4e7] bg-[#e6e6e6]">
+        <button
+          type="button"
+          aria-label={`${title}: reveal ${showAfter ? "before" : "after"}`}
+          aria-pressed={showAfter}
+          className="block w-full cursor-pointer text-inherit [perspective:1400px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0293f4]"
+          onClick={() => setIsRevealed((current) => !current)}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <motion.div
+            animate={{ rotateY: showAfter ? 180 : 0 }}
+            className="relative h-[430px] w-full sm:h-[480px]"
+            style={{ transformStyle: "preserve-3d" }}
+            transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div
+              className="absolute inset-0"
+              style={{ backfaceVisibility: "hidden" }}
+            >
+              <ComparisonPanel label="Before">{before}</ComparisonPanel>
+            </div>
+            <div
+              className="absolute inset-0"
+              style={{
+                backfaceVisibility: "hidden",
+                transform: "rotateY(180deg)",
+              }}
+            >
+              <ComparisonPanel label="After" tone="after">
+                {after}
+              </ComparisonPanel>
+            </div>
+          </motion.div>
+        </button>
       </div>
     </div>
   );
