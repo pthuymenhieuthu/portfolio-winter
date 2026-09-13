@@ -60,15 +60,25 @@ function WaterModeLabel({
 export function HomeHero() {
   const [isWaterMode, setIsWaterMode] = useState(false);
   const [isWaterLabelActive, setIsWaterLabelActive] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [supportsWaterShader, setSupportsWaterShader] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const syncViewport = () => setIsMobile(mediaQuery.matches);
+    syncViewport();
+    mediaQuery.addEventListener("change", syncViewport);
+
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("webgl2");
     setSupportsWaterShader(Boolean(context));
     context?.getExtension("WEBGL_lose_context")?.loseContext();
+
+    return () => mediaQuery.removeEventListener("change", syncViewport);
   }, []);
+
+  const waterIsActive = isMobile || isWaterMode;
 
   const toggleWaterMode = () => {
     const nextWaterMode = !isWaterMode;
@@ -83,7 +93,7 @@ export function HomeHero() {
     >
       <motion.div
         aria-hidden="true"
-        animate={{ opacity: isWaterMode ? 1 : 0 }}
+        animate={{ opacity: waterIsActive ? 1 : 0 }}
         className="pointer-events-none absolute inset-0 z-[2]"
         initial={false}
         transition={{
@@ -91,7 +101,7 @@ export function HomeHero() {
           ease: [0.16, 1, 0.3, 1],
         }}
       >
-        {isWaterMode && supportsWaterShader ? (
+        {waterIsActive && supportsWaterShader ? (
           <Water
             colorBack="#e6f6ff"
             colorHighlight="#ffffff"
@@ -102,66 +112,18 @@ export function HomeHero() {
             layering={0.62}
             highlights={0.22}
             edges={0.3}
-            maxPixelCount={1920 * 1080}
+            maxPixelCount={isMobile ? 720 * 1280 : 1920 * 1080}
             className="h-full w-full"
             style={{ height: "100%", width: "100%" }}
           />
+        ) : waterIsActive ? (
+          <div className="h-full w-full bg-[radial-gradient(circle_at_22%_18%,#ffffff_0%,transparent_38%),radial-gradient(circle_at_80%_72%,#c8ecff_0%,transparent_44%),linear-gradient(160deg,#edfaff_0%,#d8f2ff_48%,#b9ddff_100%)]" />
         ) : null}
-      </motion.div>
-
-      <motion.div
-        aria-hidden="true"
-        animate={
-          isWaterMode
-            ? { filter: "blur(10px)", opacity: 0, scale: 1.04, x: -70, y: -120 }
-            : { filter: "blur(0px)", opacity: 1, scale: 1, x: 0, y: 0 }
-        }
-        className="pointer-events-none absolute left-1/2 top-[-72px] z-[1] h-[210px] w-[410px] -translate-x-[58%] -rotate-[7deg] sm:hidden"
-        initial={
-          shouldReduceMotion
-            ? false
-            : { filter: "blur(8px)", opacity: 0, scale: 0.96, x: -28, y: -54 }
-        }
-        style={{ willChange: "transform, opacity, filter" }}
-        transition={{
-          delay: shouldReduceMotion ? 0 : isWaterMode ? 0 : 0.08,
-          duration: shouldReduceMotion ? 0 : isWaterMode ? 0.52 : 0.9,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-      >
-        <div className="absolute inset-[18px] translate-x-12 translate-y-12 rounded-[62px_112px_92px_76px] bg-[#7DC8F5]/25 blur-[28px]" />
-        <div className="absolute inset-[10px] translate-x-7 translate-y-7 rounded-[58px_108px_88px_72px] bg-[#8FD4FB]/40 blur-[16px]" />
-        <div className="absolute inset-0 rounded-[54px_104px_84px_68px] bg-gradient-to-br from-[#DDF5FF] via-[#BDE8FF] to-[#A9D2FF]" />
-      </motion.div>
-
-      <motion.div
-        aria-hidden="true"
-        animate={
-          isWaterMode
-            ? { filter: "blur(10px)", opacity: 0, scale: 1.04, x: 72, y: 130 }
-            : { filter: "blur(0px)", opacity: 1, scale: 1, x: 0, y: 0 }
-        }
-        className="pointer-events-none absolute bottom-[-142px] left-1/2 z-[1] h-[250px] w-[440px] -translate-x-[43%] rotate-[8deg] sm:hidden"
-        initial={
-          shouldReduceMotion
-            ? false
-            : { filter: "blur(8px)", opacity: 0, scale: 0.96, x: 30, y: 72 }
-        }
-        style={{ willChange: "transform, opacity, filter" }}
-        transition={{
-          delay: shouldReduceMotion ? 0 : isWaterMode ? 0.04 : 0.36,
-          duration: shouldReduceMotion ? 0 : isWaterMode ? 0.56 : 0.9,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-      >
-        <div className="absolute inset-[20px] -translate-x-12 -translate-y-12 rounded-[106px_70px_62px_98px] bg-[#7DC8F5]/25 blur-[30px]" />
-        <div className="absolute inset-[11px] -translate-x-7 -translate-y-7 rounded-[102px_66px_58px_94px] bg-[#8FD4FB]/40 blur-[17px]" />
-        <div className="absolute inset-0 rounded-[98px_62px_54px_90px] bg-gradient-to-tl from-[#DDF5FF] via-[#BDE8FF] to-[#A9D2FF]" />
       </motion.div>
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[-128px] z-[1] hidden w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:top-[-152px] sm:block md:top-[-140px] lg:top-[-140px]"
+        className="pointer-events-none absolute left-1/2 top-[-140px] z-[1] hidden w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none md:block lg:top-[-140px]"
       >
         <motion.div
           animate={
@@ -194,7 +156,7 @@ export function HomeHero() {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-[-230px] left-1/2 z-[1] hidden w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-220px] sm:block md:bottom-[-210px] lg:bottom-[-190px]"
+        className="pointer-events-none absolute bottom-[-210px] left-1/2 z-[1] hidden w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none md:block lg:bottom-[-190px]"
       >
         <motion.div
           animate={
@@ -227,11 +189,11 @@ export function HomeHero() {
 
       <motion.div
         aria-hidden="true"
-        animate={{ opacity: isWaterMode ? 0.16 : 0 }}
+        animate={{ opacity: waterIsActive ? 0.16 : 0 }}
         className="pointer-events-none absolute inset-0 z-[3] bg-[#0096F7]"
         initial={false}
         transition={{
-          delay: shouldReduceMotion || !isWaterMode ? 0 : 0.3,
+          delay: shouldReduceMotion || !waterIsActive ? 0 : 0.3,
           duration: shouldReduceMotion ? 0 : 0.48,
           ease: [0.16, 1, 0.3, 1],
         }}
@@ -244,36 +206,38 @@ export function HomeHero() {
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[640px] -translate-y-4 flex-col items-center text-center sm:-translate-y-8 lg:-translate-y-10">
-        <BlurFade delay={BLUR_FADE_DELAY}>
-          <motion.button
-            layout
-            type="button"
-            aria-label={
-              isWaterLabelActive ? WATER_MODE_LABEL : DEFAULT_MODE_LABEL
-            }
-            aria-checked={isWaterLabelActive}
-            role="switch"
-            className="water-mode-button group relative isolate mb-5 inline-flex items-center justify-center overflow-hidden rounded-full border border-black/[0.05] bg-[#F7F7FA] px-3.5 py-2 text-xs font-medium text-[#7892A3] shadow-[0_0_0_1px_rgba(0,0,0,.035),0_1px_1px_.5px_rgba(0,0,0,.06),0_3px_3px_1.5px_rgba(0,0,0,.05),0_8px_14px_-5px_rgba(0,0,0,.08),inset_0_1px_0_rgba(255,255,255,.95)] transition-[border-color,background-color,box-shadow,color] duration-500 hover:border-[#3BA0FF]/40 hover:bg-white hover:text-[#557A92] hover:shadow-[0_0_0_1px_rgba(59,160,255,.10),0_2px_3px_rgba(0,0,0,.05),0_8px_18px_-6px_rgba(0,0,0,.10),0_0_18px_-7px_rgba(59,160,255,.55),inset_0_1px_0_#fff,inset_0_-12px_18px_-14px_rgba(59,160,255,.75)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/30 sm:mb-6 sm:text-[13px]"
-            onClick={toggleWaterMode}
-            transition={{
-              layout: {
-                duration: shouldReduceMotion ? 0 : 0.72,
-                ease: [0.16, 1, 0.3, 1],
-              },
-            }}
-          >
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#3BA0FF]/20 via-[#3BA0FF]/[0.035] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            />
-            <span className="relative z-10">
-              <WaterModeLabel
-                active={isWaterLabelActive}
-                reduceMotion={Boolean(shouldReduceMotion)}
+        {!isMobile ? (
+          <BlurFade delay={BLUR_FADE_DELAY}>
+            <motion.button
+              layout
+              type="button"
+              aria-label={
+                isWaterLabelActive ? WATER_MODE_LABEL : DEFAULT_MODE_LABEL
+              }
+              aria-checked={isWaterLabelActive}
+              role="switch"
+              className="water-mode-button group relative isolate mb-6 inline-flex items-center justify-center overflow-hidden rounded-full border border-black/[0.05] bg-[#F7F7FA] px-3.5 py-2 text-[13px] font-medium text-[#7892A3] shadow-[0_0_0_1px_rgba(0,0,0,.035),0_1px_1px_.5px_rgba(0,0,0,.06),0_3px_3px_1.5px_rgba(0,0,0,.05),0_8px_14px_-5px_rgba(0,0,0,.08),inset_0_1px_0_rgba(255,255,255,.95)] transition-[border-color,background-color,box-shadow,color] duration-500 hover:border-[#3BA0FF]/40 hover:bg-white hover:text-[#557A92] hover:shadow-[0_0_0_1px_rgba(59,160,255,.10),0_2px_3px_rgba(0,0,0,.05),0_8px_18px_-6px_rgba(0,0,0,.10),0_0_18px_-7px_rgba(59,160,255,.55),inset_0_1px_0_#fff,inset_0_-12px_18px_-14px_rgba(59,160,255,.75)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/30"
+              onClick={toggleWaterMode}
+              transition={{
+                layout: {
+                  duration: shouldReduceMotion ? 0 : 0.72,
+                  ease: [0.16, 1, 0.3, 1],
+                },
+              }}
+            >
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#3BA0FF]/20 via-[#3BA0FF]/[0.035] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
               />
-            </span>
-          </motion.button>
-        </BlurFade>
+              <span className="relative z-10">
+                <WaterModeLabel
+                  active={isWaterLabelActive}
+                  reduceMotion={Boolean(shouldReduceMotion)}
+                />
+              </span>
+            </motion.button>
+          </BlurFade>
+        ) : null}
 
         <HeroTitleReveal
           className="max-w-full font-[var(--font-heading)] text-[40px] font-medium leading-[0.95] tracking-normal text-[#29303B] min-[390px]:text-[44px] sm:text-[72px]"

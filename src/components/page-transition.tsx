@@ -10,17 +10,15 @@ const RIBBON_PATHS = {
   front: "M 0 16 Q 50 3 100 16 V 112 Q 50 128 0 112 Z",
 } as const;
 
-function getTransitionTiming() {
-  const isMobile = window.matchMedia("(max-width: 639px)").matches;
-
+function getTransitionTiming(isMobile: boolean) {
   return {
-    backDuration: isMobile ? 0.58 : 0.64,
-    frontDuration: isMobile ? 0.6 : 0.68,
-    frontDelay: isMobile ? 0.05 : 0.06,
-    backRevealDuration: isMobile ? 0.38 : 0.42,
-    frontRevealDuration: isMobile ? 0.44 : 0.48,
-    routeDelay: isMobile ? 690 : 770,
-    cleanupDelay: isMobile ? 500 : 540,
+    backDuration: 0.64,
+    frontDuration: 0.68,
+    frontDelay: 0.06,
+    backRevealDuration: 0.42,
+    frontRevealDuration: 0.48,
+    routeDelay: isMobile ? 220 : 770,
+    cleanupDelay: isMobile ? 260 : 540,
   };
 }
 
@@ -63,6 +61,7 @@ export function PageTransition() {
   const router = useRouter();
   const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [phase, setPhase] = useState<"cover" | "reveal">("cover");
   const pendingPath = useRef<string | null>(null);
@@ -74,13 +73,21 @@ export function PageTransition() {
     clearTimer(watchdogTimer);
     setPhase("reveal");
 
-    const timing = getTransitionTiming();
+    const timing = getTransitionTiming(isMobile);
     clearTimer(cleanupTimer);
     cleanupTimer.current = window.setTimeout(() => {
       pendingPath.current = null;
       setIsActive(false);
       cleanupTimer.current = null;
     }, timing.cleanupDelay);
+  }, [isMobile]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const syncViewport = () => setIsMobile(mediaQuery.matches);
+    syncViewport();
+    mediaQuery.addEventListener("change", syncViewport);
+    return () => mediaQuery.removeEventListener("change", syncViewport);
   }, []);
 
   useEffect(() => {
@@ -126,7 +133,8 @@ export function PageTransition() {
       setPhase("cover");
       setIsActive(true);
 
-      const timing = getTransitionTiming();
+      const mobileViewport = window.matchMedia("(max-width: 767px)").matches;
+      const timing = getTransitionTiming(mobileViewport);
       clearTimer(routeTimer);
       clearTimer(cleanupTimer);
       clearTimer(watchdogTimer);
@@ -163,7 +171,23 @@ export function PageTransition() {
     return null;
   }
 
-  const timing = getTransitionTiming();
+  const timing = getTransitionTiming(isMobile);
+
+  if (isMobile) {
+    return (
+      <motion.div
+        aria-hidden="true"
+        animate={{ opacity: phase === "cover" ? 1 : 0 }}
+        className="pointer-events-auto fixed inset-0 z-[100] bg-[linear-gradient(180deg,#f8fcff_0%,#dff5ff_48%,#c3e1ff_100%)]"
+        initial={{ opacity: 0 }}
+        style={{ willChange: "opacity" }}
+        transition={{
+          duration: phase === "cover" ? 0.22 : 0.24,
+          ease: [0.4, 0, 0.2, 1],
+        }}
+      />
+    );
+  }
 
   return (
     <div

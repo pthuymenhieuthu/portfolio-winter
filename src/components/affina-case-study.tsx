@@ -50,21 +50,15 @@ const challenges = [
   },
   {
     label: "Challenge 02",
-    title: "Evolving the system for healthcare",
+    title: "Building the design system from foundations up",
     question:
-      "How could Affina become warmer and more healthcare-oriented without creating an entirely new design system?",
+      "How could one shared system make Affina clearer, warmer and easier to scale?",
   },
   {
     label: "Challenge 03",
-    title: "Maintaining design ownership beyond handoff",
+    title: "Rebuilding the brand foundation",
     question:
-      "How could hierarchy, spacing and interactions remain strong once the interface moved into the browser?",
-  },
-  {
-    label: "Challenge 04",
-    title: "Scaling one visual language across touchpoints",
-    question:
-      "How could product, website, partners and campaigns feel part of the same ecosystem?",
+      "How could the brand feel more relevant to women while staying youthful and energetic?",
   },
 ];
 
@@ -201,37 +195,181 @@ const mobileComparisonScreens = [
 const healthcareRows = [
   {
     number: "1",
-    title: "Preserve the core",
-    bold: "component structure, primitives and alias",
-    before: "Kept the existing",
-    after: "tokens to avoid unnecessary rebuilds.",
+    title: "Foundation first",
+    bold: "primitive palettes, typography, spacing, radius and effects",
+    before: "I defined",
+    after: "before composing product screens.",
     image: "/assets/affina/product-screen-1.png",
     ratio: "aspect-[1213/894]",
   },
   {
     number: "2",
-    title: "Evolving the system for a new care direction",
-    bold: "Updated foundation values and extended components",
-    after: "with flexible slots to support the new Care direction.",
+    title: "Add meaning with semantic tokens",
+    bold: "mapped primitives to product roles",
+    before: "I",
+    after: "such as primary, secondary, positive, warning and disabled.",
     image: "/assets/affina/product-screen-2.png",
     ratio: "aspect-[1909/973]",
   },
   {
     number: "3",
-    title: "Handoff & maintain",
-    bold: "Documented naming conventions, exported CSS values",
-    after: "for IT, and tracked future changes through a Figma change log.",
+    title: "Bridge design and code",
+    bold: "Exported shared values as CSS custom properties",
+    after: "so design decisions could move into implementation without translation gaps.",
     image: "/assets/affina/product-screen-3.png",
     ratio: "aspect-[1727/924]",
   },
   {
     number: "4",
-    title: "From system to product",
-    bold: "Documented naming conventions, exported CSS values",
-    after: "for IT, and tracked future changes through a Figma change log.",
+    title: "Prove it in product",
+    bold: "Applied the same tokens and reusable components",
+    after: "across responsive healthcare journeys, then refined the system from real use cases.",
     phones: true,
   },
 ];
+
+const designSystemLayers = [
+  {
+    kind: "principles",
+    label: "Principles",
+    detail: "Clear decisions · Human care · Scalable delivery",
+  },
+  {
+    kind: "rules",
+    label: "Rules",
+    detail: "Tokens · Grid · Accessibility · Responsive behavior",
+  },
+  {
+    kind: "elements",
+    label: "Elements",
+    detail: "Foundations · Components · Patterns · Templates",
+  },
+] as const;
+
+function DesignSystemLayerVisual({
+  kind,
+}: {
+  kind: (typeof designSystemLayers)[number]["kind"];
+}) {
+  if (kind === "principles") {
+    return (
+      <div
+        aria-hidden="true"
+        className="relative flex h-[132px] items-end overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#f7e7ff_0%,#e2f4ff_52%,#fff3db_100%)] p-4"
+      >
+        <div className="absolute -right-7 -top-8 size-28 rounded-full border-[18px] border-white/55" />
+        <div className="relative grid w-full grid-cols-3 gap-2">
+          {["Clear", "Human", "Scalable"].map((item, index) => (
+            <div
+              className="rounded-xl border border-white/70 bg-white/65 px-2 py-3 text-center shadow-[0_8px_22px_rgba(80,93,130,0.08)] backdrop-blur-sm"
+              key={item}
+            >
+              <span
+                className={cn(
+                  "mx-auto mb-2 block size-2.5 rounded-full",
+                  index === 0 && "bg-[#20b8f5]",
+                  index === 1 && "bg-[#ec62d7]",
+                  index === 2 && "bg-[#826de8]",
+                )}
+              />
+              <span className="text-[10px] font-semibold text-[#35343b] sm:text-xs">
+                {item}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (kind === "rules") {
+    return (
+      <div
+        aria-hidden="true"
+        className="grid h-[132px] grid-cols-[1.05fr_0.95fr] gap-3 overflow-hidden rounded-2xl border border-black/[0.06] bg-[#f7f7f8] p-4"
+      >
+        <div className="flex min-w-0 flex-col justify-between">
+          <div className="grid grid-cols-5 gap-1.5">
+            {["#08090a", "#0096f7", "#8b6de9", "#ec62d7", "#f3c862"].map(
+              (color) => (
+                <span
+                  className="aspect-square rounded-md"
+                  key={color}
+                  style={{ backgroundColor: color }}
+                />
+              ),
+            )}
+          </div>
+          <div>
+            <p className="font-[var(--font-affina-heading)] text-3xl leading-none text-[#18181b]">
+              Aa
+            </p>
+            <div className="mt-2 h-1.5 w-full rounded-full bg-[#dfe3e8]" />
+            <div className="mt-1.5 h-1.5 w-2/3 rounded-full bg-[#dfe3e8]" />
+          </div>
+        </div>
+        <div className="grid grid-cols-4 gap-1.5 rounded-xl bg-white p-2 shadow-[0_8px_22px_rgba(80,93,130,0.07)]">
+          {Array.from({ length: 16 }).map((_, index) => (
+            <span
+              className={cn(
+                "rounded-[4px] bg-[#edf0f4]",
+                [2, 5, 10, 15].includes(index) && "bg-[#bce9ff]",
+              )}
+              key={index}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      aria-hidden="true"
+      className="relative flex h-[132px] items-center justify-center overflow-hidden rounded-2xl bg-[#edf4fb] p-4"
+    >
+      <div className="w-full max-w-[230px] rounded-xl border border-black/[0.07] bg-white p-3 shadow-[0_10px_28px_rgba(52,72,108,0.10)]">
+        <div className="flex items-center justify-between">
+          <span className="h-2 w-16 rounded-full bg-[#d9dde3]" />
+          <span className="rounded-full bg-[#e9dcff] px-2 py-1 text-[8px] font-bold text-[#7055bc]">
+            Selected
+          </span>
+        </div>
+        <div className="mt-3 h-7 rounded-lg border border-[#dfe3e8] bg-[#fafafa]" />
+        <div className="mt-2 flex gap-2">
+          <span className="h-7 flex-1 rounded-lg bg-[#08090a]" />
+          <span className="size-7 rounded-lg bg-[linear-gradient(135deg,#6cc9ff,#ec62d7)]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const designSystemBuildOrder = [
+  {
+    number: "01",
+    title: "Audit",
+    detail: "Inventory live screens, repeated patterns and visual inconsistencies.",
+  },
+  {
+    number: "02",
+    title: "Foundations",
+    detail: "Set the shared language for color, type, spacing, grid, radius and elevation.",
+  },
+  {
+    number: "03",
+    title: "Components",
+    detail: "Build from small controls to reusable product patterns, with states and variants.",
+  },
+  {
+    number: "04",
+    title: "Governance",
+    detail: "Document usage, map values to code and record every system change.",
+  },
+] as const;
+
+const foundationSpacingTokens = [4, 8, 12, 16, 24, 32] as const;
+const foundationRadiusTokens = [4, 8, 12, 16, 24] as const;
 
 const processSteps = [
   { label: "Survey", active: true },
@@ -826,7 +964,7 @@ export function AffinaCaseStudy() {
           <CaseStudyStatementReveal text="How might we turn a fragmented insurance journey into one clear path forward?" />
 
           <CaseStudyScrollReveal>
-            <div className="grid overflow-hidden rounded-xl border border-[#e4e4e7] bg-white px-6 lg:grid-cols-4 lg:gap-x-[51px]">
+            <div className="grid overflow-hidden rounded-xl border border-[#e4e4e7] bg-white px-6 lg:grid-cols-3 lg:gap-x-[51px]">
               {challenges.map((item, index) => (
                 <article
                   className="relative flex min-w-0 flex-col gap-5 border-b border-[#e4e4e7] py-6 last:border-b-0 lg:border-b-0"
@@ -1141,8 +1279,234 @@ export function AffinaCaseStudy() {
               Challenge 02
             </span>
             <h2 className={styles.sectionTitle}>
-              Evolving the design system for healthcare
+              Building the design system from foundations up
             </h2>
+            <p className={cn("max-w-[760px]", styles.leadText)}>
+              I treated the system as a product: start with the decisions it
+              must protect, translate them into rules, then prove those rules
+              through real interfaces.
+            </p>
+          </div>
+
+          <CaseStudyStatementReveal text="Principles guide the rules. Rules shape the elements. Real product use keeps the system honest." />
+
+          <CaseStudyScrollReveal className="rounded-2xl border border-[#e4e4e7] bg-white p-5 sm:p-8 lg:p-10">
+            <p className={styles.accentLabel}>System architecture</p>
+            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+              {designSystemLayers.map((layer, index) => (
+                <div
+                  className="relative flex min-w-0 flex-col rounded-3xl border border-black/10 bg-white p-3"
+                  key={layer.label}
+                >
+                  <DesignSystemLayerVisual kind={layer.kind} />
+                  <div className="px-2 pb-3 pt-5">
+                    <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#0096f7]">
+                      0{index + 1}
+                    </p>
+                    <h3 className="mt-2 font-[var(--font-affina-heading)] text-2xl font-medium leading-tight">
+                      {layer.label}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-[#737373]">
+                      {layer.detail}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CaseStudyScrollReveal>
+
+          <CaseStudyScrollReveal>
+            <div className="flex flex-col gap-6">
+              <div>
+                <p className={styles.accentLabel}>Build order</p>
+                <h3 className="mt-4 font-[var(--font-affina-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
+                  What I built first — and why
+                </h3>
+              </div>
+              <div className="grid overflow-hidden rounded-2xl border border-[#e4e4e7] bg-white sm:grid-cols-2 lg:grid-cols-4">
+                {designSystemBuildOrder.map((step) => (
+                  <article
+                    className="border-b border-[#e4e4e7] p-6 last:border-b-0 sm:border-r sm:[&:nth-child(2)]:border-r-0 lg:border-b-0 lg:[&:nth-child(2)]:border-r lg:last:border-r-0"
+                    key={step.number}
+                  >
+                    <p className="text-xs font-bold tracking-[0.12em] text-[#0096f7]">
+                      {step.number}
+                    </p>
+                    <h4 className="mt-4 font-[var(--font-affina-heading)] text-xl font-medium leading-tight">
+                      {step.title}
+                    </h4>
+                    <p className="mt-3 text-sm leading-6 text-[#737373]">
+                      {step.detail}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </CaseStudyScrollReveal>
+
+          <CaseStudyScrollReveal className="overflow-hidden rounded-2xl border border-[#e4e4e7] bg-white">
+            <div className="bg-[#f0f1ff] p-5 sm:p-8 lg:p-10">
+              <div className="flex items-center justify-between gap-6">
+                <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#262626] sm:text-xs">
+                  Design System 1.0
+                </p>
+                <Image
+                  alt="Affina"
+                  className="h-auto w-[72px] object-contain sm:w-[92px]"
+                  height={60}
+                  src="/assets/affina/brand-wordmark-after.svg"
+                  width={300}
+                />
+              </div>
+              <div className="mt-8 max-w-[720px] sm:mt-10">
+                <p className={styles.accentLabel}>Foundation → Atoms</p>
+                <h3 className="mt-3 font-[var(--font-affina-heading)] text-[28px] font-semibold leading-[1.2] text-[#262626] sm:text-[36px]">
+                  One visual language, built into every control
+                </h3>
+                <p className="mt-4 text-sm leading-6 text-[#525252] sm:text-base">
+                  Core tokens define the rules. Reusable atoms turn those rules
+                  into consistent product states.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-px bg-[#e4e4e7] lg:grid-cols-2">
+              <article className="min-w-0 bg-white p-5 sm:p-8 lg:p-10">
+                <div className="flex items-end justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#737373]">
+                      01 · Foundation
+                    </p>
+                    <h4 className="mt-2 font-[var(--font-affina-heading)] text-2xl font-semibold text-[#262626]">
+                      Shared visual rules
+                    </h4>
+                  </div>
+                  <span className="rounded-full bg-[#f0f1ff] px-3 py-1 text-[10px] font-bold text-[#5e6bfc]">
+                    TOKEN-LED
+                  </span>
+                </div>
+
+                <div className="mt-8">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#737373]">
+                    Brand & neutral colors
+                  </p>
+                  <div className="mt-3 grid grid-cols-6 overflow-hidden rounded-xl border border-black/[0.06]">
+                    {["#5E6BFC", "#8B6CF6", "#FF51FF", "#262626", "#666666", "#EDEDED"].map(
+                      (color) => (
+                        <div className="aspect-square" key={color} style={{ backgroundColor: color }}>
+                          <span className="sr-only">{color}</span>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-7">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#737373]">
+                    Spacing
+                  </p>
+                  <div className="mt-4 flex h-16 items-end justify-between gap-2">
+                    {foundationSpacingTokens.map((space) => (
+                      <div className="flex min-w-0 flex-1 flex-col items-center gap-2" key={space}>
+                        <span
+                          className="block w-full max-w-10 rounded-sm bg-[#707afc]"
+                          style={{ height: `${Math.max(space, 4)}px` }}
+                        />
+                        <span className="text-[9px] font-medium text-[#737373]">{space}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-7">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#737373]">
+                    Radius
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-3">
+                    {foundationRadiusTokens.map((radius) => (
+                      <div
+                        className="flex size-12 items-center justify-center border border-[#c8cdff] bg-[#f0f1ff] text-[9px] font-semibold text-[#5e6bfc]"
+                        key={radius}
+                        style={{ borderRadius: `${radius}px` }}
+                      >
+                        {radius}
+                      </div>
+                    ))}
+                    <div className="flex size-12 items-center justify-center rounded-full border border-[#c8cdff] bg-[#f0f1ff] text-[9px] font-semibold text-[#5e6bfc]">
+                      full
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article className="min-w-0 bg-[#fafaff] p-5 sm:p-8 lg:p-10">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#737373]">
+                    02 · Atoms
+                  </p>
+                  <h4 className="mt-2 font-[var(--font-affina-heading)] text-2xl font-semibold text-[#262626]">
+                    Controls with complete states
+                  </h4>
+                </div>
+
+                <div className="mt-8 grid gap-4 rounded-2xl border border-[#e2e5ff] bg-white p-5">
+                  <div className="flex items-center justify-between gap-5">
+                    <span className="text-xs font-bold uppercase tracking-[0.08em] text-[#525252]">
+                      Selection controls
+                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className="flex size-6 items-center justify-center rounded-[12px] bg-[#707afc] text-sm font-bold text-white">✓</span>
+                      <span className="flex size-6 items-center justify-center rounded-full border border-black/10 bg-white">
+                        <span className="size-3 rounded-full bg-[#707afc]" />
+                      </span>
+                      <span className="relative h-8 w-14 rounded-full bg-[#707afc]">
+                        <span className="absolute right-1 top-1 size-6 rounded-full bg-white shadow-sm" />
+                      </span>
+                    </div>
+                  </div>
+                  <div className="h-px bg-[#ededed]" />
+                  <div className="flex flex-wrap gap-2">
+                    <span className="rounded-full border border-[#707afc] bg-[#f0f1ff] px-3 py-2 text-xs font-semibold text-[#5e6bfc]">
+                      Selected
+                    </span>
+                    <span className="rounded-full border border-black/10 bg-white px-3 py-2 text-xs font-semibold text-[#525252]">
+                      Default
+                    </span>
+                    <span className="rounded-full bg-[#ededed] px-3 py-2 text-xs font-semibold text-[#8d808d]">
+                      Disabled
+                    </span>
+                  </div>
+                </div>
+
+                <div className="mt-4 rounded-2xl border border-[#e2e5ff] bg-white p-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#525252]">
+                    Buttons
+                  </p>
+                  <div className="mt-5 flex flex-wrap items-center gap-3">
+                    <span className="rounded-2xl bg-[linear-gradient(90deg,#5e6bfc_0%,#8b6cf6_55%,#ff51ff_100%)] px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_24px_-12px_rgba(215,40,175,0.55)]">
+                      Continue
+                    </span>
+                    <span className="rounded-2xl border border-[#ff51ff] bg-white px-4 py-2.5 text-sm font-semibold text-[#ff51ff]">
+                      Secondary
+                    </span>
+                    <span className="rounded-2xl bg-[#262626] px-4 py-2.5 text-sm font-semibold text-white">
+                      Neutral
+                    </span>
+                  </div>
+                  <p className="mt-5 text-xs leading-5 text-[#737373]">
+                    Default, hover, pressed and disabled variants are documented
+                    before components enter product flows.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </CaseStudyScrollReveal>
+
+          <div>
+            <p className={styles.accentLabel}>From system to product</p>
+            <h3 className="mt-4 max-w-[720px] font-[var(--font-affina-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
+              Four checkpoints kept design, Figma and production aligned
+            </h3>
           </div>
 
           <div className="flex flex-col gap-16 sm:gap-20">
