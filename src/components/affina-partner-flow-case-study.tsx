@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Play } from "lucide-react";
 import { DATA } from "@/data/resume";
 import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
@@ -10,7 +9,10 @@ import { caseStudyStyles } from "@/lib/case-study-styles";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
-import { Icons } from "@/components/icons";
+import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
+import { projectMeshPalettes } from "@/components/project-mesh-gradient";
+
+const PROJECT_HERO_DELAY = 0.36;
 
 type CaseProject = {
   title: string;
@@ -241,7 +243,7 @@ function SectionHeader({
       <h2
         className={
           size === "overview"
-            ? caseStudyStyles.overviewTitle
+            ? cn(caseStudyStyles.overviewTitle, "tracking-[-1px]")
             : caseStudyStyles.sectionTitle
         }
       >
@@ -258,7 +260,7 @@ function SectionHeader({
 
 function PartnerHowMightWeReveal() {
   return (
-    <CaseStudyStatementReveal className="mt-10 max-w-[1000px]" text={partnerHowMightWe} />
+    <CaseStudyStatementReveal className="mt-10 max-w-[1000px] tracking-[-1px]" text={partnerHowMightWe} />
   );
 }
 
@@ -1242,7 +1244,24 @@ export function AffinaPartnerFlowCaseStudy() {
     <main className="min-h-screen overflow-x-hidden bg-white font-[var(--font-affina-body)] text-[#08090a]">
       <ProjectNavigation />
 
-      <section className="scroll-mt-20" id="partner-overview">
+      <ProjectCaseStudyHero
+        colors={projectMeshPalettes.affinaPartner}
+        delay={PROJECT_HERO_DELAY}
+        id="partner-overview"
+        links={[
+          { href: "https://www.affina.com.vn/ai/", label: "Website", icon: "website" },
+          { href: "https://apps.apple.com/us/app/affina-pro/id6444879374", label: "App Store", icon: "appstore" },
+          { href: "https://play.google.com/store/apps/details?id=com.affina.agency&hl=en", label: "Google Play", icon: "googleplay" },
+        ]}
+        outcome="One scalable multi-insured journey across assisted and self-service channels"
+        role="UI/UX Designer"
+        scope="Affina Pro, web app, responsive states, edge cases"
+        status="Live"
+        title="Affina — Unifying Customer & Partner Insurance Journeys"
+        titleLines={["Affina —", "Unifying Customer & Partner", "Insurance Journeys"]}
+      />
+
+      <section className="scroll-mt-20">
         <div className="mx-auto max-w-[1100px] px-5 pb-24 pt-28 sm:px-8 sm:pt-36">
           <SectionHeader
             eyebrow="Overview"
@@ -1265,73 +1284,6 @@ export function AffinaPartnerFlowCaseStudy() {
           </div>
           <OverviewMockups />
 
-          <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              ["Role", "UI/UX design, flow architecture, handoff"],
-              ["Scope", "Affina Pro, web app, mobile states, edge cases"],
-              ["Status", "Live"],
-              [
-                "Outcome",
-                "One scalable multi-insured journey across assisted and self-service channels",
-              ],
-            ].map(([title, body]) => (
-              <div
-                className="rounded-2xl border border-black/10 bg-white/55 p-4"
-                key={title}
-              >
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#737373]">
-                  {title}
-                </p>
-                {title === "Status" ? (
-                  <span className="mt-3 inline-flex w-fit rounded-full bg-[#dcfce7] px-3 py-1 text-sm font-medium leading-5 text-[#166534]">
-                    {body}
-                  </span>
-                ) : (
-                  <p className="mt-3 text-base leading-[1.6] text-[#18181b]">
-                    {body}
-                  </p>
-                )}
-              </div>
-            ))}
-
-            <div className="rounded-2xl border border-black/10 bg-white/55 p-4 sm:col-span-2 lg:col-span-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#737373]">
-                Live project
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <a
-                  aria-label="Open Affina website in a new tab"
-                  className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm font-medium transition hover:border-black/25 hover:bg-[#f7f7f8]"
-                  href="https://www.affina.com.vn/ai/"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <Icons.globe aria-hidden="true" className="size-4" />
-                  Website
-                </a>
-                <a
-                  aria-label="Open Affina Pro on the App Store in a new tab"
-                  className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm font-medium transition hover:border-black/25 hover:bg-[#f7f7f8]"
-                  href="https://apps.apple.com/us/app/affina-pro/id6444879374"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <Icons.appstore aria-hidden="true" className="size-4" />
-                  App Store
-                </a>
-                <a
-                  aria-label="Open Affina Pro on Google Play in a new tab"
-                  className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm font-medium transition hover:border-black/25 hover:bg-[#f7f7f8]"
-                  href="https://play.google.com/store/apps/details?id=com.affina.agency&hl=en"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <Play aria-hidden="true" className="size-4 fill-current" />
-                  Google Play
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -1399,7 +1351,7 @@ export function AffinaPartnerFlowCaseStudy() {
           <div>
             <SectionHeader eyebrow="Design Problem" title="Design Goal" />
             <CaseStudyStatementReveal
-              className="mt-9"
+              className="mt-9 tracking-[-1px]"
               text="Design one scalable family-insurance model that could work across both assisted and self-service journeys."
             />
           </div>

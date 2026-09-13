@@ -240,7 +240,7 @@ export function HomeHero() {
         ) : null}
 
         <HeroTitleReveal
-          className="max-w-full font-[var(--font-heading)] text-[40px] font-medium leading-[0.95] tracking-normal text-[#29303B] min-[390px]:text-[44px] sm:text-[72px]"
+          className="max-w-full font-[var(--font-heading)] text-[40px] font-medium leading-[0.95] tracking-[-3px] text-[#29303B] min-[390px]:text-[44px] sm:text-[72px]"
           delay={BLUR_FADE_DELAY * 3}
           text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
         />

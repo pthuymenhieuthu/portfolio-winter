@@ -9,7 +9,7 @@ import GoogleTracking from "@/components/google-tracking";
 
 const BLUR_FADE_DELAY = 0.04;
 const HOME_PROJECTS = DATA.projects.filter(
-  (project) => project.title !== "ZanZan"
+  (project) => project.href !== "/blog/lollypop"
 );
 
 export default function Page() {
@@ -27,7 +27,7 @@ export default function Page() {
                   <div className="text-sm font-normal text-[#29303B]/55">
                     My Projects
                   </div>
-                  <h2 className="mx-auto max-w-[300px] font-[var(--font-heading)] text-[26px] font-medium leading-[1.08] tracking-normal text-[#29303B] sm:max-w-none sm:text-[44px] lg:text-[52px]">
+                  <h2 className="mx-auto max-w-[300px] font-[var(--font-heading)] text-[26px] font-medium leading-[1.08] tracking-[-2px] text-[#29303B] sm:max-w-none sm:text-[44px] lg:text-[52px]">
                     Check out my latest work
                   </h2>
                   <p className="text-base leading-[1.35] text-[#737373]">
@@ -92,7 +92,7 @@ export default function Page() {
             <div className="text-sm font-normal text-[#29303B]/60">
               Contact
             </div>
-            <h2 className="mt-3 max-w-[520px] font-[var(--font-heading)] text-[26px] font-medium leading-[1.06] tracking-normal sm:mt-4 sm:text-[38px] lg:text-[44px]">
+            <h2 className="mt-3 max-w-[520px] font-[var(--font-heading)] text-[26px] font-medium leading-[1.06] tracking-[-2px] sm:mt-4 sm:text-[38px] lg:text-[44px]">
               Tell me about your project
             </h2>
             <p className="mt-3 max-w-[500px] text-sm leading-[1.4] text-[#29303B]/70 sm:text-base sm:leading-[1.45]">

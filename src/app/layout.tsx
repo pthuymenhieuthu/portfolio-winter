@@ -33,8 +33,8 @@ const fontHeading = localFont({
 export const metadata: Metadata = {
   ...(DATA.url ? { metadataBase: new URL(DATA.url) } : {}), 
   title: {
-    default: DATA.name,
-    template: `%s | ${DATA.name}`,
+    default: "Thuy Nguyen - Product Designer",
+    template: `%s | Thuy Nguyen - Product Designer`,
   },
   description: DATA.description,
   icons: {
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     apple: [{ url: "/icon.png", type: "image/png", sizes: "512x512" }],
   },
   openGraph: {
-    title: DATA.name,
+    title: "Thuy Nguyen - Product Designer",
     description: DATA.description,
     url: DATA.url,
     siteName: DATA.name,
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: DATA.name,
+    title: "Thuy Nguyen - Product Designer",
     card: "summary_large_image",
   },
 };

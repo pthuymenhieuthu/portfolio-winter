@@ -16,7 +16,11 @@ import {
 } from "@/components/case-study-section-navigation";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
-import { HeroBlobMotion } from "@/components/hero-blob-motion";
+import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
+import {
+  ProjectMeshGradient,
+  projectMeshPalettes,
+} from "@/components/project-mesh-gradient";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -25,7 +29,7 @@ type Theme = {
   ink: string;
   muted: string;
   accent: string;
-  hero: string;
+  meshColors: string[];
   heroText?: string;
 };
 
@@ -53,32 +57,28 @@ const themes = {
     ink: "#08090a",
     muted: "#737373",
     accent: "#01c9e0",
-    hero:
-      "radial-gradient(circle at 18% 18%, #5ff2c9 0%, transparent 30%), radial-gradient(circle at 82% 24%, #2798d3 0%, transparent 30%), linear-gradient(135deg, #06272d 0%, #01c9e0 58%, #5ff2c9 100%)",
+    meshColors: projectMeshPalettes.graphics,
   },
   pizzy: {
     page: "#f7f7f8",
     ink: "#08090a",
     muted: "#737373",
     accent: "#c1b5f8",
-    hero:
-      "radial-gradient(circle at 18% 18%, #c390ff 0%, transparent 30%), radial-gradient(circle at 82% 24%, #f0b8f4 0%, transparent 28%), linear-gradient(135deg, #5f3cbb 0%, #a864dc 42%, #d984ea 78%, #e3c0ff 100%)",
+    meshColors: projectMeshPalettes.pizzy,
   },
   cake: {
     page: "#f7f7f8",
     ink: "#08090a",
     muted: "#737373",
     accent: "#ff56cf",
-    hero:
-      "radial-gradient(circle at 18% 18%, #ff56cf 0%, transparent 30%), radial-gradient(circle at 82% 24%, #ecd974 0%, transparent 30%), linear-gradient(135deg, #2b1425 0%, #ff56cf 50%, #ecd974 100%)",
+    meshColors: projectMeshPalettes.cake,
   },
   zanzan: {
     page: "#f7f7f8",
     ink: "#08090a",
     muted: "#737373",
     accent: "#7451cf",
-    hero:
-      "linear-gradient(135deg, #7451cf 0%, #2f0374 100%)",
+    meshColors: projectMeshPalettes.zanzan,
   },
 } satisfies Record<string, Theme>;
 
@@ -127,46 +127,6 @@ const zanzanSections = [
   { id: "zanzan-next", label: "Next projects" },
 ] satisfies CaseStudySection[];
 
-function BlobCutout({
-  fill,
-  position,
-}: {
-  fill: string;
-  position: "top" | "bottom";
-}) {
-  const isTop = position === "top";
-
-  return (
-    <HeroBlobMotion
-      className={
-        isTop
-          ? "pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[1200px] max-w-none -translate-x-1/2 sm:w-[1640px]"
-          : "pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 sm:bottom-[-150px]"
-      }
-      position={position}
-    >
-      <svg
-        aria-hidden="true"
-        className="block h-auto w-full"
-        fill="none"
-        height={isTop ? 422 : 526}
-        viewBox={isTop ? "0 0 1440 422" : "0 0 1440 526"}
-        width={1440}
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d={
-            isTop
-              ? "M1085.09 250.287C1215.46 436.116 1645.28 428.276 1690.52 416.582L1635.97 -282L-346 -127.227L-308.024 359.076C-75.943 427.41 420.709 482.913 550.666 158.254C941.969 194.444 1012.09 47.8557 1074.47 -20.4985C1029.03 65.5779 1023.56 162.589 1085.09 250.287Z"
-              : "M376 150.651C260.488 -44.7637 -227.988 2.80591 -274 10.9432V711.651H1714V223.868L1709.16 222.022C1481.84 135.325 1055.37 -27.3193 901.632 284.012C620.5 205.651 456.5 297.651 412 343.651C421.5 284.651 427.131 237.151 376 150.651Z"
-          }
-          fill={fill}
-        />
-      </svg>
-    </HeroBlobMotion>
-  );
-}
-
 function CaseHero({
   title,
   date,
@@ -182,17 +142,15 @@ function CaseHero({
     <section
       id="legacy-project-overview"
       className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden px-6 text-center text-white sm:min-h-[800px]"
-      style={{ background: theme.hero }}
     >
-      <BlobCutout fill={theme.page} position="top" />
-      <BlobCutout fill={theme.page} position="bottom" />
+      <ProjectMeshGradient colors={theme.meshColors} />
       <div className="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center">
         <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur">
           {date}
         </p>
         <div style={{ width: "min(720px, calc(100vw - 48px))" }}>
           <HeroTitleReveal
-            className="mt-7 font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal"
+            className="mt-7 font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.1] tracking-[-2.5px]"
             delay={PROJECT_HERO_DELAY}
             text={title}
             wrap
@@ -245,7 +203,11 @@ function CaseSection({
       <div className="flex flex-col gap-7">
         {label && <SectionLabel theme={theme}>{label}</SectionLabel>}
         {title && (
-          <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
+          <h2 className={cn(
+            "font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]",
+            (id.endsWith("-overview") || id === "pizzy-about" || id === "zanzan-context") &&
+              "tracking-[-1px]"
+          )}>
             {title}
           </h2>
         )}
@@ -465,6 +427,7 @@ function CaseShell({
   theme,
   sections,
   children,
+  hero,
 }: {
   currentHref: string;
   title: string;
@@ -473,6 +436,7 @@ function CaseShell({
   theme: Theme;
   sections: readonly CaseStudySection[];
   children: React.ReactNode;
+  hero?: Omit<React.ComponentProps<typeof ProjectCaseStudyHero>, "id" | "colors" | "delay">;
 }) {
   return (
     <main
@@ -483,7 +447,16 @@ function CaseShell({
         heroId="legacy-project-overview"
         sections={sections}
       />
-      <CaseHero date={date} summary={summary} theme={theme} title={title} />
+      {hero ? (
+        <ProjectCaseStudyHero
+          {...hero}
+          colors={theme.meshColors}
+          delay={PROJECT_HERO_DELAY}
+          id="legacy-project-overview"
+        />
+      ) : (
+        <CaseHero date={date} summary={summary} theme={theme} title={title} />
+      )}
       <section
         className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36"
         style={{ backgroundColor: theme.page } as React.CSSProperties}
@@ -506,6 +479,15 @@ export function GraphicsCaseStudy() {
     <CaseShell
       currentHref="/blog/graphics"
       date="2023-2025"
+      hero={{
+        links: [{ href: "https://www.behance.net/gallery/206146695/Seller-Engagement-Design-TikTok-Shop", label: "Behance", icon: "behance" }],
+        outcome: "Clearer, conversion-focused campaign and product storytelling",
+        role: "Graphic Designer",
+        scope: "Campaign graphics, social content, app promotion",
+        status: "Done",
+        title: "Marketing Graphics — Designing Campaigns That Connect",
+        titleLines: ["Marketing Graphics —", "Designing Campaigns", "That Connect"],
+      }}
       sections={graphicsSections}
       summary="Campaign and product visuals."
       theme={theme}
@@ -618,6 +600,15 @@ export function PizzyCaseStudy() {
     <CaseShell
       currentHref="/blog/pizzy"
       date="2025-08"
+      hero={{
+        links: [{ href: "https://www.behance.net/gallery/232892697/Pizzy-Social-Budget-Management-App-UXUI-Design?platform=direct", label: "Behance", icon: "behance" }],
+        outcome: "A simple, social way to manage shared budgets with friends",
+        role: "UI/UX Designer",
+        scope: "UX research, mobile UI, motion, prototype",
+        status: "Personal project",
+        title: "Pizzy — Making Shared Spending Feel Effortless",
+        titleLines: ["Pizzy —", "Making Shared Spending", "Feel Effortless"],
+      }}
       sections={pizzySections}
       summary="A social budgeting app for shared spending."
       theme={theme}
@@ -661,6 +652,7 @@ export function PizzyCaseStudy() {
         <CaseSection id={id} key={title} label={title} theme={theme} title={title}>
           {id === "pizzy-how-might-we" && (
             <CaseStudyStatementReveal
+              className="tracking-[-1px]"
               color={theme.ink}
               text="A social budgeting app for shared spending."
             />
@@ -733,6 +725,14 @@ export function CakeCaseStudy() {
     <CaseShell
       currentHref="/blog/cake"
       date="2025-05"
+      hero={{
+        outcome: "A round-up concept that makes saving effortless while keeping balances neat",
+        role: "Product Designer",
+        scope: "Brief analysis and product design direction",
+        status: "Take-home test",
+        title: "CakeBank — Making Everyday Saving Automatic",
+        titleLines: ["CakeBank —", "Making Everyday Saving", "Automatic"],
+      }}
       sections={cakeSections}
       summary="Round-up savings concept."
       theme={theme}
@@ -781,6 +781,7 @@ export function CakeCaseStudy() {
         title=""
       >
         <CaseStudyStatementReveal
+          className="tracking-[-1px]"
           color={theme.ink}
           text="How might we help users feel more satisfied and in control by making their account balance look “clean” while also encouraging effortless savings?"
         />

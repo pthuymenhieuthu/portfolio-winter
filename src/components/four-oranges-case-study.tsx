@@ -23,8 +23,8 @@ import {
 import { DATA } from "@/data/resume";
 import { getNextProjects } from "@/lib/next-projects";
 import BlurFade from "@/components/magicui/blur-fade";
-import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
-import { HeroBlobMotion } from "@/components/hero-blob-motion";
+import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
+import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { cn } from "@/lib/utils";
 import { caseStudyStyles } from "@/lib/case-study-styles";
@@ -261,7 +261,7 @@ const howMightWeText = "How might we make every code and transaction status imme
 
 function HowMightWeReveal() {
   return (
-    <CaseStudyStatementReveal color="#351303" text={howMightWeText} />
+    <CaseStudyStatementReveal className="tracking-[-1px]" color="#351303" text={howMightWeText} />
   );
 }
 
@@ -541,58 +541,26 @@ export function FourOrangesCaseStudy() {
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-[var(--font-affina-body)] text-[#351303]">
       <ProjectNavigation />
 
-      <section
+      <ProjectCaseStudyHero
+        colors={projectMeshPalettes.fourOranges}
+        delay={PROJECT_HERO_DELAY}
         id="four-oranges-hero"
-        className="relative isolate flex min-h-[760px] items-center justify-center overflow-hidden bg-[#fff4da] px-6 py-24 text-center"
-      >
-        <div
-          className="pointer-events-none absolute inset-0 -z-20 opacity-50"
-          style={{
-            background:
-              "radial-gradient(circle at 18% 10%, rgba(255,244,218,.72) 0, rgba(255,244,218,0) 31%), radial-gradient(circle at 90% 86%, rgba(248,103,6,.78) 0, rgba(248,103,6,0) 34%), linear-gradient(145deg,#f86706 0%,#fba919 55%,#ffd97d 100%)",
-          }}
-        />
-        <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
-          <Image src="/assets/4oranges/4oranges-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
-        </HeroBlobMotion>
-        <HeroBlobMotion className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]" position="bottom">
-          <Image src="/assets/4oranges/4oranges-hero-blob-bottom.svg" alt="" width={1440} height={526} priority className="block h-auto w-full" />
-        </HeroBlobMotion>
-        <div className="absolute left-[-80px] top-[-90px] size-[330px] rounded-full border border-white/25" />
-        <div className="absolute bottom-[-220px] right-[-130px] size-[520px] rounded-full border border-[#351303]/10" />
-        <div className="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center">
-          <BlurFade delay={1.02}>
-            <p className="rounded-full border border-[#351303]/15 bg-[#fff4da]/35 px-4 py-1.5 text-sm font-medium text-[#351303] backdrop-blur">Mobile app &amp; UI kit · 2026</p>
-          </BlurFade>
-          <HeroTitleReveal className="mt-7 max-w-[860px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal text-[#351303]" delay={PROJECT_HERO_DELAY} text="4Oranges Rewards" wrap />
-          <BlurFade delay={1.12}>
-            <p className="mx-auto mt-7 max-w-[570px] text-base leading-[1.55] text-[#54250c]/75 sm:text-lg">A QR reward experience for painters and contractors — from code verification to bank withdrawal.</p>
-          </BlurFade>
-          <BlurFade delay={1.18}>
-            <div className="mt-11 flex flex-wrap justify-center gap-2 text-xs font-semibold uppercase tracking-[0.1em] text-[#351303]/70">
-              <span className="rounded-full bg-[#fff4da]/45 px-4 py-2">Scan</span><span className="rounded-full bg-[#fff4da]/45 px-4 py-2">Earn</span><span className="rounded-full bg-[#fff4da]/45 px-4 py-2">Withdraw</span>
-            </div>
-          </BlurFade>
-        </div>
-      </section>
+        outcome="A clear reward journey from code verification to bank withdrawal"
+        role="Sole UI/UX Designer"
+        scope="Mobile app, UI kit, iOS & Android"
+        status="UAT · APK build"
+        title="4Oranges — Turning QR Scans into Rewards"
+        titleLines={["4Oranges —", "Turning QR Scans", "into Rewards"]}
+      />
 
       <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
         <section className="flex scroll-mt-24 flex-col gap-10" id="four-oranges-overview">
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
             <div>
               <SectionLabel>Overview</SectionLabel>
-              <h2 className="mt-7 max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">A reward app for a major paint manufacturer</h2>
+              <h2 className="mt-7 max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-[-1px] sm:text-[40px]">A reward app for a major paint manufacturer</h2>
             </div>
             <p className="text-base leading-[1.65] text-[#754426]">I designed the end-to-end mobile experience and UI kit, turning physical promotional codes into a clear digital reward journey.</p>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {["Role: Sole UI/UX Designer", "Mobile app", "iOS & Android", "2026"].map((item) => <div className="rounded-2xl border border-[#351303]/10 bg-white/55 p-4 text-sm font-medium" key={item}>{item}</div>)}
-            <div className="rounded-2xl border border-[#351303]/10 bg-white/55 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#9a7057]">Status</p>
-              <span className="mt-3 inline-flex rounded-full bg-[#fff0c2] px-3 py-1 text-sm font-medium text-[#8a4b08]">
-                In testing
-              </span>
-            </div>
           </div>
           <div>
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#9a7057]">Brands by 4Oranges</p>

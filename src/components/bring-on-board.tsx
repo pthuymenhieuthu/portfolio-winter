@@ -25,7 +25,7 @@ export function BringOnBoard() {
           <p className="text-sm font-normal text-[#29303B]/55">
             Creative flow
           </p>
-          <h2 className="mt-5 font-[var(--font-heading)] text-[32px] font-medium leading-[1.08] tracking-normal text-[#29303B] sm:text-[44px] lg:text-[52px]">
+          <h2 className="mt-5 font-[var(--font-heading)] text-[32px] font-medium leading-[1.08] tracking-[-2px] text-[#29303B] sm:text-[44px] lg:text-[52px]">
             What I bring
             <br />
             into the flow

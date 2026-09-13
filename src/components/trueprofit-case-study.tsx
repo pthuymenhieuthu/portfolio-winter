@@ -12,9 +12,8 @@ import { CaseStudyStatementReveal } from "@/components/case-study-statement-reve
 import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
-import BlurFade from "@/components/magicui/blur-fade";
-import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
-import { HeroBlobMotion } from "@/components/hero-blob-motion";
+import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
+import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -214,34 +213,18 @@ export function TrueProfitCaseStudy() {
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-sans text-[#08090a]">
       <TrueProfitStickyIndicator />
 
-      <section
+      <ProjectCaseStudyHero
+        colors={projectMeshPalettes.trueProfit}
+        delay={PROJECT_HERO_DELAY}
         id="trueprofit-overview"
-        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#071b14] px-6 text-center text-white sm:min-h-[800px]"
-      >
-        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#0f8f5b_0%,transparent_30%),radial-gradient(circle_at_82%_24%,#2dd4bf_0%,transparent_30%),linear-gradient(135deg,#071b14_0%,#15803d_50%,#34d399_100%)] opacity-50" />
-        <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
-          <Image src="/assets/trueprofit/trueprofit-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
-        </HeroBlobMotion>
-        <HeroBlobMotion className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]" position="bottom">
-          <Image src="/assets/trueprofit/trueprofit-hero-blob-bottom.svg" alt="" width={1440} height={526} priority className="block h-auto w-full" />
-        </HeroBlobMotion>
-        <div className="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center">
-          <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur">
-            E-commerce Finance · Jan 2025
-          </p>
-          <HeroTitleReveal
-            className="mt-7 max-w-[860px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal"
-            delay={PROJECT_HERO_DELAY}
-            text="TrueProfit"
-          />
-          <BlurFade delay={1.12}>
-            <p className="mx-auto mt-7 max-w-[570px] text-base leading-[1.55] text-white sm:text-lg">
-              Landing Page & Onboarding
-              <br className="sm:hidden" /> Illustrations
-            </p>
-          </BlurFade>
-        </div>
-      </section>
+        links={[{ href: "https://trueprofit.io/", label: "Live site", icon: "website" }]}
+        outcome="Cohesive launch visuals and clearer onboarding that guided survey completion"
+        role="UI Designer"
+        scope="Landing page, onboarding flow, illustrations"
+        status="Live"
+        title="TrueProfit — Rethinking Shopify Onboarding"
+        titleLines={["TrueProfit —", "Rethinking Shopify", "Onboarding"]}
+      />
 
       <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-work">
@@ -249,7 +232,7 @@ export function TrueProfitCaseStudy() {
             <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1 text-sm text-white">
               Overview
             </span>
-            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">
+            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-[-1px] sm:text-[40px]">
               Landing page support and onboarding illustrations
             </h2>
             <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
@@ -260,7 +243,7 @@ export function TrueProfitCaseStudy() {
             </p>
           </div>
 
-          <CaseStudyStatementReveal text="Translate abstract product goals into clear visual storytelling while staying aligned with the existing design system and marketing direction." />
+          <CaseStudyStatementReveal className="tracking-[-1px]" text="Translate abstract product goals into clear visual storytelling while staying aligned with the existing design system and marketing direction." />
 
           <CaseImage src={assets.hero} alt="TrueProfit landing page preview" />
 

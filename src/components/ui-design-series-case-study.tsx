@@ -11,9 +11,8 @@ import { CaseStudyStatementReveal } from "@/components/case-study-statement-reve
 import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
-import BlurFade from "@/components/magicui/blur-fade";
-import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
-import { HeroBlobMotion } from "@/components/hero-blob-motion";
+import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
+import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -253,37 +252,18 @@ export function UiDesignSeriesCaseStudy() {
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-sans text-[#08090a]">
       <SeriesStickyIndicator />
 
-      <section
+      <ProjectCaseStudyHero
+        colors={projectMeshPalettes.series}
+        delay={PROJECT_HERO_DELAY}
         id="series-overview"
-        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#EAF8FF] px-6 text-center text-[#29303B] sm:min-h-[800px]"
-      >
-        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#A8DDFF_0%,transparent_34%),radial-gradient(circle_at_82%_24%,#D7F3FF_0%,transparent_32%),linear-gradient(135deg,#EAF8FF_0%,#9FD8FF_54%,#DDF5FF_100%)] opacity-90" />
-        <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
-          <Image src="/assets/ui-design-series/series-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
-        </HeroBlobMotion>
-        <HeroBlobMotion className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]" position="bottom">
-          <Image src="/assets/ui-design-series/series-hero-blob-bottom.svg" alt="" width={1440} height={526} priority className="block h-auto w-full" />
-        </HeroBlobMotion>
-        <div className="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center">
-          <p className="rounded-full border border-[#29303B]/10 bg-white/45 px-4 py-1.5 text-sm font-medium backdrop-blur">
-            Web Design · Jul 2025
-          </p>
-          <HeroTitleReveal
-            className="mt-7 max-w-[860px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal"
-            delay={PROJECT_HERO_DELAY}
-            text="UI Design Challenge"
-          />
-          <BlurFade delay={1.12}>
-            <p className="mx-auto mt-7 max-w-[570px] text-base leading-[1.55] text-[#29303B] sm:text-lg">
-              Interface Design Series
-              <br />
-              <span className="text-[#29303B]/70">
-                · A 6-week UI design competition
-              </span>
-            </p>
-          </BlurFade>
-        </div>
-      </section>
+        links={[{ href: "https://www.behance.net/thuynguyen175", label: "Behance", icon: "behance" }]}
+        outcome="Top 6 finalist with a reusable Framer library and six weekly landing-page concepts"
+        role="UI Designer"
+        scope="Six weekly briefs, web design, motion, prototype"
+        status="Done"
+        title="Mingg Challenge — Designing One Landing Page a Week"
+        titleLines={["Mingg Challenge —", "Designing One Landing", "Page a Week"]}
+      />
 
       <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="series-context">
@@ -291,7 +271,7 @@ export function UiDesignSeriesCaseStudy() {
             <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1 text-sm text-white">
               Interface Design Series
             </span>
-            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">
+            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-[-1px] sm:text-[40px]">
               Mingg UI Design Challenge
             </h2>
             <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
@@ -303,7 +283,7 @@ export function UiDesignSeriesCaseStudy() {
             </p>
           </div>
 
-          <CaseStudyStatementReveal text="One landing page per week, shaped by a different brief." />
+          <CaseStudyStatementReveal className="tracking-[-1px]" text="One landing page per week, shaped by a different brief." />
 
           <CaseImage src={assets.hero} alt="UI Design Series final prototype preview" />
 

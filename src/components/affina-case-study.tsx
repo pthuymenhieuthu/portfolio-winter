@@ -18,8 +18,8 @@ import { CaseStudyStatementReveal } from "@/components/case-study-statement-reve
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
-import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
-import { HeroBlobMotion } from "@/components/hero-blob-motion";
+import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
+import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 import { caseStudyStyles } from "@/lib/case-study-styles";
 import { Icons } from "@/components/icons";
 
@@ -847,58 +847,18 @@ export function AffinaCaseStudy() {
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-[var(--font-affina-body)] text-[#08090a]">
       <AffinaStickyIndicator />
 
-      <section
+      <ProjectCaseStudyHero
+        colors={projectMeshPalettes.affina}
+        delay={PROJECT_HERO_DELAY}
         id="affina-overview"
-        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#f7f7f8] px-6 text-center text-white sm:min-h-[800px]"
-      >
-        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#ffd360_0%,transparent_28%),radial-gradient(circle_at_82%_24%,#ff51ff_0%,transparent_30%),linear-gradient(135deg,#ff6831_0%,#ff51ff_48%,#7a35ff_100%)] opacity-80" />
-        <HeroBlobMotion
-          className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none"
-          position="top"
-        >
-            <Image
-              src="/assets/affina/affina-hero-blob-top.svg"
-              alt=""
-              width={1440}
-              height={422}
-              priority
-              className="block h-auto w-full"
-            />
-        </HeroBlobMotion>
-        <HeroBlobMotion
-          className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]"
-          position="bottom"
-        >
-            <Image
-              src="/assets/affina/affina-hero-blob-bottom.svg"
-              alt=""
-              width={1440}
-              height={526}
-              priority
-              className="block h-auto w-full"
-            />
-        </HeroBlobMotion>
-        <div className="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center">
-          <p className="rounded-full border border-white/30 bg-white/15 px-4 py-1.5 text-sm font-medium text-white backdrop-blur">
-            Web & Mobile · Oct 2025 - Present
-          </p>
-          <HeroTitleReveal
-            className="mt-7 max-w-[860px] font-[var(--font-affina-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal text-white"
-            delay={PROJECT_HERO_DELAY}
-            text="Affina"
-          />
-          <BlurFade delay={1.12}>
-            <p className="mx-auto mt-7 max-w-[570px] text-base leading-[1.55] text-white sm:text-lg">
-              Brand & Product Transformation
-              <br />
-              <span className="text-white/75">
-                · Scalable design system and
-                <br className="sm:hidden" /> AI-enhanced workflow
-              </span>
-            </p>
-          </BlurFade>
-        </div>
-      </section>
+        links={[{ href: "https://www.affina.com.vn/ai/", label: "Website", icon: "website" }]}
+        outcome="Clearer journeys and stronger brand consistency"
+        role="Product Designer"
+        scope="Web, mobile, design system, AI workflow"
+        status="Live"
+        title="Affina — Simplifying Insurance with AI"
+        titleLines={["Affina —", "Simplifying", "Insurance with AI"]}
+      />
 
       <section className={cn("relative z-10 mx-auto w-full max-w-[1040px] px-5 py-24 sm:px-8 lg:py-36", caseStudyStyles.pageStack)}>
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-work">
@@ -906,7 +866,7 @@ export function AffinaCaseStudy() {
             <span className={styles.sectionPill}>
               Overview
             </span>
-            <h2 className={caseStudyStyles.overviewTitle}>
+            <h2 className={cn(caseStudyStyles.overviewTitle, "tracking-[-1px]")}>
               Designing clearer insurance and healthcare experiences
             </h2>
             <p className={styles.leadText}>
@@ -920,48 +880,15 @@ export function AffinaCaseStudy() {
 
           <AffinaDeviceShowcase />
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              ["Role", "UI/UX, product system, brand foundation"],
-              ["Scope", "Web, mobile, design system, AI workflow"],
-              ["Status", "Live"],
-              ["Outcome", "Clearer journeys and stronger brand consistency"],
-            ].map(([title, body]) => (
-              <div className="rounded-2xl border border-black/10 bg-white/55 p-4" key={title}>
-                <p className={styles.accentLabel}>
-                  {title}
-                </p>
-                {title === "Status" ? (
-                  <span className="mt-3 inline-flex w-fit rounded-full bg-[#dcfce7] px-3 py-1 text-sm font-medium leading-5 text-[#166534]">
-                    {body}
-                  </span>
-                ) : (
-                  <p className={cn("mt-3", styles.compactBody)}>
-                    {body}
-                  </p>
-                )}
-              </div>
-            ))}
-            <div className="rounded-2xl border border-black/10 bg-white/55 p-4">
-              <p className={styles.accentLabel}>Live project</p>
-              <a
-                aria-label="Open Affina website in a new tab"
-                className="mt-3 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm font-medium text-[#08090a] transition hover:border-black/25 hover:bg-[#f7f7f8]"
-                href="https://www.affina.com.vn/ai/"
-                rel="noreferrer"
-                target="_blank"
-              >
-                <Icons.globe aria-hidden="true" className="size-4 shrink-0" />
-                Website
-              </a>
-            </div>
-          </div>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-system">
           <span className={styles.sectionPill}>Design challenges</span>
 
-          <CaseStudyStatementReveal text="How might we turn a fragmented insurance journey into one clear path forward?" />
+          <CaseStudyStatementReveal
+            className="tracking-[-1px]"
+            text="How might we turn a fragmented insurance journey into one clear path forward?"
+          />
 
           <CaseStudyScrollReveal>
             <div className="grid overflow-hidden rounded-xl border border-[#e4e4e7] bg-white px-6 lg:grid-cols-3 lg:gap-x-[51px]">
@@ -1288,7 +1215,10 @@ export function AffinaCaseStudy() {
             </p>
           </div>
 
-          <CaseStudyStatementReveal text="Principles guide the rules. Rules shape the elements. Real product use keeps the system honest." />
+          <CaseStudyStatementReveal
+            className="tracking-[-1px]"
+            text="Principles guide the rules. Rules shape the elements. Real product use keeps the system honest."
+          />
 
           <CaseStudyScrollReveal className="rounded-2xl border border-[#e4e4e7] bg-white p-5 sm:p-8 lg:p-10">
             <p className={styles.accentLabel}>System architecture</p>

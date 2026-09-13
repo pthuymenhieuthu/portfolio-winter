@@ -223,7 +223,7 @@ export const DATA = {
   ],
   projects: [
     {
-  title: "Affina — UX/UI-Led Brand & Product Transformation",
+  title: "Affina — Simplifying Insurance with AI",
   href: "/blog/affina",
   dates: "Mar 2026",
   active: true,
@@ -252,7 +252,7 @@ export const DATA = {
   video: "",
 },
     {
-      title: "Affina Partner Flow — Multi-Person Insurance Journey",
+      title: "Affina — Unifying Customer & Partner Insurance Journeys",
       href: "/blog/affina-partner-flow",
       dates: "Mar 2026",
       active: true,
@@ -271,12 +271,22 @@ export const DATA = {
           href: "https://affina.com.vn/",
           icon: <Icons.globe className="size-3" />,
         },
+        {
+          type: "App Store",
+          href: "https://apps.apple.com/us/app/affina-pro/id6444879374",
+          icon: <Icons.appstore className="size-3" />,
+        },
+        {
+          type: "Google Play",
+          href: "https://play.google.com/store/apps/details?id=com.affina.agency&hl=en",
+          icon: <Icons.link className="size-3" />,
+        },
       ],
       image: "/assets/project-thumbnails/affina-partner-flow.png",
       video: "",
     },
     {
-      title: "4Oranges — QR Rewards App & UI Kit",
+      title: "4Oranges — Turning QR Scans into Rewards",
       href: "/blog/4oranges",
       dates: "2026",
       active: true,
@@ -288,18 +298,12 @@ export const DATA = {
         "UI/UX Design",
         "UI Kit",
       ],
-      links: [
-        {
-          type: "Website",
-          href: "https://4oranges.com/",
-          icon: <Icons.globe className="size-3" />,
-        },
-      ],
+      links: [],
       image: "/assets/project-thumbnails/4oranges.png",
       video: "",
     },
     {
-      title: "Zoan AI – AI Workflow Management",
+      title: "Zoan AI — Designing Clearer AI Workflows",
       href: "/blog/zoan",
       dates: "May 2025",
       active: true,
@@ -327,7 +331,7 @@ export const DATA = {
       video: "",
     },
     {
-      title: "Pizzy - Finance Management App",
+      title: "Pizzy — Making Shared Spending Feel Effortless",
       href: "/blog/pizzy",
       dates: "Aug 2025",
       active: true,
@@ -343,7 +347,7 @@ export const DATA = {
       links: [
         {
           type: "Behance",
-          href: "https://www.behance.net/gallery/232892697/Pizzy-Social-Budget-Management-App-UXUI-Design",
+          href: "https://www.behance.net/gallery/232892697/Pizzy-Social-Budget-Management-App-UXUI-Design?platform=direct",
           icon: <Icons.behance className="size-3" />,
         },
       ],
@@ -351,7 +355,7 @@ export const DATA = {
       video: "",
     },
     {
-      title: "Website UI Design Series",
+      title: "Mingg Challenge — Designing One Landing Page a Week",
       href: "/blog/chande",
       dates: "Jul 2025",
       active: true,
@@ -374,7 +378,7 @@ export const DATA = {
       video: "",
     },
     {
-      title: "TrueProfit - Landing Page & Onboarding Illustrations",
+      title: "TrueProfit — Rethinking Shopify Onboarding",
       href: "/blog/trueprofit",
       dates: "Jan 2025",
       active: true,
@@ -400,7 +404,7 @@ export const DATA = {
       video: "",
     },
         {
-    title: "Language Learning Apps — UI & Motion Enhancement Showcase",
+    title: "Language Learning Apps — Enhancing Learning with UI & Motion",
     href: "/blog/edtechapp",
     dates: "Feb 2025",
     active: true,
@@ -415,15 +419,20 @@ export const DATA = {
     links: [
       {
         type: "App Store",
-        href: "https://apps.apple.com/app/id6468914724",
+        href: "https://apps.apple.com/vn/app/tr%C3%B9m-chinese-ti%E1%BA%BFng-trung-hsk/id6468914724?l=vi",
         icon: <Icons.appstore className="size-3" />,
+      },
+      {
+        type: "Google Play",
+        href: "https://play.google.com/store/apps/details?id=com.meophe.catchinese&hl=vi",
+        icon: <Icons.link className="size-3" />,
       },
     ],
     image: "/speakchinese-mobile-poster.jpg",
     video: "",
   },
   {
-      title: "Marketing Graphics — Campaign & Social Design",
+      title: "Marketing Graphics — Designing Campaigns That Connect",
       href: "/blog/graphics",
       dates: "2023-2025",
       active: true,
@@ -447,7 +456,7 @@ export const DATA = {
       video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764849886/2abe5d31-c309-4796-853d-ec6a0e614eba_1_nx3gl7.png",
     },
     {
-      title: "CakeBank Case Study - Rounded-Up Savings Feature",
+      title: "CakeBank — Making Everyday Saving Automatic",
       href: "/blog/cake",
       dates: "Jan 2025",
       active: true,
@@ -469,7 +478,7 @@ export const DATA = {
       video: "",
     },
     {
-      title: "ZanZan",
+      title: "ZanZan — Bringing Folk Games Back to Play",
       href: "/blog/lollypop",
       dates: "Sep 2024",
       active: true,

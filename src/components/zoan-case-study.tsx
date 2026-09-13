@@ -11,9 +11,8 @@ import { CaseStudyStatementReveal } from "@/components/case-study-statement-reve
 import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
 import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
-import BlurFade from "@/components/magicui/blur-fade";
-import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
-import { HeroBlobMotion } from "@/components/hero-blob-motion";
+import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
+import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -209,33 +208,21 @@ export function ZoanCaseStudy() {
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-sans text-[#08090a]">
       <ZoanStickyIndicator />
 
-      <section
+      <ProjectCaseStudyHero
+        colors={projectMeshPalettes.zoan}
+        delay={PROJECT_HERO_DELAY}
         id="zoan-overview"
-        className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden bg-[#f7f7f8] px-6 text-center text-[#07111f] sm:min-h-[800px]"
-      >
-        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,#ffffff_0%,transparent_30%),radial-gradient(circle_at_84%_18%,#15CABE_0%,transparent_32%),linear-gradient(135deg,#ffffff_0%,#B0F1ED_58%,#15CABE_100%)] opacity-50" />
-        <HeroBlobMotion className="pointer-events-none absolute left-[calc(50%-30px)] top-[-80px] -z-10 w-[max(1800px,115vw)] max-w-none -translate-x-1/2 select-none" position="top">
-          <Image src="/assets/zoan/zoan-hero-blob-top.svg" alt="" width={1440} height={422} priority className="block h-auto w-full" />
-        </HeroBlobMotion>
-        <HeroBlobMotion className="pointer-events-none absolute bottom-[-120px] left-1/2 -z-10 w-[max(1320px,110vw)] max-w-none -translate-x-1/2 select-none sm:bottom-[-150px]" position="bottom">
-          <Image src="/assets/zoan/zoan-hero-blob-bottom.svg" alt="" width={1440} height={526} priority className="block h-auto w-full" />
-        </HeroBlobMotion>
-        <div className="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center">
-          <p className="rounded-full border border-[#07111f]/10 bg-white/45 px-4 py-1.5 text-sm font-medium text-[#07111f] backdrop-blur">
-            AI Product · May 2025
-          </p>
-          <HeroTitleReveal
-            className="mt-7 max-w-[860px] font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.05] tracking-normal"
-            delay={PROJECT_HERO_DELAY}
-            text="Zoan AI"
-          />
-          <BlurFade delay={1.12}>
-            <p className="mx-auto mt-7 max-w-[570px] text-base leading-[1.55] text-[#07111f] sm:text-lg">
-              AI Workflow Management
-            </p>
-          </BlurFade>
-        </div>
-      </section>
+        links={[
+          { href: "https://zoan.network/", label: "Website", icon: "website" },
+          { href: "https://www.linkedin.com/company/zoanai/posts/?feedView=all", label: "LinkedIn", icon: "link" },
+        ]}
+        outcome="A scalable system that reduced design–engineering friction and strengthened the product identity"
+        role="UI/UX Designer"
+        scope="Cross-platform UI, design system, Rive motion"
+        status="Done"
+        title="Zoan AI — Designing Clearer AI Workflows"
+        titleLines={["Zoan AI —", "Designing Clearer", "AI Workflows"]}
+      />
 
       <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-work">
@@ -243,7 +230,7 @@ export function ZoanCaseStudy() {
             <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
               Overview
             </span>
-            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-normal sm:text-[40px]">
+            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-[-1px] sm:text-[40px]">
               Will AI replace UI/UX Designers?
             </h2>
             <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
@@ -254,7 +241,7 @@ export function ZoanCaseStudy() {
             </p>
           </div>
 
-          <CaseStudyStatementReveal text="I wasn’t being replaced by AI. I was designing the interface for an AI platform." />
+          <CaseStudyStatementReveal className="tracking-[-1px]" text="I wasn’t being replaced by AI. I was designing the interface for an AI platform." />
 
         </CaseStudyRevealSection>
 
