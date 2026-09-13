@@ -10,15 +10,15 @@ const RIBBON_PATHS = {
   front: "M 0 16 Q 50 3 100 16 V 112 Q 50 128 0 112 Z",
 } as const;
 
-function getTransitionTiming(isMobile: boolean) {
+function getTransitionTiming() {
   return {
     backDuration: 0.64,
     frontDuration: 0.68,
     frontDelay: 0.06,
     backRevealDuration: 0.42,
     frontRevealDuration: 0.48,
-    routeDelay: isMobile ? 220 : 770,
-    cleanupDelay: isMobile ? 260 : 540,
+    routeDelay: 770,
+    cleanupDelay: 540,
   };
 }
 
@@ -61,7 +61,6 @@ export function PageTransition() {
   const router = useRouter();
   const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [phase, setPhase] = useState<"cover" | "reveal">("cover");
   const pendingPath = useRef<string | null>(null);
@@ -73,21 +72,13 @@ export function PageTransition() {
     clearTimer(watchdogTimer);
     setPhase("reveal");
 
-    const timing = getTransitionTiming(isMobile);
+    const timing = getTransitionTiming();
     clearTimer(cleanupTimer);
     cleanupTimer.current = window.setTimeout(() => {
       pendingPath.current = null;
       setIsActive(false);
       cleanupTimer.current = null;
     }, timing.cleanupDelay);
-  }, [isMobile]);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const syncViewport = () => setIsMobile(mediaQuery.matches);
-    syncViewport();
-    mediaQuery.addEventListener("change", syncViewport);
-    return () => mediaQuery.removeEventListener("change", syncViewport);
   }, []);
 
   useEffect(() => {
@@ -99,7 +90,10 @@ export function PageTransition() {
   }, []);
 
   useEffect(() => {
-    if (shouldReduceMotion) {
+    if (
+      shouldReduceMotion ||
+      window.matchMedia("(max-width: 767px)").matches
+    ) {
       return;
     }
 
@@ -133,8 +127,7 @@ export function PageTransition() {
       setPhase("cover");
       setIsActive(true);
 
-      const mobileViewport = window.matchMedia("(max-width: 767px)").matches;
-      const timing = getTransitionTiming(mobileViewport);
+      const timing = getTransitionTiming();
       clearTimer(routeTimer);
       clearTimer(cleanupTimer);
       clearTimer(watchdogTimer);
@@ -171,23 +164,7 @@ export function PageTransition() {
     return null;
   }
 
-  const timing = getTransitionTiming(isMobile);
-
-  if (isMobile) {
-    return (
-      <motion.div
-        aria-hidden="true"
-        animate={{ opacity: phase === "cover" ? 1 : 0 }}
-        className="pointer-events-auto fixed inset-0 z-[100] bg-[linear-gradient(180deg,#f8fcff_0%,#dff5ff_48%,#c3e1ff_100%)]"
-        initial={{ opacity: 0 }}
-        style={{ willChange: "opacity" }}
-        transition={{
-          duration: phase === "cover" ? 0.22 : 0.24,
-          ease: [0.4, 0, 0.2, 1],
-        }}
-      />
-    );
-  }
+  const timing = getTransitionTiming();
 
   return (
     <div

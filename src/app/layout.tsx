@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   },
   description: DATA.description,
   icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [{ url: "/icon.png", type: "image/png", sizes: "512x512" }],
+    shortcut: "/icon.png",
+    apple: [{ url: "/icon.png", type: "image/png", sizes: "512x512" }],
   },
   openGraph: {
     title: DATA.name,
