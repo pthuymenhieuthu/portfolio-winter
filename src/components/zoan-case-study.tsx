@@ -29,6 +29,7 @@ const sections = [
   { id: "zoan-work", label: "Overview" },
   { id: "zoan-foundations", label: "System foundations" },
   { id: "zoan-platform", label: "Cross-platform application" },
+  { id: "zoan-deployment", label: "Deployment dashboard" },
   { id: "zoan-motion", label: "Motion & micro-interactions" },
   { id: "zoan-outcome", label: "Outcome" },
   { id: "zoan-next", label: "Next projects" },
@@ -46,6 +47,12 @@ const zoanAssets = {
   components: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1763909689/Screenshot_253_kqzyld.png",
   platformShowcase1: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989538/Showcase_hehe-03_rvw75h.png",
   platformShowcase2: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989540/Showcase_hehe-01_zbeuze.png",
+  versionReview: "/assets/zoan/deployment-flow/version-review.png",
+  reviewDiff: "/assets/zoan/deployment-flow/review-diff.png",
+  readyToDeploy: "/assets/zoan/deployment-flow/ready-to-deploy.png",
+  publishingLogs: "/assets/zoan/deployment-flow/publishing-logs.png",
+  deployed: "/assets/zoan/deployment-flow/deployed.png",
+  cloudStorage: "/assets/zoan/deployment-flow/cloud-storage.png",
   timelineMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764161748/Timeline_5-macd_dosrrf.gif",
   appMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764161236/app_vvjcwd.gif",
 };
@@ -61,6 +68,12 @@ const zoanAssetDimensions: Record<string, [number, number]> = {
   [zoanAssets.components]: [692, 678],
   [zoanAssets.platformShowcase1]: [3646, 1876],
   [zoanAssets.platformShowcase2]: [3646, 2176],
+  [zoanAssets.versionReview]: [1440, 1024],
+  [zoanAssets.reviewDiff]: [1440, 1024],
+  [zoanAssets.readyToDeploy]: [1440, 1024],
+  [zoanAssets.publishingLogs]: [1440, 1024],
+  [zoanAssets.deployed]: [1440, 1024],
+  [zoanAssets.cloudStorage]: [1419, 1339],
   [zoanAssets.timelineMotion]: [702, 480],
   [zoanAssets.appMotion]: [702, 480],
 };
@@ -85,6 +98,52 @@ const platformSteps = [
   "Chat-based creation",
   "Interactive previews",
   "Quick content iteration",
+];
+
+const deploymentStates = [
+  "Submit from chat",
+  "Draft",
+  "Auditing",
+  "Under review",
+  "Ready to deploy",
+  "Publishing",
+  "Deployed",
+];
+
+const deploymentStages = [
+  {
+    number: "01",
+    eyebrow: "Review",
+    title: "Make every version decision visible",
+    description:
+      "Filter versions by lifecycle state, then open a project to inspect code changes and audit messages without losing context.",
+    images: [
+      { src: zoanAssets.versionReview, alt: "Zoan version review dashboard with lifecycle status filters" },
+      { src: zoanAssets.reviewDiff, alt: "Zoan version details with code diff and deployment notifications" },
+    ],
+  },
+  {
+    number: "02",
+    eyebrow: "Release",
+    title: "Turn approval into a controlled launch",
+    description:
+      "Approved versions move into scheduling, while publishing logs make progress and failure states easy to follow during release.",
+    images: [
+      { src: zoanAssets.readyToDeploy, alt: "Zoan deployment scheduling flow" },
+      { src: zoanAssets.publishingLogs, alt: "Zoan publishing logs during deployment" },
+    ],
+  },
+  {
+    number: "03",
+    eyebrow: "Operate",
+    title: "Keep live products and resources connected",
+    description:
+      "Deployed projects retain their version history and controls, while Zoan Cloud brings storage and supporting resources into the same ecosystem.",
+    images: [
+      { src: zoanAssets.deployed, alt: "Zoan deployed project summary and version history" },
+      { src: zoanAssets.cloudStorage, alt: "Zoan Cloud storage dashboard" },
+    ],
+  },
 ];
 
 const nextProjects = getNextProjects(
@@ -370,10 +429,83 @@ export function ZoanCaseStudy() {
           </div>
         </CaseStudyRevealSection>
 
+        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-deployment">
+          <div className="flex flex-col gap-7">
+            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
+              Phase 5 · Deployment Dashboard
+            </span>
+            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-[-1px] sm:text-[40px]">
+              Making every step from review to release visible
+            </h2>
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+              I mapped deployment as a state-driven workflow so teams could
+              review changes, schedule a release, monitor publishing, and manage
+              live projects without losing context.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-[#07111f]/10 bg-white p-5 sm:p-7">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#737373]">
+              Product lifecycle
+            </p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-7">
+              {deploymentStates.map((state, index) => (
+                <div className="flex items-center gap-3 lg:flex-col lg:items-start" key={state}>
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[#dff8f6] text-xs font-semibold text-[#087f77]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-sm leading-5 text-[#08090a]">{state}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <CaseStudyStatementReveal
+            className="tracking-[-1px]"
+            text="One dashboard connected version decisions, release timing, and live operations."
+          />
+
+          <div className="flex flex-col gap-20 sm:gap-28">
+            {deploymentStages.map((stage) => (
+              <article className="flex flex-col gap-8" key={stage.number}>
+                <div className="grid gap-6 border-t border-[#07111f]/10 pt-7 md:grid-cols-[120px_1fr]">
+                  <div>
+                    <p className="font-[var(--font-heading)] text-4xl font-bold leading-none text-[#15CABE]">
+                      {stage.number}
+                    </p>
+                    <p className="mt-3 text-xs font-semibold uppercase tracking-[0.12em] text-[#737373]">
+                      {stage.eyebrow}
+                    </p>
+                  </div>
+                  <div className="max-w-[700px]">
+                    <h3 className="font-[var(--font-heading)] text-2xl font-normal leading-[1.2] tracking-normal sm:text-[30px]">
+                      {stage.title}
+                    </h3>
+                    <p className="mt-4 text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+                      {stage.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid items-start gap-5 lg:grid-cols-2">
+                  {stage.images.map((image) => (
+                    <CaseImage
+                      className="bg-white"
+                      key={image.src}
+                      src={image.src}
+                      alt={image.alt}
+                    />
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </CaseStudyRevealSection>
+
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-motion">
           <div className="flex flex-col gap-7">
             <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
-              Phase 5 · Motion &amp; Micro-Interaction Design
+              Phase 6 · Motion &amp; Micro-Interaction Design
             </span>
             <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Motion that guides attention and transitions
