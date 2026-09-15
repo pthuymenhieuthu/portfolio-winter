@@ -49,6 +49,14 @@ export const metadata: Metadata = {
     siteName: DATA.name,
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/og-preview.png",
+        width: 1536,
+        height: 729,
+        alt: "Thuy Nguyen — Product Designer portfolio",
+      },
+    ],
   },
   robots: {
     index: true,
@@ -63,7 +71,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: "Thuy Nguyen - Product Designer",
+    description: DATA.description,
     card: "summary_large_image",
+    images: ["/og-preview.png"],
   },
 };
 

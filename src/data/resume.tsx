@@ -4,7 +4,7 @@ import { HomeIcon, NotebookIcon } from "lucide-react";
 export const DATA = {
   name: "Thuy Nguyen",
   initials: "Thuy",
-  url: "https://pthuyday.xyz",
+  url: "https://www.thuydesign.site",
   location: "Ho Chi Minh City, Vietnam",
   locationLink: "https://www.google.com/maps/place/hochiminh",
   description:
