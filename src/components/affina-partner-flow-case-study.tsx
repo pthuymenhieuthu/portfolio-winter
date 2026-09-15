@@ -269,7 +269,7 @@ function Arrow({ vertical = false }: { vertical?: boolean }) {
     <span
       className={cn(
         "flex shrink-0 items-center justify-center text-[#7792a6]",
-        vertical ? "h-10" : "w-5 max-sm:rotate-90"
+        vertical ? "h-10" : "w-5 max-sm:self-center max-sm:rotate-90"
       )}
     >
       →
@@ -1258,7 +1258,7 @@ export function AffinaPartnerFlowCaseStudy() {
         scope="Affina Pro, web app, responsive states, edge cases"
         status="Live"
         title="Affina — Unifying Customer & Partner Insurance Journeys"
-        titleLines={["Affina —", "Unifying Customer & Partner", "Insurance Journeys"]}
+        titleLines={["Affina — Unifying", "Customer & Partner", "Insurance Journeys"]}
       />
 
       <section className="scroll-mt-20">

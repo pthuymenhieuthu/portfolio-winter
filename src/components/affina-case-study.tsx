@@ -1288,16 +1288,6 @@ export function AffinaCaseStudy() {
                   width={300}
                 />
               </div>
-              <div className="mt-8 max-w-[720px] sm:mt-10">
-                <p className={styles.accentLabel}>Foundation → Atoms</p>
-                <h3 className="mt-3 font-[var(--font-affina-heading)] text-[28px] font-semibold leading-[1.2] text-[#262626] sm:text-[36px]">
-                  One visual language, built into every control
-                </h3>
-                <p className="mt-4 text-sm leading-6 text-[#525252] sm:text-base">
-                  Core tokens define the rules. Reusable atoms turn those rules
-                  into consistent product states.
-                </p>
-              </div>
             </div>
 
             <div className="grid gap-px bg-[#e4e4e7] lg:grid-cols-2">

@@ -49,6 +49,14 @@ export function ProjectCaseStudyHero({
   links = [],
   delay = 0.96,
 }: ProjectCaseStudyHeroProps) {
+  const longestTitleLine = Math.max(...titleLines.map((line) => line.length));
+  const titleSizeClass = longestTitleLine >= 25
+    ? "text-[clamp(23px,calc(4.3vw+9.3px),60px)]"
+    : longestTitleLine >= 22
+      ? "text-[clamp(24px,calc(7.15vw+1.1px),60px)]"
+      : longestTitleLine >= 19
+        ? "text-[clamp(27px,calc(5.7vw+8.8px),60px)]"
+        : "text-[clamp(31px,calc(4.3vw+17.2px),60px)]";
   const statusClass = /uat|test/i.test(status)
     ? "text-[#ffd166] sm:text-[#b86900]"
     : /personal/i.test(status)
@@ -90,7 +98,7 @@ export function ProjectCaseStudyHero({
 
       <div className="relative z-10 mx-auto flex w-full max-w-[976px] flex-col items-start">
         <HeroTitleReveal
-          className="max-w-[760px] font-[var(--font-heading)] text-[34px] font-medium leading-[1.1] tracking-[-2.5px] text-white min-[390px]:text-[40px] sm:text-[60px] sm:text-[#1d1d1d]"
+          className={`${titleSizeClass} max-w-[976px] font-[var(--font-heading)] font-medium leading-[1.1] tracking-[-2.5px] text-white sm:text-[#1d1d1d]`}
           delay={delay}
           lines={titleLines}
           text={title}
