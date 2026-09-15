@@ -50,8 +50,8 @@ type FlowScreen = {
 const salesAssistedFlow: FlowScreen[] = [
   {
     src: "/assets/affina-partner-flow/flows/mobile-01-home.png",
-    width: 1170,
-    height: 3210,
+    width: 390,
+    height: 1070,
     title: "Sales dashboard",
     description: "Start from the partner workspace and product catalogue.",
   },
@@ -64,15 +64,15 @@ const salesAssistedFlow: FlowScreen[] = [
   },
   {
     src: "/assets/affina-partner-flow/flows/mobile-03-family.png",
-    width: 1170,
-    height: 2937,
+    width: 390,
+    height: 979,
     title: "Family assessment",
     description: "Capture the household structure and insurance needs.",
   },
   {
     src: "/assets/affina-partner-flow/flows/mobile-04-provider.png",
     width: 390,
-    height: 1985,
+    height: 2049,
     title: "Provider shortlist",
     description: "Compare eligible plans without losing the family context.",
   },
@@ -85,15 +85,15 @@ const salesAssistedFlow: FlowScreen[] = [
   },
   {
     src: "/assets/affina-partner-flow/flows/mobile-06-buyer.png",
-    width: 1170,
-    height: 4476,
+    width: 390,
+    height: 1492,
     title: "Buyer details",
     description: "Add the buyer and connect each insured family member.",
   },
   {
     src: "/assets/affina-partner-flow/flows/mobile-07-summary.png",
-    width: 1170,
-    height: 2913,
+    width: 463,
+    height: 971,
     title: "Family review",
     description: "Check every person, relationship and required detail together.",
   },
@@ -169,7 +169,7 @@ const recoveryStates: FlowScreen[] = [
   {
     src: "/assets/affina-partner-flow/flows/state-02-family-warning.png",
     width: 344,
-    height: 468,
+    height: 492,
     title: "Family validation",
     description: "Show which member blocks the current configuration.",
   },
@@ -302,37 +302,17 @@ function FlowNode({
 
 function OverviewMockups() {
   return (
-    <div className="mt-14 grid items-start gap-6 lg:grid-cols-[1fr_185px_185px]">
-      <div className="relative aspect-[1.72/1] overflow-hidden rounded-xl border border-[#7792a6] bg-white shadow-[0_12px_30px_rgba(20,45,65,0.08)]">
-        <Image
-          src="/assets/affina-partner-flow/hero-web.png"
-          alt="Affina web insurance purchase screen"
-          fill
-          priority
-          unoptimized
-          className="object-cover object-top"
-          sizes="(max-width:1024px) 92vw, 575px"
-        />
-      </div>
-      {[
-        ["/assets/affina-partner-flow/raw-4.png", "Affina Pro insured member screen"],
-        ["/assets/affina-partner-flow/raw-5.png", "Affina mobile payment screen"],
-      ].map(([src, alt]) => (
-        <div
-          className="relative mx-auto aspect-[0.462/1] w-[185px] overflow-hidden rounded-[20px] border border-[#7792a6] bg-white shadow-[0_12px_30px_rgba(20,45,65,0.08)]"
-          key={src}
-        >
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            priority
-            unoptimized
-            className="object-cover object-top"
-            sizes="185px"
-          />
-        </div>
-      ))}
+    <div className="mt-14">
+      <Image
+        src="/assets/affina-partner-flow/overview-mockups.png"
+        alt="Affina partner insurance purchase flow shown on desktop and mobile devices"
+        width={995}
+        height={413}
+        priority
+        unoptimized
+        className="h-auto w-full"
+        sizes="(max-width: 1100px) calc(100vw - 40px), 995px"
+      />
     </div>
   );
 }
