@@ -224,9 +224,43 @@ const healthcareRows = [
     title: "Prove it in product",
     bold: "Applied the same tokens and reusable components",
     after: "across responsive healthcare journeys, then refined the system from real use cases.",
-    phones: true,
+    flow: true,
   },
 ];
+
+const healthcareProductFlow = [
+  {
+    number: "01",
+    title: "Start from Home",
+    detail: "Tap Remote Health Consultation.",
+    src: "/assets/affina/healthcare-flow/01-home.png",
+    objectPosition: "center top",
+    highlight: {
+      left: "28.5%",
+      top: "89.8%",
+      width: "20%",
+      height: "9.4%",
+    },
+  },
+  {
+    number: "02",
+    title: "Choose a provider",
+    detail: "Pick the care partner that fits the need.",
+    src: "/assets/affina/healthcare-flow/01-choose-provider.png",
+  },
+  {
+    number: "03",
+    title: "Review the service",
+    detail: "Keep provider and benefit context together.",
+    src: "/assets/affina/healthcare-flow/02-review-service.png",
+  },
+  {
+    number: "04",
+    title: "Accept the terms",
+    detail: "Make the required consent easy to scan.",
+    src: "/assets/affina/healthcare-flow/03-accept-terms.png",
+  },
+] as const;
 
 const designSystemLayers = [
   {
@@ -257,7 +291,6 @@ function DesignSystemLayerVisual({
         aria-hidden="true"
         className="relative flex h-[132px] items-end overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#f7e7ff_0%,#e2f4ff_52%,#fff3db_100%)] p-4"
       >
-        <div className="absolute -right-7 -top-8 size-28 rounded-full border-[18px] border-white/55" />
         <div className="relative grid w-full grid-cols-3 gap-2">
           {["Clear", "Human", "Scalable"].map((item, index) => (
             <div
@@ -457,16 +490,37 @@ function AffinaPhoneMockup({
   );
 }
 
+function AffinaOverviewPhoneMockup({
+  src,
+  alt,
+}: {
+  src: string;
+  alt: string;
+}) {
+  return (
+    <div className="relative aspect-[734/1592] w-[150px] shrink-0 sm:w-[186px]">
+      <Image
+        src={src}
+        alt={alt}
+        width={734}
+        height={1592}
+        className="h-full w-full object-contain"
+        sizes="(max-width: 640px) 150px, 186px"
+      />
+    </div>
+  );
+}
+
 function AffinaMacBookMockup() {
   return (
-    <div className="relative mx-auto aspect-[2010/1325] w-full max-w-[560px]">
+    <div className="relative mx-auto aspect-[1482/1062] w-full max-w-[600px]">
       <Image
-        src="/assets/affina/journey/recommend-compare.png"
-        alt=""
-        width={2010}
-        height={1325}
+        src="/assets/affina/overview-desktop-transparent.png"
+        alt="Affina website homepage shown in a desktop monitor mockup"
+        width={1482}
+        height={1062}
         className="absolute inset-0 h-full w-full object-contain"
-        sizes="(max-width: 768px) 90vw, 560px"
+        sizes="(max-width: 768px) 90vw, 600px"
       />
     </div>
   );
@@ -545,14 +599,7 @@ function MobileComparisonFlow() {
             {mobileComparisonScreens.map((screen, index) => (
               <div className="contents" key={screen.src}>
                 <figure className="w-[68vw] max-w-[205px] shrink-0 snap-start justify-self-center lg:w-full">
-                  <div
-                    className={cn(
-                      "relative overflow-hidden rounded-[20px] border bg-[#f6f8fb] shadow-sm",
-                      screen.highlightZoom
-                        ? "border-[#FFD360] ring-2 ring-[#FFD360]/35"
-                        : "border-[#d9dce2]"
-                    )}
-                  >
+                  <div className="relative overflow-hidden rounded-[20px] border border-[#d9dce2] bg-[#f6f8fb] shadow-sm">
                     <Image
                       src={screen.src}
                       alt={`Affina mobile flow: ${screen.label}`}
@@ -563,12 +610,10 @@ function MobileComparisonFlow() {
                       sizes="(max-width: 1024px) 68vw, 205px"
                     />
                     {screen.highlightZoom && (
-                      <>
-                        <span className="pointer-events-none absolute left-[6.7%] top-[20.5%] h-[3.65%] w-[31.6%] rounded-full border-2 border-[#FFD360] shadow-[0_0_0_4px_rgba(255,211,96,0.20)]" />
-                        <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-[#FFD360] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.08em] text-[#2f270f]">
-                          Zoom control
-                        </span>
-                      </>
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute left-[6.4%] top-[17.65%] h-[4.15%] w-[32.8%] rounded-full border-[1.5px] border-[#f2bd22] bg-[#FFD360]/10 shadow-[0_0_0_3px_rgba(255,211,96,0.24)]"
+                      />
                     )}
                   </div>
                   <figcaption className="mt-5">
@@ -603,10 +648,77 @@ function AffinaDeviceShowcase() {
   return (
     <div className="grid items-center gap-10 py-4 sm:py-6 lg:grid-cols-[0.9fr_1.25fr]">
       <div className="flex items-start justify-center gap-4 sm:gap-5">
-        <AffinaPhoneMockup />
-        <AffinaPhoneMockup screenPosition="middle" />
+        <AffinaOverviewPhoneMockup
+          src="/assets/affina/overview-mobile-1.png"
+          alt="Affina mobile home screen for a signed-out customer"
+        />
+        <AffinaOverviewPhoneMockup
+          src="/assets/affina/overview-mobile-2.png"
+          alt="Affina mobile home screen with an active insurance policy"
+        />
       </div>
       <AffinaMacBookMockup />
+    </div>
+  );
+}
+
+function HealthcareProductFlow() {
+  return (
+    <div className="relative mx-auto grid w-full max-w-[620px] grid-cols-2 gap-x-8 gap-y-10 rounded-3xl border border-[#dde1ff] bg-[#f7f7ff] p-4 sm:p-6">
+      <div className="pointer-events-none absolute left-1/2 top-[26%] z-10 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border border-[#c8cdff] bg-white text-[#5e6bfc] shadow-sm">
+        <ChevronRight aria-hidden="true" className="size-4" strokeWidth={1.8} />
+      </div>
+      <div className="pointer-events-none absolute right-[24%] top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-[#c8cdff] bg-white text-[#5e6bfc] shadow-sm">
+        <ChevronRight aria-hidden="true" className="size-4 rotate-90" strokeWidth={1.8} />
+      </div>
+      <div className="pointer-events-none absolute bottom-[25%] left-1/2 z-10 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border border-[#c8cdff] bg-white text-[#5e6bfc] shadow-sm">
+        <ChevronRight aria-hidden="true" className="size-4 rotate-180" strokeWidth={1.8} />
+      </div>
+
+      {healthcareProductFlow.map((step, index) => (
+        <figure
+          className={cn(
+            "relative min-w-0",
+            index === 2 && "col-start-2 row-start-2",
+            index === 3 && "col-start-1 row-start-2",
+          )}
+          key={step.number}
+        >
+          <div className="relative mx-auto aspect-[390/844] w-full max-w-[190px] overflow-hidden rounded-[18px] border border-[#d9dce2] bg-white shadow-[0_14px_32px_-20px_rgba(32,36,84,0.34)]">
+            <Image
+              src={step.src}
+              alt={`Affina healthcare flow: ${step.title}`}
+              width={390}
+              height={1128}
+              className="h-full w-full object-cover object-top"
+              style={{ objectPosition: "objectPosition" in step ? step.objectPosition : undefined }}
+              sizes="(max-width: 768px) 42vw, 190px"
+            />
+            {"highlight" in step && step.highlight ? (
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute z-10 rounded-2xl border-2 border-[#ff51ff] bg-[#ff51ff]/10 shadow-[0_0_0_4px_rgba(255,255,255,0.92),0_0_0_7px_rgba(255,81,255,0.28)]"
+                style={step.highlight}
+              >
+                <span className="absolute -right-2 -top-6 rounded-full bg-[#202454] px-2 py-1 text-[8px] font-bold uppercase tracking-[0.12em] text-white shadow-sm">
+                  Tap
+                </span>
+              </div>
+            ) : null}
+          </div>
+          <figcaption className="mt-3">
+            <p className="text-[10px] font-bold tracking-[0.12em] text-[#5e6bfc]">
+              {step.number}
+            </p>
+            <p className="mt-1 text-sm font-semibold leading-5 text-[#262626]">
+              {step.title}
+            </p>
+            <p className="mt-1 text-[11px] leading-4 text-[#737373]">
+              {step.detail}
+            </p>
+          </figcaption>
+        </figure>
+      ))}
     </div>
   );
 }
@@ -632,14 +744,8 @@ function AffinaHealthcareRow({
         </p>
       </div>
 
-      {row.phones ? (
-        <div className="flex items-center justify-center gap-3 sm:justify-start">
-          <AffinaPhoneMockup className="w-[136px] sm:w-[186px]" />
-          <AffinaPhoneMockup
-            className="w-[136px] sm:w-[186px]"
-            screenPosition="middle"
-          />
-        </div>
+      {row.flow ? (
+        <HealthcareProductFlow />
       ) : (
         <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
           <ImageZoom>
