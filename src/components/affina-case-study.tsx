@@ -1096,7 +1096,13 @@ export function AffinaCaseStudy() {
 
             <div className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2">
               <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
-                <ImageZoom zoomImg={{ src: "/assets/affina/user-flow-image.png" }}>
+                <a
+                  href="https://schema-wreath-37837045.figma.site"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open the Affina insurance purchase flow in a new tab"
+                  className="block cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#0293f4]"
+                >
                   <Image
                     src="/assets/affina/user-flow-image.png"
                     alt="Affina insurance purchase user flow"
@@ -1106,7 +1112,7 @@ export function AffinaCaseStudy() {
                     className="h-auto w-full object-cover object-top"
                     sizes="(max-width: 640px) 90vw, 450px"
                   />
-                </ImageZoom>
+                </a>
               </div>
               <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
                 <ImageZoom zoomImg={{ src: "/assets/affina/gitlab-code-repo-blur.png" }}>
