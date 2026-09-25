@@ -386,7 +386,9 @@ function LinearScreenFlow({
       <div
         className={cn(
           "grid items-start gap-5",
-          screens.length === 2
+          screens.length === 1
+            ? "lg:grid-cols-1"
+            : screens.length === 2
             ? "lg:grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)]"
             : "lg:grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)_48px_minmax(0,1fr)_48px_minmax(0,1fr)]"
         )}
@@ -404,17 +406,9 @@ function LinearScreenFlow({
 
 const entryScreens: FlowScreen[] = [
   {
-    src: "/assets/4oranges/ui-flow/login.png",
-    alt: "4Oranges login screen",
-    label: "01 · Login",
-    detail: "Phone/email, Facebook or Apple ID sign-in, with password recovery.",
-    width: 390,
-    height: 844,
-  },
-  {
     src: "/assets/4oranges/ui-flow/home.png",
     alt: "4Oranges rewards home screen",
-    label: "02 · Home",
+    label: "01 · Home",
     detail: "Bank-linked dashboard with reward summary, banners, history, news and scan entry.",
     width: 430,
     height: 1374,
@@ -595,7 +589,7 @@ export function FourOrangesCaseStudy() {
           <div className="space-y-8">
             <LinearScreenFlow
               title="Entry journey"
-              copy="Users sign in, then land on a dashboard that keeps rewards, transactions, campaigns and the scan action in one place."
+              copy="Users land on a dashboard that keeps rewards, transactions, campaigns and the scan action in one place."
               screens={entryScreens}
             />
             <LinearScreenFlow
