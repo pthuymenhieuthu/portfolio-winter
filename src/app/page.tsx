@@ -4,11 +4,12 @@ import { ProjectCard } from "@/components/project-card";
 import { TallyContactForm } from "@/components/tally-contact-form";
 import { HomeHero } from "@/components/home-hero";
 import { DATA } from "@/data/resume";
+import { getVisibleProjects } from "@/lib/next-projects";
 import Link from "next/link";
 import GoogleTracking from "@/components/google-tracking";
 
 const BLUR_FADE_DELAY = 0.04;
-const HOME_PROJECTS = DATA.projects.filter(
+const HOME_PROJECTS = getVisibleProjects(DATA.projects).filter(
   (project) => project.href !== "/blog/lollypop"
 );
 

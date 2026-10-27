@@ -3,6 +3,21 @@ type ProjectLink = {
   title: string;
 };
 
+// Temporarily hide these case studies while their designs are being updated.
+const HIDDEN_PROJECT_HREFS = new Set([
+  "/blog/affina",
+  "/blog/affina-partner-flow",
+  "/blog/4oranges",
+]);
+
+export function getVisibleProjects<T extends ProjectLink>(projects: readonly T[]): T[] {
+  return projects
+    .filter((project) => !HIDDEN_PROJECT_HREFS.has(project.href ?? ""))
+    .sort(
+      (a, b) => Number(b.href === "/blog/chande") - Number(a.href === "/blog/chande")
+    );
+}
+
 /**
  * Returns the projects immediately following the current case study in the
  * homepage order, wrapping back to the start when needed.
@@ -12,7 +27,7 @@ export function getNextProjects<T extends ProjectLink>(
   currentHref: string,
   limit = 3
 ): T[] {
-  const homepageProjects = projects.filter(
+  const homepageProjects = getVisibleProjects(projects).filter(
     (project) => project.title !== "ZanZan"
   );
   const currentIndex = homepageProjects.findIndex(

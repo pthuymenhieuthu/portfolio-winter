@@ -39,8 +39,12 @@ const sections = [
 const zoanAssets = {
   hero: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787904374/Frame_2147225273_isnnjf.png",
   overview: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1766037533/01_sj2voy.png",
-  workMockup1: "/assets/project-thumbnails/zoan.png",
-  workMockup2: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787904374/Frame_2147225273_isnnjf.png",
+  workMockup1: "/assets/zoan/mobile-showcase/app-in-hand.webp",
+  workMockup2: "/assets/zoan/mobile-showcase/brand-app-icon.webp",
+  typographyColors: "/assets/zoan/mobile-showcase/typography-colors.webp",
+  homeSocial: "/assets/zoan/mobile-showcase/home-social-screens.webp",
+  miniApps: "/assets/zoan/mobile-showcase/mini-apps-screens.webp",
+  socialMockup: "/assets/zoan/mobile-showcase/social-phone-mockup.webp",
   color: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989302/Showcase_hehe-05_ny1lld.png",
   typography: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989302/Showcase_hehe-04_yapp30.png",
   tokens: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1763893945/Screenshot_252_ngb7lj.png",
@@ -60,8 +64,12 @@ const zoanAssets = {
 const zoanAssetDimensions: Record<string, [number, number]> = {
   [zoanAssets.hero]: [1152, 648],
   [zoanAssets.overview]: [5469, 3264],
-  [zoanAssets.workMockup1]: [3693, 2760],
-  [zoanAssets.workMockup2]: [3604, 2760],
+  [zoanAssets.workMockup1]: [2000, 1599],
+  [zoanAssets.workMockup2]: [2000, 995],
+  [zoanAssets.typographyColors]: [2000, 1760],
+  [zoanAssets.homeSocial]: [2000, 4697],
+  [zoanAssets.miniApps]: [2000, 4072],
+  [zoanAssets.socialMockup]: [1600, 1816],
   [zoanAssets.color]: [1400, 612],
   [zoanAssets.typography]: [1400, 683],
   [zoanAssets.tokens]: [703, 686],
@@ -323,11 +331,11 @@ export function ZoanCaseStudy() {
           <div className="grid gap-6">
             <CaseImage
               src={zoanAssets.workMockup1}
-              alt="Zoan AI desktop and mobile product mockup"
+              alt="Zoan mobile app held in hand, showing mini apps and Zoan IDs"
             />
             <CaseImage
               src={zoanAssets.workMockup2}
-              alt="Zoan AI product system mockup"
+              alt="Zoan cat app icon on an iPhone alongside the mint brand identity"
             />
           </div>
 
@@ -363,8 +371,10 @@ export function ZoanCaseStudy() {
           </div>
 
           <div className="flex flex-col gap-6">
-            <CaseImage src={zoanAssets.color} alt="Zoan color foundation" />
-            <CaseImage src={zoanAssets.typography} alt="Zoan typography foundation" />
+            <CaseImage
+              src={zoanAssets.typographyColors}
+              alt="Zoan typography and color foundations: BD StreetSign Sans headings, SF Pro UI text, and a mint-led pastel palette"
+            />
             <CaseImage
               src={zoanAssets.tokens}
               alt="Zoan variable token system"
@@ -426,6 +436,28 @@ export function ZoanCaseStudy() {
           <div className="grid gap-6">
             <CaseImage src={zoanAssets.platformShowcase1} alt="Zoan desktop workflow showcase" />
             <CaseImage src={zoanAssets.platformShowcase2} alt="Zoan mobile workflow showcase" />
+          </div>
+
+          <div className="flex flex-col gap-8">
+            <h3 className="font-[var(--font-heading)] text-2xl font-normal leading-[1.2] tracking-normal">
+              Exploring the mobile experience
+            </h3>
+            <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
+              Home brings app discovery and social conversations together, while
+              Mini Apps gives community creations a dedicated place to explore.
+            </p>
+            <CaseImage
+              src={zoanAssets.homeSocial}
+              alt="Zoan Home and Talk screens showing pinned shortcuts, trending agents, live activity, and a social feed"
+            />
+            <CaseImage
+              src={zoanAssets.miniApps}
+              alt="Zoan Mini Apps screens showing the app hub, welcome flow, featured apps, and app directory"
+            />
+            <CaseImage
+              src={zoanAssets.socialMockup}
+              alt="Two iPhone mockups showing Zoan's social feed and mint cat-logo launch screen"
+            />
           </div>
         </CaseStudyRevealSection>
 
