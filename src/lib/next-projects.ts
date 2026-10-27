@@ -11,10 +11,13 @@ const HIDDEN_PROJECT_HREFS = new Set([
 ]);
 
 export function getVisibleProjects<T extends ProjectLink>(projects: readonly T[]): T[] {
+  const priority = (project: ProjectLink) =>
+    project.href === "/blog/zoan" ? 0 : project.href === "/blog/chande" ? 1 : 2;
+
   return projects
     .filter((project) => !HIDDEN_PROJECT_HREFS.has(project.href ?? ""))
     .sort(
-      (a, b) => Number(b.href === "/blog/chande") - Number(a.href === "/blog/chande")
+      (a, b) => priority(a) - priority(b)
     );
 }
 
