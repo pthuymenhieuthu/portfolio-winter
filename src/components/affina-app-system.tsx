@@ -20,7 +20,7 @@ export function AffinaAppDesignSystem() {
           <h4 className="mt-2 text-2xl font-bold">The app’s visual language</h4>
           <p className="mt-7 text-[10px] font-bold uppercase tracking-[0.1em] text-[#62666b]">Background · Action · Selection · Surface · Text</p>
           <div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-6">
-            {["#A8DFFE", "#2C86FF", "#FF51FF", "#F9F8FB", "#2E2222", "#808080"].map(color => (
+            {["#A8DFFE", "#2C86FF", "#FD82EA", "#F9F8FB", "#2E2222", "#808080"].map(color => (
               <div key={color}>
                 <div className="aspect-square rounded-xl border border-black/[0.06]" style={{ backgroundColor: color }} />
                 <p className="mt-2 text-[9px] text-[#62666b]">{color}</p>
@@ -57,9 +57,9 @@ export function AffinaAppDesignSystem() {
           <h4 className="mt-2 text-2xl font-bold">Familiar at every step</h4>
           <div className="mt-7 space-y-3">
             <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#62666b]">Survey selection</p>
-            <div className="flex items-center justify-between gap-4 rounded-[20px] bg-white p-5 shadow-[0_8px_24px_rgba(255,81,255,0.12)]">
+            <div className="flex items-center justify-between gap-4 rounded-[20px] bg-white p-5 shadow-[0_8px_24px_rgba(253,130,234,0.12)]">
               <span className="text-sm font-semibold">Health insurance</span>
-              <span className="flex size-5 shrink-0 items-center justify-center rounded-full border border-[#ff51ff]"><span className="size-3 rounded-full bg-[#ff51ff]" /></span>
+              <span className="flex size-5 shrink-0 items-center justify-center rounded-full border border-[#fd82ea]"><span className="size-3 rounded-full bg-[#fd82ea]" /></span>
             </div>
             <div className="flex items-center justify-between gap-4 rounded-[20px] border border-[#e8e3ed] bg-[#f9f8fb] p-5">
               <span className="text-sm font-medium">Home insurance</span><span className="size-5 shrink-0 rounded-full border border-[#d4cedb] bg-white" />

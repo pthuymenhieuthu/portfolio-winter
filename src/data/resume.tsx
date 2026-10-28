@@ -253,7 +253,7 @@ export const DATA = {
       icon: <Icons.linkedin className="size-3" />,
     },
   ],
-  image: "/assets/project-thumbnails/affina-pink-meadow.webp",
+  image: "/assets/project-thumbnails/affina-pink-meadow-en.webp",
   video: "",
 },
     {

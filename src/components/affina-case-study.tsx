@@ -237,22 +237,15 @@ function DesignSystemLayerVisual({
     return (
       <div
         aria-hidden="true"
-        className="relative flex h-[132px] items-end overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#f7e7ff_0%,#e2f4ff_52%,#fff3db_100%)] p-4"
+        className="relative flex h-[132px] items-end overflow-hidden rounded-2xl p-4"
+        style={{ background: affinaAppGradient }}
       >
         <div className="relative grid w-full grid-cols-3 gap-2">
-          {["Clear", "Human", "Scalable"].map((item, index) => (
+          {["Clear", "Human", "Scalable"].map((item) => (
             <div
               className="rounded-xl border border-white/70 bg-white/65 px-2 py-3 text-center shadow-[0_8px_22px_rgba(80,93,130,0.08)] backdrop-blur-sm"
               key={item}
             >
-              <span
-                className={cn(
-                  "mx-auto mb-2 block size-2.5 rounded-full",
-                  index === 0 && "bg-[#20b8f5]",
-                  index === 1 && "bg-[#ec62d7]",
-                  index === 2 && "bg-[#826de8]",
-                )}
-              />
               <span className="text-[10px] font-semibold text-[#35343b] sm:text-xs">
                 {item}
               </span>
@@ -267,7 +260,8 @@ function DesignSystemLayerVisual({
     return (
       <div
         aria-hidden="true"
-        className="grid h-[132px] grid-cols-[1.05fr_0.95fr] gap-3 overflow-hidden rounded-2xl border border-black/[0.06] bg-[#f7f7f8] p-4"
+        className="grid h-[132px] grid-cols-[1.05fr_0.95fr] gap-3 overflow-hidden rounded-2xl border border-black/[0.06] p-4"
+        style={{ background: affinaAppGradient }}
       >
         <div className="flex min-w-0 flex-col justify-between">
           <div className="grid grid-cols-5 gap-1.5">
@@ -307,7 +301,8 @@ function DesignSystemLayerVisual({
   return (
     <div
       aria-hidden="true"
-      className="relative flex h-[132px] items-center justify-center overflow-hidden rounded-2xl bg-[#edf4fb] p-4"
+      className="relative flex h-[132px] items-center justify-center overflow-hidden rounded-2xl p-4"
+      style={{ background: affinaAppGradient }}
     >
       <div className="w-full max-w-[230px] rounded-xl border border-black/[0.07] bg-white p-3 shadow-[0_10px_28px_rgba(52,72,108,0.10)]">
         <div className="flex items-center justify-between">
@@ -319,7 +314,7 @@ function DesignSystemLayerVisual({
         <div className="mt-3 h-7 rounded-lg border border-[#dfe3e8] bg-[#fafafa]" />
         <div className="mt-2 flex gap-2">
           <span className="h-7 flex-1 rounded-lg bg-[#08090a]" />
-          <span className="size-7 rounded-lg bg-[linear-gradient(135deg,#6cc9ff,#ec62d7)]" />
+          <span className="size-7 rounded-lg bg-[linear-gradient(135deg,#a8dffe,#2c86ff)]" />
         </div>
       </div>
     </div>
@@ -436,42 +431,6 @@ function AffinaPhoneMockup({
   );
 }
 
-function AffinaOverviewPhoneMockup({
-  src,
-  alt,
-}: {
-  src: string;
-  alt: string;
-}) {
-  return (
-    <div className="relative aspect-[734/1718] w-[150px] shrink-0 sm:w-[186px]">
-      <Image
-        src={src}
-        alt={alt}
-        width={734}
-        height={1718}
-        className="h-full w-full object-contain"
-        sizes="(max-width: 640px) 150px, 186px"
-      />
-    </div>
-  );
-}
-
-function AffinaMacBookMockup() {
-  return (
-    <div className="relative mx-auto aspect-[2375/1718] w-full max-w-[600px]">
-      <Image
-        src="/assets/affina/ai-journey/overview-desktop-transparent.webp"
-        alt="Affina website displayed in the desktop mockup from Figma"
-        width={2375}
-        height={1718}
-        className="h-full w-full object-contain"
-        sizes="(max-width: 768px) 90vw, 600px"
-      />
-    </div>
-  );
-}
-
 type JourneyFlowScreen = {
   src: string;
   label: string;
@@ -523,20 +482,17 @@ function JourneyScreenFlow({
   );
 }
 
-function AffinaDeviceShowcase() {
+function AffinaProjectCover() {
   return (
-    <div className="grid items-center gap-10 py-4 sm:py-6 lg:grid-cols-[0.9fr_1.25fr]">
-      <div className="flex items-start justify-center gap-4 sm:gap-5">
-        <AffinaOverviewPhoneMockup
-          src="/assets/affina/ai-journey/overview-phone-1.webp"
-          alt="Affina insurance recommendations in the first Figma phone mockup"
-        />
-        <AffinaOverviewPhoneMockup
-          src="/assets/affina/ai-journey/overview-phone-2.webp"
-          alt="Affina insurance journey introduction in the second Figma phone mockup"
-        />
-      </div>
-      <AffinaMacBookMockup />
+    <div className="overflow-hidden rounded-xl">
+      <Image
+        src="/assets/project-thumbnails/affina-pink-meadow-en.webp"
+        alt="Affina app displayed on a phone above a grassy hill with pink flowers"
+        width={1448}
+        height={1086}
+        className="block h-auto w-full"
+        sizes="(max-width: 1040px) 100vw, 976px"
+      />
     </div>
   );
 }
@@ -826,7 +782,7 @@ export function AffinaCaseStudy() {
             </p>
           </div>
 
-          <AffinaDeviceShowcase />
+          <AffinaProjectCover />
 
         </CaseStudyRevealSection>
 

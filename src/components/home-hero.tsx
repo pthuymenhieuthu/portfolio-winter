@@ -89,7 +89,7 @@ export function HomeHero() {
   return (
     <section
       id="hero"
-      className="relative isolate flex min-h-[100svh] w-full max-w-full items-center justify-center overflow-hidden px-6"
+      className="relative isolate flex min-h-[580px] w-full max-w-full items-center justify-center overflow-hidden px-6 sm:min-h-[670px] md:min-h-[780px] lg:min-h-[860px] min-[1920px]:min-h-[100svh]"
     >
       <motion.div
         aria-hidden="true"
@@ -156,7 +156,7 @@ export function HomeHero() {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-[-210px] left-1/2 z-[1] hidden w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none md:block lg:bottom-[-190px] min-[1440px]:bottom-[calc(170px_-_25vw)]"
+        className="pointer-events-none absolute bottom-[-210px] left-1/2 z-[1] hidden w-[max(1280px,100vw)] max-w-none -translate-x-1/2 select-none md:block lg:bottom-[-190px] min-[1920px]:bottom-[calc(90px_-_25vw)]"
       >
         <motion.div
           animate={
@@ -205,7 +205,7 @@ export function HomeHero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-28 bg-gradient-to-b from-transparent via-background/55 to-background"
       />
 
-      <div className="relative z-10 mx-auto grid h-[100svh] w-full max-w-[640px] grid-rows-[minmax(0,1fr)_auto_minmax(0,1fr)] justify-items-center text-center">
+      <div className="relative z-10 mx-auto flex w-full max-w-[640px] -translate-y-4 flex-col items-center text-center sm:-translate-y-8 lg:-translate-y-10 min-[1920px]:grid min-[1920px]:h-[100svh] min-[1920px]:translate-y-0 min-[1920px]:grid-rows-[minmax(0,1fr)_auto_minmax(0,1fr)] min-[1920px]:justify-items-center min-[1920px]:items-stretch">
         <div className="flex w-full items-end justify-center">
         {!isMobile ? (
           <BlurFade delay={BLUR_FADE_DELAY}>
@@ -242,7 +242,7 @@ export function HomeHero() {
         </div>
 
         <HeroTitleReveal
-          className="mb-0 max-w-full font-[var(--font-heading)] text-[40px] font-medium leading-[0.95] tracking-[-3px] text-[#29303B] min-[390px]:text-[44px] sm:text-[72px]"
+          className="min-[1920px]:mb-0 max-w-full font-[var(--font-heading)] text-[40px] font-medium leading-[0.95] tracking-[-3px] text-[#29303B] min-[390px]:text-[44px] sm:text-[72px]"
           delay={BLUR_FADE_DELAY * 3}
           text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
         />
