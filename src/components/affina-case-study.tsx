@@ -796,7 +796,10 @@ export function AffinaCaseStudy() {
         colors={projectMeshPalettes.affina}
         delay={PROJECT_HERO_DELAY}
         id="affina-overview"
-        links={[{ href: "https://www.affina.com.vn/ai/", label: "Website", icon: "website" }]}
+        links={[
+          { href: "https://apps.apple.com/vn/app/affina-one/id6474957786", label: "App Store", icon: "appstore" },
+          { href: "https://play.google.com/store/apps/details?id=com.affina&hl=en", label: "Google Play", icon: "googleplay" },
+        ]}
         outcome="Clearer journeys and stronger brand consistency"
         role="Product Designer"
         scope="Web, mobile, design system, AI workflow"

@@ -238,9 +238,14 @@ export const DATA = {
   ],
   links: [
     {
-      type: "Website",
-      href: "https://affina.com.vn/",
-      icon: <Icons.globe className="size-3" />,
+      type: "App Store",
+      href: "https://apps.apple.com/vn/app/affina-one/id6474957786",
+      icon: <Icons.appstore className="size-3" />,
+    },
+    {
+      type: "Google Play",
+      href: "https://play.google.com/store/apps/details?id=com.affina&hl=en",
+      icon: <Icons.link className="size-3" />,
     },
     {
       type: "LinkedIn",
