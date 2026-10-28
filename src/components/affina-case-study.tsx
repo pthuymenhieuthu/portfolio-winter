@@ -22,6 +22,7 @@ import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
 import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 import { caseStudyStyles } from "@/lib/case-study-styles";
 import { Icons } from "@/components/icons";
+import { AffinaAppDesignSystem, affinaAppGradient } from "@/components/affina-app-system";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -69,11 +70,11 @@ const journeySteps = [
     eyebrow: "Start with less friction",
     body: (
       <>
-        Open the{" "}
+        Start with{" "}
         <CaseStudyScrollHighlight>
-          survey from the homepage
+          four focused questions
         </CaseStudyScrollHighlight>{" "}
-        in a modal — no page change.
+        about the coverage the customer needs.
       </>
     ),
     detailLabel: (
@@ -85,32 +86,37 @@ const journeySteps = [
         :
       </>
     ),
-    detail: "Coverage → Profile → Budget → Benefits → Insurer",
+    detail: "Insurance type → Insured person → Monthly budget → Preferred insurers",
     media: [
       {
-        src: "/assets/affina/survey-flow/01-insurance-type.png",
-        label: "01 · Insurance type",
+        src: "/assets/affina/ai-journey/00-intro.webp?v=en-final",
+        label: "Start · Design your protection",
+        detail: "Introduce the journey before asking for personal preferences.",
+      },
+      {
+        src: "/assets/affina/ai-journey/01-insurance-type.webp?v=en-final",
+        label: "01 / 04 · Insurance type",
         detail: "Choose the insurance product to explore.",
       },
       {
-        src: "/assets/affina/survey-flow/02-insured-person.png",
-        label: "02 · Insured person",
-        detail: "Define who needs coverage and their date of birth.",
+        src: "/assets/affina/ai-journey/02-insured-person.webp?v=en-final",
+        label: "02 / 04 · Insured person",
+        detail: "Provide the protected person's gender and birth year.",
       },
       {
-        src: "/assets/affina/survey-flow/03-budget-benefits.png",
-        label: "03 · Budget & core benefits",
-        detail: "Set an expected budget and the most important coverage.",
+        src: "/assets/affina/ai-journey/03-monthly-budget.webp?v=en-final",
+        label: "03 / 04 · Monthly budget",
+        detail: "Choose an expected monthly budget from four clear ranges.",
       },
       {
-        src: "/assets/affina/survey-flow/04-extra-benefits-insurer.png",
-        label: "04 · Preferences",
-        detail: "Add optional benefits and preferred insurers.",
+        src: "/assets/affina/ai-journey/04-preferred-insurer.webp?v=en-final",
+        label: "04 / 04 · Preferred insurers",
+        detail: "Select preferred providers using familiar insurer logos.",
       },
       {
-        src: "/assets/affina/survey-flow/05-loading.png",
-        label: "05 · Matching",
-        detail: "Process the answers before showing suitable plans.",
+        src: "/assets/affina/ai-journey/05-matching.webp?v=en-final",
+        label: "Matching · Finding suitable plans",
+        detail: "Use the Affina mascot to explain the wait before recommendations appear.",
       },
     ],
   },
@@ -134,7 +140,7 @@ const journeySteps = [
     ],
     media: [
       {
-        src: "/assets/affina/survey-flow/06-results.png",
+        src: "/assets/affina/ai-journey/06-recommendations.webp?v=en-final",
         label: "06 · Recommendations",
         detail: "Surface three suitable plans with clear price and benefit cues.",
       },
@@ -143,54 +149,23 @@ const journeySteps = [
   {
     number: "3",
     title: "Compare",
-    eyebrow: "Make complex benefits easier to compare across web and mobile",
+    eyebrow: "Keep benefits readable within a narrow mobile viewport",
     bullets: [
-      "Keep the same three plans",
+      "Keep the three recommended plans together",
       "Group benefits into clear rows",
-      "Emphasize meaningful differences",
-      "Add status and best-choice cues",
+      "Keep benefit labels beside the plan columns",
+      "Distinguish included, selected and optional benefits",
     ],
     media: [
       {
-        src: "/assets/affina/survey-flow/07-compare-top.png",
-        label: "07 · Compare overview",
-        detail: "Compare plan pricing and providers side by side.",
-      },
-      {
-        src: "/assets/affina/survey-flow/08-compare-details.png",
-        label: "08 · Benefit details",
-        detail: "Review coverage differences before making a final choice.",
+        src: "/assets/affina/ai-journey/07-comparison.webp?v=en-final",
+        label: "07 · Compare plans",
+        height: 4164,
+        detail: "Swipe across three plans to compare annual fees, benefit status and purchase actions.",
       },
     ],
   },
 ];
-
-const mobileComparisonScreens = [
-  {
-    src: "/assets/affina/mobile-flow/06-recommendation.png",
-    label: "01 · Recommend",
-    detail: "Keep the best-fit plan and essential facts easy to scan.",
-    highlightZoom: false,
-  },
-  {
-    src: "/assets/affina/mobile-flow/06-expanded-reasons.png",
-    label: "02 · Reveal reasons",
-    detail: "Expand why a plan fits only when users need the detail.",
-    highlightZoom: false,
-  },
-  {
-    src: "/assets/affina/mobile-flow/07-comparison.png",
-    label: "03 · Compare",
-    detail: "Preserve readable rows within the narrow mobile viewport.",
-    highlightZoom: true,
-  },
-  {
-    src: "/assets/affina/mobile-flow/07-overview.png",
-    label: "04 · Open overview",
-    detail: "Fit the full table on screen for a faster overall comparison.",
-    highlightZoom: false,
-  },
-] as const;
 
 const healthcareRows = [
   {
@@ -223,43 +198,16 @@ const healthcareRows = [
     number: "4",
     title: "Prove it in product",
     bold: "Applied the same tokens and reusable components",
-    after: "across responsive healthcare journeys, then refined the system from real use cases.",
+    after: "across the insurance survey, matching, recommendations and comparison, so the same visual language supports every decision.",
     flow: true,
   },
 ];
 
-const healthcareProductFlow = [
-  {
-    number: "01",
-    title: "Start from Home",
-    detail: "Tap Remote Health Consultation.",
-    src: "/assets/affina/healthcare-flow/01-home.png",
-    objectPosition: "center top",
-    highlight: {
-      left: "28.5%",
-      top: "89.8%",
-      width: "20%",
-      height: "9.4%",
-    },
-  },
-  {
-    number: "02",
-    title: "Choose a provider",
-    detail: "Pick the care partner that fits the need.",
-    src: "/assets/affina/healthcare-flow/01-choose-provider.png",
-  },
-  {
-    number: "03",
-    title: "Review the service",
-    detail: "Keep provider and benefit context together.",
-    src: "/assets/affina/healthcare-flow/02-review-service.png",
-  },
-  {
-    number: "04",
-    title: "Accept the terms",
-    detail: "Make the required consent easy to scan.",
-    src: "/assets/affina/healthcare-flow/03-accept-terms.png",
-  },
+const insuranceProductFlow = [
+  { number: "01", title: "Choose protection", detail: "Use clear option cards and pink selection cues to capture insurance needs.", src: "/assets/affina/ai-journey/01-insurance-type.webp?v=en-final" },
+  { number: "02", title: "Find a match", detail: "Carry the blue background and Affina mascot into the waiting state.", src: "/assets/affina/ai-journey/05-matching.webp?v=en-final" },
+  { number: "03", title: "Review recommendations", detail: "Bring provider, price and purchase action together in a white plan card.", src: "/assets/affina/ai-journey/06-recommendations.webp?v=en-final" },
+  { number: "04", title: "Compare plans", detail: "Reuse the same colors and controls to distinguish coverage and compare fees.", src: "/assets/affina/ai-journey/07-comparison.webp?v=en-final" },
 ] as const;
 
 const designSystemLayers = [
@@ -401,8 +349,6 @@ const designSystemBuildOrder = [
   },
 ] as const;
 
-const foundationSpacingTokens = [4, 8, 12, 16, 24, 32] as const;
-const foundationRadiusTokens = [4, 8, 12, 16, 24] as const;
 
 const processSteps = [
   { label: "Survey", active: true },
@@ -498,12 +444,12 @@ function AffinaOverviewPhoneMockup({
   alt: string;
 }) {
   return (
-    <div className="relative aspect-[734/1592] w-[150px] shrink-0 sm:w-[186px]">
+    <div className="relative aspect-[734/1718] w-[150px] shrink-0 sm:w-[186px]">
       <Image
         src={src}
         alt={alt}
         width={734}
-        height={1592}
+        height={1718}
         className="h-full w-full object-contain"
         sizes="(max-width: 640px) 150px, 186px"
       />
@@ -513,13 +459,13 @@ function AffinaOverviewPhoneMockup({
 
 function AffinaMacBookMockup() {
   return (
-    <div className="relative mx-auto aspect-[1482/1062] w-full max-w-[600px]">
+    <div className="relative mx-auto aspect-[2375/1718] w-full max-w-[600px]">
       <Image
-        src="/assets/affina/overview-desktop-transparent.png"
-        alt="Affina website homepage shown in a desktop monitor mockup"
-        width={1482}
-        height={1062}
-        className="absolute inset-0 h-full w-full object-contain"
+        src="/assets/affina/ai-journey/overview-desktop-transparent.webp"
+        alt="Affina website displayed in the desktop mockup from Figma"
+        width={2375}
+        height={1718}
+        className="h-full w-full object-contain"
         sizes="(max-width: 768px) 90vw, 600px"
       />
     </div>
@@ -530,6 +476,7 @@ type JourneyFlowScreen = {
   src: string;
   label: string;
   detail: string;
+  height?: number;
 };
 
 function JourneyScreenFlow({
@@ -542,19 +489,19 @@ function JourneyScreenFlow({
   return (
     <div className="-mx-5 overflow-hidden sm:mx-0">
       <div className="scrollbar-none overflow-x-auto pb-4">
-        <div className="flex w-max snap-x snap-mandatory items-center px-5 sm:px-0">
+        <div className="flex w-max snap-x snap-mandatory items-start px-5 sm:px-0">
           {screens.map((screen, index) => (
             <div className="contents" key={screen.src}>
-              <figure className="w-[82vw] max-w-[680px] shrink-0 snap-start">
+              <figure className="w-[62vw] max-w-[240px] shrink-0 snap-start">
                 <ImageZoom>
-                  <div className="overflow-hidden rounded-xl border border-[#cfd0d4] bg-white shadow-sm">
+                  <div className="overflow-hidden rounded-[24px] border border-[#cfd0d4] bg-white shadow-sm">
                     <Image
                       src={screen.src}
                       alt={`${title}: ${screen.label}`}
-                      width={1920}
-                      height={912}
+                      width={1533}
+                      height={screen.height ?? 3317}
                       className="block h-auto w-full"
-                      sizes="(max-width: 768px) 82vw, 680px"
+                      sizes="(max-width: 768px) 62vw, 240px"
                     />
                   </div>
                 </ImageZoom>
@@ -564,7 +511,7 @@ function JourneyScreenFlow({
                 </figcaption>
               </figure>
               {index < screens.length - 1 && (
-                <div className="mx-4 flex size-10 shrink-0 items-center justify-center rounded-full border border-[#0293f4]/20 bg-white text-[#0293f4] shadow-sm sm:mx-6">
+                <div className="mx-4 mt-48 flex size-10 shrink-0 items-center justify-center rounded-full border border-[#0293f4]/20 bg-white text-[#0293f4] shadow-sm sm:mx-6">
                   <ChevronRight aria-hidden="true" className="size-5" strokeWidth={1.8} />
                 </div>
               )}
@@ -576,85 +523,17 @@ function JourneyScreenFlow({
   );
 }
 
-function MobileComparisonFlow() {
-  return (
-    <div className="rounded-[28px] border border-[#d9dce2] bg-white/70 p-5 sm:p-8">
-      <div className="mb-10">
-        <p className={styles.accentLabel}>Mobile comparison flow</p>
-        <h3 className="mt-4 max-w-[720px] font-[var(--font-affina-heading)] text-[26px] font-normal leading-[1.2] tracking-normal text-[#08090a] sm:text-[30px]">
-          Keep the detail readable — and the whole picture one tap away
-        </h3>
-        <p className={cn("mt-5 max-w-[720px]", styles.leadText)}>
-          Keep details readable, then use the{" "}
-          <CaseStudyScrollHighlight>
-            expand control
-          </CaseStudyScrollHighlight>{" "}
-          to see the full comparison.
-        </p>
-      </div>
-
-      <div className="-mx-5 overflow-hidden sm:-mx-8 lg:mx-0 lg:overflow-visible">
-        <div className="scrollbar-none overflow-x-auto px-5 pb-4 sm:px-8 lg:overflow-visible lg:px-0">
-          <div className="flex w-max snap-x snap-mandatory items-start gap-4 lg:grid lg:w-full lg:grid-cols-[minmax(0,1fr)_40px_minmax(0,1fr)_40px_minmax(0,1fr)_40px_minmax(0,1fr)] lg:gap-3">
-            {mobileComparisonScreens.map((screen, index) => (
-              <div className="contents" key={screen.src}>
-                <figure className="w-[68vw] max-w-[205px] shrink-0 snap-start justify-self-center lg:w-full">
-                  <div className="relative overflow-hidden rounded-[20px] border border-[#d9dce2] bg-[#f6f8fb] shadow-sm">
-                    <Image
-                      src={screen.src}
-                      alt={`Affina mobile flow: ${screen.label}`}
-                      width={828}
-                      height={1792}
-                      unoptimized
-                      className="block h-auto w-full"
-                      sizes="(max-width: 1024px) 68vw, 205px"
-                    />
-                    {screen.highlightZoom && (
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute left-[6.4%] top-[17.65%] h-[4.15%] w-[32.8%] rounded-full border-[1.5px] border-[#f2bd22] bg-[#FFD360]/10 shadow-[0_0_0_3px_rgba(255,211,96,0.24)]"
-                      />
-                    )}
-                  </div>
-                  <figcaption className="mt-5">
-                    <p className="text-sm font-semibold text-[#08090a]">
-                      {screen.label}
-                    </p>
-                    <p className="mt-1 text-xs leading-5 text-[#737373]">
-                      {screen.detail}
-                    </p>
-                  </figcaption>
-                </figure>
-
-                {index < mobileComparisonScreens.length - 1 && (
-                  <div className="flex size-10 shrink-0 items-center justify-center self-center rounded-full border border-[#0293f4]/20 bg-white text-[#0293f4] shadow-sm">
-                    <ChevronRight
-                      aria-hidden="true"
-                      className="size-5"
-                      strokeWidth={1.8}
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function AffinaDeviceShowcase() {
   return (
     <div className="grid items-center gap-10 py-4 sm:py-6 lg:grid-cols-[0.9fr_1.25fr]">
       <div className="flex items-start justify-center gap-4 sm:gap-5">
         <AffinaOverviewPhoneMockup
-          src="/assets/affina/overview-mobile-1.png"
-          alt="Affina mobile home screen for a signed-out customer"
+          src="/assets/affina/ai-journey/overview-phone-1.webp"
+          alt="Affina insurance recommendations in the first Figma phone mockup"
         />
         <AffinaOverviewPhoneMockup
-          src="/assets/affina/overview-mobile-2.png"
-          alt="Affina mobile home screen with an active insurance policy"
+          src="/assets/affina/ai-journey/overview-phone-2.webp"
+          alt="Affina insurance journey introduction in the second Figma phone mockup"
         />
       </div>
       <AffinaMacBookMockup />
@@ -662,60 +541,20 @@ function AffinaDeviceShowcase() {
   );
 }
 
-function HealthcareProductFlow() {
+function InsuranceProductFlow() {
   return (
-    <div className="relative mx-auto grid w-full max-w-[620px] grid-cols-2 gap-x-8 gap-y-10 rounded-3xl border border-[#dde1ff] bg-[#f7f7ff] p-4 sm:p-6">
-      <div className="pointer-events-none absolute left-1/2 top-[26%] z-10 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border border-[#c8cdff] bg-white text-[#5e6bfc] shadow-sm">
-        <ChevronRight aria-hidden="true" className="size-4" strokeWidth={1.8} />
-      </div>
-      <div className="pointer-events-none absolute right-[24%] top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-[#c8cdff] bg-white text-[#5e6bfc] shadow-sm">
-        <ChevronRight aria-hidden="true" className="size-4 rotate-90" strokeWidth={1.8} />
-      </div>
-      <div className="pointer-events-none absolute bottom-[25%] left-1/2 z-10 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border border-[#c8cdff] bg-white text-[#5e6bfc] shadow-sm">
-        <ChevronRight aria-hidden="true" className="size-4 rotate-180" strokeWidth={1.8} />
-      </div>
-
-      {healthcareProductFlow.map((step, index) => (
-        <figure
-          className={cn(
-            "relative min-w-0",
-            index === 2 && "col-start-2 row-start-2",
-            index === 3 && "col-start-1 row-start-2",
-          )}
-          key={step.number}
-        >
-          <div className="relative mx-auto aspect-[390/844] w-full max-w-[190px] overflow-hidden rounded-[18px] border border-[#d9dce2] bg-white shadow-[0_14px_32px_-20px_rgba(32,36,84,0.34)]">
-            <Image
-              src={step.src}
-              alt={`Affina healthcare flow: ${step.title}`}
-              width={390}
-              height={1128}
-              className="h-full w-full object-cover object-top"
-              style={{ objectPosition: "objectPosition" in step ? step.objectPosition : undefined }}
-              sizes="(max-width: 768px) 42vw, 190px"
-            />
-            {"highlight" in step && step.highlight ? (
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute z-10 rounded-2xl border-2 border-[#ff51ff] bg-[#ff51ff]/10 shadow-[0_0_0_4px_rgba(255,255,255,0.92),0_0_0_7px_rgba(255,81,255,0.28)]"
-                style={step.highlight}
-              >
-                <span className="absolute -right-2 -top-6 rounded-full bg-[#202454] px-2 py-1 text-[8px] font-bold uppercase tracking-[0.12em] text-white shadow-sm">
-                  Tap
-                </span>
-              </div>
-            ) : null}
-          </div>
+    <div id="affina-system-product-flow" className="relative mx-auto grid w-full max-w-[620px] grid-cols-2 gap-x-7 gap-y-10 p-4 sm:p-6">
+      {insuranceProductFlow.map((step, index) => (
+        <figure className={cn("relative min-w-0", index === 2 && "col-start-2 row-start-2", index === 3 && "col-start-1 row-start-2")} key={step.number}>
+          <ImageZoom>
+            <div className="relative mx-auto aspect-[390/844] w-full max-w-[190px] overflow-hidden rounded-[18px] border border-[#e8e3ed] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.09)]">
+              <Image src={step.src} alt={step.title} width={1533} height={3317} className="h-full w-full object-cover object-top" sizes="(max-width: 768px) 42vw, 190px" />
+            </div>
+          </ImageZoom>
           <figcaption className="mt-3">
-            <p className="text-[10px] font-bold tracking-[0.12em] text-[#5e6bfc]">
-              {step.number}
-            </p>
-            <p className="mt-1 text-sm font-semibold leading-5 text-[#262626]">
-              {step.title}
-            </p>
-            <p className="mt-1 text-[11px] leading-4 text-[#737373]">
-              {step.detail}
-            </p>
+            <p className="text-[10px] font-bold tracking-[0.12em] text-[#2366b7]">{step.number}</p>
+            <p className="mt-1 text-sm font-semibold leading-5 text-[#2e2222]">{step.title}</p>
+            <p className="mt-1 text-[11px] leading-4 text-[#62666b]">{step.detail}</p>
           </figcaption>
         </figure>
       ))}
@@ -745,7 +584,7 @@ function AffinaHealthcareRow({
       </div>
 
       {row.flow ? (
-        <HealthcareProductFlow />
+        <InsuranceProductFlow />
       ) : (
         <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
           <ImageZoom>
@@ -1216,53 +1055,18 @@ export function AffinaCaseStudy() {
             ))}
           </CaseStudyScrollReveal>
 
-          <CaseStudyScrollReveal className="flex flex-col gap-8 sm:gap-10">
-            <div className="aspect-video overflow-hidden rounded-xl border border-[#cfd0d4] bg-black shadow-sm">
-              <video
-                aria-label="Affina AI recommendation flow demo"
-                className="h-full w-full object-contain"
-                controls
-                playsInline
-                preload="metadata"
-              >
-                <source
-                  src="https://res.cloudinary.com/dqtfjvkok/video/upload/v1789011251/RECOMMEND_AI_-_AFFINA_1_arfukn.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-          </CaseStudyScrollReveal>
-
           <CaseStudyScrollReveal>
-            <MobileComparisonFlow />
-          </CaseStudyScrollReveal>
-
-          <CaseStudyScrollReveal>
-            <div className="overflow-hidden rounded-xl border border-[#cfd0d4]">
-              <ImageZoom>
-                <Image
-                  src="/assets/affina/affina-care-journey-scene.png"
-                  alt="Affina healthcare journey scene"
-                  width={1672}
-                  height={941}
-                  className="h-auto w-full object-contain"
-                  sizes="(max-width: 1024px) 90vw, 934px"
-                />
-              </ImageZoom>
-            </div>
-          </CaseStudyScrollReveal>
-
-          <CaseStudyScrollReveal className="rounded-xl bg-[#08090a] p-6 text-white shadow-sm sm:p-8 lg:p-10">
+            <div id="affina-measured-behavior" className="rounded-3xl border border-[#cce6f7] p-6 text-[#2e2222] shadow-sm sm:p-8 lg:p-10" style={{ background: affinaAppGradient }}>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#ffd360]">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#2366b7]">
                   Measured behavior
                 </p>
                 <h3 className="mt-4 font-[var(--font-affina-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
                   30-day snapshot after launch
                 </h3>
               </div>
-              <p className="max-w-[300px] text-sm leading-[1.5] text-white/70 sm:text-right">
+              <p className="max-w-[300px] text-sm leading-[1.5] text-[#526677] sm:text-right">
                 Traffic during this period was primarily organic and internal
                 testing, with no paid acquisition campaigns.
               </p>
@@ -1271,13 +1075,13 @@ export function AffinaCaseStudy() {
             <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-5">
               {measuredBehaviorStats.map((stat) => (
                 <div
-                  className="rounded-xl border border-white/10 bg-white/[0.06] p-4"
+                  className="rounded-xl border border-white/80 bg-white/65 p-4"
                   key={stat.label}
                 >
-                  <p className="font-[var(--font-affina-heading)] text-[30px] font-medium leading-none tracking-normal text-white sm:text-[34px]">
+                  <p className="font-[var(--font-affina-heading)] text-[30px] font-medium leading-none tracking-normal text-[#2e2222] sm:text-[34px]">
                     {stat.value}
                   </p>
-                  <p className="mt-3 text-xs font-bold uppercase tracking-[0.08em] text-white/55">
+                  <p className="mt-3 text-xs font-bold uppercase tracking-[0.08em] text-[#526677]">
                     {stat.label}
                   </p>
                 </div>
@@ -1295,19 +1099,20 @@ export function AffinaCaseStudy() {
                 </p>
               </div>
 
-              <div className="rounded-xl border border-white/10 p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-white/65">
+              <div className="rounded-xl border border-white/80 bg-white/45 p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#526677]">
                   What&apos;s next
                 </p>
-                <ul className="mt-4 flex flex-col gap-3 text-base leading-7 text-white/75">
+                <ul className="mt-4 flex flex-col gap-3 text-base leading-7 text-[#405568]">
                   {nextMeasurementSteps.map((item) => (
                     <li className="flex gap-3" key={item}>
-                      <span className="mt-[0.72em] size-1.5 shrink-0 rounded-full bg-white/50" />
+                      <span className="mt-[0.72em] size-1.5 shrink-0 rounded-full bg-[#2c86ff]/60" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
+            </div>
             </div>
           </CaseStudyScrollReveal>
         </section>
@@ -1386,152 +1191,8 @@ export function AffinaCaseStudy() {
             </div>
           </CaseStudyScrollReveal>
 
-          <CaseStudyScrollReveal className="overflow-hidden rounded-2xl border border-[#e4e4e7] bg-white">
-            <div className="bg-[#f0f1ff] p-5 sm:p-8 lg:p-10">
-              <div className="flex items-center justify-between gap-6">
-                <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#262626] sm:text-xs">
-                  Design System 1.0
-                </p>
-                <Image
-                  alt="Affina"
-                  className="h-auto w-[72px] object-contain sm:w-[92px]"
-                  height={60}
-                  src="/assets/affina/brand-wordmark-after.svg"
-                  width={300}
-                />
-              </div>
-            </div>
-
-            <div className="grid gap-px bg-[#e4e4e7] lg:grid-cols-2">
-              <article className="min-w-0 bg-white p-5 sm:p-8 lg:p-10">
-                <div className="flex items-end justify-between gap-4">
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#737373]">
-                      01 · Foundation
-                    </p>
-                    <h4 className="mt-2 font-[var(--font-affina-heading)] text-2xl font-semibold text-[#262626]">
-                      Shared visual rules
-                    </h4>
-                  </div>
-                  <span className="rounded-full bg-[#f0f1ff] px-3 py-1 text-[10px] font-bold text-[#5e6bfc]">
-                    TOKEN-LED
-                  </span>
-                </div>
-
-                <div className="mt-8">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#737373]">
-                    Brand & neutral colors
-                  </p>
-                  <div className="mt-3 grid grid-cols-6 overflow-hidden rounded-xl border border-black/[0.06]">
-                    {["#5E6BFC", "#8B6CF6", "#FF51FF", "#262626", "#666666", "#EDEDED"].map(
-                      (color) => (
-                        <div className="aspect-square" key={color} style={{ backgroundColor: color }}>
-                          <span className="sr-only">{color}</span>
-                        </div>
-                      ),
-                    )}
-                  </div>
-                </div>
-
-                <div className="mt-7">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#737373]">
-                    Spacing
-                  </p>
-                  <div className="mt-4 flex h-16 items-end justify-between gap-2">
-                    {foundationSpacingTokens.map((space) => (
-                      <div className="flex min-w-0 flex-1 flex-col items-center gap-2" key={space}>
-                        <span
-                          className="block w-full max-w-10 rounded-sm bg-[#707afc]"
-                          style={{ height: `${Math.max(space, 4)}px` }}
-                        />
-                        <span className="text-[9px] font-medium text-[#737373]">{space}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-7">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#737373]">
-                    Radius
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-3">
-                    {foundationRadiusTokens.map((radius) => (
-                      <div
-                        className="flex size-12 items-center justify-center border border-[#c8cdff] bg-[#f0f1ff] text-[9px] font-semibold text-[#5e6bfc]"
-                        key={radius}
-                        style={{ borderRadius: `${radius}px` }}
-                      >
-                        {radius}
-                      </div>
-                    ))}
-                    <div className="flex size-12 items-center justify-center rounded-full border border-[#c8cdff] bg-[#f0f1ff] text-[9px] font-semibold text-[#5e6bfc]">
-                      full
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article className="min-w-0 bg-[#fafaff] p-5 sm:p-8 lg:p-10">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#737373]">
-                    02 · Atoms
-                  </p>
-                  <h4 className="mt-2 font-[var(--font-affina-heading)] text-2xl font-semibold text-[#262626]">
-                    Controls with complete states
-                  </h4>
-                </div>
-
-                <div className="mt-8 grid gap-4 rounded-2xl border border-[#e2e5ff] bg-white p-5">
-                  <div className="flex items-center justify-between gap-5">
-                    <span className="text-xs font-bold uppercase tracking-[0.08em] text-[#525252]">
-                      Selection controls
-                    </span>
-                    <div className="flex items-center gap-3">
-                      <span className="flex size-6 items-center justify-center rounded-[12px] bg-[#707afc] text-sm font-bold text-white">✓</span>
-                      <span className="flex size-6 items-center justify-center rounded-full border border-black/10 bg-white">
-                        <span className="size-3 rounded-full bg-[#707afc]" />
-                      </span>
-                      <span className="relative h-8 w-14 rounded-full bg-[#707afc]">
-                        <span className="absolute right-1 top-1 size-6 rounded-full bg-white shadow-sm" />
-                      </span>
-                    </div>
-                  </div>
-                  <div className="h-px bg-[#ededed]" />
-                  <div className="flex flex-wrap gap-2">
-                    <span className="rounded-full border border-[#707afc] bg-[#f0f1ff] px-3 py-2 text-xs font-semibold text-[#5e6bfc]">
-                      Selected
-                    </span>
-                    <span className="rounded-full border border-black/10 bg-white px-3 py-2 text-xs font-semibold text-[#525252]">
-                      Default
-                    </span>
-                    <span className="rounded-full bg-[#ededed] px-3 py-2 text-xs font-semibold text-[#8d808d]">
-                      Disabled
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mt-4 rounded-2xl border border-[#e2e5ff] bg-white p-5">
-                  <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#525252]">
-                    Buttons
-                  </p>
-                  <div className="mt-5 flex flex-wrap items-center gap-3">
-                    <span className="rounded-2xl bg-[linear-gradient(90deg,#5e6bfc_0%,#8b6cf6_55%,#ff51ff_100%)] px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_24px_-12px_rgba(215,40,175,0.55)]">
-                      Continue
-                    </span>
-                    <span className="rounded-2xl border border-[#ff51ff] bg-white px-4 py-2.5 text-sm font-semibold text-[#ff51ff]">
-                      Secondary
-                    </span>
-                    <span className="rounded-2xl bg-[#262626] px-4 py-2.5 text-sm font-semibold text-white">
-                      Neutral
-                    </span>
-                  </div>
-                  <p className="mt-5 text-xs leading-5 text-[#737373]">
-                    Default, hover, pressed and disabled variants are documented
-                    before components enter product flows.
-                  </p>
-                </div>
-              </article>
-            </div>
+          <CaseStudyScrollReveal>
+            <AffinaAppDesignSystem />
           </CaseStudyScrollReveal>
 
           <div>

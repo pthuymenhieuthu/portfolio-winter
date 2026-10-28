@@ -248,7 +248,7 @@ export const DATA = {
       icon: <Icons.linkedin className="size-3" />,
     },
   ],
-  image: "/assets/project-thumbnails/affina.png",
+  image: "/assets/project-thumbnails/affina-pink-meadow.webp",
   video: "",
 },
     {
