@@ -281,7 +281,6 @@ export function ZoanCaseStudy() {
         id="zoan-overview"
         links={[
           { href: "https://zoan.network/", label: "Website", icon: "website" },
-          { href: "https://www.linkedin.com/company/zoanai/posts/?feedView=all", label: "LinkedIn", icon: "link" },
         ]}
         outcome="A scalable system that reduced design–engineering friction and strengthened the product identity"
         role="UI/UX Designer"
@@ -615,9 +614,9 @@ export function ZoanCaseStudy() {
             <a className="text-[#08090a] underline underline-offset-4" href="mailto:phuongthuy101222@gmail.com">
               phuongthuy101222@gmail.com
             </a>{" "}
-            or DM me on{" "}
-            <a className="text-[#08090a] underline underline-offset-4" href={DATA.contact.social.LinkedIn.url} rel="noopener noreferrer" target="_blank">
-              Linkedin
+            or see my work on{" "}
+            <a className="text-[#08090a] underline underline-offset-4" href={DATA.contact.social.Behance.url} rel="noopener noreferrer" target="_blank">
+              Behance
             </a>
           </p>
         </div>

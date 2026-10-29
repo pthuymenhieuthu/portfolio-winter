@@ -11,7 +11,7 @@ export function TallyContactForm() {
         height="284"
         loading="eager"
         scrolling="no"
-        title="Contact form"
+        title="Project inquiry form"
         width="100%"
         className="block h-full w-full overflow-hidden bg-transparent"
         style={{ border: 0, margin: 0 }}

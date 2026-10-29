@@ -14,9 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const socialOrder = ["LinkedIn", "Behance", "Threads", "email"] as const;
-const CV_URL =
-  "https://drive.google.com/file/d/1gLkY5mOFYf0NKvDU5oKwIqxyRtvT8PPt/view?usp=sharing";
+const socialOrder = ["Behance", "email"] as const;
 
 const dockTransition = {
   duration: 0.72,
@@ -65,6 +63,7 @@ function NavButton({
     <Tooltip>
       <TooltipTrigger asChild>
         <Link
+          aria-label={label}
           href={href}
           rel={isExternal ? "noopener noreferrer" : undefined}
           target={isExternal ? "_blank" : undefined}
@@ -104,7 +103,8 @@ export default function Navbar() {
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 mx-auto mb-4 flex h-16 origin-bottom">
       <div className="fixed inset-x-0 bottom-0 h-32 w-full bg-background/[0.18] backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_top,black_0%,rgba(0,0,0,.9)_26%,rgba(0,0,0,.55)_56%,rgba(0,0,0,.22)_78%,transparent_100%)] [mask-image:linear-gradient(to_top,black_0%,rgba(0,0,0,.9)_26%,rgba(0,0,0,.55)_56%,rgba(0,0,0,.22)_78%,transparent_100%)] dark:bg-background/[0.18]" />
       <motion.nav
-        animate={{ width: isExpanded ? 368 : 48 }}
+        aria-label="Main navigation"
+        animate={{ width: isExpanded ? 312 : 48 }}
         className="pointer-events-auto relative z-50 mx-auto flex h-16 min-h-0 max-w-[calc(100vw-24px)] items-center justify-center overflow-hidden rounded-full border-0 px-2 py-2 shadow-[0_1px_2px_rgba(0,0,0,.03),0_10px_28px_-12px_rgba(0,0,0,.12),inset_0_1px_0_rgba(255,255,255,.92),inset_0_-1px_0_rgba(255,255,255,.4),inset_0_0_0_.5px_rgba(0,0,0,.05)] backdrop-blur-[22px] transform-gpu dark:shadow-[0_1px_2px_rgba(0,0,0,.16),0_10px_28px_-12px_rgba(0,0,0,.42),inset_0_1px_0_rgba(255,255,255,.16),inset_0_-1px_0_rgba(255,255,255,.06)]"
         initial={false}
         style={{
@@ -176,7 +176,7 @@ export default function Navbar() {
                     transition={motionTransition}
                     variants={itemVariants}
                   >
-                    <NavButton href={social.url} label={name}>
+                    <NavButton href={social.url} label={social.name}>
                       <social.icon className="size-4" />
                     </NavButton>
                   </motion.div>
@@ -187,14 +187,12 @@ export default function Navbar() {
                 transition={motionTransition}
                 variants={itemVariants}
               >
-                <Link
+                <a
                   className="inline-flex h-12 items-center justify-center whitespace-nowrap rounded-full bg-[#3BA0FF] px-4 text-sm font-bold leading-none text-white shadow-[0_2px_4px_rgba(0,0,0,.03),0_8px_14px_rgba(59,160,255,.18),inset_0_3px_5px_rgba(255,255,255,.41)] transition duration-300 hover:bg-[#238fe8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/35 focus-visible:ring-offset-2"
-                  href={CV_URL}
-                  rel="noopener noreferrer"
-                  target="_blank"
+                  href="/#contact"
                 >
-                  Read my CV
-                </Link>
+                  Start a project
+                </a>
               </motion.div>
             </motion.div>
           )}

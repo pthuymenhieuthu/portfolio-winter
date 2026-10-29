@@ -34,7 +34,7 @@ export default function Page() {
                   <p className="text-base leading-[1.35] text-[#737373]">
                     Find out more on my{" "}
                     <a
-                      href="https://www.behance.net/thuynguyen175"
+                      href={DATA.contact.social.Behance.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#0096F7] underline underline-offset-4 transition hover:text-[#007ac9]"
@@ -85,7 +85,7 @@ export default function Page() {
         />
       </div>
       <footer
-        id="contact"
+        aria-labelledby="contact-heading"
         className="relative z-10 flex min-h-[720px] items-center justify-center overflow-hidden bg-[#F2F6FA] px-5 pb-[calc(8rem+env(safe-area-inset-bottom))] pt-20 text-center text-[#29303B] md:fixed md:inset-x-0 md:bottom-0 md:z-0 md:h-[64dvh] md:min-h-[560px] md:px-8 md:pb-40 md:pt-[72px]"
       >
         <div className="mx-auto grid w-full max-w-[1080px] items-center justify-items-center gap-4 text-center md:translate-y-14 md:grid-cols-2 md:gap-8 md:text-left lg:translate-y-12 lg:gap-10">
@@ -93,7 +93,7 @@ export default function Page() {
             <div className="text-sm font-normal text-[#29303B]/60">
               Contact
             </div>
-            <h2 className="mt-3 max-w-[520px] font-[var(--font-heading)] text-[26px] font-medium leading-[1.06] tracking-[-2px] sm:mt-4 sm:text-[38px] lg:text-[44px]">
+            <h2 id="contact-heading" className="mt-3 max-w-[520px] font-[var(--font-heading)] text-[26px] font-medium leading-[1.06] tracking-[-2px] sm:mt-4 sm:text-[38px] lg:text-[44px]">
               Tell me about your project
             </h2>
             <p className="mt-3 max-w-[500px] text-sm leading-[1.4] text-[#29303B]/70 sm:text-base sm:leading-[1.45]">
@@ -102,22 +102,20 @@ export default function Page() {
               <Link
                 href={DATA.contact.social.email.url}
                 className="text-[#0096F7] underline-offset-4 hover:underline"
-                rel="noopener noreferrer"
-                target="_blank"
               >
-                phuongthuy101222@gmail.com
+                {DATA.contact.email}
               </Link>
               .
             </p>
             <p className="mt-3 text-sm text-[#29303B]/60 sm:mt-4">
-              Prefer DM? Find me on{" "}
+              See more of my work on{" "}
               <Link
-                href={DATA.contact.social.LinkedIn.url}
+                href={DATA.contact.social.Behance.url}
                 className="text-[#0096F7] underline-offset-4 hover:underline"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                Linkedin
+                Behance
               </Link>
               .
             </p>
@@ -125,6 +123,8 @@ export default function Page() {
           <TallyContactForm />
         </div>
       </footer>
+      {/* Keep the anchor in document flow so the fixed desktop footer is revealed. */}
+      <div id="contact" className="h-px" />
     </div>
   );
 }

@@ -3,10 +3,26 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-export function BackToTopButton() {
+export function BackToTopButton({ targetId }: { targetId?: string }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isOverFooter, setIsOverFooter] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const label = targetId === "projects" ? "Back to projects" : "Back to top";
+
+  const scrollBack = () => {
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "instant"
+      : "smooth";
+    const target = targetId ? document.getElementById(targetId) : null;
+
+    if (target) {
+      target.scrollIntoView({ behavior, block: "start" });
+      window.history.replaceState(null, "", `#${targetId}`);
+      return;
+    }
+
+    window.scrollTo({ top: 0, behavior });
+  };
 
   useEffect(() => {
     const updateVisibility = () => {
@@ -32,7 +48,7 @@ export function BackToTopButton() {
             element !== document.documentElement
         );
 
-        setIsOverFooter(Boolean(surface?.closest("footer#contact")));
+        setIsOverFooter(Boolean(surface?.closest("footer")));
       }
     };
 
@@ -48,7 +64,7 @@ export function BackToTopButton() {
 
   return (
     <button
-      aria-label="Back to top"
+      aria-label={label}
       ref={buttonRef}
       className={cn(
         "fixed bottom-28 right-5 z-50 flex h-[68px] w-12 items-center justify-center bg-transparent transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 sm:right-8",
@@ -59,8 +75,8 @@ export function BackToTopButton() {
           ? "pointer-events-auto translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0"
       )}
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      title="Back to top"
+      onClick={scrollBack}
+      title={label}
       type="button"
     >
       <svg

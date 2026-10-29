@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { DATA } from "@/data/resume";
 
 const PASSWORD_BY_SLUG: Record<string, string> = {
   zoan: "1125", // bài /blog/zoan dùng pass 1125
@@ -85,14 +86,14 @@ export function PasswordGate({ slug, title, children }: PasswordGateProps) {
     >
       phuongthuy101222@gmail.com
     </a>{" "}
-    or connect with me on{" "}
+    or see my work on{" "}
     <a
-      href="https://www.linkedin.com/in/thuy-nguyen-1665ab208/"
+      href={DATA.contact.social.Behance.url}
       target="_blank"
       rel="noopener noreferrer"
       className="font-medium underline underline-offset-2 hover:text-foreground"
     >
-      LinkedIn
+      Behance
     </a>.
   </p>
 </div>

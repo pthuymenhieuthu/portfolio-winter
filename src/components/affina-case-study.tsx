@@ -1352,9 +1352,9 @@ export function AffinaCaseStudy() {
             <a className="text-[#08090a] underline underline-offset-4" href="mailto:phuongthuy101222@gmail.com">
               phuongthuy101222@gmail.com
             </a>{" "}
-            or DM me on{" "}
-            <a className="text-[#08090a] underline underline-offset-4" href={DATA.contact.social.LinkedIn.url} rel="noopener noreferrer" target="_blank">
-              Linkedin
+            or see my work on{" "}
+            <a className="text-[#08090a] underline underline-offset-4" href={DATA.contact.social.Behance.url} rel="noopener noreferrer" target="_blank">
+              Behance
             </a>
           </p>
         </div>

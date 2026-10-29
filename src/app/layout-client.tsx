@@ -48,7 +48,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
           >
             {children}
           </div>
-          {isFullBleed && <BackToTopButton />}
+          {isFullBleed && <BackToTopButton targetId={isHome ? "projects" : undefined} />}
           <Navbar />
           <PageTransition />
         </TooltipProvider>

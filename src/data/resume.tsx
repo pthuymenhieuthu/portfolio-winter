@@ -35,30 +35,9 @@ export const DATA = {
 
         navbar: true,
       },
-      Dribble: {
-        name: "Dribble",
-        url: "https://www.behance.net/thuynguyen175",
-        icon: Icons.dribble,
-
-        navbar: true,
-      },
-      LinkedIn: {
-        name: "LinkedIn",
-        url: "https://www.linkedin.com/in/thuy-nguyen-1665ab208/",
-        icon: Icons.linkedin,
-
-        navbar: true,
-      },
-      Threads: {
-        name: "Threads",
-        url: "https://www.threads.net/@winter.arrt",
-        icon: Icons.threads,
-
-        navbar: true,
-      },
       email: {
         name: "Send Email",
-        url: "https://mail.google.com/mail/u/0/?fs=1&to=phuongthuy101222@gmail.com&tf=cm",
+        url: "mailto:phuongthuy101222@gmail.com",
         icon: Icons.email,
 
         navbar: true,
@@ -247,11 +226,6 @@ export const DATA = {
       href: "https://play.google.com/store/apps/details?id=com.affina&hl=en",
       icon: <Icons.link className="size-3" />,
     },
-    {
-      type: "LinkedIn",
-      href: "https://www.linkedin.com/company/affina-vn/",
-      icon: <Icons.linkedin className="size-3" />,
-    },
   ],
   image: "/assets/project-thumbnails/affina-pink-meadow-en.webp",
   video: "",
@@ -326,11 +300,6 @@ export const DATA = {
       href: "https://zoan.network/",
       icon: <Icons.globe className="size-3" />,
         },
-        {
-          type: "Linkedin",
-          href: "https://www.linkedin.com/company/zoanai/posts/?feedView=all",
-          icon: <Icons.linkedin className="size-3" />,
-        },
       ],
       image: "/assets/project-thumbnails/zoan.png",
       video: "",
@@ -375,7 +344,7 @@ export const DATA = {
       links: [
         {
           type: "Behance",
-          href: "https://www.behance.net/thuynguyen175?fbclid=IwY2xjawMnJzZleHRuA2FlbQIxMABicmlkETFiNktNMVpJaTlCWkY4a29RAR5tjrgVNL2qaAfS824pS6_HGMleBwazaQmDA03I71mIIqZ8wBTAGmBR-BSD8A_aem_oQB3E8ApP2trzP5kBapFCA",
+          href: "https://www.behance.net/thuynguyen175",
           icon: <Icons.behance className="size-3" />,
         },
       ],
@@ -475,7 +444,7 @@ export const DATA = {
       links: [
         {
           type: "About Cake",
-          href: "https://cake.vn//",
+          href: "https://cake.vn/",
           icon: <Icons.link className="size-3" />,
         },
       ],
