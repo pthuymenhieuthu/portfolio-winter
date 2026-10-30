@@ -1,6 +1,7 @@
 "use client";
 
 import { buttonVariants } from "@/components/ui/button";
+import { ProjectInquiryDialog } from "@/components/project-inquiry-dialog";
 import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
@@ -85,6 +86,7 @@ function NavButton({
 
 export default function Navbar() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isProjectInquiryOpen, setIsProjectInquiryOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const homeItem = DATA.navbar[0];
   const motionTransition = shouldReduceMotion ? { duration: 0 } : dockTransition;
@@ -100,9 +102,10 @@ export default function Navbar() {
   }, [shouldReduceMotion]);
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 mx-auto mb-4 flex h-16 origin-bottom">
-      <div className="fixed inset-x-0 bottom-0 h-32 w-full bg-background/[0.18] backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_top,black_0%,rgba(0,0,0,.9)_26%,rgba(0,0,0,.55)_56%,rgba(0,0,0,.22)_78%,transparent_100%)] [mask-image:linear-gradient(to_top,black_0%,rgba(0,0,0,.9)_26%,rgba(0,0,0,.55)_56%,rgba(0,0,0,.22)_78%,transparent_100%)] dark:bg-background/[0.18]" />
-      <motion.nav
+    <>
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 mx-auto mb-4 flex h-16 origin-bottom">
+        <div className="fixed inset-x-0 bottom-0 h-32 w-full bg-background/[0.18] backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_top,black_0%,rgba(0,0,0,.9)_26%,rgba(0,0,0,.55)_56%,rgba(0,0,0,.22)_78%,transparent_100%)] [mask-image:linear-gradient(to_top,black_0%,rgba(0,0,0,.9)_26%,rgba(0,0,0,.55)_56%,rgba(0,0,0,.22)_78%,transparent_100%)] dark:bg-background/[0.18]" />
+        <motion.nav
         aria-label="Main navigation"
         animate={{ width: isExpanded ? 312 : 48 }}
         className="pointer-events-auto relative z-50 mx-auto flex h-16 min-h-0 max-w-[calc(100vw-24px)] items-center justify-center overflow-hidden rounded-full border-0 px-2 py-2 shadow-[0_1px_2px_rgba(0,0,0,.03),0_10px_28px_-12px_rgba(0,0,0,.12),inset_0_1px_0_rgba(255,255,255,.92),inset_0_-1px_0_rgba(255,255,255,.4),inset_0_0_0_.5px_rgba(0,0,0,.05)] backdrop-blur-[22px] transform-gpu dark:shadow-[0_1px_2px_rgba(0,0,0,.16),0_10px_28px_-12px_rgba(0,0,0,.42),inset_0_1px_0_rgba(255,255,255,.16),inset_0_-1px_0_rgba(255,255,255,.06)]"
@@ -187,17 +190,23 @@ export default function Navbar() {
                 transition={motionTransition}
                 variants={itemVariants}
               >
-                <a
+                <button
                   className="inline-flex h-12 items-center justify-center whitespace-nowrap rounded-full bg-[#3BA0FF] px-4 text-sm font-bold leading-none text-white shadow-[0_2px_4px_rgba(0,0,0,.03),0_8px_14px_rgba(59,160,255,.18),inset_0_3px_5px_rgba(255,255,255,.41)] transition duration-300 hover:bg-[#238fe8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/35 focus-visible:ring-offset-2"
-                  href="/#contact"
+                  onClick={() => setIsProjectInquiryOpen(true)}
+                  type="button"
                 >
                   Start a project
-                </a>
+                </button>
               </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.nav>
-    </div>
+        </motion.nav>
+      </div>
+      <ProjectInquiryDialog
+        onOpenChange={setIsProjectInquiryOpen}
+        open={isProjectInquiryOpen}
+      />
+    </>
   );
 }
