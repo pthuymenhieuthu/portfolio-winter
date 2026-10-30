@@ -9,6 +9,7 @@ import { AffinaCaseStudy } from "@/components/affina-case-study";
 import { AffinaPartnerFlowCaseStudy } from "@/components/affina-partner-flow-case-study";
 import { FourOrangesCaseStudy } from "@/components/four-oranges-case-study";
 import { ZoanCaseStudy } from "@/components/zoan-case-study";
+import { MedhuntCaseStudy } from "@/components/medhunt-case-study";
 import { TrueProfitCaseStudy } from "@/components/trueprofit-case-study";
 import { EdTechCaseStudy } from "@/components/edtech-case-study";
 import { UiDesignSeriesCaseStudy } from "@/components/ui-design-series-case-study";
@@ -24,6 +25,10 @@ export default async function BlogPage({
 }: {
   params: { slug: string };
 }) {
+  if (params.slug === "medhunt") {
+    return <MedhuntCaseStudy />;
+  }
+
   if (params.slug === "affina") {
     return <AffinaCaseStudy />;
   }

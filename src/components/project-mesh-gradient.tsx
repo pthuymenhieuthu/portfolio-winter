@@ -6,6 +6,7 @@ import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const projectMeshPalettes = {
+  medhunt: ["#eaf0ff", "#2457c5", "#bfeaf2", "#f5d866"],
   affina: ["#65c7ff", "#b9b2ff", "#f38ee7", "#ffd7ed"],
   affinaPartner: ["#65c7ff", "#b9b2ff", "#f38ee7", "#ffd7ed"],
   fourOranges: ["#ff6a00", "#ff9f1c", "#ffd166", "#fff3d0"],

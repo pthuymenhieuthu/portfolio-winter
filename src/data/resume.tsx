@@ -202,6 +202,30 @@ export const DATA = {
   ],
   projects: [
     {
+      title: "MedHunt — Healthcare Recruitment OS",
+      href: "/blog/medhunt",
+      dates: "Oct 2026",
+      active: true,
+      description:
+        "Designed an end-to-end operating system connecting recruitment requests, candidates, interviews, placements, warranty, and service fees.",
+      technologies: [
+        "Dashboard",
+        "Information Architecture",
+        "Interactive HTML",
+        "Design System",
+        "Developer Handoff",
+      ],
+      links: [
+        {
+          type: "Live project",
+          href: "https://medhunts.com/",
+          icon: <Icons.globe className="size-3" />,
+        },
+      ],
+      image: "/assets/project-thumbnails/medhunt-monitor.png",
+      video: "",
+    },
+    {
   title: "Affina — Simplifying Insurance with AI",
   href: "/blog/affina",
   dates: "Mar 2026",

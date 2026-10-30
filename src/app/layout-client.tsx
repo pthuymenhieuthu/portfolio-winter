@@ -17,6 +17,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isCaseStudy =
+    pathname === "/blog/medhunt" ||
     pathname === "/blog/affina" ||
     pathname === "/blog/affina-partner-flow" ||
     pathname === "/blog/4oranges" ||
