@@ -40,11 +40,17 @@ export function ProjectCard({
   links,
   className,
 }: Props) {
+  const isExternalHref = href?.startsWith("http://") || href?.startsWith("https://");
+
   return (
     <Card className="group relative flex h-full flex-col overflow-hidden border text-[#29303B] transition-all duration-300 ease-out hover:shadow-lg">
       <Link
-        aria-label={`View ${title} project`}
+        aria-label={
+          isExternalHref ? `Open ${title} link in a new tab` : `View ${title} project`
+        }
         href={href || "#"}
+        rel={isExternalHref ? "noopener noreferrer" : undefined}
+        target={isExternalHref ? "_blank" : undefined}
         className={cn(
           "absolute inset-0 z-10 cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/45 focus-visible:ring-inset",
           className

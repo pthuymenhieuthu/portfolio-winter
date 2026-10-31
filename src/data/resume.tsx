@@ -236,7 +236,6 @@ export const DATA = {
     "Brand Identity",
     "Design System",
     "UI/UX Design",
-    "Website Redesign",
     "AI-Enhanced Workflow",
   ],
   links: [
@@ -285,7 +284,7 @@ export const DATA = {
           icon: <Icons.link className="size-3" />,
         },
       ],
-      image: "/assets/project-thumbnails/affina-partner-flow.png?v=pink-1",
+      image: "/assets/affina-partner-flow/partner-thumbnail.png",
       video: "",
     },
     {

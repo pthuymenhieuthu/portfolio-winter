@@ -46,7 +46,7 @@ export function ProjectInquiryDialog({
   return (
     <dialog
       aria-labelledby="project-inquiry-title"
-      className="fixed inset-0 m-auto max-h-[calc(100dvh-32px)] w-[calc(100%-32px)] max-w-[680px] overflow-y-auto rounded-[28px] bg-white p-0 text-[#29303B] shadow-[0_0_0_1px_rgba(15,23,42,.06),0_28px_80px_-20px_rgba(15,23,42,.32)] backdrop:bg-[#101827]/40 backdrop:backdrop-blur-[6px]"
+      className="fixed inset-0 m-auto max-h-[calc(100dvh-32px)] w-[calc(100%-32px)] max-w-[720px] overflow-y-auto rounded-[28px] bg-white p-0 text-[#29303B] shadow-[0_0_0_1px_rgba(15,23,42,.06),0_28px_80px_-20px_rgba(15,23,42,.32)] backdrop:bg-[#101827]/40 backdrop:backdrop-blur-[6px]"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) event.currentTarget.close();
       }}
@@ -75,8 +75,8 @@ export function ProjectInquiryDialog({
           </p>
         </div>
 
-        <div className="mt-5 rounded-[20px] bg-[#F4F7FA] px-3 py-2 sm:px-4 sm:py-3">
-          <TallyContactForm />
+        <div className="mx-auto mt-2 w-full max-w-[560px] rounded-[20px] px-3 py-0 sm:px-5">
+          <TallyContactForm layout="stacked" />
         </div>
       </div>
     </dialog>

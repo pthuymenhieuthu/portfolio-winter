@@ -50,50 +50,50 @@ type FlowScreen = {
 const salesAssistedFlow: FlowScreen[] = [
   {
     src: "/assets/affina-partner-flow/flows/mobile-01-home.png",
-    width: 390,
-    height: 1070,
+    width: 780,
+    height: 1870,
     title: "Sales dashboard",
     description: "Start from the partner workspace and product catalogue.",
   },
   {
     src: "/assets/affina-partner-flow/flows/mobile-02-product.png",
-    width: 390,
-    height: 1070,
+    width: 1170,
+    height: 4644,
     title: "Product overview",
     description: "Explain the offer, commission and core benefits before setup.",
   },
   {
     src: "/assets/affina-partner-flow/flows/mobile-03-family.png",
-    width: 390,
-    height: 979,
+    width: 1170,
+    height: 2937,
     title: "Family assessment",
     description: "Capture the household structure and insurance needs.",
   },
   {
     src: "/assets/affina-partner-flow/flows/mobile-04-provider.png",
-    width: 390,
-    height: 2049,
+    width: 414,
+    height: 1993,
     title: "Provider shortlist",
     description: "Compare eligible plans without losing the family context.",
   },
   {
     src: "/assets/affina-partner-flow/flows/mobile-05-benefits.png",
-    width: 390,
-    height: 1688,
+    width: 414,
+    height: 1696,
     title: "Benefit setup",
     description: "Configure coverage and benefits for the selected plan.",
   },
   {
     src: "/assets/affina-partner-flow/flows/mobile-06-buyer.png",
-    width: 390,
-    height: 1492,
+    width: 1242,
+    height: 4500,
     title: "Buyer details",
     description: "Add the buyer and connect each insured family member.",
   },
   {
     src: "/assets/affina-partner-flow/flows/mobile-07-summary.png",
-    width: 463,
-    height: 971,
+    width: 1242,
+    height: 2937,
     title: "Family review",
     description: "Check every person, relationship and required detail together.",
   },
@@ -116,10 +116,10 @@ const selfServiceFlow: FlowScreen[] = [
   },
   {
     src: "/assets/affina-partner-flow/flows/web-02-filter.png",
-    width: 1280,
-    height: 2771,
-    title: "Set family criteria",
-    description: "Use age, gender and budget to narrow eligible options.",
+    width: 2560,
+    height: 5192,
+    title: "Select insurer",
+    description: "Compare insurer plans, eligibility, coverage and premium.",
   },
   {
     src: "/assets/affina-partner-flow/flows/web-03-detail.png",
@@ -169,28 +169,28 @@ const recoveryStates: FlowScreen[] = [
   {
     src: "/assets/affina-partner-flow/flows/state-02-family-warning.png",
     width: 344,
-    height: 492,
+    height: 468,
     title: "Family validation",
     description: "Show which member blocks the current configuration.",
   },
   {
     src: "/assets/affina-partner-flow/flows/state-03-add-success.png",
     width: 390,
-    height: 504,
-    title: "Member added",
-    description: "Confirm the action and keep the user inside the journey.",
+    height: 484,
+    title: "Add insured person",
+    description: "Collect a family member’s name, gender and date of birth before adding them.",
   },
   {
     src: "/assets/affina-partner-flow/flows/state-04-upload-warning.png",
     width: 344,
-    height: 508,
+    height: 503,
     title: "Incomplete upload",
     description: "Identify missing rows and offer a direct recovery path.",
   },
   {
     src: "/assets/affina-partner-flow/flows/state-05-upload-failed.png",
     width: 344,
-    height: 452,
+    height: 423,
     title: "Upload failed",
     description: "State the file problem and provide a clear retry action.",
   },
@@ -304,10 +304,10 @@ function OverviewMockups() {
   return (
     <div className="mt-14">
       <Image
-        src="/assets/affina-partner-flow/overview-mockups.png"
+        src="/assets/affina-partner-flow/partner-mockup.png"
         alt="Affina partner insurance purchase flow shown on desktop and mobile devices"
-        width={995}
-        height={413}
+        width={1672}
+        height={941}
         priority
         unoptimized
         className="h-auto w-full"

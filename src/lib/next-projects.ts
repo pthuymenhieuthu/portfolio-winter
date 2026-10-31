@@ -9,8 +9,15 @@ const HIDDEN_PROJECT_HREFS = new Set([
 ]);
 
 export function getVisibleProjects<T extends ProjectLink>(projects: readonly T[]): T[] {
+  const projectOrder: Record<string, number> = {
+    "/blog/medhunt": 0,
+    "/blog/affina": 1,
+    "/blog/affina-partner-flow": 2,
+    "/blog/zoan": 3,
+    "/blog/chande": 4,
+  };
   const priority = (project: ProjectLink) =>
-    project.href === "/blog/medhunt" ? 0 : project.href === "/blog/affina" ? 1 : project.href === "/blog/zoan" ? 2 : project.href === "/blog/chande" ? 3 : 4;
+    projectOrder[project.href ?? ""] ?? 5;
 
   return projects
     .filter((project) => !HIDDEN_PROJECT_HREFS.has(project.href ?? ""))
