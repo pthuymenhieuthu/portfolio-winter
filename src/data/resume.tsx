@@ -285,7 +285,7 @@ export const DATA = {
           icon: <Icons.link className="size-3" />,
         },
       ],
-      image: "/assets/project-thumbnails/affina-partner-flow.png",
+      image: "/assets/project-thumbnails/affina-partner-flow.png?v=pink-1",
       video: "",
     },
     {
