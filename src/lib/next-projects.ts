@@ -5,7 +5,6 @@ type ProjectLink = {
 
 // Temporarily hide these case studies while their designs are being updated.
 const HIDDEN_PROJECT_HREFS = new Set([
-  "/blog/affina-partner-flow",
   "/blog/4oranges",
 ]);
 
