@@ -52,11 +52,7 @@ export default function Page() {
                   delay={BLUR_FADE_DELAY * 12 + id * 0.05}
                 >
                   <ProjectCard
-                    href={
-                      project.href === "/blog/affina-partner-flow"
-                        ? "https://apps.apple.com/us/app/affina-pro/id6444879374"
-                        : project.href
-                    }
+                    href={project.href}
                     key={project.title}
                     title={project.title}
                     description={project.description}
