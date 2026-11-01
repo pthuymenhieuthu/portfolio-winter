@@ -304,10 +304,10 @@ function OverviewMockups() {
   return (
     <div className="mt-14">
       <Image
-        src="/assets/affina-partner-flow/partner-mockup.png"
+        src="/assets/affina-partner-flow/partner-thumbnail.png"
         alt="Affina partner insurance purchase flow shown on desktop and mobile devices"
-        width={1672}
-        height={941}
+        width={1200}
+        height={900}
         priority
         unoptimized
         className="h-auto w-full"
