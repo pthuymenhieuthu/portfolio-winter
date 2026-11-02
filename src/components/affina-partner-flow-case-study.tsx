@@ -162,7 +162,7 @@ const recoveryStates: FlowScreen[] = [
   {
     src: "/assets/affina-partner-flow/flows/state-01-age-warning.png",
     width: 344,
-    height: 436,
+    height: 460,
     title: "Age rule",
     description: "Explain eligibility constraints at the moment they matter.",
   },
@@ -176,7 +176,7 @@ const recoveryStates: FlowScreen[] = [
   {
     src: "/assets/affina-partner-flow/flows/state-03-add-success.png",
     width: 390,
-    height: 484,
+    height: 504,
     title: "Add insured person",
     description: "Collect a family member’s name, gender and date of birth before adding them.",
   },
