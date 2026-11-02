@@ -1,6 +1,7 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import { BringOnBoard } from "@/components/bring-on-board";
 import { ProjectCard } from "@/components/project-card";
+import { ProjectGallery } from "@/components/project-gallery";
 import { TallyContactForm } from "@/components/tally-contact-form";
 import { HomeHero } from "@/components/home-hero";
 import { DATA } from "@/data/resume";
@@ -45,26 +46,21 @@ export default function Page() {
                 </div>
               </div>
             </BlurFade>
-            <div className="mx-auto grid w-full max-w-[800px] grid-cols-1 gap-3 px-4 sm:grid-cols-2 sm:px-0">
-              {HOME_PROJECTS.map((project, id) => (
-                <BlurFade
+            <ProjectGallery>
+              {HOME_PROJECTS.map((project) => (
+                <ProjectCard
+                  href={project.href}
                   key={project.title}
-                  delay={BLUR_FADE_DELAY * 12 + id * 0.05}
-                >
-                  <ProjectCard
-                    href={project.href}
-                    key={project.title}
-                    title={project.title}
-                    description={project.description}
-                    dates={project.dates}
-                    tags={project.technologies}
-                    image={project.image}
-                    video={project.video}
-                    links={project.links}
-                  />
-                </BlurFade>
+                  title={project.title}
+                  description={project.description}
+                  dates={project.dates}
+                  tags={project.technologies}
+                  image={project.image}
+                  video={project.video}
+                  links={project.links}
+                />
               ))}
-            </div>
+            </ProjectGallery>
           </div>
         </section>
 
