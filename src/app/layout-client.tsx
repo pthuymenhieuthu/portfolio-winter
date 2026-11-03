@@ -16,6 +16,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
 
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const isExperiment = pathname.startsWith("/experiments/");
   const isCaseStudy =
     pathname === "/blog/medhunt" ||
     pathname === "/blog/affina" ||
@@ -29,14 +30,14 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
     pathname === "/blog/pizzy" ||
     pathname === "/blog/cake" ||
     pathname === "/blog/lollypop";
-  const isFullBleed = isHome || isCaseStudy;
+  const isFullBleed = isHome || isCaseStudy || isExperiment;
 
   return (
     <>
       <ScrollProgress />
       <ThemeProvider attribute="class" defaultTheme="light">
         <TooltipProvider delayDuration={0}>
-          {!isHome && (
+          {!isHome && !isExperiment && (
             <GridBackground className="fixed inset-0 -z-10 opacity-20 dark:opacity-10" />
           )}
           <div

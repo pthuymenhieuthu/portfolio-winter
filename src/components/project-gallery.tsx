@@ -2,9 +2,10 @@
 
 import { EXPERIMENTS, type Experiment } from "@/data/experiments";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, Play, Shapes } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Play, Shapes } from "lucide-react";
 import Image from "next/image";
-import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 
 const TABS = [
   { id: "work", label: "Work" },
@@ -45,6 +46,7 @@ function ExperimentCard({ experiment }: { experiment: Experiment }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasVideoError, setHasVideoError] = useState(false);
   const isComingSoon = experiment.status === "coming-soon";
+  const isExternalHref = /^https?:\/\//.test(experiment.href ?? "");
 
   return (
     <article className="group min-w-0">
@@ -86,11 +88,11 @@ function ExperimentCard({ experiment }: { experiment: Experiment }) {
               className="object-contain transition-transform duration-300 ease-out group-hover:scale-[1.025] motion-reduce:transform-none motion-reduce:transition-none"
             />
             {experiment.href && !experiment.video && !isComingSoon && (
-              <a
+              <Link
                 href={experiment.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Try ${experiment.title} (opens in a new tab)`}
+                target={isExternalHref ? "_blank" : undefined}
+                rel={isExternalHref ? "noopener noreferrer" : undefined}
+                aria-label={isExternalHref ? `Try ${experiment.title} (opens in a new tab)` : `Read ${experiment.title}`}
                 className="absolute inset-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0096F7]"
               />
             )}
@@ -124,16 +126,16 @@ function ExperimentCard({ experiment }: { experiment: Experiment }) {
       </h3>
       <p className="mt-2 text-sm leading-relaxed text-[#697686]">{experiment.description}</p>
       {experiment.href && !isComingSoon && (
-        <a
+        <Link
           href={experiment.href}
-          target="_blank"
-          rel="noopener noreferrer"
+          target={isExternalHref ? "_blank" : undefined}
+          rel={isExternalHref ? "noopener noreferrer" : undefined}
           className="mt-3 inline-flex min-h-11 items-center gap-1 rounded-sm text-sm text-[#007AC9] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0096F7]"
         >
-          Open {experiment.category.toLowerCase()}
-          <ArrowUpRight aria-hidden="true" className="size-4" />
-          <span className="sr-only"> (opens in a new tab)</span>
-        </a>
+          {experiment.actionLabel ?? `Open ${experiment.category.toLowerCase()}`}
+          {isExternalHref ? <ArrowUpRight aria-hidden="true" className="size-4" /> : <ArrowRight aria-hidden="true" className="size-4" />}
+          {isExternalHref && <span className="sr-only"> (opens in a new tab)</span>}
+        </Link>
       )}
     </article>
   );
@@ -143,6 +145,12 @@ export function ProjectGallery({ children }: { children: ReactNode }) {
   const [activeTab, setActiveTab] = useState<TabId>("work");
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("collection") === "experiments") {
+      setActiveTab("experiments");
+    }
+  }, []);
 
   function handleTabKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     let nextIndex: number;
