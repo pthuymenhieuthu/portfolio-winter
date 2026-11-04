@@ -77,10 +77,7 @@ export function ProjectCard({
             alt={title}
             width={1200}
             height={900}
-            className={cn(
-              "h-auto w-full overflow-hidden object-cover object-top",
-              href === "/blog/affina-partner-flow" ? "aspect-video" : "aspect-[4/3]"
-            )}
+            className="aspect-[4/3] h-auto w-full overflow-hidden object-cover object-top"
             priority={false}
             sizes="(max-width: 768px) 100vw, 600px"
           />
