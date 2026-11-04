@@ -17,7 +17,9 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isExperiment = pathname.startsWith("/experiments/");
+  const isKioskDemo = pathname === "/experiments/mcdonalds-kiosk";
   const isCaseStudy =
+    pathname === "/blog/mcdonalds-kiosk" ||
     pathname === "/blog/medhunt" ||
     pathname === "/blog/affina" ||
     pathname === "/blog/affina-partner-flow" ||
@@ -50,8 +52,8 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
           >
             {children}
           </div>
-          {isFullBleed && <BackToTopButton targetId={isHome ? "projects" : undefined} />}
-          <Navbar />
+          {isFullBleed && !isKioskDemo && <BackToTopButton targetId={isHome ? "projects" : undefined} />}
+          {!isKioskDemo && <Navbar />}
           <PageTransition />
         </TooltipProvider>
       </ThemeProvider>

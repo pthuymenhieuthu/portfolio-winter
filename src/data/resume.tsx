@@ -202,6 +202,17 @@ export const DATA = {
   ],
   projects: [
     {
+      title: "McDonald’s — Making Self-Ordering Easier",
+      href: "/blog/mcdonalds-kiosk",
+      dates: "Independent mini case study",
+      active: true,
+      description: "Helping first-time and occasional kiosk users find, choose, and collect their meals with confidence.",
+      technologies: ["UX/UI Design", "Self-Service Kiosk", "Research Exploration"],
+      links: [],
+      image: "/assets/kiosk/thumbnail-mockup.png",
+      video: "",
+    },
+    {
       title: "MedHunt — Healthcare Recruitment OS",
       href: "/blog/medhunt",
       dates: "Oct 2026",

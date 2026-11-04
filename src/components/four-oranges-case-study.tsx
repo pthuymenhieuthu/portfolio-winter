@@ -440,14 +440,6 @@ const qrScreens: FlowScreen[] = [
     width: 390,
     height: 859,
   },
-  {
-    src: "/assets/4oranges/ui-flow/qr-success.png",
-    alt: "4Oranges reward success screen",
-    label: "14 · Reward success",
-    detail: "Show product, QR and reward details with actions to continue.",
-    width: 430,
-    height: 871,
-  },
 ];
 
 const accountScreen: FlowScreen = {
