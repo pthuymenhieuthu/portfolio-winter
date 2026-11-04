@@ -5,11 +5,11 @@ type ProjectLink = {
 
 export function getVisibleProjects<T extends ProjectLink>(projects: readonly T[]): T[] {
   const projectOrder: Record<string, number> = {
-    "/blog/medhunt": 0,
-    "/blog/mcdonalds-kiosk": 1,
-    "/blog/4oranges": 2,
-    "/blog/affina": 3,
-    "/blog/affina-partner-flow": 4,
+    "/blog/affina": 0,
+    "/blog/affina-partner-flow": 1,
+    "/blog/mcdonalds-kiosk": 2,
+    "/blog/4oranges": 3,
+    "/blog/medhunt": 4,
     "/blog/zoan": 5,
     "/blog/chande": 6,
   };
