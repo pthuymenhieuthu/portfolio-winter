@@ -27,7 +27,7 @@ function FoodPhoto({ file, name, className="" }: {file:string;name:string;classN
 }
 
 export function KioskPrototype({standalone=false,mockup=false}:{standalone?:boolean;mockup?:boolean}) {
-  const [language,setLanguage]=useState<KioskLanguage>("vi");
+  const [language,setLanguage]=useState<KioskLanguage>("en");
   const [screen,setScreen]=useState<Screen>("menu");
   const [category,setCategory]=useState<string>("burger");
   const [query,setQuery]=useState("");

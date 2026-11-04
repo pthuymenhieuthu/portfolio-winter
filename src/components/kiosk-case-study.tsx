@@ -1,5 +1,6 @@
 import { KioskJourneyIllustration } from "@/components/kiosk-journey-illustration";
 import { KioskPrototype } from "@/components/kiosk-prototype";
+import { KioskCustomerJourney } from "@/components/kiosk-customer-journey";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
@@ -8,6 +9,7 @@ import { caseStudyStyles as styles } from "@/lib/case-study-styles";
 const sections = [
   { id: "kiosk-overview", label: "Overview" },
   { id: "kiosk-problem", label: "Problem statement" },
+  { id: "kiosk-journey", label: "Customer journey" },
   { id: "kiosk-challenge", label: "Design challenge" },
   { id: "kiosk-research", label: "Research focus" },
   { id: "kiosk-directions", label: "Design directions" },
@@ -58,6 +60,7 @@ export function KioskCaseStudy() {
         <section id="kiosk-problem" className="scroll-mt-28">
           <SectionHeading index="02" title="Problem statement" />
           <p className={`${styles.body} max-w-[800px]`}>First-time and occasional kiosk users may struggle to find menu items, distinguish between similar meal options, and understand pickup instructions. These moments of uncertainty can make independent ordering more difficult and lead customers to seek staff assistance.</p>
+          <KioskCustomerJourney />
         </section>
 
         <section id="kiosk-challenge" className="scroll-mt-28 border-l-4 border-[#ffc72c] pl-6 sm:pl-10">
