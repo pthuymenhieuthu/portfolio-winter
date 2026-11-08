@@ -25,6 +25,9 @@ importers:
       '@next/mdx':
         specifier: ^15.5.3
         version: 15.5.3(@mdx-js/loader@3.1.1)(@mdx-js/react@3.1.0(@types/react@18.3.3)(react@18.3.1))
+      '@paper-design/shaders':
+        specifier: 0.0.80
+        version: 0.0.80
       '@paper-design/shaders-react':
         specifier: ^0.0.80
         version: 0.0.80(@types/react@18.3.3)(react@18.3.1)

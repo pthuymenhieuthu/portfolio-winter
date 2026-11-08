@@ -1,6 +1,6 @@
 "use client";
 
-import { Water } from "@paper-design/shaders-react";
+import dynamic from "next/dynamic";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -9,6 +9,12 @@ import { DATA } from "@/data/resume";
 import BlurFade from "@/components/magicui/blur-fade";
 import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
 import { HeroCtaButtons } from "@/components/hero-cta-buttons";
+import { useWaterMode } from "./water-mode";
+
+const CursorRippleBackground = dynamic(
+  () => import("./cursor-ripple-background").then((module) => module.CursorRippleBackground),
+  { ssr: false }
+);
 
 const BLUR_FADE_DELAY = 0.04;
 const WATER_MODE_LABEL = "My name means “water” in Vietnamese 😉";
@@ -58,10 +64,9 @@ function WaterModeLabel({
 }
 
 export function HomeHero() {
-  const [isWaterMode, setIsWaterMode] = useState(false);
+  const { isWaterMode, setIsWaterMode } = useWaterMode();
   const [isWaterLabelActive, setIsWaterLabelActive] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [supportsWaterShader, setSupportsWaterShader] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -69,11 +74,6 @@ export function HomeHero() {
     const syncViewport = () => setIsMobile(mediaQuery.matches);
     syncViewport();
     mediaQuery.addEventListener("change", syncViewport);
-
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("webgl2");
-    setSupportsWaterShader(Boolean(context));
-    context?.getExtension("WEBGL_lose_context")?.loseContext();
 
     return () => mediaQuery.removeEventListener("change", syncViewport);
   }, []);
@@ -101,24 +101,7 @@ export function HomeHero() {
           ease: [0.16, 1, 0.3, 1],
         }}
       >
-        {waterIsActive && supportsWaterShader ? (
-          <Water
-            colorBack="#e6f6ff"
-            colorHighlight="#ffffff"
-            speed={0.52}
-            size={1.08}
-            caustic={0.16}
-            waves={0.26}
-            layering={0.62}
-            highlights={0.22}
-            edges={0.3}
-            maxPixelCount={isMobile ? 720 * 1280 : 1920 * 1080}
-            className="h-full w-full"
-            style={{ height: "100%", width: "100%" }}
-          />
-        ) : waterIsActive ? (
-          <div className="h-full w-full bg-[radial-gradient(circle_at_22%_18%,#ffffff_0%,transparent_38%),radial-gradient(circle_at_80%_72%,#c8ecff_0%,transparent_44%),linear-gradient(160deg,#edfaff_0%,#d8f2ff_48%,#b9ddff_100%)]" />
-        ) : null}
+        {waterIsActive ? <CursorRippleBackground interactive={isWaterMode && !isMobile} /> : null}
       </motion.div>
 
       <div

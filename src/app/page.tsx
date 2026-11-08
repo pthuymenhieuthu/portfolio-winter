@@ -8,6 +8,7 @@ import { DATA } from "@/data/resume";
 import { getVisibleProjects } from "@/lib/next-projects";
 import Link from "next/link";
 import GoogleTracking from "@/components/google-tracking";
+import { WaterModeProvider } from "@/components/water-mode";
 
 const BLUR_FADE_DELAY = 0.04;
 const HOME_PROJECTS = getVisibleProjects(DATA.projects).filter(
@@ -16,6 +17,7 @@ const HOME_PROJECTS = getVisibleProjects(DATA.projects).filter(
 
 export default function Page() {
   return (
+    <WaterModeProvider>
     <div className="w-full max-w-full overflow-x-hidden bg-[#F2F6FA]">
       <GoogleTracking />
       <main className="relative z-10 flex min-h-[100dvh] w-full max-w-full flex-col overflow-hidden rounded-b-[32px] bg-background text-[#29303B] md:mb-[64dvh] md:rounded-b-[40px]">
@@ -122,5 +124,6 @@ export default function Page() {
       {/* Keep the anchor in document flow so the fixed desktop footer is revealed. */}
       <div id="contact" className="h-px" />
     </div>
+    </WaterModeProvider>
   );
 }
