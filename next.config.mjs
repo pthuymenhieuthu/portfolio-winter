@@ -6,6 +6,7 @@ const withMDX = createMDX({
 });
 
 const nextConfig = {
+  distDir: process.env.NODE_ENV === 'development' ? '.next-dev' : '.next',
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'], // hỗ trợ file md/mdx như page
 };

@@ -5,11 +5,11 @@ import Lenis from "lenis";
 
 let activeLenis: Lenis | null = null;
 
-export function resetScrollToTop() {
+export function setScrollPosition(top: number) {
   // Reset Lenis's target and velocity as well as the native scroll position.
   // Otherwise its next frame can restore the previous project's scroll depth.
-  activeLenis?.scrollTo(0, { immediate: true, force: true });
-  window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+  activeLenis?.scrollTo(top, { immediate: true, force: true });
+  window.scrollTo({ top, left: 0, behavior: "instant" as ScrollBehavior });
 }
 
 export function useLenis() {

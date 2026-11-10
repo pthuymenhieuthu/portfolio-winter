@@ -36,29 +36,6 @@
   height: 0 !important;
 }
 
-/* The browser snapshots the actual old viewport and the real incoming hero. */
-html[data-project-water-transition]::view-transition-group(root) {
-  animation: none;
-}
-
-html[data-project-water-transition]::view-transition-image-pair(root) {
-  isolation: isolate;
-}
-
-html[data-project-water-transition]::view-transition-old(root),
-html[data-project-water-transition]::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: plus-lighter;
-}
-
-html[data-project-water-transition]::view-transition-old(root) {
-  filter: url(#project-water-out);
-}
-
-html[data-project-water-transition]::view-transition-new(root) {
-  filter: url(#project-water-in);
-}
-
 @layer base {
     :root {
       --page: 0 0% 100%;

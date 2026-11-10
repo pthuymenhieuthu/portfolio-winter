@@ -1,8 +1,7 @@
 import { KioskJourneyIllustration } from "@/components/kiosk-journey-illustration";
 import { KioskPrototype } from "@/components/kiosk-prototype";
 import { KioskCustomerJourney } from "@/components/kiosk-customer-journey";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { CaseStudyNextProjects } from "@/components/case-study-next-projects";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
 import { caseStudyStyles as styles } from "@/lib/case-study-styles";
@@ -15,6 +14,7 @@ const sections = [
   { id: "kiosk-research", label: "Research focus" },
   { id: "kiosk-directions", label: "Design directions" },
   { id: "kiosk-validation", label: "Validation" },
+  { id: "kiosk-next", label: "Next projects" },
 ];
 
 const stages = [
@@ -104,8 +104,8 @@ export function KioskCaseStudy() {
             <li><a href="https://mcdonalds.vn" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">McDonald’s Vietnam · Product photography ↗</a><p className="mt-1 text-[#737373]">Product images are used in the interactive concept. Prototype prices are illustrative.</p></li>
           </ul>
           <p className="mt-6 text-xs leading-relaxed text-[#737373]">Independent concept study, not commissioned by or affiliated with McDonald’s. Illustrations show the proposed research focus, not a shipped kiosk interface.</p>
-          <Link href="/classic#projects" className="mt-10 inline-flex min-h-11 items-center gap-2 text-sm underline underline-offset-4">Explore more projects<ArrowRight aria-hidden="true" className="size-4" /></Link>
         </aside>
+        <CaseStudyNextProjects currentHref="/blog/mcdonalds-kiosk" id="kiosk-next" />
       </div>
     </main>
   );

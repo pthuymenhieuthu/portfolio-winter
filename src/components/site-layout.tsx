@@ -9,7 +9,7 @@ import { GridBackground } from "@/components/ui/grid-background";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { BackToTopButton } from "@/components/back-to-top-button";
-import { PageTransition } from "@/components/page-transition";
+import { RouteScrollRestoration } from "@/components/route-scroll-restoration";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   useLenis();
@@ -55,7 +55,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
           </div>
           {isFullBleed && !isHome && !isKioskDemo && <BackToTopButton />}
           {!isHome && !isKioskDemo && <Navbar />}
-          <PageTransition />
+          <RouteScrollRestoration />
         </TooltipProvider>
       </ThemeProvider>
     </>

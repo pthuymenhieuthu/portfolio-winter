@@ -147,6 +147,28 @@ const journeySteps = [
       },
     ],
   },
+  {
+    number: "4",
+    title: "Complete info",
+    eyebrow: "From Buy Now to a verified application",
+    body: "Guide the buyer through health declarations, answer review and OTP verification before completing their contact and policyholder details.",
+    media: [
+      { src: "/assets/affina/purchase-flow/08-health-consent.webp", width: 489, height: 537, label: "08 · Declaration consent", detail: "Explain the health declaration and obtain consent before continuing." },
+      { src: "/assets/affina/purchase-flow/09-health-declaration.webp", width: 559, height: 537, label: "09 · Health questions", detail: "Present the declaration as focused questions with clear answer choices." },
+      { src: "/assets/affina/purchase-flow/10-review-answers.webp", width: 577, height: 788, label: "10 · Review answers", detail: "Let the buyer review and edit their declarations before confirming." },
+      { src: "/assets/affina/purchase-flow/11-verify-otp.webp", width: 559, height: 537, label: "11 · Verify by OTP", detail: "Confirm the declaration using a six-digit verification code." },
+      { src: "/assets/affina/purchase-flow/12-buyer-payment-details.webp", width: 1779, height: 785, wide: true, label: "12 · Buyer details & payment method", detail: "Complete policyholder details and choose ATM, credit card or QR payment. Personal information is redacted." },
+    ],
+  },
+  {
+    number: "5",
+    title: "Purchase",
+    eyebrow: "Make the next payment action clear",
+    body: "Show the amount due, a time-limited QR transfer and step-by-step payment instructions. The recording ends at this payment screen.",
+    media: [
+      { src: "/assets/affina/purchase-flow/13-qr-payment.webp", width: 758, height: 430, wide: true, label: "13 · QR payment instructions", detail: "Keep the amount, expiry timer and transfer instructions together. Payment QR codes are redacted." },
+    ],
+  },
 ];
 
 const healthcareRows = [
@@ -331,8 +353,8 @@ const processSteps = [
   { label: "Survey", active: true },
   { label: "Recommend", active: true },
   { label: "Compare", active: true },
-  { label: "Complete info", active: false },
-  { label: "Purchase", active: false },
+  { label: "Complete info", active: true },
+  { label: "Purchase", active: true },
 ];
 
 const measuredBehaviorStats = [
@@ -418,6 +440,8 @@ type JourneyFlowScreen = {
   label: string;
   detail: string;
   height?: number;
+  width?: number;
+  wide?: boolean;
 };
 
 function JourneyScreenFlow({
@@ -433,16 +457,17 @@ function JourneyScreenFlow({
         <div className="flex w-max snap-x snap-mandatory items-start px-5 sm:px-0">
           {screens.map((screen, index) => (
             <div className="contents" key={screen.src}>
-              <figure className="w-[62vw] max-w-[240px] shrink-0 snap-start">
-                <ImageZoom>
+              <figure className={cn("shrink-0 snap-start", screen.wide ? "w-[82vw] max-w-[640px]" : "w-[62vw] max-w-[240px]")}>
+                <ImageZoom zoomImg={{ src: screen.src }}>
                   <div className="overflow-hidden rounded-[24px] border border-[#cfd0d4] bg-white shadow-sm">
                     <Image
                       src={screen.src}
                       alt={`${title}: ${screen.label}`}
-                      width={1533}
+                      width={screen.width ?? 1533}
                       height={screen.height ?? 3317}
+                      unoptimized
                       className="block h-auto w-full"
-                      sizes="(max-width: 768px) 62vw, 240px"
+                      sizes={screen.wide ? "(max-width: 768px) 82vw, 640px" : "(max-width: 768px) 62vw, 240px"}
                     />
                   </div>
                 </ImageZoom>
@@ -875,14 +900,14 @@ export function AffinaCaseStudy() {
             </div>
           </CaseStudyScrollReveal>
 
-          <CaseStudyScrollReveal className="flex flex-col gap-0">
-            {journeySteps.map((step) => (
-              <article className="grid grid-cols-[29px_1fr] gap-5" key={step.number}>
+          <div className="flex flex-col gap-0">
+            {journeySteps.map((step, stepIndex) => (
+              <article className="grid scroll-mt-24 grid-cols-[29px_1fr] gap-5" id={`affina-journey-${step.number}`} key={step.number}>
                 <div className="flex flex-col items-center">
                   <div className="flex size-[29px] items-center justify-center rounded-full bg-[#08090a] text-base font-bold leading-none text-white">
                     {step.number}
                   </div>
-                  {step.number !== "3" && (
+                  {stepIndex < journeySteps.length - 1 && (
                     <div className="h-full min-h-[64px] w-px bg-[#08090a]/25" />
                   )}
                 </div>
@@ -890,7 +915,7 @@ export function AffinaCaseStudy() {
                 <div
                   className={cn(
                     "flex min-w-0 flex-col gap-5 sm:gap-6",
-                    step.number !== "3" && "pb-16 sm:pb-20"
+                    stepIndex < journeySteps.length - 1 && "pb-16 sm:pb-20"
                   )}
                 >
                   <div className="font-[var(--font-affina-body)]">
@@ -930,7 +955,7 @@ export function AffinaCaseStudy() {
                 </div>
               </article>
             ))}
-          </CaseStudyScrollReveal>
+          </div>
 
           <CaseStudyScrollReveal>
             <div id="affina-measured-behavior" className="rounded-3xl border border-[#cce6f7] p-6 text-[#2e2222] shadow-sm sm:p-8 lg:p-10" style={{ background: affinaAppGradient }}>
