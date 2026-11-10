@@ -1,12 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import { ExternalLink, Play } from "lucide-react";
+import Image from "next/image";
+import { useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { ProjectMockupBackground } from "@/components/affina-mockup-hero";
+import { cn } from "@/lib/utils";
 
 import { Icons } from "@/components/icons";
-import BlurFade from "@/components/magicui/blur-fade";
-import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
-import { ProjectMeshGradient } from "@/components/project-mesh-gradient";
 
 export type ProjectHeroLink = {
   href: string;
@@ -17,7 +18,7 @@ export type ProjectHeroLink = {
 type ProjectCaseStudyHeroProps = {
   id: string;
   title: string;
-  titleLines: readonly string[];
+  titleLines: readonly [string, string];
   role: string;
   scope: string;
   status: string;
@@ -25,6 +26,11 @@ type ProjectCaseStudyHeroProps = {
   colors: string[];
   links?: readonly ProjectHeroLink[];
   delay?: number;
+  summary?: React.ReactNode;
+  summaryLines?: readonly [string, string, string];
+  background?: React.ReactNode;
+  backgroundSrc?: string;
+  posterSrc?: string;
 };
 
 function LinkIcon({ icon }: { icon: ProjectHeroLink["icon"] }) {
@@ -45,107 +51,91 @@ export function ProjectCaseStudyHero({
   scope,
   status,
   outcome,
-  colors,
+  summary,
+  summaryLines,
+  background,
+  backgroundSrc,
+  posterSrc,
   links = [],
-  delay = 0.96,
 }: ProjectCaseStudyHeroProps) {
-  const longestTitleLine = Math.max(...titleLines.map((line) => line.length));
-  const titleSizeClass = longestTitleLine >= 25
-    ? "text-[clamp(23px,calc(4.3vw+9.3px),60px)]"
-    : longestTitleLine >= 22
-      ? "text-[clamp(24px,calc(7.15vw+1.1px),60px)]"
-      : longestTitleLine >= 19
-        ? "text-[clamp(27px,calc(5.7vw+8.8px),60px)]"
-        : "text-[clamp(31px,calc(4.3vw+17.2px),60px)]";
-  const statusClass = /uat|test/i.test(status)
-    ? "text-[#ffd166] sm:text-[#b86900]"
-    : /personal/i.test(status)
-      ? "text-[#b9ddff] sm:text-[#2878bd]"
-      : "text-[#68ed82] sm:text-[#19c332]";
+  const reduceMotion = useReducedMotion();
+  const hasBackground = Boolean(background || backgroundSrc);
+  const isAnimated = Boolean(backgroundSrc?.match(/\.gif(?:[?#]|$)/i));
+  const mediaSrc = isAnimated && !reduceMotion ? backgroundSrc : posterSrc || backgroundSrc;
+  const heading = useRef<HTMLHeadingElement>(null);
+  const [titleSize, setTitleSize] = useState<number>();
+
+  useEffect(() => {
+    const element = heading.current;
+    if (!element) return;
+    const fit = () => {
+      const base = window.matchMedia("(min-width: 640px)").matches ? 52 : 36;
+      const current = parseFloat(getComputedStyle(element).fontSize);
+      const widest = Math.max(...Array.from(element.children, (line) => line.getBoundingClientRect().width));
+      if (!widest || !element.clientWidth) return;
+      setTitleSize(Math.floor(Math.min(base, element.clientWidth * current / widest) * 100) / 100);
+    };
+    const observer = new ResizeObserver(fit);
+    observer.observe(element);
+    let mounted = true;
+    void document.fonts.ready.then(() => { if (mounted) fit(); });
+    fit();
+    return () => { mounted = false; observer.disconnect(); };
+  }, [titleLines]);
 
   return (
-    <section
-      id={id}
-      className="relative isolate flex min-h-[800px] max-w-full items-center justify-center overflow-hidden bg-[#f9f4ff] px-5 py-24 text-left text-white sm:px-8 sm:text-[#1d1d1d]"
-    >
-      <ProjectMeshGradient colors={colors} />
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-black/10 sm:hidden" />
-
-      <div className="pointer-events-none absolute left-[-41px] top-[167px] -z-10 hidden h-[846px] w-[2026px] items-center justify-center sm:flex">
-        <div className="-scale-y-100 rotate-[3.16deg]">
-          <Image
-            alt=""
-            className="block h-[738px] w-[1988px] max-w-none"
-            height={746}
-            priority
-            src="/assets/affina/hero-mesh-cutout-bottom.svg"
-            width={1996}
-          />
-        </div>
-      </div>
-      <div className="pointer-events-none absolute left-[calc(50%+183px)] top-[-218px] -z-10 hidden h-[756px] w-[2006px] -translate-x-1/2 items-center justify-center sm:flex">
-        <div className="-scale-y-100 rotate-[-178.43deg]">
-          <Image
-            alt=""
-            className="block h-[702px] w-[1988px] max-w-none"
-            height={702}
-            priority
-            src="/assets/affina/hero-mesh-cutout-top.svg"
-            width={1988}
-          />
-        </div>
-      </div>
-
-      <div className="relative z-10 mx-auto flex w-full max-w-[976px] flex-col items-start">
-        <HeroTitleReveal
-          className={`${titleSizeClass} max-w-[976px] font-[var(--font-heading)] font-medium leading-[1.1] tracking-[-2.5px] text-white sm:text-[#1d1d1d]`}
-          delay={delay}
-          lines={titleLines}
-          text={title}
-        />
-        <BlurFade delay={delay + 0.16}>
-          <div className="mt-10 flex w-full max-w-[760px] flex-col items-start gap-[19px] backdrop-blur-[12px]">
-            <div>
-              <p className="text-[11px] font-semibold uppercase leading-[16.5px] tracking-[0.14em] text-white/65 sm:text-[#2e2e2e]/65">Role</p>
-              <p className="mt-[11px] text-base leading-6 sm:text-xl">{role}</p>
-            </div>
-            <div>
-              <p className="text-[11px] font-semibold uppercase leading-[16.5px] tracking-[0.14em] text-white/65 sm:text-[#2e2e2e]/65">Scope</p>
-              <p className="mt-[11px] text-base leading-6 sm:text-xl">{scope}</p>
-            </div>
-            <div className="flex flex-col items-start gap-[9px]">
-              <div className="flex items-center gap-3">
-                <p className="text-[11px] font-semibold uppercase leading-[16.5px] tracking-[0.14em] text-white/65 sm:text-[#2e2e2e]/65">Status</p>
-                <span className={`inline-flex items-center gap-1.5 text-sm font-medium ${statusClass}`}>
-                  <span className="size-1.5 rounded-full bg-current shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]" />
-                  {status}
-                </span>
-              </div>
-              {links.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {links.map((link) => (
-                    <a
-                      aria-label={`Open ${link.label} in a new tab`}
-                      className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-[#a3a3a3]/10 px-3 py-2 text-sm font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] transition hover:bg-white/20 sm:text-base sm:text-[#1d1d1d]"
-                      href={link.href}
-                      key={`${link.label}-${link.href}`}
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      <LinkIcon icon={link.icon} />
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div>
-              <p className="text-[11px] font-semibold uppercase leading-[16.5px] tracking-[0.14em] text-white/65 sm:text-[#2e2e2e]/65">Outcome</p>
-              <p className="mt-[11px] text-base leading-6 sm:text-xl">{outcome}</p>
-            </div>
+    <>
+    <header id={id} data-project-hero="true" className={hasBackground ? "relative isolate flex min-h-[100svh] w-full items-end overflow-hidden bg-black text-white" : "text-[#1d1d1d]"}>
+      {hasBackground && (
+        <>
+          {background || (mediaSrc && (isAnimated
+            ? <Image src={mediaSrc} alt="" fill unoptimized priority sizes="100vw" className="pointer-events-none select-none object-cover object-center" />
+            : <ProjectMockupBackground src={mediaSrc} />))}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] bg-black/60" />
+          <div aria-hidden="true" className="project-hero-reading-backdrop pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[min(85%,560px)]" />
+          <div aria-hidden="true" className="project-hero-noise pointer-events-none absolute inset-0 z-[2]" />
+        </>
+      )}
+      <div className={cn("relative z-10 mx-auto w-full px-5 sm:px-8", hasBackground ? "max-w-[1440px] pb-32 pt-32 lg:px-12 lg:pb-28" : "max-w-[1040px] pb-10 pt-24 sm:pb-12 sm:pt-28")}>
+        <h1 ref={heading} aria-label={title} style={{ fontSize: titleSize }} className={cn("max-w-[1050px] font-[var(--font-heading)] text-[36px] font-medium leading-[1.12] tracking-[-0.035em] sm:text-[52px]", hasBackground && "text-white")}>
+          {titleLines.map((line) => <span key={line} className="block w-max whitespace-nowrap">{line}</span>)}
+        </h1>
+        <div className="mt-6 grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-x-8">
+        {(summary || summaryLines) && <p className={cn("max-w-[46ch] text-sm leading-relaxed sm:text-base lg:col-span-7", hasBackground ? "text-white" : "text-[#626773]")}>{summaryLines ? summaryLines.map((line) => <span key={line} className="block whitespace-nowrap">{line}{" "}</span>) : summary}</p>}
+        {links.length > 0 && (
+          <div className="flex flex-wrap gap-3 lg:col-span-5 lg:col-start-8 lg:justify-self-end">
+            {links.map((link) => (
+              <a
+                aria-label={link.href.startsWith("/") || link.href.startsWith("#") ? `Go to ${link.label}` : `Open ${link.label} in a new tab`}
+                className={cn("inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4", hasBackground ? "border-white/40 text-white hover:bg-white/15 focus-visible:outline-white" : "border-black/15 hover:bg-black/5 focus-visible:outline-[#29303B]")}
+                href={link.href}
+                key={`${link.label}-${link.href}`}
+                rel={link.href.startsWith("/") || link.href.startsWith("#") ? undefined : "noreferrer"}
+                target={link.href.startsWith("/") || link.href.startsWith("#") ? undefined : "_blank"}
+              >
+                <LinkIcon icon={link.icon} />
+                {link.label}
+              </a>
+            ))}
           </div>
-        </BlurFade>
+        )}
+        </div>
       </div>
-    </section>
+    </header>
+    <div data-project-metadata="true" className="mx-auto w-full max-w-[1040px] px-5 pt-[120px] text-[#1d1d1d] sm:px-8">
+      <dl className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
+        {[["Role", role], ["Scope", scope], ["Status", status], ["Outcome", outcome]].map(([label, value]) => (
+          <div key={label}>
+            <dt className="text-base leading-6 text-[#626773]">{label}</dt>
+            <dd className="mt-3 text-base leading-relaxed sm:text-lg">
+              {label === "Status" && value === "Live" ? (
+                <span className="inline-flex items-center gap-2"><span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-[#16a34a]" />{value}</span>
+              ) : value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+    </>
   );
 }

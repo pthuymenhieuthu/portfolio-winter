@@ -3,24 +3,20 @@ type ProjectLink = {
   title: string;
 };
 
-// Temporarily hide these case studies while their designs are being updated.
-const HIDDEN_PROJECT_HREFS = new Set([
-  "/blog/4oranges",
-]);
-
 export function getVisibleProjects<T extends ProjectLink>(projects: readonly T[]): T[] {
   const projectOrder: Record<string, number> = {
-    "/blog/medhunt": 0,
-    "/blog/affina": 1,
-    "/blog/affina-partner-flow": 2,
-    "/blog/zoan": 3,
-    "/blog/chande": 4,
+    "/blog/affina": 0,
+    "/blog/affina-partner-flow": 1,
+    "/blog/mcdonalds-kiosk": 2,
+    "/blog/4oranges": 3,
+    "/blog/medhunt": 4,
+    "/blog/zoan": 5,
+    "/blog/chande": 6,
   };
   const priority = (project: ProjectLink) =>
-    projectOrder[project.href ?? ""] ?? 5;
+    projectOrder[project.href ?? ""] ?? 7;
 
-  return projects
-    .filter((project) => !HIDDEN_PROJECT_HREFS.has(project.href ?? ""))
+  return [...projects]
     .sort(
       (a, b) => priority(a) - priority(b)
     );

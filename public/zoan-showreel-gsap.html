@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#eaf9f6" />
+  <title>Zoan — GSAP showreel experiment</title>
+  <style>
+    :root { color-scheme: light; --mint:#b0f1ed; --ink:#183b39; --scale:1; }
+    * { box-sizing:border-box; }
+    html,body { min-height:100%; margin:0; }
+    body { min-height:100vh; width:100%; overflow-x:hidden; display:grid; place-items:center; padding:16px; background:#eaf9f6; color:var(--ink); font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+    .player { width:min(calc(100vw - 32px), calc((100vh - 110px) * 1.7777778)); min-width:0; }
+    .viewport { width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:14px; box-shadow:0 24px 80px #215a541f,0 2px 8px #215a5414; background:#eaf9f6; }
+    .artboard { position:relative; width:1920px; height:1080px; overflow:hidden; perspective:1600px; transform:scale(var(--scale)); transform-origin:top left; background:radial-gradient(ellipse at 53% 50%,#fff 0%,#f5fdfb 44%,#eaf9f6 100%); }
+    .wash { position:absolute; left:590px; top:95px; width:790px; height:920px; border-radius:50%; background:radial-gradient(ellipse,#b0f1ed80 0%,#b0f1ed20 55%,transparent 75%); }
+    .orbit { position:absolute; left:400px; top:94px; width:1120px; height:880px; border:2px solid #2da09712; border-radius:50%; transform:rotate(-12deg); }
+    .orbit::after { content:""; position:absolute; inset:30px -55px; border:1px solid #fff9; border-radius:50%; }
+    .camera { position:absolute; z-index:2; inset:0; transform-origin:50% 50%; transform-style:preserve-3d; }
+    .phone { position:absolute; left:741px; top:79px; width:438px; height:922px; padding:12px; border-radius:62px; background:linear-gradient(105deg,#899695 0%,#fafdfc 5%,#aeb9b8 12%,#fff 20%,#e3eae9 79%,#a2adac 94%,#f7fbfa 100%); box-shadow:0 54px 86px #163c3933,0 18px 28px #163c3924,inset 0 0 0 2px #647471a6; }
+    .screen { position:relative; width:100%; height:100%; overflow:hidden; border-radius:49px; background:#fff; box-shadow:inset 0 0 0 1.5px #34444280; }
+    .home,.splash { position:absolute; inset:0; width:100%; height:100%; }
+    .home { object-fit:fill; }
+    .splash { z-index:2; }
+    .splash img { width:100%; height:100%; object-fit:fill; }
+    .camera-card { position:absolute; inset:0; z-index:5; pointer-events:none; perspective:1000px; transform-style:preserve-3d; }
+    .card { position:absolute; left:769px; top:212px; width:380px; height:auto; border-radius:10px; box-shadow:0 28px 60px #13363335,0 8px 18px #13363320; opacity:1; filter:blur(1.8px); will-change:transform,filter; }
+    .end-background { position:absolute; inset:0; z-index:1; background:#000; opacity:0; }
+    .key { position:absolute; width:7px; border-radius:4px; background:linear-gradient(90deg,#75817f,#c7cecd); }
+    .key.one { left:calc(100% - 1px); top:236px; height:108px; }
+    .key.two { left:-5px; top:338px; height:78px; }
+    .controls { display:grid; grid-template-columns:auto auto auto auto minmax(100px,1fr) minmax(80px,auto); align-items:center; gap:8px; padding:10px 2px 0; }
+    button { min-height:38px; border:1px solid #2b69632b; border-radius:999px; padding:0 15px; color:#17423e; background:#ffffffba; font:600 13px/1 Inter,ui-sans-serif,system-ui,sans-serif; cursor:pointer; }
+    button:hover { background:#fff; }
+    button:disabled { opacity:.45; }
+    input[type=range] { width:100%; accent-color:#2eaaa0; }
+    .readout { white-space:nowrap; text-align:right; color:#52716d; font:12px/1.3 ui-monospace,Consolas,monospace; }
+    .note { margin-top:6px; text-align:right; color:#64817e; font-size:11px; }
+    @media(max-width:620px) { body{padding:12px 8px;align-items:start}.player{width:100%}.controls{grid-template-columns:repeat(4,auto);gap:6px}button{padding:0 9px;font-size:11px}.controls input{grid-column:1/5;grid-row:2}.readout{grid-column:5/7;grid-row:1}.note{text-align:left} }
+  </style>
+</head>
+<body>
+  <main class="player">
+    <div class="viewport" id="viewport">
+      <div class="artboard" id="artboard" role="img" aria-label="Zoan five second mobile product showreel">
+        <div class="wash"></div><div class="orbit"></div><div class="end-background" id="endBackground"></div>
+        <div class="camera" id="camera">
+          <div class="phone" id="phone">
+            <i class="key one"></i><i class="key two"></i>
+            <div class="screen">
+              <img class="home" src="/assets/zoan/showreel/home-screen-empty.jpg" alt="" />
+              <div class="splash" id="splash"><img src="/assets/zoan/showreel/zoan-cat-splash.png" alt="" /></div>
+            </div>
+          </div>
+          <div class="camera-card"><img class="card" id="card" src="/assets/zoan/showreel/think-fast-card.jpg" alt="" /></div>
+        </div>
+      </div>
+    </div>
+    <div class="controls" aria-label="Playback controls">
+      <button id="play">Play</button><button id="pause">Pause</button><button id="restart">Restart</button>
+      <input id="scrub" type="range" min="0" max="5" step="0.01" value="0" aria-label="Seek showreel timeline" />
+      <output class="readout" id="readout">0.00s · beat 1/10</output>
+    </div>
+    <div class="note">GSAP timeline · 1920 × 1080 · 16:9 · 5s</div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script>
+    (() => {
+      const DURATION = 5;
+      const camera = document.querySelector('#camera');
+      const phone = document.querySelector('#phone');
+      const splash = document.querySelector('#splash');
+      const card = document.querySelector('#card');
+      const endBackground = document.querySelector('#endBackground');
+      const scrub = document.querySelector('#scrub');
+      const readout = document.querySelector('#readout');
+      const playButton = document.querySelector('#play');
+      const pauseButton = document.querySelector('#pause');
+      const restartButton = document.querySelector('#restart');
+      const viewport = document.querySelector('#viewport');
+      const artboard = document.querySelector('#artboard');
+      const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+
+      function fit() {
+        artboard.style.setProperty('--scale', Math.min(viewport.clientWidth / 1920, viewport.clientHeight / 1080));
+      }
+      new ResizeObserver(fit).observe(viewport); fit();
+
+      const tl = gsap.timeline({ paused:true, defaults:{ overwrite:'auto' }, onUpdate:updateReadout, onComplete:syncButtons, onStart:syncButtons, onReverseComplete:syncButtons });
+      tl.set(card, { z:80, scale:.84, rotationX:12, rotationY:-14, rotation:6 }, 0)
+        .addLabel('splash', 0)
+        .fromTo(camera, { rotationY:-8, rotationZ:-1.8, scale:1.04, y:24 }, { rotationY:-2, rotationZ:-.5, scale:1.12, y:0, duration:.55, ease:'power3.out' }, 0)
+        .fromTo(phone, { y:30 }, { y:0, duration:.9, ease:'power3.out' }, 0)
+        .to(camera, { rotationY:0, rotationZ:0, scale:.96, duration:2.15, ease:'power2.inOut' }, .55)
+        .addLabel('homeReveal', .72)
+        .to(splash, { yPercent:-100, duration:.72, ease:'power3.inOut' }, .72)
+        .addLabel('cardLaunch', 1.17)
+        .fromTo(card, { y:900 }, { y:470, duration:.58, ease:'power3.out' }, .58)
+        .to(card, { filter:'blur(0px)', duration:.7, ease:'power2.out' }, .58)
+        .fromTo(card, { y:470 }, { y:-14, duration:.76, ease:'power2.inOut' }, 1.17)
+        .fromTo(card,
+          { z:80, scale:.84, rotationX:12, rotationY:-14, rotation:6 },
+          { z:100, scale:1.12, rotationX:-6, rotationY:10, rotation:-4, duration:.4, ease:'power2.out' }, 1.17)
+        .to(card, { z:45, scale:1.025, rotationX:3, rotationY:-3, rotation:1, duration:.36, ease:'power2.inOut' }, 1.57)
+        .to(card, { y:4, z:40, scale:.945, rotationX:1, rotationY:-1, rotation:0, duration:.12, ease:'power2.in' }, 1.93)
+        .to(card, { y:0, z:40, scale:.97, rotationX:0, rotationY:0, rotation:0, duration:.12, ease:'power1.out' }, 2.05)
+        .to(endBackground, { opacity:1, duration:.37, ease:'power2.inOut' }, 1.87)
+        .addLabel('heroHold', 2.5)
+        .to({}, { duration:.3 }, 4.7);
+
+      function seek(t) {
+        const time = clamp(Number(t) || 0, 0, DURATION);
+        tl.pause().time(time, false);
+        updateReadout(); syncButtons();
+        return time;
+      }
+      function updateReadout() {
+        const time = tl.time();
+        scrub.value = String(time);
+        readout.textContent = `${time.toFixed(2)}s · beat ${Math.min(10, Math.floor(time * 2) + 1)}/10`;
+      }
+      function syncButtons() {
+        playButton.disabled = tl.isActive();
+        pauseButton.disabled = !tl.isActive();
+      }
+      window.seek = seek;
+      window.zoanTimeline = tl;
+      playButton.addEventListener('click', () => { if (tl.time() >= DURATION) tl.restart(); else tl.play(); });
+      pauseButton.addEventListener('click', () => tl.pause());
+      restartButton.addEventListener('click', () => { tl.pause(0); seek(0); });
+      scrub.addEventListener('input', () => seek(scrub.value));
+      const requested = new URLSearchParams(location.search).get('t');
+      seek(requested === null ? 0 : requested);
+    })();
+  </script>
+</body>
+</html>

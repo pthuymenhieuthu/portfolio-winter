@@ -1,0 +1,44 @@
+---
+config:
+  theme: base
+  fontFamily: "var(--font-sans, Arial), sans-serif"
+  themeVariables:
+    fontSize: "17px"
+    background: "#f7f7f8"
+    edgeLabelBackground: "#f7f7f8"
+  flowchart:
+    curve: monotoneY
+    nodeSpacing: 64
+    rankSpacing: 30
+    padding: 16
+---
+flowchart TB
+  accTitle: Two routes to a family insurance policy
+  accDescr: A family buys for multiple members. Affina Pro sales staff fill data, prepare the order and send it to the buyer, who confirms. On the Web App, the customer fills data, selects a plan and completes their information. Both routes continue to payment and a family policy.
+
+  need(["Buy for multiple members"]):::entry
+  pro["Affina Pro"]:::assisted
+  web["Web App"]:::selfService
+  need -->|Sales-assisted| pro
+  need -->|Self-service| web
+
+  pro --> p1["Sales fills data"]:::step
+  p1 --> p2["Sales prepares order"]:::step
+  p2 --> p3["Send request to buyer"]:::step
+  p3 --> p4["Customer confirms"]:::step
+
+  web --> w1["Customer fills data"]:::step
+  w1 --> w2["Customer selects plan"]:::step
+  w2 ---> w3["Customer completes info"]:::step
+
+  p4 --> payment(["Payment"]):::shared
+  w3 --> payment
+  payment --> policy(["Family policy"]):::policy
+
+  classDef entry fill:#eaf3ff,stroke:#aacbf2,color:#173e68,font-weight:600;
+  classDef assisted fill:#1769d3,stroke:#1769d3,color:#ffffff,font-weight:600;
+  classDef selfService fill:#22394f,stroke:#22394f,color:#ffffff,font-weight:600;
+  classDef step fill:#ffffff,stroke:#cfdae6,color:#263d54,rx:10,ry:10;
+  classDef shared fill:#eaf3ff,stroke:#aacbf2,color:#173e68,font-weight:600;
+  classDef policy fill:#142f49,stroke:#142f49,color:#ffffff,font-weight:600;
+  linkStyle default stroke:#8ca2b7,stroke-width:1.5px;

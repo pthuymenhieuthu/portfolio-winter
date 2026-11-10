@@ -472,6 +472,8 @@ export function MedhuntCaseStudy() {
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f5f7fb] text-[#111827] selection:bg-[#c9d8ff] selection:text-[#10285f]">
       <CaseStudySectionNavigation heroId="medhunt-hero" sections={sections} />
       <ProjectCaseStudyHero
+        backgroundSrc="/assets/project-thumbnails/medhunt-monitor.png"
+        summaryLines={["Connecting healthcare recruitment", "in one workspace, from candidates", "to placements and service fees."]}
         colors={projectMeshPalettes.medhunt}
         id="medhunt-hero"
         links={[
@@ -489,7 +491,7 @@ export function MedhuntCaseStudy() {
         titleLines={["MedHunt — Healthcare", "Recruitment OS"]}
       />
 
-      <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-28 sm:gap-40 sm:px-8 sm:py-36">
+      <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 pb-28 pt-[120px] sm:gap-40 sm:px-8 sm:pb-36">
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-overview">
           <div className="border-y border-[#d7deea] py-10">
             <CaseStudyStatementReveal className="text-[#17213a]" text="The design challenge was not a single dashboard. It was making an entire service operation understandable." />

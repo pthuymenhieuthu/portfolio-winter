@@ -45,11 +45,11 @@ const sections = [
 
 const assets = {
   hero: "/uidesignseries-mobile-poster.jpg",
-  direction: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758356378/298bd9ed-f325-48c0-aaf8-e76058112339_o7fhaf.png",
-  draft: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758356379/DRAFTTT_wwrvbt.png",
-  week1: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758357035/1IEUZ7Fhxsal69TkPP3bhjHfljw_e3c6vh.avif",
-  week3: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758357034/lQmZQzSQd5utD8yFPXQpABes44_wse6b2.webp",
-  week6: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758357034/KYrmwAQJkJwCYdd5x620BTxlGgo_p08hi9.webp",
+  direction: "/298bd9ed-f325-48c0-aaf8-e76058112339_o7fhaf.png",
+  draft: "/DRAFTTT_wwrvbt.png",
+  week1: "/1IEUZ7Fhxsal69TkPP3bhjHfljw_e3c6vh.avif",
+  week3: "/lQmZQzSQd5utD8yFPXQpABes44_wse6b2.webp",
+  week6: "/KYrmwAQJkJwCYdd5x620BTxlGgo_p08hi9.webp",
 };
 
 const assetDimensions: Record<string, [number, number]> = {
@@ -65,48 +65,6 @@ const gains = [
   "Learned from industry pros.",
   "Built my own Framer library.",
   "Made it to the Top 6 finalists.",
-];
-
-const briefFeatures = [
-  {
-    title: "Prompt to UI",
-    body: "Just describe what you need. Our AI instantly generates clean, editable UI layouts tailored to your idea.",
-  },
-  {
-    title: "Smart copy, built-in",
-    body: "Get on-brand headings, CTAs, and microcopy — no need to switch tabs or call your copywriter.",
-  },
-  {
-    title: "Export to Figma",
-    body: "Match your brand's voice, color, or layout system without lifting a finger.",
-  },
-  {
-    title: "Export to Code",
-    body: "Need code? We've got that too. Generate clean HTML/CSS/React code, ready for developers.",
-  },
-  {
-    title: "Real-time iteration",
-    body: "Tweak your prompt. Add a new section. Edit content. All in seconds — with instant visual updates.",
-  },
-];
-
-const howItWorks = [
-  {
-    title: "Write your prompt",
-    body: "Tweak your prompt. Add a new section. Edit content. All in seconds — with instant visual updates.",
-  },
-  {
-    title: "Generate layout, structure & content",
-    body: "Auto-generate a responsive layout based on common UI patterns. Fill in with AI-written copy: titles, descriptions, CTAs. Instantly editable before you export.",
-  },
-  {
-    title: "Customize your design",
-    body: "Tweak layout directly. Replace images, reorder sections. Adjust tone, design intent, or use design tokens (if available).",
-  },
-  {
-    title: "Export to Figma or Code",
-    body: "Send to Figma with one click — fully layered, auto-layout ready. Export as production-ready code (HTML/CSS/React).",
-  },
 ];
 
 const processSteps = [
@@ -253,6 +211,15 @@ export function UiDesignSeriesCaseStudy() {
       <SeriesStickyIndicator />
 
       <ProjectCaseStudyHero
+        summaryLines={["Six weeks. Six landing-page briefs.", "Exploring visual design and motion,", "with a reusable Framer library."]}
+        backgroundSrc="/assets/project-thumbnails/ui-design-series.png"
+        summary={<>
+          Mingg UI Design Challenge was a 6-week UI design competition where
+              participants created <CaseStudyScrollHighlight>
+                one landing page per week
+              </CaseStudyScrollHighlight>{" "}
+              based on a given brief.
+        </>}
         colors={projectMeshPalettes.series}
         delay={PROJECT_HERO_DELAY}
         id="series-overview"
@@ -261,27 +228,13 @@ export function UiDesignSeriesCaseStudy() {
         role="UI Designer"
         scope="Six weekly briefs, web design, motion, prototype"
         status="Done"
-        title="Mingg Challenge — Designing One Landing Page a Week"
-        titleLines={["Mingg Challenge —", "Designing One Landing", "Page a Week"]}
+        title="Mingg Challenge — One Landing Page a Week"
+        titleLines={["Mingg Challenge —", "One Landing Page a Week"]}
       />
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+      <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 pb-24 pt-[120px] sm:gap-40 sm:px-8 lg:pb-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="series-context">
-          <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1 text-sm text-white">
-              Interface Design Series
-            </span>
-            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-[-1px] sm:text-[40px]">
-              Mingg UI Design Challenge
-            </h2>
-            <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              Mingg UI Design Challenge was a 6-week UI design competition where
-              participants created <CaseStudyScrollHighlight>
-                one landing page per week
-              </CaseStudyScrollHighlight>{" "}
-              based on a given brief.
-            </p>
-          </div>
+
 
           <CaseStudyStatementReveal className="tracking-[-1px]" text="One landing page per week, shaped by a different brief." />
 
@@ -297,57 +250,19 @@ export function UiDesignSeriesCaseStudy() {
           </div>
         </CaseStudyRevealSection>
 
-        <CaseStudyRevealSection
-          className="flex scroll-mt-24 flex-col gap-10 rounded-[28px] bg-[#EEEFF1] p-6 sm:p-10 lg:p-12"
-          id="series-brief"
-        >
-          <div className="flex flex-col gap-5">
-            <span className="w-fit rounded-lg bg-[#21120a] px-3 py-1 text-sm text-white">
-              One-week competition brief
-            </span>
-            <h2 className="font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-              Design faster, think smarter with an AI design partner
-            </h2>
-            <p className="max-w-[760px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              For this one-week challenge, I designed a fundraising-ready landing
-              page for a pre-MVP AI design partner—building a friendly visual
-              identity, clearer messaging, and a strong first impression.
-            </p>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {briefFeatures.map((item, index) => (
-              <article
-                className="rounded-2xl bg-white/70 p-5"
-                key={item.title}
-              >
-                <p className="text-xs font-semibold tracking-[0.12em] text-[#737373]">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-3 font-[var(--font-heading)] text-lg font-medium leading-[1.2] tracking-normal">
-                  {item.title}
-                </h3>
-              </article>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-5 border-t border-[#21120a]/10 pt-8">
-            <h3 className="font-[var(--font-heading)] text-xl font-medium leading-[1.2] tracking-normal">
-              How it works
-            </h3>
-            <div className="grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
-              {howItWorks.map((item, index) => (
-                <div className="flex items-start gap-3" key={item.title}>
-                  <span className="text-xs font-semibold text-[#737373]">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <p className="text-sm font-medium leading-[1.4] text-[#08090a]">
-                    {item.title}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
+        <CaseStudyRevealSection className="max-w-[860px] scroll-mt-24" id="series-brief">
+          <p className="text-base italic leading-[1.8] text-[#62666b] sm:text-[17px]">
+            For one week of the Mingg UI Design Challenge, the competition brief
+            was to design a fundraising-ready landing page for a pre-MVP AI
+            design partner, under the theme “Design faster, think smarter with an
+            AI design partner.” The proposed product would turn a written prompt
+            into editable UI layouts and copy, support real-time iteration, and
+            export designs to Figma or HTML/CSS/React. The brief described a
+            journey from writing a prompt and generating a layout to customizing
+            the design and exporting it. My task was to communicate this concept
+            through a friendly visual identity, clear messaging, and a strong
+            first impression.
+          </p>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="series-process">

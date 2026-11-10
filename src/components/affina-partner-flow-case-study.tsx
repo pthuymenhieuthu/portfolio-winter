@@ -10,6 +10,7 @@ import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlig
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
+import { PartnerJourneyDiagram } from "@/components/partner-journey-diagram";
 import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 
 const PROJECT_HERO_DELAY = 0.36;
@@ -302,7 +303,7 @@ function FlowNode({
 
 function OverviewMockups() {
   return (
-    <div className="mt-14">
+    <div>
       <Image
         src="/assets/affina-partner-flow/partner-thumbnail.png"
         alt="Affina partner insurance purchase flow shown on desktop and mobile devices"
@@ -313,56 +314,6 @@ function OverviewMockups() {
         className="h-auto w-full"
         sizes="(max-width: 1100px) calc(100vw - 40px), 995px"
       />
-    </div>
-  );
-}
-
-function JourneyDiagram() {
-  const assisted = [
-    "Sales fills data",
-    "Sales prepares order",
-    "Send request to buyer",
-    "Customer confirms",
-  ];
-  const selfService = [
-    "Customer fills data",
-    "Customer selects plan",
-    "Customer completes info",
-  ];
-
-  return (
-    <div className="mx-auto mt-12 flex max-w-[640px] flex-col items-center">
-      <div className="w-full max-w-[310px] rounded-xl bg-[#08090a] px-5 py-4 text-center text-sm font-bold text-white">
-        FAMILY INSURANCE NEED
-      </div>
-      <Arrow vertical />
-      <FlowNode active>Buy for multiple members</FlowNode>
-      <div className="mt-8 grid w-full gap-8 sm:grid-cols-2">
-        <div className="flex flex-col gap-3">
-          <div className="rounded-lg border border-[#0293f4] bg-[#f2f6fa] p-4 text-center text-sm font-bold">
-            ASSISTED SALES
-            <br />
-            <span className="font-normal text-[#737373]">Affina Pro</span>
-          </div>
-          {assisted.map((step) => (
-            <FlowNode key={step}>{step}</FlowNode>
-          ))}
-        </div>
-        <div className="flex flex-col gap-3">
-          <div className="rounded-lg border border-[#e1e6ea] bg-white p-4 text-center text-sm font-bold">
-            SELF-SERVICE
-            <br />
-            <span className="font-normal text-[#737373]">Web App</span>
-          </div>
-          {selfService.map((step) => (
-            <FlowNode key={step}>{step}</FlowNode>
-          ))}
-        </div>
-      </div>
-      <Arrow vertical />
-      <FlowNode active>PAYMENT</FlowNode>
-      <Arrow vertical />
-      <FlowNode dark>FAMILY POLICY</FlowNode>
     </div>
   );
 }
@@ -440,7 +391,7 @@ function ScreenFlow({
   device: "mobile" | "web";
 }) {
   return (
-    <div className="-mx-5 mt-12 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
+    <div className="scrollbar-none -mx-5 mt-12 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
       <div className="flex w-max snap-x snap-mandatory items-start gap-4 pb-4">
         {screens.map((screen, index) => (
           <div className="flex items-center gap-4" key={screen.src}>
@@ -451,8 +402,9 @@ function ScreenFlow({
               )}
             >
               <a
+                data-app-screen-preview="true"
                 className={cn(
-                  "block overflow-y-auto overscroll-contain bg-[#f2f6fa]",
+                  "scrollbar-none block overflow-y-auto overscroll-contain bg-[#f2f6fa]",
                   device === "mobile"
                     ? "h-[720px] sm:h-[780px]"
                     : "h-[520px] sm:h-[580px]"
@@ -554,7 +506,7 @@ function RecoveryStatesSection() {
           eyebrow="Designing beyond the happy path"
           title="Rules become clear next actions"
         />
-        <div className="-mx-5 mt-12 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
+        <div className="scrollbar-none -mx-5 mt-12 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
           <div className="flex w-max snap-x snap-mandatory items-stretch gap-5 pb-4">
             {recoveryStates.map((screen, index) => (
               <article
@@ -1225,6 +1177,19 @@ export function AffinaPartnerFlowCaseStudy() {
       <ProjectNavigation />
 
       <ProjectCaseStudyHero
+        backgroundSrc="/assets/affina-partner-flow/partner-thumbnail.png"
+        summaryLines={["One insurance journey for families,", "across self-service and assisted sales,", "with clear rules and responsive states."]}
+        summary={<>
+This flow expanded the insurance journey from one insured person to{" "}
+              <CaseStudyScrollHighlight>
+                multiple insured people under the same contract
+              </CaseStudyScrollHighlight>{" "}
+              across Affina Pro and Web.
+<br /><br />
+<b>My role</b> was to work with BA, Business Owner, Product, and IT to clarify
+              requirements, translate rules into user flows, design UI states, and prepare
+              {" "}<CaseStudyScrollHighlight>implementation-ready handoff</CaseStudyScrollHighlight>.
+</>}
         colors={projectMeshPalettes.affinaPartner}
         delay={PROJECT_HERO_DELAY}
         id="partner-overview"
@@ -1238,30 +1203,11 @@ export function AffinaPartnerFlowCaseStudy() {
         scope="Affina Pro, web app, responsive states, edge cases"
         status="Live"
         title="Affina — Unifying Customer & Partner Insurance Journeys"
-        titleLines={["Affina — Unifying", "Customer & Partner", "Insurance Journeys"]}
+        titleLines={["Affina — Unifying Customer", "& Partner Insurance Journeys"]}
       />
 
       <section className="scroll-mt-20">
-        <div className="mx-auto max-w-[1100px] px-5 pb-24 pt-28 sm:px-8 sm:pt-36">
-          <SectionHeader
-            eyebrow="Overview"
-            size="overview"
-            title="Designing a scalable purchase flow for partner-led insurance"
-          />
-          <div className={cn("mt-10 max-w-[780px] space-y-5", caseStudyStyles.body)}>
-            <p>
-              This flow expanded the insurance journey from one insured person to{" "}
-              <CaseStudyScrollHighlight>
-                multiple insured people under the same contract
-              </CaseStudyScrollHighlight>{" "}
-              across Affina Pro and Web.
-            </p>
-            <p>
-              <b>My role</b> was to work with BA, Business Owner, Product, and IT to clarify
-              requirements, translate rules into user flows, design UI states, and prepare
-              {" "}<CaseStudyScrollHighlight>implementation-ready handoff</CaseStudyScrollHighlight>.
-            </p>
-          </div>
+        <div className="mx-auto max-w-[1100px] px-5 pb-24 pt-[120px] sm:px-8">
           <OverviewMockups />
 
         </div>
@@ -1315,7 +1261,7 @@ export function AffinaPartnerFlowCaseStudy() {
               </>
             }
           />
-          <JourneyDiagram />
+          <PartnerJourneyDiagram />
         </div>
       </section>
 

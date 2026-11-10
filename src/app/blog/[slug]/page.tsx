@@ -13,6 +13,7 @@ import { MedhuntCaseStudy } from "@/components/medhunt-case-study";
 import { TrueProfitCaseStudy } from "@/components/trueprofit-case-study";
 import { EdTechCaseStudy } from "@/components/edtech-case-study";
 import { UiDesignSeriesCaseStudy } from "@/components/ui-design-series-case-study";
+import { KioskCaseStudy } from "@/components/kiosk-case-study";
 import {
   CakeCaseStudy,
   GraphicsCaseStudy,
@@ -25,6 +26,10 @@ export default async function BlogPage({
 }: {
   params: { slug: string };
 }) {
+  if (params.slug === "mcdonalds-kiosk") {
+    return <KioskCaseStudy />;
+  }
+
   if (params.slug === "medhunt") {
     return <MedhuntCaseStudy />;
   }

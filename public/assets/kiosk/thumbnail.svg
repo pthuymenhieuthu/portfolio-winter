@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900"><defs>
+    <g id="customer" stroke="#242424" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m-24 42-5 94-15 56h23l26-66 13 66h24l-14-68-1-83" fill="#304c43"/>
+      <path d="M-23-46c-19 6-25 24-27 51l-9 33 19 7 19-35-4 40h62l-6-52c-2-25-10-42-29-46" fill="#f4b941"/>
+      <path d="M-8-58v21c11 11 19 5 24-1v-23" fill="#edbba2"/>
+      <path d="M-21-83c0-25 49-28 49 3v16C28-34-16-35-18-62Z" fill="#edbba2"/>
+      <path d="M-21-69c-15-31 8-47 29-42 25-3 35 17 24 40l-10-13c-13 8-24 4-33-2l-3 17" fill="#242424"/>
+      <path d="M12-71h1m-11 17c5 3 10 2 13-1M-45 192h27m25 0h28"/>
+      <path d="m-41 4-7 35 26 15 8-14-19-13 8-18" fill="#edbba2"/>
+      <path d="m27-18 26 18 29-23 11 12-35 34c-5 4-10 3-16 0L22 8" fill="#edbba2"/>
+    </g>
+    <g id="kiosk" stroke="#242424" stroke-width="3" stroke-linejoin="round">
+      <path d="M47 223v45m-35 0h70"/><rect width="104" height="225" rx="12" fill="#fff"/>
+      <rect x="10" y="12" width="84" height="158" rx="4" fill="#f6f4ec"/>
+      <path d="M15 191h36m-36 9h20"/><rect x="65" y="185" width="25" height="19" rx="3" fill="#304c43"/>
+    </g>
+    <g id="burger" stroke="#242424" stroke-width="2" stroke-linejoin="round"><path d="M0 17C0-5 44-5 44 17Z" fill="#eab15b"/><path d="M0 20h44v8H0Z" fill="#304c43"/><path d="m2 28 20 5 20-5v9H2Z" fill="#b96a40"/><path d="M0 38h44v6H0Z" fill="#eab15b"/></g>
+  </defs><rect width="1200" height="900" fill="#ffdf70"/><text x="65" y="88" fill="#242424" font-family="Arial,sans-serif" font-size="20" letter-spacing="3">INDEPENDENT UX/UI MINI CASE</text><g fill="#242424" font-family="Arial,sans-serif" font-size="76" font-weight="600" letter-spacing="-3"><text x="65" y="208">A little clarity.</text><text x="65" y="292">A lot more confidence.</text></g><g transform="translate(100 170)"><use href="#kiosk" transform="translate(460 220) scale(1.65)"/><use href="#customer" transform="translate(300 350) scale(1.5)"/><path d="M55 640h830" stroke="#242424" stroke-width="3"/><use href="#burger" transform="translate(509 269) scale(1.6)"/><path d="M491 378h110m-110 14h80" stroke="#242424" stroke-width="3"/></g><text x="65" y="865" fill="#242424" font-family="Arial,sans-serif" font-size="22">McDonald’s Kiosk · Find → Choose → Collect</text></svg>

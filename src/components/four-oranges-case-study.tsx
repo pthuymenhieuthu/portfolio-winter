@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import {
   motion,
   useReducedMotion,
@@ -24,6 +23,7 @@ import { DATA } from "@/data/resume";
 import { getNextProjects } from "@/lib/next-projects";
 import BlurFade from "@/components/magicui/blur-fade";
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { cn } from "@/lib/utils";
@@ -67,102 +67,7 @@ const nextProjects = getNextProjects(
 );
 
 function ProjectNavigation() {
-  const [activeLabel, setActiveLabel] = useState(sections[0].label);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const hero = document.getElementById("four-oranges-hero");
-    const updateVisibility = () => {
-      if (hero) setIsVisible(window.scrollY > hero.offsetHeight - 48);
-    };
-
-    updateVisibility();
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-    window.addEventListener("resize", updateVisibility);
-
-    const observers = sections
-      .map((section) => document.getElementById(section.id))
-      .filter((element): element is HTMLElement => Boolean(element))
-      .map((element) => {
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (!entry.isIntersecting) return;
-            const section = sections.find((item) => item.id === element.id);
-            if (section) setActiveLabel(section.label);
-          },
-          { rootMargin: "-18% 0px -62% 0px", threshold: 0.01 }
-        );
-        observer.observe(element);
-        return observer;
-      });
-
-    return () => {
-      window.removeEventListener("scroll", updateVisibility);
-      window.removeEventListener("resize", updateVisibility);
-      observers.forEach((observer) => observer.disconnect());
-    };
-  }, []);
-
-  const goToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  return (
-    <>
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-40 lg:hidden">
-      <div
-        className={cn(
-          "pointer-events-auto flex h-9 items-center justify-center border-b border-black/10 bg-[#f7f7f8]/85 px-4 text-sm text-[#351303] shadow-[0_8px_30px_rgba(8,9,10,0.08)] backdrop-blur-xl transition-transform duration-500",
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        )}
-      >
-        {activeLabel}
-      </div>
-      </div>
-
-      <nav
-        aria-label="Case study sections"
-        className={cn(
-          "pointer-events-none fixed left-5 top-1/2 z-40 hidden -translate-y-1/2 transition-all duration-500 lg:flex lg:flex-col lg:gap-4",
-          isVisible ? "translate-x-0 opacity-100" : "-translate-x-4 opacity-0"
-        )}
-      >
-        {sections.map((section) => {
-          const isActive = activeLabel === section.label;
-
-          return (
-            <button
-              type="button"
-              aria-label={`Go to ${section.label}`}
-              aria-current={isActive ? "true" : undefined}
-              className="pointer-events-auto relative flex h-6 items-center"
-              onClick={() => goToSection(section.id)}
-              key={section.id}
-            >
-              <span
-                className={cn(
-                  "relative flex shrink-0 items-center justify-center rounded-full transition-all duration-300",
-                  isActive ? "size-6 bg-[#3BA0FF]/15" : "size-4"
-                )}
-              >
-                <span
-                  className={cn(
-                    "rounded-full bg-[#3BA0FF]/90 transition-all duration-300",
-                    isActive ? "size-3" : "size-2"
-                  )}
-                />
-              </span>
-              {isActive && (
-                <span className="ml-2 whitespace-nowrap rounded bg-[#29292d] px-3 py-1.5 text-xs font-medium text-white shadow-sm">
-                  {section.label}
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </nav>
-    </>
-  );
+  return <CaseStudySectionNavigation heroId="four-oranges-hero" sections={sections} />;
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -440,14 +345,6 @@ const qrScreens: FlowScreen[] = [
     width: 390,
     height: 859,
   },
-  {
-    src: "/assets/4oranges/ui-flow/qr-success.png",
-    alt: "4Oranges reward success screen",
-    label: "14 · Reward success",
-    detail: "Show product, QR and reward details with actions to continue.",
-    width: 430,
-    height: 871,
-  },
 ];
 
 const accountScreen: FlowScreen = {
@@ -536,6 +433,9 @@ export function FourOrangesCaseStudy() {
       <ProjectNavigation />
 
       <ProjectCaseStudyHero
+        backgroundSrc="/assets/project-thumbnails/4oranges.png"
+        summaryLines={["Turning promotional codes into", "a clear mobile rewards experience", "for a major paint manufacturer."]}
+        summary="I designed the end-to-end mobile experience and UI kit, turning physical promotional codes into a clear digital reward journey for a major paint manufacturer."
         colors={projectMeshPalettes.fourOranges}
         delay={PROJECT_HERO_DELAY}
         id="four-oranges-hero"
@@ -544,18 +444,11 @@ export function FourOrangesCaseStudy() {
         scope="Mobile app, UI kit, iOS & Android"
         status="UAT · APK build"
         title="4Oranges — Turning QR Scans into Rewards"
-        titleLines={["4Oranges —", "Turning QR Scans", "into Rewards"]}
+        titleLines={["4Oranges — Turning", "QR Scans into Rewards"]}
       />
 
-      <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+      <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 pb-24 pt-[120px] sm:gap-40 sm:px-8 lg:pb-36">
         <section className="flex scroll-mt-24 flex-col gap-10" id="four-oranges-overview">
-          <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
-            <div>
-              <SectionLabel>Overview</SectionLabel>
-              <h2 className="mt-7 max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-[-1px] sm:text-[40px]">A reward app for a major paint manufacturer</h2>
-            </div>
-            <p className="text-base leading-[1.65] text-[#754426]">I designed the end-to-end mobile experience and UI kit, turning physical promotional codes into a clear digital reward journey.</p>
-          </div>
           <div>
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#9a7057]">Brands by 4Oranges</p>
             <BrandStrip />

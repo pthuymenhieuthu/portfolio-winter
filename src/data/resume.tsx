@@ -22,7 +22,7 @@ export const DATA = {
     "Web Builder",
   ],
   navbar: [
-    { href: "/", icon: HomeIcon, label: "Home" },
+    { href: "/classic", icon: HomeIcon, label: "Home" },
   ],
   contact: {
     email: "phuongthuy101222@gmail.com",
@@ -201,6 +201,17 @@ export const DATA = {
     },
   ],
   projects: [
+    {
+      title: "McDonald’s — Making Self-Ordering Easier",
+      href: "/blog/mcdonalds-kiosk",
+      dates: "Independent mini case study",
+      active: true,
+      description: "Helping first-time and occasional kiosk users find, choose, and collect their meals with confidence.",
+      technologies: ["UX/UI Design", "Self-Service Kiosk", "Research Exploration"],
+      links: [],
+      image: "/assets/kiosk/thumbnail-mockup.png",
+      video: "",
+    },
     {
       title: "MedHunt — Healthcare Recruitment OS",
       href: "/blog/medhunt",
@@ -450,7 +461,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764849886/2abe5d31-c309-4796-853d-ec6a0e614eba_1_nx3gl7.png",
+      video: "/2abe5d31-c309-4796-853d-ec6a0e614eba_1_nx3gl7.png",
     },
     {
       title: "CakeBank — Making Everyday Saving Automatic",
@@ -471,7 +482,7 @@ export const DATA = {
           icon: <Icons.link className="size-3" />,
         },
       ],
-      image: "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_1200,pg_1/v1759915810/Untitled_design_43_ymcl3e.webp",
+      image: "/Untitled_design_43_ymcl3e.webp",
       video: "",
     },
     {

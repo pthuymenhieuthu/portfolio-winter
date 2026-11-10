@@ -37,28 +37,28 @@ const sections = [
 ];
 
 const zoanAssets = {
-  hero: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787904374/Frame_2147225273_isnnjf.png",
-  overview: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1766037533/01_sj2voy.png",
+  hero: "/Frame_2147225273_isnnjf.png",
+  overview: "/01_sj2voy.png",
   workMockup1: "/assets/zoan/mobile-showcase/app-in-hand.webp",
   workMockup2: "/assets/zoan/mobile-showcase/brand-app-icon.webp",
   typographyColors: "/assets/zoan/mobile-showcase/typography-colors.webp",
   homeSocial: "/assets/zoan/mobile-showcase/home-social-screens.webp",
   miniApps: "/assets/zoan/mobile-showcase/mini-apps-screens.webp",
   socialMockup: "/assets/zoan/mobile-showcase/social-phone-mockup.webp",
-  color: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989302/Showcase_hehe-05_ny1lld.png",
-  typography: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989302/Showcase_hehe-04_yapp30.png",
-  tokens: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1763893945/Screenshot_252_ngb7lj.png",
-  components: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1763909689/Screenshot_253_kqzyld.png",
-  platformShowcase1: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989538/Showcase_hehe-03_rvw75h.png",
-  platformShowcase2: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1787989540/Showcase_hehe-01_zbeuze.png",
+  color: "/Showcase_hehe-05_ny1lld.png",
+  typography: "/Showcase_hehe-04_yapp30.png",
+  tokens: "/Screenshot_252_ngb7lj.png",
+  components: "/Screenshot_253_kqzyld.png",
+  platformShowcase1: "/Showcase_hehe-03_rvw75h.png",
+  platformShowcase2: "/Showcase_hehe-01_zbeuze.png",
   versionReview: "/assets/zoan/deployment-flow/version-review.png",
   reviewDiff: "/assets/zoan/deployment-flow/review-diff.png",
   readyToDeploy: "/assets/zoan/deployment-flow/ready-to-deploy.png",
   publishingLogs: "/assets/zoan/deployment-flow/publishing-logs.png",
   deployed: "/assets/zoan/deployment-flow/deployed.png",
   cloudStorage: "/assets/zoan/deployment-flow/cloud-storage.png",
-  timelineMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764161748/Timeline_5-macd_dosrrf.gif",
-  appMotion: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764161236/app_vvjcwd.gif",
+  timelineMotion: "/Timeline_5-macd_dosrrf.gif",
+  appMotion: "/app_vvjcwd.gif",
 };
 
 const zoanAssetDimensions: Record<string, [number, number]> = {
@@ -276,6 +276,14 @@ export function ZoanCaseStudy() {
       <ZoanStickyIndicator />
 
       <ProjectCaseStudyHero
+        summaryLines={["Making AI workflows clearer through", "cross-platform UI, a shared system,", "and purposeful motion."]}
+        backgroundSrc="/assets/project-thumbnails/zoan.png"
+        summary={<>
+          Will AI replace UI/UX Designers? Before joining Zoan AI, I used to ask myself that question. But
+              leading this project, from system rebuilding and UI redesign to
+              shaping cross-platform experiences, made me realize something
+              else.
+        </>}
         colors={projectMeshPalettes.zoan}
         delay={PROJECT_HERO_DELAY}
         id="zoan-overview"
@@ -287,25 +295,12 @@ export function ZoanCaseStudy() {
         scope="Cross-platform UI, design system, Rive motion"
         status="Done"
         title="Zoan AI — Designing Clearer AI Workflows"
-        titleLines={["Zoan AI —", "Designing Clearer", "AI Workflows"]}
+        titleLines={["Zoan AI — Designing", "Clearer AI Workflows"]}
       />
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+      <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 pb-24 pt-[120px] sm:gap-40 sm:px-8 lg:pb-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-work">
-          <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#07111f] px-3 py-1 text-sm text-white">
-              Overview
-            </span>
-            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-[-1px] sm:text-[40px]">
-              Will AI replace UI/UX Designers?
-            </h2>
-            <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              Before joining Zoan AI, I used to ask myself that question. But
-              leading this project, from system rebuilding and UI redesign to
-              shaping cross-platform experiences, made me realize something
-              else.
-            </p>
-          </div>
+
 
           <CaseStudyStatementReveal className="tracking-[-1px]" text="I wasn’t being replaced by AI. I was designing the interface for an AI platform." />
 

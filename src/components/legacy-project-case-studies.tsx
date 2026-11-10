@@ -15,10 +15,8 @@ import {
   type CaseStudySection,
 } from "@/components/case-study-section-navigation";
 import BlurFade from "@/components/magicui/blur-fade";
-import { HeroTitleReveal } from "@/components/magicui/hero-title-reveal";
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
 import {
-  ProjectMeshGradient,
   projectMeshPalettes,
 } from "@/components/project-mesh-gradient";
 
@@ -139,32 +137,10 @@ function CaseHero({
   theme: Theme;
 }) {
   return (
-    <section
-      id="legacy-project-overview"
-      className="relative isolate flex min-h-[760px] max-w-full items-center justify-center overflow-hidden px-6 text-center text-white sm:min-h-[800px]"
-    >
-      <ProjectMeshGradient colors={theme.meshColors} />
-      <div className="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center">
-        <p className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur">
-          {date}
-        </p>
-        <div style={{ width: "min(720px, calc(100vw - 48px))" }}>
-          <HeroTitleReveal
-            className="mt-7 font-[var(--font-heading)] text-[clamp(36px,9.8vw,64px)] font-medium leading-[1.1] tracking-[-2.5px]"
-            delay={PROJECT_HERO_DELAY}
-            text={title}
-            wrap
-          />
-        </div>
-        {summary && (
-          <BlurFade delay={1.12}>
-            <p className="mt-7 max-w-[calc(100vw-40px)] text-base leading-[1.55] text-white/80 sm:max-w-[620px] sm:text-lg">
-              {summary}
-            </p>
-          </BlurFade>
-        )}
-      </div>
-    </section>
+    <header id="legacy-project-overview" className="mx-auto w-full max-w-[1040px] px-5 pb-10 pt-24 sm:px-8 sm:pt-28" style={{ color: theme.ink }}>
+      <h1 className="text-balance font-[var(--font-heading)] text-4xl font-medium leading-[1.12] tracking-[-0.035em] sm:text-[52px]">{title}</h1>
+      <p className="mt-6 text-sm" style={{ color: theme.muted }}>{date}</p>
+    </header>
   );
 }
 
@@ -450,6 +426,7 @@ function CaseShell({
       {hero ? (
         <ProjectCaseStudyHero
           {...hero}
+          summary={summary}
           colors={theme.meshColors}
           delay={PROJECT_HERO_DELAY}
           id="legacy-project-overview"
@@ -458,7 +435,7 @@ function CaseShell({
         <CaseHero date={date} summary={summary} theme={theme} title={title} />
       )}
       <section
-        className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36"
+        className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 pb-24 pt-[120px] sm:gap-40 sm:px-8 lg:pb-36"
         style={{ backgroundColor: theme.page } as React.CSSProperties}
       >
         {children}
@@ -480,13 +457,15 @@ export function GraphicsCaseStudy() {
       currentHref="/blog/graphics"
       date="2023-2025"
       hero={{
+        backgroundSrc: "/Top_PLAZA_Live_Banner_wfxa4w.png",
+        summaryLines: ["Campaign and promotional graphics", "for TikTok Shop and learning apps,", "with clear visual storytelling."],
         links: [{ href: "https://www.behance.net/gallery/206146695/Seller-Engagement-Design-TikTok-Shop", label: "Behance", icon: "behance" }],
         outcome: "Clearer, conversion-focused campaign and product storytelling",
         role: "Graphic Designer",
         scope: "Campaign graphics, social content, app promotion",
         status: "Done",
-        title: "Marketing Graphics — Designing Campaigns That Connect",
-        titleLines: ["Marketing Graphics —", "Designing Campaigns", "That Connect"],
+        title: "Marketing Graphics — Campaigns That Connect",
+        titleLines: ["Marketing Graphics —", "Campaigns That Connect"],
       }}
       sections={graphicsSections}
       summary="Campaign and product visuals."
@@ -519,15 +498,15 @@ export function GraphicsCaseStudy() {
         <ImageGrid
           images={[
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764845928/Top_PLAZA_Live_Banner_wfxa4w.png",
+              src: "/Top_PLAZA_Live_Banner_wfxa4w.png",
               alt: "TikTok Shop live banner",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764845944/kv_banner_dafi_zalo_oa_gdis4y.png",
+              src: "/kv_banner_dafi_zalo_oa_gdis4y.png",
               alt: "TikTok Shop Zalo OA banner",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764845938/kv_gia_han_rs1j8d.png",
+              src: "/kv_gia_han_rs1j8d.png",
               alt: "TikTok Shop renewal banner",
             },
           ]}
@@ -543,19 +522,19 @@ export function GraphicsCaseStudy() {
         <ImageGrid
           images={[
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764845920/tet_2_hqhp3d.png",
+              src: "/tet_2_hqhp3d.png",
               alt: "Tet campaign graphic",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764845920/tet_1_gxxab9.png",
+              src: "/tet_1_gxxab9.png",
               alt: "Tet campaign graphic",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764845922/tet_03_yzwbio.png",
+              src: "/tet_03_yzwbio.png",
               alt: "Tet campaign graphic",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764845953/02_ens8yq.jpg",
+              src: "/02_ens8yq.jpg",
               alt: "Zalo OA campaign graphic",
             },
           ]}
@@ -571,19 +550,19 @@ export function GraphicsCaseStudy() {
         <ImageGrid
           images={[
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764755849/HSK_soiciu.png",
+              src: "/HSK_soiciu.png",
               alt: "HSK app promotional visual",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764755845/android_banner-tr%C3%B9m_japanese_cyfugx.png",
+              src: "/android_banner-tr%C3%B9m_japanese_cyfugx.png",
               alt: "Japanese app promotional visual",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764756721/Frame_2147225634_auzyip.png",
+              src: "/Frame_2147225634_auzyip.png",
               alt: "Language app product highlight",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764756718/Frame_2147225633_jn2vkl.png",
+              src: "/Frame_2147225633_jn2vkl.png",
               alt: "Language app product highlight",
             },
           ]}
@@ -601,13 +580,15 @@ export function PizzyCaseStudy() {
       currentHref="/blog/pizzy"
       date="2025-08"
       hero={{
+        backgroundSrc: "/pizzy-mobile-poster.jpg",
+        summaryLines: ["Helping friends manage shared costs", "through a social budgeting concept", "with clear, approachable mobile UI."],
         links: [{ href: "https://www.behance.net/gallery/232892697/Pizzy-Social-Budget-Management-App-UXUI-Design?platform=direct", label: "Behance", icon: "behance" }],
         outcome: "A simple, social way to manage shared budgets with friends",
         role: "UI/UX Designer",
         scope: "UX research, mobile UI, motion, prototype",
         status: "Personal project",
         title: "Pizzy — Making Shared Spending Feel Effortless",
-        titleLines: ["Pizzy —", "Making Shared Spending", "Feel Effortless"],
+        titleLines: ["Pizzy — Making Shared", "Spending Feel Effortless"],
       }}
       sections={pizzySections}
       summary="A social budgeting app for shared spending."
@@ -625,27 +606,27 @@ export function PizzyCaseStudy() {
       {[
         [
           "About",
-          "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758327371/04_isp8w7.png",
+          "/04_isp8w7.png",
           "pizzy-about",
         ],
         [
           "Research",
-          "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758327371/03_zyelt0.png",
+          "/03_zyelt0.png",
           "pizzy-research",
         ],
         [
           "How Might We",
-          "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758342172/02_snxsdc.png",
+          "/02_snxsdc.png",
           "pizzy-how-might-we",
         ],
         [
           "Information Architecture",
-          "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758332011/01_coe1qv.png",
+          "/01_coe1qv.png",
           "pizzy-information-architecture",
         ],
         [
           "How it works",
-          "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758339821/Frame_427318364_qvmrbo.png",
+          "/Frame_427318364_qvmrbo.png",
           "pizzy-how-it-works",
         ],
       ].map(([title, src, id]) => (
@@ -666,31 +647,31 @@ export function PizzyCaseStudy() {
           columns="md:grid-cols-1"
           images={[
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758327371/05_bljo9e.png",
+              src: "/05_bljo9e.png",
               alt: "Pizzy showcase",
               fit: "contain",
               ratio: "h-auto",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758340281/shocase10_op5skr.png",
+              src: "/shocase10_op5skr.png",
               alt: "Pizzy showcase",
               fit: "contain",
               ratio: "h-auto",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758340777/shocase07_upri7m.png",
+              src: "/shocase07_upri7m.png",
               alt: "Pizzy showcase",
               fit: "contain",
               ratio: "h-auto",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758340778/shocase09_y8zqfp.png",
+              src: "/shocase09_y8zqfp.png",
               alt: "Pizzy showcase",
               fit: "contain",
               ratio: "h-auto",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758340237/shocase06_npq4ei.png",
+              src: "/shocase06_npq4ei.png",
               alt: "Pizzy showcase",
               fit: "contain",
               ratio: "h-auto",
@@ -726,12 +707,14 @@ export function CakeCaseStudy() {
       currentHref="/blog/cake"
       date="2025-05"
       hero={{
+        backgroundSrc: "/Untitled_design_43_ymcl3e.webp",
+        summaryLines: ["A round-up savings concept", "that makes everyday saving simpler", "while keeping balances tidy."],
         outcome: "A round-up concept that makes saving effortless while keeping balances neat",
         role: "Product Designer",
         scope: "Brief analysis and product design direction",
         status: "Take-home test",
         title: "CakeBank — Making Everyday Saving Automatic",
-        titleLines: ["CakeBank —", "Making Everyday Saving", "Automatic"],
+        titleLines: ["CakeBank — Making", "Everyday Saving Automatic"],
       }}
       sections={cakeSections}
       summary="Round-up savings concept."
@@ -770,7 +753,7 @@ export function CakeCaseStudy() {
           alt="CakeBank brief"
           fit="contain"
           ratio="h-auto"
-          src="https://res.cloudinary.com/dqtfjvkok/image/upload/v1759893150/Group_66_v0diy9.png"
+          src="/Group_66_v0diy9.png"
         />
       </CaseSection>
 
@@ -789,7 +772,7 @@ export function CakeCaseStudy() {
           alt="CakeBank how might we"
           fit="contain"
           ratio="h-auto"
-          src="https://res.cloudinary.com/dqtfjvkok/image/upload/v1759894994/Group_67_ur7rmg.png"
+          src="/Group_67_ur7rmg.png"
         />
       </CaseSection>
 
@@ -826,7 +809,7 @@ export function CakeCaseStudy() {
           alt="CakeBank persona"
           fit="contain"
           ratio="h-auto"
-          src="https://res.cloudinary.com/dqtfjvkok/image/upload/v1759896234/Group_68_wthqtn.png"
+          src="/Group_68_wthqtn.png"
         />
       </CaseSection>
 
@@ -933,7 +916,7 @@ export function CakeCaseStudy() {
           alt="CakeBank flow"
           fit="contain"
           ratio="h-auto"
-          src="https://res.cloudinary.com/dqtfjvkok/image/upload/v1759907168/Group_633000_gacby2.png"
+          src="/Group_633000_gacby2.png"
         />
         <Link
           className="w-fit font-medium underline underline-offset-4"
@@ -965,25 +948,25 @@ export function CakeCaseStudy() {
           columns="md:grid-cols-1"
           images={[
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759909271/Group_633001_u69vfd.png",
+              src: "/Group_633001_u69vfd.png",
               alt: "CakeBank visual design",
               fit: "contain",
               ratio: "h-auto",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759910918/M%E1%BB%9F_t%C3%A0i_kho%E1%BA%A3n_ti%E1%BB%81n_g%E1%BB%ADi_m%E1%BB%9Bi_onboarding_xjrrzw.png",
+              src: "/M%E1%BB%9F_t%C3%A0i_kho%E1%BA%A3n_ti%E1%BB%81n_g%E1%BB%ADi_m%E1%BB%9Bi_onboarding_xjrrzw.png",
               alt: "Enabling Round-up from Savings - Onboarding Screen",
               fit: "contain",
               ratio: "h-auto",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759910917/Chi_ti%E1%BA%BFt_t%C3%A0i_kho%E1%BA%A3n_ti%E1%BB%81n_g%E1%BB%ADi_p4qb8l.png",
+              src: "/Chi_ti%E1%BA%BFt_t%C3%A0i_kho%E1%BA%A3n_ti%E1%BB%81n_g%E1%BB%ADi_p4qb8l.png",
               alt: "Enabling Round-up from Savings - Details Screen",
               fit: "contain",
               ratio: "h-auto",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1759911014/T%E1%BB%B1_nh%E1%BA%ADp_s%E1%BB%91_giao_d%E1%BB%8Bch_Qu%C3%A9t_m%C3%A3_QR_j0mkgt.png",
+              src: "/T%E1%BB%B1_nh%E1%BA%ADp_s%E1%BB%91_giao_d%E1%BB%8Bch_Qu%C3%A9t_m%C3%A3_QR_j0mkgt.png",
               alt: "Enabling Round-up from Balance Screen",
               fit: "contain",
               ratio: "h-auto",
@@ -1009,7 +992,7 @@ export function CakeCaseStudy() {
           alt="CakeBank usability testing"
           fit="contain"
           ratio="h-auto"
-          src="https://res.cloudinary.com/dqtfjvkok/image/upload/v1759910917/Group_633002_aszgse.png"
+          src="/Group_633002_aszgse.png"
         />
         <BulletList
           items={[
@@ -1100,6 +1083,17 @@ export function ZanZanCaseStudy() {
     <CaseShell
       currentHref="/blog/lollypop"
       date="2024-09-20"
+      hero={{
+        backgroundSrc: "/1ZaN0fd1UHesnkGpQ5TxYCoJbo_v9qdeo.avif",
+        summaryLines: ["Bringing Vietnamese folk games", "into a playful digital platform,", "created with Team 14."],
+        links: [{ href: "https://www.figma.com/proto/bEJfJb6iB0pXlrrLDIONC1/K14---Team-14?page-id=7004%3A4&node-id=7138-5885&node-type=frame&viewport=545%2C292%2C0.06&t=zJ3CTlFM4bFMSAe1-1&scaling=scale-down-width&content-scaling=fixed", label: "Prototype", icon: "link" }],
+        title: "ZanZan — Bringing Folk Games Back to Play",
+        titleLines: ["ZanZan — Bringing Folk", "Games Back to Play"],
+        role: "UI/UX Design · Team 14",
+        scope: "Web design, UX research, prototype",
+        status: "Designathon concept",
+        outcome: "A digital platform for Vietnamese folk games",
+      }}
       sections={zanzanSections}
       summary="A digital platform for Vietnamese folk games."
       theme={theme}
@@ -1109,7 +1103,7 @@ export function ZanZanCaseStudy() {
         alt="ZanZan intro"
         fit="contain"
         ratio="h-auto"
-        src="https://res.cloudinary.com/dqtfjvkok/image/upload/v1758358132/1ZaN0fd1UHesnkGpQ5TxYCoJbo_v9qdeo.avif"
+        src="/1ZaN0fd1UHesnkGpQ5TxYCoJbo_v9qdeo.avif"
       />
 
       <CaseSection id="zanzan-context" label="Context" theme={theme} title="Context">
@@ -1152,7 +1146,7 @@ export function ZanZanCaseStudy() {
           alt="ZanZan problem statement"
           fit="contain"
           ratio="h-auto"
-          src="https://res.cloudinary.com/dqtfjvkok/image/upload/v1758358133/4kp9lfzm6Rm3uYd1eMX0hVlcEyU_qa9kfz.webp"
+          src="/4kp9lfzm6Rm3uYd1eMX0hVlcEyU_qa9kfz.webp"
         />
       </CaseSection>
 
@@ -1221,7 +1215,7 @@ export function ZanZanCaseStudy() {
           alt="ZanZan how might we"
           fit="contain"
           ratio="h-auto"
-          src="https://res.cloudinary.com/dqtfjvkok/image/upload/v1758358133/4kp9lfzm6Rm3uYd1eMX0hVlcEyU_qa9kfz.webp"
+          src="/4kp9lfzm6Rm3uYd1eMX0hVlcEyU_qa9kfz.webp"
         />
       </CaseSection>
 
@@ -1251,13 +1245,13 @@ export function ZanZanCaseStudy() {
           columns="md:grid-cols-1"
           images={[
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758358133/Ty3w3dbemYK9iAryPI3diN07o_zzjlrc.webp",
+              src: "/Ty3w3dbemYK9iAryPI3diN07o_zzjlrc.webp",
               alt: "ZanZan solution screen",
               fit: "contain",
               ratio: "h-auto",
             },
             {
-              src: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758358133/HgZgPI0cxFtWtliY7U0k9azu3M_pbv6oc.webp",
+              src: "/HgZgPI0cxFtWtliY7U0k9azu3M_pbv6oc.webp",
               alt: "ZanZan solution screen",
               fit: "contain",
               ratio: "h-auto",

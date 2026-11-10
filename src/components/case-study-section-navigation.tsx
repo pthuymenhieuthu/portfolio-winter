@@ -47,10 +47,8 @@ export function CaseStudySectionNavigation({
       animationFrame = window.requestAnimationFrame(() => {
         if (!hero) return;
 
-        const shouldShow =
-          revealAfter === undefined
-            ? hero.getBoundingClientRect().bottom <= 48
-            : window.scrollY > revealAfter;
+        const shouldShow = hero.getBoundingClientRect().bottom <= 0 &&
+          (revealAfter === undefined || window.scrollY > revealAfter);
         setIsVisible(shouldShow);
         if (!shouldShow) setIsMenuOpen(false);
 
@@ -72,6 +70,8 @@ export function CaseStudySectionNavigation({
     window.addEventListener("load", updateNavigation);
     window.addEventListener("scroll", updateNavigation, { passive: true });
     window.addEventListener("resize", updateNavigation);
+    const heroResize = new ResizeObserver(updateNavigation);
+    if (hero) heroResize.observe(hero);
     const delayedUpdate = window.setTimeout(updateNavigation, 250);
 
     return () => {
@@ -80,6 +80,7 @@ export function CaseStudySectionNavigation({
       window.removeEventListener("load", updateNavigation);
       window.removeEventListener("scroll", updateNavigation);
       window.removeEventListener("resize", updateNavigation);
+      heroResize.disconnect();
     };
   }, [heroId, revealAfter, sections]);
 
@@ -90,11 +91,12 @@ export function CaseStudySectionNavigation({
       <nav
         aria-label="Case study sections"
         aria-hidden={!isVisible}
+        data-visible={isVisible}
         className={cn(
-          "pointer-events-none fixed left-5 top-1/2 z-40 hidden -translate-y-1/2 transition duration-500 ease-out md:block",
+          "pointer-events-none fixed left-5 top-1/2 z-40 hidden -translate-y-1/2 transition-[transform,opacity,visibility] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none md:block",
           isVisible
             ? "visible translate-x-0 opacity-100"
-            : "invisible -translate-x-4 opacity-0"
+            : "invisible -translate-x-[calc(100%+1.25rem)] opacity-0"
         )}
       >
         <ol className="flex flex-col gap-1.5">
@@ -134,9 +136,10 @@ export function CaseStudySectionNavigation({
       </nav>
 
       <div
+        aria-hidden={!isVisible}
         className={cn(
-          "pointer-events-none fixed inset-x-0 top-0 z-40 flex flex-col items-center pt-2 transition-transform duration-500 ease-out md:hidden",
-          isVisible ? "translate-y-0" : "-translate-y-full"
+          "pointer-events-none fixed inset-x-0 top-0 z-40 flex flex-col items-center pt-2 transition-[transform,visibility] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none md:hidden",
+          isVisible ? "visible translate-y-0" : "invisible -translate-y-full"
         )}
       >
         <button

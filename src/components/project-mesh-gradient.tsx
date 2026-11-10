@@ -1,10 +1,3 @@
-"use client";
-
-import { MeshGradient } from "@paper-design/shaders-react";
-import { useReducedMotion } from "framer-motion";
-
-import { cn } from "@/lib/utils";
-
 export const projectMeshPalettes = {
   medhunt: ["#eaf0ff", "#2457c5", "#bfeaf2", "#f5d866"],
   affina: ["#65c7ff", "#b9b2ff", "#f38ee7", "#ffd7ed"],
@@ -20,49 +13,13 @@ export const projectMeshPalettes = {
   zanzan: ["#4a1f8c", "#8b5cf6", "#ff6b6b", "#ffd166"],
 } satisfies Record<string, string[]>;
 
-type ProjectMeshGradientProps = {
+// Retained for older local previews; project pages use a plain header.
+export function ProjectMeshGradient({ colors, className }: {
   colors: string[];
   className?: string;
   distortion?: number;
   speed?: number;
   swirl?: number;
-};
-
-export function ProjectMeshGradient({
-  colors,
-  className,
-  distortion = 0.72,
-  speed = 1,
-  swirl = 0.22,
-}: ProjectMeshGradientProps) {
-  const shouldReduceMotion = useReducedMotion();
-
-  return (
-    <div
-      aria-hidden="true"
-      className={cn(
-        "pointer-events-none absolute inset-0 -z-20 overflow-hidden bg-[var(--mesh-fallback)]",
-        className
-      )}
-      style={
-        {
-          "--mesh-fallback": colors[0],
-        } as React.CSSProperties
-      }
-    >
-      <MeshGradient
-        className="h-full w-full"
-        colors={colors}
-        distortion={distortion}
-        fit="cover"
-        grainMixer={0}
-        grainOverlay={0}
-        height="100%"
-        maxPixelCount={960 * 720}
-        speed={shouldReduceMotion ? 0 : speed}
-        swirl={swirl}
-        width="100%"
-      />
-    </div>
-  );
+}) {
+  return <div aria-hidden="true" className={className} style={{ position: "absolute", inset: 0, zIndex: -20, backgroundColor: colors[0], pointerEvents: "none" }} />;
 }

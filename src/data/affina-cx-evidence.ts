@@ -1,0 +1,45 @@
+// Aggregate dashboard snapshot only. No customer names, company names,
+// raw feedback, identifiers, or credentials belong in this file.
+export const affinaCxEvidence = {
+  reviewedAt: "10 Nov 2026",
+  period: "Oct 2024 – 10 Nov 2026",
+  sent: 11718,
+  rated: 11479,
+  mean: 4.13,
+  satisfied: 8712,
+  dissatisfied: 1084,
+  satisfiedPercent: 75.9,
+  dissatisfiedPercent: 9.4,
+  writtenComments: 1579,
+  issueSummaryComments: 581,
+  positiveComments: 709,
+  scores: [
+    { score: 1, count: 586 },
+    { score: 2, count: 498 },
+    { score: 3, count: 1683 },
+    { score: 4, count: 2745 },
+    { score: 5, count: 5967 },
+  ],
+  issues: [
+    { label: "Performance & errors", count: 186, share: 32 },
+    { label: "Bank details & selection", count: 175, share: 30 },
+    { label: "OTP & verification", count: 133, share: 23 },
+    { label: "Complex steps & language", count: 92, share: 16 },
+    { label: "Claim history & status", count: 81, share: 14 },
+    { label: "Support responsiveness", count: 41, share: 7 },
+  ],
+  positiveThemes: [
+    { label: "Service satisfaction", count: 351 },
+    { label: "Speed", count: 120 },
+    { label: "Ease of use", count: 102 },
+  ],
+  segments: [
+    { label: "Individual customers", mean: 4.3, satisfiedPercent: 81.7 },
+    { label: "Partner-served customers", mean: 4.09, satisfiedPercent: 74.1 },
+    { label: "SME customers", mean: 4.25, satisfiedPercent: 81.6 },
+  ],
+  completeMonths: [
+    { month: "Sep 2026", rated: 955, mean: 4.05, satisfiedPercent: 71.5, dissatisfiedPercent: 11.4 },
+    { month: "Oct 2026", rated: 932, mean: 4.09, satisfiedPercent: 76.2, dissatisfiedPercent: 11.2 },
+  ],
+} as const;

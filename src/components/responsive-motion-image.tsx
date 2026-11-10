@@ -18,12 +18,12 @@ function isGif(src: string) {
   return /\.gif(?:\?|$)/i.test(src);
 }
 
-function getCloudinaryPosterSrc(src: string) {
-  if (!isGif(src) || !src.includes("res.cloudinary.com") || !src.includes("/image/upload/")) {
+function getLocalPosterSrc(src: string) {
+  if (!isGif(src) || !src.startsWith("/") || src.startsWith("//")) {
     return null;
   }
 
-  return src.replace("/image/upload/", "/image/upload/f_webp,q_auto,w_720,pg_1/");
+  return src.replace(/\.gif(?=\?|$)/i, ".poster.webp");
 }
 
 export function ResponsiveMotionImage({
@@ -39,7 +39,7 @@ export function ResponsiveMotionImage({
   preserveAnimation = false,
 }: ResponsiveMotionImageProps) {
   const gifPosterSrc = isGif(src) && !preserveAnimation
-    ? mobilePosterSrc || getCloudinaryPosterSrc(src)
+    ? mobilePosterSrc || getLocalPosterSrc(src)
     : null;
   const displaySrc = gifPosterSrc || src;
 

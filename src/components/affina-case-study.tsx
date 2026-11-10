@@ -19,6 +19,8 @@ import { ImageZoom } from "@/components/ui/kibo-ui/image-zoom";
 import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
+import { AffinaMockupHero } from "@/components/affina-mockup-hero";
+import { AffinaCustomerEvidence } from "@/components/affina-customer-evidence";
 import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 import { caseStudyStyles } from "@/lib/case-study-styles";
 import { Icons } from "@/components/icons";
@@ -33,6 +35,7 @@ const sections = [
     id: "affina-challenge-01",
     label: "AI journey",
   },
+  { id: "affina-customer-evidence", label: "Customer feedback" },
   {
     id: "affina-challenge-02",
     label: "Healthcare system",
@@ -40,27 +43,6 @@ const sections = [
   { id: "affina-brand", label: "Brand foundation" },
   { id: "affina-next", label: "Next projects" },
   { id: "affina-contact", label: "Get in touch" },
-];
-
-const challenges = [
-  {
-    label: "Challenge 01",
-    title: "Turning an offline sales journey into an AI-assisted online experience",
-    question:
-      "How might AI narrow complex choices without removing the human support users trust?",
-  },
-  {
-    label: "Challenge 02",
-    title: "Building the design system from foundations up",
-    question:
-      "How could one shared system make Affina clearer, warmer and easier to scale?",
-  },
-  {
-    label: "Challenge 03",
-    title: "Rebuilding the brand foundation",
-    question:
-      "How could the brand feel more relevant to women while staying youthful and energetic?",
-  },
 ];
 
 const journeySteps = [
@@ -482,21 +464,6 @@ function JourneyScreenFlow({
   );
 }
 
-function AffinaProjectCover() {
-  return (
-    <div className="overflow-hidden rounded-xl">
-      <Image
-        src="/assets/project-thumbnails/affina-pink-meadow-en.webp"
-        alt="Affina app displayed on a phone above a grassy hill with pink flowers"
-        width={1448}
-        height={1086}
-        className="block h-auto w-full"
-        sizes="(max-width: 1040px) 100vw, 976px"
-      />
-    </div>
-  );
-}
-
 function InsuranceProductFlow() {
   return (
     <div id="affina-system-product-flow" className="relative mx-auto grid w-full max-w-[620px] grid-cols-2 gap-x-7 gap-y-10 p-4 sm:p-6">
@@ -749,6 +716,9 @@ export function AffinaCaseStudy() {
       <AffinaStickyIndicator />
 
       <ProjectCaseStudyHero
+        background={<AffinaMockupHero />}
+        summary="Simplifying insurance journeys through product design, a shared design system, and a clearer digital identity."
+        summaryLines={["Simplifying insurance journeys through", "product design, a shared design system,", "and a clearer digital identity."]}
         colors={projectMeshPalettes.affina}
         delay={PROJECT_HERO_DELAY}
         id="affina-overview"
@@ -761,70 +731,18 @@ export function AffinaCaseStudy() {
         scope="Web, mobile, design system, AI workflow"
         status="Live"
         title="Affina — Simplifying Insurance with AI"
-        titleLines={["Affina —", "Simplifying", "Insurance with AI"]}
+        titleLines={["Affina — Simplifying", "Insurance with AI"]}
       />
 
-      <section className={cn("relative z-10 mx-auto w-full max-w-[1040px] px-5 py-24 sm:px-8 lg:py-36", caseStudyStyles.pageStack)}>
-        <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-work">
-          <div className="flex flex-col gap-7">
-            <span className={styles.sectionPill}>
-              Overview
-            </span>
-            <h2 className={cn(caseStudyStyles.overviewTitle, "tracking-[-1px]")}>
-              Designing clearer insurance and healthcare experiences
-            </h2>
-            <p className={styles.leadText}>
-              I worked across Affina&apos;s digital ecosystem, simplifying insurance
-              journeys, evolving an existing design system toward a more
-              healthcare-oriented experience, refining interfaces beyond
-              handoff, and keeping the product language consistent across
-              digital touchpoints.
-            </p>
-          </div>
-
-          <AffinaProjectCover />
-
-        </CaseStudyRevealSection>
-
+      <section id="affina-work" className={cn("relative z-10 mx-auto w-full max-w-[1040px] px-5 pb-24 pt-[120px] sm:px-8 lg:pb-36", caseStudyStyles.pageStack)}>
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-system">
-          <span className={styles.sectionPill}>Design challenges</span>
-
-          <CaseStudyStatementReveal
-            className="tracking-[-1px]"
-            text="How might we turn a fragmented insurance journey into one clear path forward?"
-          />
-
-          <CaseStudyScrollReveal>
-            <div className="grid overflow-hidden rounded-xl border border-[#e4e4e7] bg-white px-6 lg:grid-cols-3 lg:gap-x-[51px]">
-              {challenges.map((item, index) => (
-                <article
-                  className="relative flex min-w-0 flex-col gap-5 border-b border-[#e4e4e7] py-6 last:border-b-0 lg:border-b-0"
-                  key={item.label}
-                >
-                  <div className="flex w-full items-center gap-4">
-                    <p className="whitespace-nowrap rounded-full bg-[#e8edf4] px-5 py-3 text-base font-bold leading-none text-[#18181b]">
-                      {item.label}
-                    </p>
-                    {index < challenges.length - 1 && (
-                      <ChevronRight
-                        aria-hidden="true"
-                        className="size-4 shrink-0 rotate-90 text-[#a1a1aa] lg:rotate-0"
-                        strokeWidth={2.5}
-                      />
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-3">
-                    <h3 className="font-[var(--font-affina-heading)] text-lg font-normal leading-[1.3] tracking-normal text-[#18181b]">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm leading-6 text-[#71717a]">
-                      {item.question}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </CaseStudyScrollReveal>
+          <div className="flex flex-col items-start gap-4 sm:gap-5">
+            <span className={styles.sectionPill}>Design challenges</span>
+            <CaseStudyStatementReveal
+              className="py-0 tracking-[-1px]"
+              text="How might we turn a fragmented insurance journey into one clear path forward?"
+            />
+          </div>
         </CaseStudyRevealSection>
 
         <section className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="affina-challenge-01">
@@ -1075,6 +993,10 @@ export function AffinaCaseStudy() {
             </div>
           </CaseStudyScrollReveal>
         </section>
+
+        <CaseStudyRevealSection>
+          <AffinaCustomerEvidence />
+        </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="affina-challenge-02">
           <div className="flex flex-col gap-6 sm:gap-7">

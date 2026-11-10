@@ -1,0 +1,208 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  width: 100%;
+  height: 100dvh;
+  container-type: inline-size;
+  color: #30251f;
+  background-color: #fafafa;
+}
+
+.floor {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, transparent 12%, #000 38%);
+}
+
+.floorPlane {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: max(2600px, 260vw);
+  height: max(2600px, 260vw);
+  background-image: radial-gradient(circle, rgb(60 65 70 / 25%) 1.15px, transparent 1.65px);
+  background-size: 28px 28px;
+  /* Parallel axes at approximately ±30°, matching the pedestal top faces. */
+  transform: translate(-50%, -50%) rotateX(55deg) rotateZ(45deg);
+  backface-visibility: hidden;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  container-type: inline-size;
+}
+
+.artwork {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.object {
+  position: absolute;
+  width: clamp(120px, 17cqw, 245px);
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+}
+
+.affina { left: 29%; top: 42%; width: clamp(112.5px, 16.2cqw, 229.5px); }
+.finance { left: 73%; top: 39%; width: clamp(125px, 18cqw, 255px); }
+.medhunt { left: 19%; top: 59%; width: clamp(125px, 18cqw, 255px); }
+.mingg { left: 81%; top: 59%; width: clamp(125px, 18cqw, 255px); }
+.playground { left: 32%; top: 81%; width: clamp(100px, 14.4cqw, 204px); }
+.zoan { left: 69%; top: 80%; width: clamp(125px, 18cqw, 255px); }
+.accentEsc { left: 19%; top: 79%; width: clamp(25px, 3.8cqw, 52px); }
+.accentStar { left: 52%; top: 32%; width: clamp(22px, 3.2cqw, 44px); }
+
+.horse {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: clamp(155px, 21cqw, 290px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotate(-1.97deg);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 24px;
+}
+
+.horse:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 6px;
+}
+
+.sceneGuide {
+  position: absolute;
+  left: 50%;
+  top: calc(55% + clamp(77.5px, 10.5cqw, 145px));
+  margin: 8px 0 0;
+  transform: translateX(-50%);
+  font-family: var(--font-heading), Arial, sans-serif;
+  font-size: clamp(11px, 0.85cqw, 13px);
+  line-height: 1.4;
+  color: #30251f;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.horseImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.greeting {
+  position: absolute;
+  left: 50%;
+  bottom: 76%;
+  z-index: 1;
+  padding: 8px 14px;
+  border: 1px solid rgb(0 0 0 / 12%);
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 6%);
+  color: #30251f;
+  font-size: clamp(18px, 1.6cqw, 23px);
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 6px) rotate(1.97deg);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.greeting::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 6px);
+  bottom: -7px;
+  width: 12px;
+  height: 12px;
+  border-right: 1px solid rgb(0 0 0 / 12%);
+  border-bottom: 1px solid rgb(0 0 0 / 12%);
+  background: #fff;
+  transform: rotate(45deg);
+}
+
+.horse[data-open="true"] .greeting,
+.horse:focus-visible .greeting {
+  opacity: 1;
+  transform: translate(-50%, 0) rotate(1.97deg);
+}
+
+@media (hover: hover) {
+  .horse:hover .greeting {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(1.97deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .greeting {
+    transition: none;
+  }
+}
+
+.masthead {
+  position: relative;
+  pointer-events: none;
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 15.85%;
+  gap: 1.31%;
+  align-items: start;
+  padding: 1.5cqw clamp(24px, 10.45cqw, 160px) 0;
+  font-family: var(--font-heading), Arial, sans-serif;
+}
+
+.name svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  fill: currentColor;
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 219px;
+  font-weight: 900;
+}
+
+.role {
+  padding-top: 0.25cqw;
+  font-size: 2.77cqw;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 639px) {
+  .hero {
+    height: 100dvh;
+  }
+
+  .masthead {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem 0;
+  }
+
+  .role {
+    padding-top: 0;
+    font-size: clamp(1rem, 4.5cqw, 1.375rem);
+  }
+
+  .object { width: 27cqw; }
+  .affina { left: 22%; top: 33%; width: 26.1cqw; }
+  .finance { left: 78%; top: 33%; width: 29cqw; }
+  .medhunt { left: 17%; top: 58%; width: 29cqw; }
+  .mingg { left: 83%; top: 58%; width: 29cqw; }
+  .playground { left: 28%; top: 82%; width: 23.2cqw; }
+  .zoan { left: 73%; top: 82%; width: 29cqw; }
+  .accentEsc { left: 12%; top: 75%; width: 7cqw; }
+  .accentStar { left: 53%; top: 29%; width: 6cqw; }
+  .horse { width: 37cqw; }
+  .sceneGuide { top: calc(55% + 18.5cqw); margin-top: 4px; }
+}

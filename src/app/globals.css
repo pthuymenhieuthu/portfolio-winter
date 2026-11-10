@@ -2,6 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+.partner-journey-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+.project-hero-reading-backdrop {
+  background: linear-gradient(to bottom, transparent, rgb(0 0 0 / 44%) 65%);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 45%);
+  mask-image: linear-gradient(to bottom, transparent, black 45%);
+}
+
+.project-hero-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' d='M0 0h180v180H0z'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: soft-light;
+  opacity: 0.12;
+}
+
+/* App screenshots remain scrollable without browser chrome inside the mockup. */
+[data-app-screen-preview] {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none;
+}
+
+[data-app-screen-preview]::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* The browser snapshots the actual old viewport and the real incoming hero. */
+html[data-project-water-transition]::view-transition-group(root) {
+  animation: none;
+}
+
+html[data-project-water-transition]::view-transition-image-pair(root) {
+  isolation: isolate;
+}
+
+html[data-project-water-transition]::view-transition-old(root),
+html[data-project-water-transition]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: plus-lighter;
+}
+
+html[data-project-water-transition]::view-transition-old(root) {
+  filter: url(#project-water-out);
+}
+
+html[data-project-water-transition]::view-transition-new(root) {
+  filter: url(#project-water-in);
+}
+
 @layer base {
     :root {
       --page: 0 0% 100%;

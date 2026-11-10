@@ -3,6 +3,15 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 
+let activeLenis: Lenis | null = null;
+
+export function resetScrollToTop() {
+  // Reset Lenis's target and velocity as well as the native scroll position.
+  // Otherwise its next frame can restore the previous project's scroll depth.
+  activeLenis?.scrollTo(0, { immediate: true, force: true });
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+}
+
 export function useLenis() {
   useEffect(() => {
     // ❌ Bỏ qua nếu đang chạy trên server
@@ -13,15 +22,19 @@ export function useLenis() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
+    activeLenis = lenis;
+    let frame = 0;
 
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      frame = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    frame = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(frame);
+      if (activeLenis === lenis) activeLenis = null;
       lenis.destroy();
     };
   }, []);

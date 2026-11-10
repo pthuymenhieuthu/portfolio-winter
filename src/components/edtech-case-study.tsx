@@ -46,13 +46,13 @@ const sections = [
 
 const assets = {
   hero: "/speakchinese-mobile-poster.jpg",
-  leftRight: "https://res.cloudinary.com/dqtfjvkok/image/upload/f_webp,q_auto,w_1200,pg_1/v1764752790/Copy_of_Phone_shocase_e6nh4i.webp",
-  speakChinese: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764754172/speak_chinese_z1dzwv.png",
-  sensei: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764755845/android_banner-tr%C3%B9m_japanese_cyfugx.png",
-  hsk: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764755849/HSK_soiciu.png",
-  androidBanner: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764755833/android_banner_xge5vi.png",
-  graphics1: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764756718/Frame_2147225633_jn2vkl.png",
-  graphics2: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1764756721/Frame_2147225634_auzyip.png",
+  leftRight: "/Copy_of_Phone_shocase_e6nh4i.webp",
+  speakChinese: "/speak_chinese_z1dzwv.png",
+  sensei: "/android_banner-tr%C3%B9m_japanese_cyfugx.png",
+  hsk: "/HSK_soiciu.png",
+  androidBanner: "/android_banner_xge5vi.png",
+  graphics1: "/Frame_2147225633_jn2vkl.png",
+  graphics2: "/Frame_2147225634_auzyip.png",
 };
 
 const assetDimensions: Record<string, [number, number]> = {
@@ -200,6 +200,15 @@ export function EdTechCaseStudy() {
       <EdTechStickyIndicator />
 
       <ProjectCaseStudyHero
+        summaryLines={["Building clearer, friendlier learning", "through mobile UI, motion, and", "App Store graphics."]}
+        backgroundSrc="/assets/project-heroes/edtech.webp"
+        summary={<>
+          This showcase focuses on <CaseStudyScrollHighlight>
+                clarity, motivation, and friendly interaction
+              </CaseStudyScrollHighlight>{" "}
+              for language learning apps that are publicly available
+              on the App Store and used by global learners every day.
+        </>}
         colors={projectMeshPalettes.edtech}
         delay={PROJECT_HERO_DELAY}
         id="edtech-overview"
@@ -211,27 +220,13 @@ export function EdTechCaseStudy() {
         role="UI & Motion Designer"
         scope="Mobile UI, motion, App Store graphics"
         status="Live"
-        title="Language Learning Apps — Enhancing Learning with UI & Motion"
-        titleLines={["Language Learning Apps —", "Enhancing Learning", "with UI & Motion"]}
+        title="Language Learning Apps — UI & Motion"
+        titleLines={["Language Learning Apps", "UI & Motion"]}
       />
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+      <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 pb-24 pt-[120px] sm:gap-40 sm:px-8 lg:pb-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="edtech-work">
-          <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#092014] px-3 py-1 text-sm text-white">
-              Overview
-            </span>
-            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-[-1px] sm:text-[40px]">
-              UI improvements for Chinese and Japanese learning apps
-            </h2>
-            <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              This showcase focuses on <CaseStudyScrollHighlight>
-                clarity, motivation, and friendly interaction
-              </CaseStudyScrollHighlight>{" "}
-              for language learning apps that are publicly available
-              on the App Store and used by global learners every day.
-            </p>
-          </div>
+
 
           <CaseStudyStatementReveal className="tracking-[-1px]" text="Clarity, motivation, and friendly interaction for language learning apps used by global learners every day." />
 

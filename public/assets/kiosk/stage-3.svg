@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="480" viewBox="800 0 400 480" fill="none">
+  <defs>
+    <g id="customer" stroke="#242424" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m-24 42-5 94-15 56h23l26-66 13 66h24l-14-68-1-83" fill="#304c43"/>
+      <path d="M-23-46c-19 6-25 24-27 51l-9 33 19 7 19-35-4 40h62l-6-52c-2-25-10-42-29-46" fill="#f4b941"/>
+      <path d="M-8-58v21c11 11 19 5 24-1v-23" fill="#edbba2"/>
+      <path d="M-21-83c0-25 49-28 49 3v16C28-34-16-35-18-62Z" fill="#edbba2"/>
+      <path d="M-21-69c-15-31 8-47 29-42 25-3 35 17 24 40l-10-13c-13 8-24 4-33-2l-3 17" fill="#242424"/>
+      <path d="M12-71h1m-11 17c5 3 10 2 13-1M-45 192h27m25 0h28"/>
+      <path d="m-41 4-7 35 26 15 8-14-19-13 8-18" fill="#edbba2"/>
+      <path d="m27-18 26 18 29-23 11 12-35 34c-5 4-10 3-16 0L22 8" fill="#edbba2"/>
+    </g>
+    <g id="kiosk" stroke="#242424" stroke-width="3" stroke-linejoin="round">
+      <path d="M47 223v45m-35 0h70"/><rect width="104" height="225" rx="12" fill="#fff"/>
+      <rect x="10" y="12" width="84" height="158" rx="4" fill="#f6f4ec"/>
+      <path d="M15 191h36m-36 9h20"/><rect x="65" y="185" width="25" height="19" rx="3" fill="#304c43"/>
+    </g>
+    <g id="burger" stroke="#242424" stroke-width="2" stroke-linejoin="round"><path d="M0 17C0-5 44-5 44 17Z" fill="#eab15b"/><path d="M0 20h44v8H0Z" fill="#304c43"/><path d="m2 28 20 5 20-5v9H2Z" fill="#b96a40"/><path d="M0 38h44v6H0Z" fill="#eab15b"/></g>
+  </defs>
+  <rect width="1200" height="480" rx="16" fill="#ffdf70"/>
+  <path d="M400 34v411m400-411v411" stroke="#b69c4f" stroke-dasharray="4 7"/>
+  <g fill="#242424" font-family="Arial,sans-serif"><text x="30" y="42" font-size="13">01 / FIND</text><text x="430" y="42" font-size="13">02 / CHOOSE</text><text x="830" y="42" font-size="13">03 / COLLECT</text></g>
+  <g stroke="#242424" stroke-width="2"><rect x="30" y="63" width="249" height="43" rx="21" fill="#fffaf0"/><rect x="430" y="63" width="218" height="43" rx="21" fill="#fffaf0"/><rect x="830" y="63" width="340" height="43" rx="21" fill="#fffaf0"/></g>
+  <g fill="#242424" font-family="Arial,sans-serif" font-size="17"><text x="48" y="90">Where can I find it?</text><text x="448" y="90">What’s included?</text><text x="848" y="90">Where do I collect my order?</text></g>
+  <path d="M28 416h344m56 0h344m56 0h344" stroke="#242424" stroke-width="2"/>
+  <use href="#kiosk" x="249" y="148"/>
+  <g fill="#ffdf70" stroke="#242424" stroke-width="1.5"><rect x="265" y="169" width="20" height="22" rx="3"/><rect x="265" y="198" width="20" height="22" rx="3"/><rect x="265" y="227" width="20" height="22" rx="3"/></g>
+  <path d="M294 173h34m-34 8h25m-25 22h34m-34 8h25m-25 22h34m-34 8h25m-10 38 5 5 5-5" stroke="#242424" stroke-width="2" stroke-linecap="round"/>
+  <use href="#customer" transform="translate(145 223) scale(.99)"/>
+  <use href="#kiosk" x="651" y="148"/>
+  <use href="#burger" transform="translate(679 175) scale(.68)"/>
+  <path d="M670 219h65m-65 10h48" stroke="#242424" stroke-width="2"/>
+  <rect x="669" y="242" width="69" height="41" rx="3" fill="white" stroke="#242424" stroke-width="1.5"/>
+  <g fill="#242424" font-family="Arial,sans-serif" font-size="8"><text x="675" y="254">Burger + fries</text><text x="675" y="268">+ drink</text></g>
+  <use href="#customer" transform="translate(545 223) scale(.99)"/>
+  <path d="M1040 299h134v117h-134Z" fill="#fffaf0" stroke="#242424" stroke-width="3"/>
+  <path d="M1030 297h144v12h-144Z" fill="#304c43" stroke="#242424" stroke-width="3"/>
+  <rect x="1050" y="156" width="111" height="88" rx="4" fill="#304c43" stroke="#242424" stroke-width="3"/>
+  <g fill="white" font-family="Arial,sans-serif" text-anchor="middle"><text x="1105" y="181" font-size="10">PICKUP</text><text x="1105" y="223" font-size="36">042</text></g>
+  <path d="m1082 254 23 25 23-25" stroke="#242424" stroke-width="3"/>
+  <use href="#customer" transform="translate(943 223) scale(.99)"/>
+  <rect x="1017" y="199" width="27" height="39" rx="2" fill="white" stroke="#242424" stroke-width="2" transform="rotate(-12 1017 199)"/>
+  <text x="1025" y="220" fill="#242424" font-family="Arial,sans-serif" font-size="9" transform="rotate(-12 1025 220)">042</text>
+  <g fill="#514622" font-family="Arial,sans-serif" font-size="12"><text x="30" y="454">Discover the menu</text><text x="430" y="454">Understand the meal</text><text x="830" y="454">Know what happens next</text></g>
+</svg>

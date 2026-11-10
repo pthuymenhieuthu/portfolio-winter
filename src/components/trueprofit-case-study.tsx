@@ -47,16 +47,16 @@ const sections = [
 
 const assets = {
   hero: "/trueprofit-mobile-poster.jpg",
-  keywords: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758739200/truepro-01_hcnk3e.png",
-  feeling: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758739200/truepro-02_xul57w.png",
-  landingOutcome: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758739200/truepro-03_a32knn.png",
-  landingResult: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758979026/truepro-02-ux_yjgd3g.png",
-  onboardingProblem: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758730723/01_xdfyoa.png",
-  empathyMap: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758732412/04_sypjpi.png",
-  journeyMap: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758730723/03_diajt3.png",
-  brandAlignment: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758730723/05_wo4zax.png",
-  handoff: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758733263/Screenshot_212_bpptse.png",
-  onboardingOutcome: "https://res.cloudinary.com/dqtfjvkok/image/upload/v1758730725/Frame_560_t1ebbr.png",
+  keywords: "/truepro-01_hcnk3e.png",
+  feeling: "/truepro-02_xul57w.png",
+  landingOutcome: "/truepro-03_a32knn.png",
+  landingResult: "/truepro-02-ux_yjgd3g.png",
+  onboardingProblem: "/01_xdfyoa.png",
+  empathyMap: "/04_sypjpi.png",
+  journeyMap: "/03_diajt3.png",
+  brandAlignment: "/05_wo4zax.png",
+  handoff: "/Screenshot_212_bpptse.png",
+  onboardingOutcome: "/Frame_560_t1ebbr.png",
 };
 
 const assetDimensions: Record<string, [number, number]> = {
@@ -214,6 +214,15 @@ export function TrueProfitCaseStudy() {
       <TrueProfitStickyIndicator />
 
       <ProjectCaseStudyHero
+        summaryLines={["Connecting landing page visuals", "and in-app onboarding through", "one consistent design language."]}
+        backgroundSrc="/Untitled_design_32_pf1vgx.gif"
+        posterSrc="/assets/project-heroes/trueprofit.webp"
+        summary={<>
+          During my internship, I worked on two design tasks closely tied to
+              <CaseStudyScrollHighlight> user experience and brand consistency</CaseStudyScrollHighlight>.
+              Both tasks shared the same need for clarity across product and
+              communication.
+        </>}
         colors={projectMeshPalettes.trueProfit}
         delay={PROJECT_HERO_DELAY}
         id="trueprofit-overview"
@@ -223,25 +232,12 @@ export function TrueProfitCaseStudy() {
         scope="Landing page, onboarding flow, illustrations"
         status="Live"
         title="TrueProfit — Rethinking Shopify Onboarding"
-        titleLines={["TrueProfit —", "Rethinking Shopify", "Onboarding"]}
+        titleLines={["TrueProfit — Rethinking", "Shopify Onboarding"]}
       />
 
-      <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 py-24 sm:gap-40 sm:px-8 lg:py-36">
+      <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 pb-24 pt-[120px] sm:gap-40 sm:px-8 lg:pb-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-work">
-          <div className="flex flex-col gap-7">
-            <span className="w-fit rounded-lg bg-[#071b14] px-3 py-1 text-sm text-white">
-              Overview
-            </span>
-            <h2 className="max-w-[760px] font-[var(--font-heading)] text-[30px] font-normal leading-[1.2] tracking-[-1px] sm:text-[40px]">
-              Landing page support and onboarding illustrations
-            </h2>
-            <p className="text-base leading-[1.6] text-[#737373] sm:text-[17px]">
-              During my internship, I worked on two design tasks closely tied to
-              <CaseStudyScrollHighlight> user experience and brand consistency</CaseStudyScrollHighlight>.
-              Both tasks shared the same need for clarity across product and
-              communication.
-            </p>
-          </div>
+
 
           <CaseStudyStatementReveal className="tracking-[-1px]" text="Translate abstract product goals into clear visual storytelling while staying aligned with the existing design system and marketing direction." />
 
