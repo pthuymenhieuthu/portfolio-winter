@@ -1134,18 +1134,6 @@ export function AffinaCaseStudy() {
             </p>
           </div>
 
-          <div className="border-y border-black/10 py-10 sm:py-12">
-            <p className={styles.accentLabel}>
-              Founder direction → solution
-            </p>
-            <p className={cn("mt-5", styles.bodyText)}>
-              The founder wanted the brand to feel more relevant to women
-              without losing its youthful, energetic character. I translated
-              that direction into a visual foundation that could scale across
-              product and communication.
-            </p>
-          </div>
-
           <div className="flex flex-col gap-16 sm:gap-20">
             <ComparisonRow
               title="Logo usage"
