@@ -85,7 +85,7 @@ export function ProjectCaseStudyHero({
 
   return (
     <>
-    <header id={id} data-project-hero="true" className={hasBackground ? "relative isolate flex min-h-[100svh] w-full items-end overflow-hidden bg-black text-white" : "text-[#1d1d1d]"}>
+    <header id={id} data-project-hero="true" className={hasBackground ? "relative isolate flex h-[100dvh] w-full items-center overflow-hidden bg-black text-white" : "text-[#1d1d1d]"}>
       {hasBackground && (
         <>
           {background || (mediaSrc && (isAnimated
@@ -96,14 +96,14 @@ export function ProjectCaseStudyHero({
           <div aria-hidden="true" className="project-hero-noise pointer-events-none absolute inset-0 z-[2]" />
         </>
       )}
-      <div className={cn("relative z-10 mx-auto w-full px-5 sm:px-8", hasBackground ? "max-w-[1440px] pb-32 pt-32 lg:px-12 lg:pb-28" : "max-w-[1040px] pb-10 pt-24 sm:pb-12 sm:pt-28")}>
-        <h1 ref={heading} aria-label={title} style={{ fontSize: titleSize }} className={cn("max-w-[1050px] font-[var(--font-heading)] text-[36px] font-medium leading-[1.12] tracking-[-0.035em] sm:text-[52px]", hasBackground && "text-white")}>
-          {titleLines.map((line) => <span key={line} className="block w-max whitespace-nowrap">{line}</span>)}
+      <div className={cn("relative z-10 mx-auto w-full px-5 text-center sm:px-8", hasBackground ? "max-w-[1440px] py-24 lg:px-12" : "max-w-[1040px] pb-10 pt-24 sm:pb-12 sm:pt-28")}>
+        <h1 ref={heading} aria-label={title} style={{ fontSize: titleSize }} className={cn("mx-auto max-w-[1050px] font-[var(--font-heading)] text-[36px] font-medium leading-[1.12] tracking-[-0.035em] sm:text-[52px]", hasBackground && "text-white")}>
+          {titleLines.map((line) => <span key={line} className="mx-auto block w-max whitespace-nowrap">{line}</span>)}
         </h1>
-        <div className="mt-6 grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-x-8">
-        {(summary || summaryLines) && <p className={cn("max-w-[46ch] text-sm leading-relaxed sm:text-base lg:col-span-7", hasBackground ? "text-white" : "text-[#626773]")}>{summaryLines ? summaryLines.map((line) => <span key={line} className="block whitespace-nowrap">{line}{" "}</span>) : summary}</p>}
+        <div className="mt-6 flex flex-col items-center gap-6">
+        {(summary || summaryLines) && <p className={cn("max-w-[46ch] text-sm leading-relaxed sm:text-base", hasBackground ? "text-white" : "text-[#626773]")}>{summaryLines ? summaryLines.map((line) => <span key={line} className="block whitespace-nowrap">{line}{" "}</span>) : summary}</p>}
         {links.length > 0 && (
-          <div className="flex flex-wrap gap-3 lg:col-span-5 lg:col-start-8 lg:justify-self-end">
+          <div className="flex flex-wrap justify-center gap-3">
             {links.map((link) => (
               <a
                 aria-label={link.href.startsWith("/") || link.href.startsWith("#") ? `Go to ${link.label}` : `Open ${link.label} in a new tab`}

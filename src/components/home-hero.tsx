@@ -13,9 +13,14 @@ export function HomeHero() {
   return (
     <section
       id="hero"
-      className="relative isolate flex min-h-[580px] w-full items-center justify-center overflow-hidden bg-background px-6 py-24 sm:min-h-[670px] md:min-h-[780px] lg:min-h-[860px] min-[1920px]:min-h-[100svh]"
+      className="relative isolate flex h-[100dvh] w-full shrink-0 items-center justify-center overflow-hidden bg-background px-6 py-12"
     >
       <CursorRippleBackground interactive />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%]"
+        style={{ background: "linear-gradient(to bottom, hsl(var(--background) / 0) 0%, hsl(var(--background) / 0.25) 30%, hsl(var(--background) / 0.72) 68%, hsl(var(--background)) 100%)" }}
+      />
       <div className="relative z-10 mx-auto flex w-full max-w-[640px] flex-col items-center text-center">
         <h1 className="text-balance font-[var(--font-heading)] text-[40px] font-medium leading-[1.05] tracking-[-0.035em] text-[#29303B] min-[390px]:text-[44px] sm:text-[72px]">
           Hi, I&apos;m {DATA.name.split(" ")[0]}
