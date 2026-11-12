@@ -20,6 +20,7 @@ import { ResponsiveMotionImage } from "@/components/responsive-motion-image";
 import BlurFade from "@/components/magicui/blur-fade";
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
 import { AffinaMockupHero } from "@/components/affina-mockup-hero";
+import { AffinaFocusReel } from "@/components/affina-focus-reel";
 import { AffinaCustomerEvidence } from "@/components/affina-customer-evidence";
 import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 import { caseStudyStyles } from "@/lib/case-study-styles";
@@ -768,6 +769,7 @@ export function AffinaCaseStudy() {
               text="How might we turn a fragmented insurance journey into one clear path forward?"
             />
           </div>
+          <AffinaFocusReel />
         </CaseStudyRevealSection>
 
         <section className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="affina-challenge-01">
