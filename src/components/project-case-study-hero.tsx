@@ -85,7 +85,7 @@ export function ProjectCaseStudyHero({
 
   return (
     <>
-    <header id={id} data-project-hero="true" className={hasBackground ? "relative isolate flex h-[100dvh] w-full items-center overflow-hidden bg-black text-white" : "text-[#1d1d1d]"}>
+    <header id={id} data-project-hero="true" className={hasBackground ? "relative isolate flex h-[100dvh] w-full items-end overflow-hidden bg-black text-white" : "text-[#1d1d1d]"}>
       {hasBackground && (
         <>
           {background || (mediaSrc && (isAnimated
@@ -96,14 +96,15 @@ export function ProjectCaseStudyHero({
           <div aria-hidden="true" className="project-hero-noise pointer-events-none absolute inset-0 z-[2]" />
         </>
       )}
-      <div className={cn("relative z-10 mx-auto w-full px-5 text-center sm:px-8", hasBackground ? "max-w-[1440px] py-24 lg:px-12" : "max-w-[1040px] pb-10 pt-24 sm:pb-12 sm:pt-28")}>
-        <h1 ref={heading} aria-label={title} style={{ fontSize: titleSize }} className={cn("mx-auto max-w-[1050px] font-[var(--font-heading)] text-[36px] font-medium leading-[1.12] tracking-[-0.035em] sm:text-[52px]", hasBackground && "text-white")}>
-          {titleLines.map((line) => <span key={line} className="mx-auto block w-max whitespace-nowrap">{line}</span>)}
+      <div className={cn("relative z-10 mx-auto grid w-full grid-cols-1 items-end gap-8 px-5 sm:px-8 lg:grid-cols-[minmax(0,1fr)_auto]", hasBackground ? "pb-28 pt-24 lg:px-12 lg:pb-12" : "max-w-[1040px] pb-10 pt-24 sm:pb-12 sm:pt-28")}>
+        <div className="min-w-0">
+        <h1 ref={heading} aria-label={title} style={{ fontSize: titleSize }} className={cn("max-w-[1050px] font-[var(--font-heading)] text-[36px] font-medium leading-[1.12] tracking-[-0.035em] sm:text-[52px]", hasBackground && "text-white")}>
+          {titleLines.map((line) => <span key={line} className="block w-max whitespace-nowrap">{line}</span>)}
         </h1>
-        <div className="mt-6 flex flex-col items-center gap-6">
-        {(summary || summaryLines) && <p className={cn("max-w-[46ch] text-sm leading-relaxed sm:text-base", hasBackground ? "text-white" : "text-[#626773]")}>{summaryLines ? summaryLines.map((line) => <span key={line} className="block whitespace-nowrap">{line}{" "}</span>) : summary}</p>}
+        {(summary || summaryLines) && <p className={cn("mt-6 max-w-[46ch] text-sm leading-relaxed sm:text-base", hasBackground ? "text-white" : "text-[#626773]")}>{summaryLines ? summaryLines.map((line) => <span key={line} className="block whitespace-nowrap">{line}{" "}</span>) : summary}</p>}
+        </div>
         {links.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap gap-3 lg:justify-self-end">
             {links.map((link) => (
               <a
                 aria-label={link.href.startsWith("/") || link.href.startsWith("#") ? `Go to ${link.label}` : `Open ${link.label} in a new tab`}
@@ -119,7 +120,6 @@ export function ProjectCaseStudyHero({
             ))}
           </div>
         )}
-        </div>
       </div>
     </header>
     <div data-project-metadata="true" className="mx-auto w-full max-w-[1040px] px-5 pt-[120px] text-[#1d1d1d] sm:px-8">
