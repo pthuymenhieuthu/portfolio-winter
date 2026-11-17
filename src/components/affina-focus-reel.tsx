@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 
 const screens = [
   "00-intro", "01-insurance-type", "02-insured-person", "03-monthly-budget",
-  "04-preferred-insurer", "05-matching", "06-recommendations", "07-comparison",
+  "04-preferred-insurer", "05-matching", "07-comparison",
 ];
 const offsets = [-3, -2, -1, 0, 1, 2, 3];
 

@@ -242,12 +242,12 @@ export const DATA = {
   dates: "Mar 2026",
   active: true,
   description:
-    "Unified Affina’s brand, product design, and digital presence with a scalable design system and AI-enhanced creative workflow.",
+    "Designed a guided insurance journey from survey to plan comparison, supported by a reusable UI system across web and mobile.",
   technologies: [
-    "Brand Identity",
+    "Product Design",
+    "Insurance Journey",
     "Design System",
     "UI/UX Design",
-    "AI-Enhanced Workflow",
   ],
   links: [
     {

@@ -121,13 +121,7 @@ const journeySteps = [
       "Show price and core benefits",
       "Reveal why it fits on demand",
     ],
-    media: [
-      {
-        src: "/assets/affina/ai-journey/06-recommendations.webp?v=en-final",
-        label: "06 · Recommendations",
-        detail: "Surface three suitable plans with clear price and benefit cues.",
-      },
-    ],
+    media: [],
   },
   {
     number: "3",
@@ -209,9 +203,9 @@ const healthcareRows = [
 ];
 
 const insuranceProductFlow = [
-  { number: "01", title: "Choose protection", detail: "Use clear option cards and pink selection cues to capture insurance needs.", src: "/assets/affina/ai-journey/01-insurance-type.webp?v=en-final" },
-  { number: "02", title: "Find a match", detail: "Carry the blue background and Affina mascot into the waiting state.", src: "/assets/affina/ai-journey/05-matching.webp?v=en-final" },
-  { number: "03", title: "Review recommendations", detail: "Bring provider, price and purchase action together in a white plan card.", src: "/assets/affina/ai-journey/06-recommendations.webp?v=en-final" },
+  { number: "01", title: "Start the journey", detail: "Introduce the task before asking for preferences.", src: "/assets/affina/ai-journey/overview-phone-2.webp" },
+  { number: "02", title: "Choose protection", detail: "Use clear option cards and pink selection cues to capture insurance needs.", src: "/assets/affina/ai-journey/01-insurance-type.webp?v=en-final" },
+  { number: "03", title: "Find a match", detail: "Carry the blue background and Affina mascot into the waiting state.", src: "/assets/affina/ai-journey/05-matching.webp?v=en-final" },
   { number: "04", title: "Compare plans", detail: "Reuse the same colors and controls to distinguish coverage and compare fees.", src: "/assets/affina/ai-journey/07-comparison.webp?v=en-final" },
 ] as const;
 
@@ -752,15 +746,20 @@ export function AffinaCaseStudy() {
           { href: "https://apps.apple.com/vn/app/affina-one/id6474957786", label: "App Store", icon: "appstore" },
           { href: "https://play.google.com/store/apps/details?id=com.affina&hl=en", label: "Google Play", icon: "googleplay" },
         ]}
-        outcome="Clearer journeys and stronger brand consistency"
+        outcome="Guided insurance flow and reusable UI foundation"
         role="Product Designer"
         scope="Web, mobile, design system, AI workflow"
-        status="Live"
+        status="App live"
         title="Affina — Simplifying Insurance with AI"
         titleLines={["Affina — Simplifying", "Insurance with AI"]}
       />
 
       <section id="affina-work" className={cn("relative z-10 mx-auto w-full max-w-[1040px] px-5 pb-24 pt-[120px] sm:px-8 lg:pb-36", caseStudyStyles.pageStack)}>
+        <p className={cn("max-w-[760px]", styles.leadText)}>
+          This case connects the insurance buying journey with the visual system
+          used across Affina&apos;s digital surfaces. The cover shows the broader
+          app experience; the first deep dive follows the buying journey.
+        </p>
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-10 sm:gap-12" id="affina-system">
           <div className="flex flex-col items-start gap-4 sm:gap-5">
             <span className={styles.sectionPill}>Design challenges</span>
@@ -814,6 +813,8 @@ export function AffinaCaseStudy() {
               </p>
               <p className="mt-6 max-w-[760px] text-base font-normal leading-[1.6] text-[#18181b] sm:text-[17px]">
                 I owned the journey from flow definition to responsive UI delivery.
+                My scope covered the experience around recommendations, not the
+                ranking model behind them.
               </p>
               <ul className="mt-8 flex max-w-[760px] list-disc flex-col gap-2 pl-6 text-base font-normal leading-[1.6] text-[#18181b] marker:text-[#18181b] sm:text-[17px]">
                 <li>
@@ -953,7 +954,7 @@ export function AffinaCaseStudy() {
                     </div>
                   </div>
 
-                  <JourneyScreenFlow screens={step.media} title={step.title} />
+                  {step.media.length > 0 && <JourneyScreenFlow screens={step.media} title={step.title} />}
                 </div>
               </article>
             ))}
@@ -967,12 +968,12 @@ export function AffinaCaseStudy() {
                   Measured behavior
                 </p>
                 <h3 className="mt-4 font-[var(--font-affina-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
-                  30-day snapshot after launch
+                  30-day web funnel snapshot
                 </h3>
               </div>
               <p className="max-w-[300px] text-sm leading-[1.5] text-[#526677] sm:text-right">
-                Traffic during this period was primarily organic and internal
-                testing, with no paid acquisition campaigns.
+                Measured on the earlier live web flow. These figures do not
+                measure the newer screens shown above.
               </p>
             </div>
 
@@ -1031,12 +1032,11 @@ export function AffinaCaseStudy() {
               Challenge 02
             </span>
             <h2 className={styles.sectionTitle}>
-              Building the design system from foundations up
+              Evolving a shared design system
             </h2>
             <p className={cn("max-w-[760px]", styles.leadText)}>
-              I treated the system as a product: start with the decisions it
-              must protect, translate them into rules, then prove those rules
-              through real interfaces.
+              I audited existing patterns, defined the missing foundations,
+              and tested the shared rules through real interfaces.
             </p>
           </div>
 
@@ -1180,50 +1180,6 @@ export function AffinaCaseStudy() {
                   height={60}
                   className="w-[220px] object-contain sm:w-[300px]"
                 />
-              }
-            />
-
-            <ComparisonRow
-              title="Brand / Graphic Typography"
-              before={
-                <div className="max-w-[320px] text-left text-[#7f7f7f]">
-                  <p className="text-4xl font-semibold">Montserrat</p>
-                  <p className="mt-4 text-2xl leading-snug">
-                    Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm
-                  </p>
-                  <p className="mt-2 text-2xl leading-snug">0 1 2 3 4 5 6 7 8 9</p>
-                </div>
-              }
-              after={
-                <div className="max-w-[360px] text-left text-[#7f7f7f]">
-                  <p className="text-4xl font-semibold">Familjen Grotesk</p>
-                  <p className="mt-4 text-2xl leading-snug">
-                    Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm
-                  </p>
-                  <p className="mt-2 text-2xl leading-snug">0 1 2 3 4 5 6 7 8 9</p>
-                </div>
-              }
-            />
-
-            <ComparisonRow
-              title="Product / UI Typography"
-              before={
-                <div className="max-w-[320px] text-left text-[#7f7f7f]">
-                  <p className="text-4xl font-semibold">Montserrat</p>
-                  <p className="mt-4 text-2xl leading-snug">
-                    Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm
-                  </p>
-                  <p className="mt-2 text-2xl leading-snug">0 1 2 3 4 5 6 7 8 9</p>
-                </div>
-              }
-              after={
-                <div className="max-w-[360px] text-left text-[#7f7f7f]">
-                  <p className="text-4xl font-semibold">Be Vietnam Pro</p>
-                  <p className="mt-4 text-2xl leading-snug">
-                    Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm
-                  </p>
-                  <p className="mt-2 text-2xl leading-snug">0 1 2 3 4 5 6 7 8 9</p>
-                </div>
               }
             />
 
