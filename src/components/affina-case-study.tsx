@@ -195,17 +195,17 @@ const healthcareRows = [
   },
   {
     number: "4",
-    title: "Prove it in product",
-    bold: "Applied the same tokens and reusable components",
-    after: "across the insurance survey, matching, recommendations and comparison, so the same visual language supports every decision.",
+    title: "Test it in app screens",
+    bold: "Applied the shared visual language",
+    after: "to the Affina Care home concept and the insurance survey, recommendations and comparison screens.",
     flow: true,
   },
 ];
 
 const insuranceProductFlow = [
-  { number: "01", title: "Start the journey", detail: "Introduce the task before asking for preferences.", src: "/assets/affina/ai-journey/overview-phone-2.webp" },
+  { number: "01", title: "App home", detail: "Bring healthcare services and insurance discovery into one app entry point.", src: "/assets/affina/affina-app-home.webp" },
   { number: "02", title: "Choose protection", detail: "Use clear option cards and pink selection cues to capture insurance needs.", src: "/assets/affina/ai-journey/01-insurance-type.webp?v=en-final" },
-  { number: "03", title: "Find a match", detail: "Carry the blue background and Affina mascot into the waiting state.", src: "/assets/affina/ai-journey/05-matching.webp?v=en-final" },
+  { number: "03", title: "Review recommendations", detail: "Show the plan, insurer and starting price before asking for a decision.", src: "/assets/affina/ai-journey/06-recommendations.webp" },
   { number: "04", title: "Compare plans", detail: "Reuse the same colors and controls to distinguish coverage and compare fees.", src: "/assets/affina/ai-journey/07-comparison.webp?v=en-final" },
 ] as const;
 
@@ -489,7 +489,7 @@ function InsuranceProductFlow() {
     <div id="affina-system-product-flow" className="relative mx-auto grid w-full max-w-[620px] grid-cols-2 gap-x-7 gap-y-10 p-4 sm:p-6">
       {insuranceProductFlow.map((step, index) => (
         <figure className={cn("relative min-w-0", index === 2 && "col-start-2 row-start-2", index === 3 && "col-start-1 row-start-2")} key={step.number}>
-          <ImageZoom>
+          <ImageZoom zoomImg={{ src: step.src }}>
             <div className="relative mx-auto aspect-[390/844] w-full max-w-[190px] overflow-hidden rounded-[18px] border border-[#e8e3ed] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.09)]">
               <Image src={step.src} alt={step.title} width={1533} height={3317} className="h-full w-full object-cover object-top" sizes="(max-width: 768px) 42vw, 190px" />
             </div>
