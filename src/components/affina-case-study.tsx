@@ -209,6 +209,23 @@ const insuranceProductFlow = [
   { number: "04", title: "Compare plans", detail: "Reuse the same colors and controls to distinguish coverage and compare fees.", src: "/assets/affina/ai-journey/07-comparison.webp?v=en-final" },
 ] as const;
 
+function NeutralSurveyHeader({ src }: { src: string }) {
+  if (!/\/ai-journey\/0[1-4]-/.test(src)) return null;
+
+  return (
+    <Image
+      src={src}
+      alt=""
+      aria-hidden="true"
+      width={1533}
+      height={3317}
+      unoptimized
+      className="pointer-events-none absolute inset-0 h-full w-full object-cover object-top grayscale"
+      style={{ clipPath: "inset(0 0 88.63% 0)" }}
+    />
+  );
+}
+
 const designSystemLayers = [
   {
     kind: "principles",
@@ -455,15 +472,18 @@ function JourneyScreenFlow({
               <figure className={cn("shrink-0 snap-start", screen.wide ? "w-[82vw] max-w-[640px]" : "w-[62vw] max-w-[240px]")}>
                 <ImageZoom zoomImg={{ src: screen.src }}>
                   <div className="overflow-hidden rounded-[24px] border border-[#cfd0d4] bg-white shadow-sm">
-                    <Image
-                      src={screen.src}
-                      alt={`${title}: ${screen.label}`}
-                      width={screen.width ?? 1533}
-                      height={screen.height ?? 3317}
-                      unoptimized
-                      className="block h-auto w-full"
-                      sizes={screen.wide ? "(max-width: 768px) 82vw, 640px" : "(max-width: 768px) 62vw, 240px"}
-                    />
+                    <div className="relative">
+                      <Image
+                        src={screen.src}
+                        alt={`${title}: ${screen.label}`}
+                        width={screen.width ?? 1533}
+                        height={screen.height ?? 3317}
+                        unoptimized
+                        className="block h-auto w-full"
+                        sizes={screen.wide ? "(max-width: 768px) 82vw, 640px" : "(max-width: 768px) 62vw, 240px"}
+                      />
+                      <NeutralSurveyHeader src={screen.src} />
+                    </div>
                   </div>
                 </ImageZoom>
                 <figcaption className="mt-5">
@@ -492,6 +512,7 @@ function InsuranceProductFlow() {
           <ImageZoom zoomImg={{ src: step.src }}>
             <div className="relative mx-auto aspect-[390/844] w-full max-w-[190px] overflow-hidden rounded-[18px] border border-[#e8e3ed] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.09)]">
               <Image src={step.src} alt={step.title} width={1533} height={3317} className="h-full w-full object-cover object-top" sizes="(max-width: 768px) 42vw, 190px" />
+              <NeutralSurveyHeader src={step.src} />
             </div>
           </ImageZoom>
           <figcaption className="mt-3">
