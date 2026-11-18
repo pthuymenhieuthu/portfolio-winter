@@ -191,6 +191,7 @@ export default function Navbar() {
                 variants={itemVariants}
               >
                 <button
+                  data-analytics-contact="project_form"
                   className="inline-flex h-12 items-center justify-center whitespace-nowrap rounded-full bg-[#3BA0FF] px-4 text-sm font-bold leading-none text-white shadow-[0_2px_4px_rgba(0,0,0,.03),0_8px_14px_rgba(59,160,255,.18),inset_0_3px_5px_rgba(255,255,255,.41)] transition duration-300 hover:bg-[#238fe8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/35 focus-visible:ring-offset-2"
                   onClick={() => setIsProjectInquiryOpen(true)}
                   type="button"
