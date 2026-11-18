@@ -85,6 +85,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <Script id="portfolio-owner-analytics" strategy="beforeInteractive">
+          {`
+            try {
+              var analyticsChoice = new URLSearchParams(window.location.search).get('portfolio_analytics');
+              if (analyticsChoice === 'off') localStorage.setItem('portfolio_analytics_off', '1');
+              if (analyticsChoice === 'on') localStorage.removeItem('portfolio_analytics_off');
+              window['ga-disable-G-R3RF6WJBJZ'] = localStorage.getItem('portfolio_analytics_off') === '1';
+            } catch (error) {}
+          `}
+        </Script>
         {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-R3RF6WJBJZ"
