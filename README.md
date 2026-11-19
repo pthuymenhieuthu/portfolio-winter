@@ -42,6 +42,12 @@ Built with next.js, [shadcn/ui](https://ui.shadcn.com/), and [magic ui](https://
 
 5. Open the [Config file](./src/data/resume.tsx) and make changes
 
+## Portfolio AI guide
+
+The home hero sends questions to `/api/portfolio-chat`. The server uses public portfolio facts in `src/lib/portfolio-chat-knowledge.ts` and returns a short answer with an optional case-study link. Questions are not sent to analytics or stored on the server. The current tab keeps the conversation in `sessionStorage` so visitors can return from a case study and continue.
+
+To enable it locally, copy `.env.example` to `.env.local`, add your OpenAI API key, and restart `pnpm dev`. For production, add `OPENAI_API_KEY` in the Vercel project's environment variables and redeploy. The key must stay server-side; do not use a `NEXT_PUBLIC_` variable. `OPENAI_MODEL` is optional and defaults to `gpt-6-luna`.
+
 # License
 
 Licensed under the [MIT license](https://github.com/dillionverma/portfolio/blob/main/LICENSE.md).

@@ -9,7 +9,7 @@ import { setScrollPosition } from "@/hooks/useLenis";
 import styles from "@/app/experiments/portfolio-chat/portfolio-chat.module.css";
 
 type Reply = { text: string; title?: string; href?: string; image?: string; tag?: string };
-type Turn = { question: string; reply?: Reply };
+type Turn = { question: string; reply?: Reply; error?: boolean };
 
 const SUGGESTIONS = [
   { question: "What did you design at Affina?", icon: ShieldCheck, tone: "peach" },
@@ -18,63 +18,7 @@ const SUGGESTIONS = [
   { question: "How do you work with developers?", icon: Code2, tone: "mint" },
 ];
 
-function responseFor(question: string): Reply {
-  const query = question.toLowerCase();
-
-  if (/affina|insurance|coverage|survey/.test(query)) {
-    return {
-      text: "At Affina, I designed a guided insurance journey from the first survey question through plan comparison. I also worked on a reusable UI system across web and mobile.",
-      title: "Affina — Simplifying Insurance with AI",
-      href: "/blog/affina",
-      image: "/assets/project-thumbnails/affina-pink-meadow-en.webp",
-      tag: "Insurance journey · Product design",
-    };
-  }
-
-  if (/zoan|\bai\b|motion|animation/.test(query)) {
-    return {
-      text: "At Zoan AI, I designed clearer workflows for a complex AI product across web and mobile. The case study shows how I organized the flows and built a consistent interface system.",
-      title: "Zoan AI — Designing Clearer AI Workflows",
-      href: "/blog/zoan",
-      image: "/assets/project-thumbnails/zoan.png",
-      tag: "AI product · UI system",
-    };
-  }
-
-  if (/medhunt|developer|handoff|collaborat|team/.test(query)) {
-    return {
-      text: "I work with developers early to clarify flows, edge cases, and reusable UI states. In MedHunt, I mapped a complex recruitment workflow into an interactive system that supported design and developer handoff.",
-      title: "MedHunt — Healthcare Recruitment OS",
-      href: "/blog/medhunt",
-      image: "/assets/project-thumbnails/medhunt-monitor.png",
-      tag: "Collaboration · Developer handoff",
-    };
-  }
-
-  if (/mcdonald|kiosk|\bux\b|research|process|approach/.test(query)) {
-    return {
-      text: "I start by clarifying the task people are trying to complete, then map the journey and explore a concrete flow. My McDonald’s kiosk study focuses on helping first-time and occasional users choose and collect a meal with confidence.",
-      title: "McDonald’s — Making Self-Ordering Easier",
-      href: "/blog/mcdonalds-kiosk",
-      image: "/assets/kiosk/thumbnail-mockup.png",
-      tag: "UX process · Research exploration",
-    };
-  }
-
-  if (/4oranges|reward|loyalty|qr/.test(query)) {
-    return {
-      text: "For 4Oranges, I designed a mobile reward experience built around QR scans, with a UI kit to keep the app consistent.",
-      title: "4Oranges — Turning QR Scans into Rewards",
-      href: "/blog/4oranges",
-      image: "/assets/project-thumbnails/4oranges.png",
-      tag: "Mobile app · UI kit",
-    };
-  }
-
-  return {
-    text: "I can share work from insurance, AI products, recruitment tools, mobile rewards, and UX research. Ask about a specific project or how I approach UX, AI design, or developer handoff.",
-  };
-}
+const CHAT_STORAGE_KEY = "thuy-portfolio-chat-v1";
 
 export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
   const [draft, setDraft] = useState("");
@@ -82,11 +26,32 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
   const [isAnswering, setIsAnswering] = useState(false);
   const [introReady, setIntroReady] = useState(false);
   const [session, setSession] = useState(0);
+  const [restored, setRestored] = useState(false);
   const fluidRef = useRef<FluidTypingHandle>(null);
   const surfaceRef = useRef<HTMLDivElement>(null);
   const sendRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const replyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const requestRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(CHAT_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved) as { turns?: Turn[]; draft?: string };
+        if (Array.isArray(parsed.turns)) {
+          setTurns(parsed.turns.filter((turn) => typeof turn.question === "string" && turn.reply).slice(-12));
+        }
+        if (typeof parsed.draft === "string") setDraft(parsed.draft.slice(0, 180));
+      }
+    } catch { /* A stale session should not break the hero. */ }
+    setRestored(true);
+  }, []);
+
+  useEffect(() => {
+    if (!restored) return;
+    try { sessionStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify({ turns: turns.slice(-12), draft })); }
+    catch { /* Private browsing can block session storage. */ }
+  }, [turns, draft, restored]);
 
   useEffect(() => {
     const timer = setTimeout(() => setIntroReady(true), 1550);
@@ -116,10 +81,10 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
   }, [session]);
 
   useEffect(() => () => {
-    if (replyTimer.current) clearTimeout(replyTimer.current);
+    requestRef.current?.abort();
   }, []);
 
-  const sendQuestion = (event: FormEvent<HTMLFormElement>) => {
+  const sendQuestion = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const question = draft.trim();
     if (!question || isAnswering) return;
@@ -135,21 +100,49 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
       );
     }
 
+    const history = turns.filter((turn) => turn.reply && !turn.error).slice(-4)
+      .map((turn) => ({ question: turn.question, answer: turn.reply!.text }));
+    const controller = new AbortController();
+    requestRef.current = controller;
     setTurns((current) => [...current, { question }]);
     setDraft("");
     setIsAnswering(true);
-    replyTimer.current = setTimeout(() => {
+
+    try {
+      const response = await fetch("/api/portfolio-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question, history }),
+        signal: controller.signal,
+      });
+      const result = await response.json() as { reply?: Reply };
+      if (!response.ok || !result.reply || typeof result.reply.text !== "string") {
+        throw new Error(response.status === 503 ? "unconfigured" : response.status === 429 ? "limited" : "unavailable");
+      }
       setTurns((current) => current.map((turn, index) =>
-        index === current.length - 1 ? { ...turn, reply: responseFor(turn.question) } : turn
+        index === current.length - 1 ? { ...turn, reply: result.reply } : turn
       ));
-      setIsAnswering(false);
-      replyTimer.current = null;
-    }, 1050);
+    } catch (error) {
+      if (controller.signal.aborted) return;
+      const message = error instanceof Error && error.message === "unconfigured"
+        ? "The AI guide is not connected yet. You can still explore the projects below."
+        : error instanceof Error && error.message === "limited"
+          ? "That was a lot of good questions! Please come back in a bit."
+          : "The AI guide hit a snag. Please try again in a moment.";
+      setTurns((current) => current.map((turn, index) =>
+        index === current.length - 1 ? { ...turn, reply: { text: message }, error: true } : turn
+      ));
+    } finally {
+      if (!controller.signal.aborted) {
+        requestRef.current = null;
+        setIsAnswering(false);
+      }
+    }
   };
 
   const reset = () => {
-    if (replyTimer.current) clearTimeout(replyTimer.current);
-    replyTimer.current = null;
+    requestRef.current?.abort();
+    requestRef.current = null;
     setTurns([]);
     setDraft("");
     setIsAnswering(false);
@@ -263,7 +256,7 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
                       </div>
                     ) : (
                       <div className={styles.loadingBubble}>
-                        <span className={styles.loadingDots} aria-label="Preparing a sample answer"><i /><i /><i /></span>
+                        <span className={styles.loadingDots} aria-label="Thinking about your question"><i /><i /><i /></span>
                       </div>
                     )}
                   </div>
