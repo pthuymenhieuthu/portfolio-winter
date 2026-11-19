@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUp, ArrowUpRight, Code2, RotateCcw, Route, ShieldCheck, Sparkles } from "lucide-react";
 import { FluidTyping, type FluidTypingHandle } from "@/components/reactdrops/fluid-typing";
-import { SoapBubbleSurface } from "@/components/reactdrops/soap-bubble";
 import styles from "@/app/experiments/portfolio-chat/portfolio-chat.module.css";
 
 type Reply = { text: string; title: string; href: string; image: string; tag: string };
@@ -221,12 +220,12 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
           ) : (
             <div className={styles.chat}>
               <p className={styles.chatGuide}>Ask about my projects, process, or experience.</p>
-              <div className={styles.messages} aria-live="polite">
+              <div className={styles.messages} data-lenis-prevent tabIndex={0} role="log" aria-label="Conversation" aria-live="polite">
                 {turns.map((turn, index) => (
                   <div className={styles.turn} key={`${index}-${turn.question}`}>
-                    <SoapBubbleSurface className={styles.questionBubble} radius={25} glass={0.86} iridescence={0.45} tint="#daedffdd" oilEdge={12} clearCenter={0.7}>
+                    <div className={styles.questionBubble}>
                       <p>{turn.question}</p>
-                    </SoapBubbleSurface>
+                    </div>
                     {turn.reply ? (
                       <div className={styles.answerBubble}>
                         <div className={styles.answerInner}>
@@ -242,9 +241,9 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
                         </div>
                       </div>
                     ) : (
-                      <SoapBubbleSurface className={styles.loadingBubble} radius={24} glass={0.85} tint="#ffffffdb">
+                      <div className={styles.loadingBubble}>
                         <span className={styles.loadingDots} aria-label="Preparing a sample answer"><i /><i /><i /></span>
-                      </SoapBubbleSurface>
+                      </div>
                     )}
                   </div>
                 ))}
