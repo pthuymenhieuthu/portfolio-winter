@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 import { BackToTopButton } from "@/components/back-to-top-button";
 import { RouteScrollRestoration } from "@/components/route-scroll-restoration";
 import PortfolioAnalytics from "@/components/portfolio-analytics";
+import { PageRippleTransition } from "@/components/page-ripple-transition";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   useLenis();
@@ -39,6 +40,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <PortfolioAnalytics />
+      <PageRippleTransition />
       {!isHome && <ScrollProgress />}
       <ThemeProvider attribute="class" defaultTheme="light">
         <TooltipProvider delayDuration={0}>
