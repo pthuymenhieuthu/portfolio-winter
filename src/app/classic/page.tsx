@@ -21,7 +21,7 @@ export default function Page() {
       <main className="relative z-10 flex min-h-[100dvh] w-full max-w-full flex-col overflow-hidden rounded-b-[32px] bg-background text-[#29303B] md:mb-[64dvh] md:rounded-b-[40px]">
         <HomeHero />
 
-        <section id="projects" className="relative z-10 w-full max-w-full overflow-hidden pt-16 sm:pt-36 lg:pt-52">
+        <section id="projects" className="relative z-10 w-full max-w-full scroll-mt-[80px] overflow-hidden pt-16 sm:scroll-mt-[96px] sm:pt-36 lg:pt-52">
           <div className="w-full space-y-12 pb-20 sm:space-y-16 lg:space-y-20">
             <BlurFade delay={BLUR_FADE_DELAY * 11}>
               <div className="flex w-full flex-col items-center justify-center space-y-4 px-4 text-center">

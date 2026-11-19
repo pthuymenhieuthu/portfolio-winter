@@ -1,0 +1,249 @@
+/*!
+ReactDrops Component License 1.0
+
+Copyright (c) 2026 ReactDrops
+
+1. Scope and definitions
+
+This license applies to ReactDrops software and associated documentation that
+expressly carry this license or are distributed under a LICENSE file containing
+it (the "Software"). "Licensor" means the copyright holder granting rights in
+the Software, and only to the extent that holder has authority to grant them.
+"You" means the individual or entity exercising these rights.
+
+An "End Product" is a website, application, service, or other finished project
+whose primary purpose is something other than providing reusable components,
+source code, templates, or development assets to others.
+
+2. Permitted uses
+
+Subject to this license, Licensor grants You a worldwide, non-exclusive,
+royalty-free license to use, copy, modify, and incorporate the Software into
+unlimited personal, internal, and commercial End Products. You may charge for
+End Products, subscriptions, development services, and work for clients.
+
+You may distribute the Software as an integrated part of an End Product,
+including in browser-delivered JavaScript. You may provide End Product source
+code to a client, and share the Software with employees and contractors who
+need it to develop or maintain End Products. Those recipients may use the
+Software for those purposes subject to this license. This permission does not
+authorize them to redistribute the Software as a reusable development asset.
+
+3. Restricted redistribution
+
+Unless You obtain separate written permission from Licensor, You may not sell,
+sublicense, publish, share, or otherwise redistribute the Software, or a
+substantial portion of it, whether unchanged or modified:
+
+(a) as a standalone component, component library, UI kit, source-code bundle,
+    registry, or other collection of reusable development assets;
+(b) as part of a theme, template, starter project, or similar product offered
+    to multiple recipients for reuse in their own projects; or
+(c) through a builder or generation service that offers the Software as
+    reusable blocks or source-code exports for others' projects.
+
+These restrictions apply to paid and free redistribution. Renaming, restyling,
+repackaging, translating, or modifying the Software does not remove them.
+Building separate finished websites or applications for multiple clients is
+permitted; offering a reusable template or kit containing the Software is not.
+
+Public source-code hosting by Licensor is not permission to republish the
+Software under another license. This license does not override any separate
+rights granted directly by Licensor or applicable code-hosting terms.
+
+4. Notices and ownership
+
+Retain this license and applicable copyright and third-party notices in source
+copies of the Software and permitted source distributions. No visible credit
+or ReactDrops logo is required in an End Product's user interface.
+
+Licensor retains ownership of its Software. You retain rights in Your own
+contributions, subject to the license for any incorporated Software. No rights
+to trademarks, trade names, or logos are granted by this license.
+
+5. Third-party materials and separate grants
+
+Dependencies, fonts, images, videos, and other third-party materials remain
+subject to their respective licenses. Separately identified third-party code
+is licensed under its stated terms, and these restrictions do not limit rights
+granted by its copyright holders. Retain all required third-party notices.
+Demo media are not licensed by this document; obtain Your own permission or
+replace them with media You are entitled to use.
+
+This license does not revoke rights granted under other valid licenses. It does
+not assert ownership of third-party work or grant rights Licensor lacks.
+
+6. Termination
+
+The permissions granted here continue unless terminated for a material breach.
+If You fail to cure a material breach within 30 days after receiving written
+notice from Licensor, Your permissions terminate. On termination, cease uses
+and distributions requiring this license. Rights under independently granted
+licenses and rights that applicable law does not allow to be restricted remain
+unaffected. Sections 3 through 7 survive termination.
+
+7. Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. TO THE MAXIMUM EXTENT
+PERMITTED BY APPLICABLE LAW, LICENSOR AND CONTRIBUTORS SHALL NOT BE LIABLE FOR
+ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT, OR OTHERWISE,
+ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
+
+This license does not limit rights or exceptions that applicable law makes
+non-waivable. No other permissions are granted by implication.
+*/
+
+.fluid-typing {
+  --fluid-typing-color: var(--fluid-typing-palette-light, #173b4b);
+  container-type: inline-size;
+}
+@media (prefers-color-scheme: dark) {
+  .fluid-typing[data-fluid-mode='auto'] {
+    --fluid-typing-color: var(--fluid-typing-palette-dark, #bce6f5);
+  }
+}
+:where([data-theme='dark'], .dark) .fluid-typing[data-fluid-mode='auto'],
+.fluid-typing[data-fluid-mode='dark'] {
+  --fluid-typing-color: var(--fluid-typing-palette-dark, #bce6f5);
+}
+:where([data-theme='light']) .fluid-typing[data-fluid-mode='auto'],
+.fluid-typing[data-fluid-mode='light'] {
+  --fluid-typing-color: var(--fluid-typing-palette-light, #173b4b);
+}
+.fluid-typing[data-fluid-theme='dark'] {
+  --fluid-typing-color: var(--fluid-typing-palette-dark, #bce6f5);
+}
+.fluid-typing[data-fluid-theme='light'] {
+  --fluid-typing-color: var(--fluid-typing-palette-light, #173b4b);
+}
+.fluid-typing-stage {
+  display: grid;
+  place-content: center start;
+  justify-items: start;
+  gap: 1.25rem;
+  min-width: 0;
+  height: 100%;
+  padding: clamp(1rem, 5cqw, 3rem);
+  padding-inline: clamp(1.5rem, 12cqw, 12rem);
+  box-sizing: border-box;
+}
+.fluid-typing-copy {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  color: var(--fluid-typing-color);
+  font-family: inherit;
+  font-size: clamp(1.5rem, 5.8cqw, 3rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: left;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.fluid-typing-reserve {
+  visibility: hidden;
+}
+.fluid-typing-visible {
+  position: absolute;
+  inset: 0;
+}
+.fluid-typing-character {
+  animation: fluid-typing-reveal 140ms ease-out;
+}
+.fluid-typing-stage[data-fluid-typing-mode='manual'] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.fluid-typing-stage[data-fluid-typing-mode='manual'] .fluid-typing-copy {
+  display: flex;
+  align-items: baseline;
+  width: min(100%, 26ch);
+  max-height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px;
+  box-sizing: border-box;
+}
+.fluid-typing-stage[data-fluid-typing-mode='manual'] .fluid-typing-fixed {
+  min-width: 0;
+  flex: 0 1 auto;
+}
+.fluid-typing-input {
+  display: block;
+  flex: 1;
+  min-width: 1ch;
+  min-height: 1em;
+  padding-inline-end: 0.12em;
+  box-sizing: border-box;
+  cursor: text;
+  caret-color: transparent;
+  outline: none;
+}
+.fluid-typing-input:empty::before {
+  content: attr(data-placeholder);
+  opacity: 0.45;
+}
+.fluid-typing-caret {
+  display: inline-block;
+  width: 0.055em;
+  height: 0.95em;
+  margin-inline-start: 0.02em;
+  background: currentColor;
+  vertical-align: -0.08em;
+  animation: fluid-typing-blink 1s steps(1, end) infinite;
+}
+.fluid-typing-caret-metrics {
+  position: absolute;
+  inset: 0 auto auto 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.fluid-typing-manual-caret {
+  position: absolute;
+  pointer-events: none;
+}
+.fluid-typing-manual-caret:not([data-fluid-active='true']) {
+  visibility: hidden;
+}
+.fluid-typing-caret[data-fluid-cursor='false'] {
+  visibility: hidden;
+}
+[data-fluid-typing-paused='true'] .fluid-typing-caret,
+[data-fluid-typing-paused='true'] .fluid-typing-character {
+  animation-play-state: paused;
+}
+.fluid-typing-accessible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@keyframes fluid-typing-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes fluid-typing-reveal {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fluid-typing-caret,
+  .fluid-typing-character {
+    animation: none;
+  }
+}

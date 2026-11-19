@@ -13,6 +13,8 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const socialOrder = ["Behance", "email"] as const;
@@ -86,12 +88,27 @@ function NavButton({
 
 export default function Navbar() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [introComplete, setIntroComplete] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProjectInquiryOpen, setIsProjectInquiryOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const pathname = usePathname();
+  const isHome = pathname === "/" || pathname === "/classic";
   const homeItem = DATA.navbar[0];
   const motionTransition = shouldReduceMotion ? { duration: 0 } : dockTransition;
 
+  const goToProjects = (tab: "work" | "experiments") => {
+    setIsMobileMenuOpen(false);
+    document.getElementById(`projects-tab-${tab}`)?.click();
+    const target = document.getElementById(tab === "experiments" ? "projects-tab-experiments" : "projects");
+    target?.scrollIntoView({
+      behavior: shouldReduceMotion ? "auto" : "smooth",
+      block: tab === "experiments" ? "center" : "start",
+    });
+  };
+
   useEffect(() => {
+    if (isHome) return;
     if (shouldReduceMotion) {
       setIsExpanded(true);
       return;
@@ -99,7 +116,114 @@ export default function Navbar() {
 
     const timeout = window.setTimeout(() => setIsExpanded(true), 820);
     return () => window.clearTimeout(timeout);
-  }, [shouldReduceMotion]);
+  }, [isHome, shouldReduceMotion]);
+
+  useEffect(() => {
+    if (!isHome) return;
+    const stage = document.querySelector<HTMLElement>("#hero .fluid-typing-stage");
+    if (!stage) return;
+    const update = () => setIntroComplete(stage.dataset.fluidTypingState === "done");
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(stage, { attributes: true, attributeFilter: ["data-fluid-typing-state"] });
+    return () => observer.disconnect();
+  }, [isHome]);
+
+  if (isHome) {
+    return (
+      <>
+        <motion.nav
+          aria-label="Main navigation"
+          className="fixed inset-x-0 top-0 z-50 w-full px-4 pt-4 sm:px-[clamp(24px,2.5vw,48px)] sm:pt-6"
+          initial={shouldReduceMotion ? false : { opacity: 0, y: -54 }}
+          animate={{ opacity: introComplete ? 1 : 0, y: introComplete ? 0 : -54 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
+          style={{ pointerEvents: introComplete ? "auto" : "none" }}
+        >
+          <div className="relative mx-auto flex h-[60px] w-full items-center justify-between gap-4 rounded-full border border-white/70 bg-white/80 px-5 shadow-[0_10px_30px_rgba(23,59,75,.09),inset_0_1px_0_rgba(255,255,255,.8)] backdrop-blur-[24px] md:px-6">
+            <div className="flex shrink-0 items-center">
+              <Link href="/" aria-label="Thuy Nguyen — home" className="shrink-0 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#3BA0FF]">
+                <Image src="/thuy-logo.svg" alt="Thuy" width={1304} height={521} priority className="h-6 w-auto md:h-[26px]" />
+              </Link>
+            </div>
+            <div className="hidden items-center justify-center gap-5 text-sm font-medium text-[#173b4b] md:flex lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:gap-9">
+              <button type="button" onClick={() => goToProjects("work")} className="whitespace-nowrap rounded-sm py-1 transition hover:text-[#007ac9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#3BA0FF]">
+                Projects
+              </button>
+              <button type="button" onClick={() => goToProjects("experiments")} className="whitespace-nowrap rounded-sm py-1 transition hover:text-[#007ac9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#3BA0FF]">
+                AI Experiments
+              </button>
+            </div>
+            <div className="hidden items-center gap-1 md:flex">
+              {socialOrder
+                .map((name) => [name, DATA.contact.social[name]] as const)
+                .filter(([_, social]) => social?.navbar)
+                .map(([name, social]) => (
+                  <NavButton href={social.url} label={social.name} key={name}>
+                    <social.icon className="size-4" />
+                  </NavButton>
+                ))}
+              <button
+                data-analytics-contact="project_form"
+                className="ml-1 inline-flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-[#3BA0FF] px-4 text-sm font-bold text-white transition hover:bg-[#238fe8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3BA0FF]/35"
+                onClick={() => setIsProjectInquiryOpen(true)}
+                type="button"
+              >
+                Start a project
+              </button>
+            </div>
+            <button
+              type="button"
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-controls="mobile-portfolio-menu"
+              aria-expanded={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen((open) => !open)}
+              className="grid size-10 place-items-center rounded-full text-[#173b4b] transition hover:bg-[#e9f6ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3BA0FF] md:hidden"
+            >
+              {isMobileMenuOpen ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
+            </button>
+          </div>
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div
+                id="mobile-portfolio-menu"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+                className="mt-2 flex flex-col gap-1 rounded-[24px] border border-white/75 bg-white/80 p-3 shadow-[0_14px_34px_rgba(23,59,75,.12)] backdrop-blur-[24px] md:hidden"
+              >
+                <button type="button" onClick={() => goToProjects("work")} className="min-h-11 rounded-xl px-4 text-left text-sm font-medium text-[#173b4b] hover:bg-[#e9f6ff]">Projects</button>
+                <button type="button" onClick={() => goToProjects("experiments")} className="min-h-11 rounded-xl px-4 text-left text-sm font-medium text-[#173b4b] hover:bg-[#e9f6ff]">AI Experiments</button>
+                <div className="my-1 h-px bg-[#173b4b]/10" />
+                <div className="flex items-center justify-between gap-3 px-1">
+                  <div className="flex items-center gap-1">
+                    {socialOrder
+                      .map((name) => [name, DATA.contact.social[name]] as const)
+                      .filter(([_, social]) => social?.navbar)
+                      .map(([name, social]) => (
+                        <NavButton href={social.url} label={social.name} key={name}>
+                          <social.icon className="size-4" />
+                        </NavButton>
+                      ))}
+                  </div>
+                  <button
+                    data-analytics-contact="project_form"
+                    className="inline-flex h-10 items-center justify-center rounded-full bg-[#3BA0FF] px-4 text-sm font-bold text-white hover:bg-[#238fe8]"
+                    onClick={() => { setIsMobileMenuOpen(false); setIsProjectInquiryOpen(true); }}
+                    type="button"
+                  >
+                    Start a project
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.nav>
+        <ProjectInquiryDialog onOpenChange={setIsProjectInquiryOpen} open={isProjectInquiryOpen} />
+      </>
+    );
+  }
 
   return (
     <>
