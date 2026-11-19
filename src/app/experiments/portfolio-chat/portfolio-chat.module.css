@@ -90,6 +90,7 @@
 .answerBubble { width: min(100%, 630px); padding: 24px; border: 0; border-radius: 26px; background: rgba(255,255,255,.94); box-shadow: 0 16px 32px -15px rgba(21,70,106,.24), 0 4px 12px rgba(21,70,106,.08); }
 .answerInner { position: relative; z-index: 1; }
 .answerText { max-width: 54ch; margin: 0; font-size: 17px; line-height: 1.62; color: #1b3d4d; }
+.fallbackNote { margin: 12px 0 0; color: #688293; font-size: 12px; line-height: 1.4; }
 .projectLink { display: flex; align-items: center; gap: 14px; margin-top: 20px; padding: 12px; border-radius: 16px; background: rgba(244,250,252,.82); text-decoration: none; color: #173b4b; transition: background 180ms ease, transform 180ms ease; }
 .projectLink:hover { background: #fff; transform: translateY(-2px); }
 .projectImage { position: relative; flex: 0 0 64px; width: 64px; height: 56px; overflow: hidden; border-radius: 10px; background: #d9e9ef; }

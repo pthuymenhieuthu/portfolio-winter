@@ -20,6 +20,36 @@ const SUGGESTIONS = [
 
 const CHAT_STORAGE_KEY = "thuy-portfolio-chat-v1";
 
+function fallbackFor(question: string): Reply {
+  const query = question.toLowerCase();
+  if (/affina|insurance|coverage|survey/.test(query)) return {
+    text: "Thuy designed a guided insurance journey at Affina, from the first survey question through plan comparison, plus a reusable UI system for web and mobile.",
+    title: "Affina — Simplifying Insurance with AI", href: "/blog/affina",
+    image: "/assets/project-thumbnails/affina-pink-meadow-en.webp", tag: "Insurance journey · Product design",
+  };
+  if (/zoan|\bai\b|motion|animation/.test(query)) return {
+    text: "At Zoan AI, Thuy designed clearer content-creation flows across web and mobile, including UI system foundations and motion details.",
+    title: "Zoan AI — Designing Clearer AI Workflows", href: "/blog/zoan",
+    image: "/assets/project-thumbnails/zoan.png", tag: "AI product · UI system",
+  };
+  if (/medhunt|developer|handoff|collaborat|team/.test(query)) return {
+    text: "Thuy works with developers early to clarify flows, edge cases and reusable UI states. In MedHunt, she mapped a complex recruitment workflow into an interactive handoff system.",
+    title: "MedHunt — Healthcare Recruitment OS", href: "/blog/medhunt",
+    image: "/assets/project-thumbnails/medhunt-monitor.png", tag: "Collaboration · Developer handoff",
+  };
+  if (/mcdonald|kiosk|\bux\b|research|process|approach/.test(query)) return {
+    text: "Thuy starts by clarifying the task and business rules, then maps the journey, explores flows and prototypes the interaction. Her kiosk study shows that process in a self-ordering experience.",
+    title: "McDonald’s — Making Self-Ordering Easier", href: "/blog/mcdonalds-kiosk",
+    image: "/assets/kiosk/thumbnail-mockup.png", tag: "UX process · Research exploration",
+  };
+  if (/4oranges|reward|loyalty|qr/.test(query)) return {
+    text: "For 4Oranges, Thuy designed a mobile rewards experience built around QR scans, with a UI kit to keep the app consistent.",
+    title: "4Oranges — Turning QR Scans into Rewards", href: "/blog/4oranges",
+    image: "/assets/project-thumbnails/4oranges.png", tag: "Mobile app · UI kit",
+  };
+  return { text: "The AI guide is unavailable right now. You can explore Thuy’s projects below, or ask about Affina, Zoan AI, her UX process or developer handoff for a quick portfolio summary." };
+}
+
 export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
   const [draft, setDraft] = useState("");
   const [turns, setTurns] = useState<Turn[]>([]);
@@ -27,6 +57,7 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
   const [introReady, setIntroReady] = useState(false);
   const [session, setSession] = useState(0);
   const [restored, setRestored] = useState(false);
+  const [aiUnavailable, setAiUnavailable] = useState(false);
   const fluidRef = useRef<FluidTypingHandle>(null);
   const surfaceRef = useRef<HTMLDivElement>(null);
   const sendRef = useRef<HTMLButtonElement>(null);
@@ -109,14 +140,16 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
     setIsAnswering(true);
 
     try {
+      if (aiUnavailable) throw new Error("unavailable");
       const response = await fetch("/api/portfolio-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question, history }),
         signal: controller.signal,
       });
-      const result = await response.json() as { reply?: Reply };
+      const result = await response.json() as { reply?: Reply; upstreamCode?: string };
       if (!response.ok || !result.reply || typeof result.reply.text !== "string") {
+        if (response.status === 503 || result.upstreamCode === "credit_balance_exhausted") setAiUnavailable(true);
         throw new Error(response.status === 503 ? "unconfigured" : response.status === 429 ? "limited" : "unavailable");
       }
       setTurns((current) => current.map((turn, index) =>
@@ -124,13 +157,8 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
       ));
     } catch (error) {
       if (controller.signal.aborted) return;
-      const message = error instanceof Error && error.message === "unconfigured"
-        ? "The AI guide is not connected yet. You can still explore the projects below."
-        : error instanceof Error && error.message === "limited"
-          ? "That was a lot of good questions! Please come back in a bit."
-          : "The AI guide hit a snag. Please try again in a moment.";
       setTurns((current) => current.map((turn, index) =>
-        index === current.length - 1 ? { ...turn, reply: { text: message }, error: true } : turn
+        index === current.length - 1 ? { ...turn, reply: fallbackFor(question), error: true } : turn
       ));
     } finally {
       if (!controller.signal.aborted) {
@@ -244,6 +272,7 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
                       <div className={styles.answerBubble}>
                         <div className={styles.answerInner}>
                           <p className={styles.answerText}>{turn.reply.text}</p>
+                          {turn.error && <p className={styles.fallbackNote}>Portfolio summary · AI temporarily unavailable</p>}
                           {turn.reply.href && turn.reply.image && turn.reply.title && <Link href={turn.reply.href} className={styles.projectLink}>
                             <span className={styles.projectImage}><Image src={turn.reply.image} alt="" fill sizes="64px" /></span>
                             <span className={styles.projectMeta}>
