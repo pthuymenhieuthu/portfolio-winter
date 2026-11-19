@@ -8,7 +8,7 @@ import { FluidTyping, type FluidTypingHandle } from "@/components/reactdrops/flu
 import { setScrollPosition } from "@/hooks/useLenis";
 import styles from "@/app/experiments/portfolio-chat/portfolio-chat.module.css";
 
-type Reply = { text: string; title: string; href: string; image: string; tag: string };
+type Reply = { text: string; title?: string; href?: string; image?: string; tag?: string };
 type Turn = { question: string; reply?: Reply };
 
 const SUGGESTIONS = [
@@ -21,16 +21,6 @@ const SUGGESTIONS = [
 function responseFor(question: string): Reply {
   const query = question.toLowerCase();
 
-  if (/zoan|\bai\b|motion|animation/.test(query)) {
-    return {
-      text: "At Zoan AI, I designed clearer workflows for a complex AI product across web and mobile. The case study shows how I organized the flows and built a consistent interface system.",
-      title: "Zoan AI — Designing Clearer AI Workflows",
-      href: "/blog/zoan",
-      image: "/assets/project-thumbnails/zoan.png",
-      tag: "AI product · UI system",
-    };
-  }
-
   if (/affina|insurance|coverage|survey/.test(query)) {
     return {
       text: "At Affina, I designed a guided insurance journey from the first survey question through plan comparison. I also worked on a reusable UI system across web and mobile.",
@@ -41,7 +31,17 @@ function responseFor(question: string): Reply {
     };
   }
 
-  if (/developer|handoff|collaborat|team/.test(query)) {
+  if (/zoan|\bai\b|motion|animation/.test(query)) {
+    return {
+      text: "At Zoan AI, I designed clearer workflows for a complex AI product across web and mobile. The case study shows how I organized the flows and built a consistent interface system.",
+      title: "Zoan AI — Designing Clearer AI Workflows",
+      href: "/blog/zoan",
+      image: "/assets/project-thumbnails/zoan.png",
+      tag: "AI product · UI system",
+    };
+  }
+
+  if (/medhunt|developer|handoff|collaborat|team/.test(query)) {
     return {
       text: "I work with developers early to clarify flows, edge cases, and reusable UI states. In MedHunt, I mapped a complex recruitment workflow into an interactive system that supported design and developer handoff.",
       title: "MedHunt — Healthcare Recruitment OS",
@@ -51,12 +51,28 @@ function responseFor(question: string): Reply {
     };
   }
 
+  if (/mcdonald|kiosk|\bux\b|research|process|approach/.test(query)) {
+    return {
+      text: "I start by clarifying the task people are trying to complete, then map the journey and explore a concrete flow. My McDonald’s kiosk study focuses on helping first-time and occasional users choose and collect a meal with confidence.",
+      title: "McDonald’s — Making Self-Ordering Easier",
+      href: "/blog/mcdonalds-kiosk",
+      image: "/assets/kiosk/thumbnail-mockup.png",
+      tag: "UX process · Research exploration",
+    };
+  }
+
+  if (/4oranges|reward|loyalty|qr/.test(query)) {
+    return {
+      text: "For 4Oranges, I designed a mobile reward experience built around QR scans, with a UI kit to keep the app consistent.",
+      title: "4Oranges — Turning QR Scans into Rewards",
+      href: "/blog/4oranges",
+      image: "/assets/project-thumbnails/4oranges.png",
+      tag: "Mobile app · UI kit",
+    };
+  }
+
   return {
-    text: "I start by understanding what people need to accomplish, map the journey, and test a concrete flow before polishing the interface. Affina is a good example of that process in a complex product.",
-    title: "Affina — See the design process",
-    href: "/blog/affina",
-    image: "/assets/project-thumbnails/affina-pink-meadow-en.webp",
-    tag: "UX process · Case study",
+    text: "I can share work from insurance, AI products, recruitment tools, mobile rewards, and UX research. Ask about a specific project or how I approach UX, AI design, or developer handoff.",
   };
 }
 
@@ -235,14 +251,14 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
                       <div className={styles.answerBubble}>
                         <div className={styles.answerInner}>
                           <p className={styles.answerText}>{turn.reply.text}</p>
-                          <Link href={turn.reply.href} className={styles.projectLink}>
+                          {turn.reply.href && turn.reply.image && turn.reply.title && <Link href={turn.reply.href} className={styles.projectLink}>
                             <span className={styles.projectImage}><Image src={turn.reply.image} alt="" fill sizes="64px" /></span>
                             <span className={styles.projectMeta}>
-                              <span className={styles.projectTag}>{turn.reply.tag}</span>
+                              {turn.reply.tag && <span className={styles.projectTag}>{turn.reply.tag}</span>}
                               <strong>{turn.reply.title}</strong>
                             </span>
                             <ArrowUpRight size={18} aria-hidden="true" />
-                          </Link>
+                          </Link>}
                         </div>
                       </div>
                     ) : (
