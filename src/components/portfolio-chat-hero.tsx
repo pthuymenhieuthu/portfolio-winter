@@ -5,10 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowUp, ArrowUpRight, Code2, RotateCcw, Route, ShieldCheck, Sparkles } from "lucide-react";
 import { FluidTyping, type FluidTypingHandle } from "@/components/reactdrops/fluid-typing";
+import { fallbackFor, type PortfolioReply } from "@/lib/portfolio-chat-fallback";
 import { setScrollPosition } from "@/hooks/useLenis";
 import styles from "@/app/experiments/portfolio-chat/portfolio-chat.module.css";
 
-type Reply = { text: string; title?: string; href?: string; image?: string; tag?: string };
+type Reply = PortfolioReply;
 type Turn = { question: string; reply?: Reply; error?: boolean };
 
 const SUGGESTIONS = [
@@ -19,36 +20,6 @@ const SUGGESTIONS = [
 ];
 
 const CHAT_STORAGE_KEY = "thuy-portfolio-chat-v1";
-
-function fallbackFor(question: string): Reply {
-  const query = question.toLowerCase();
-  if (/affina|insurance|coverage|survey/.test(query)) return {
-    text: "Thuy designed a guided insurance journey at Affina, from the first survey question through plan comparison, plus a reusable UI system for web and mobile.",
-    title: "Affina — Simplifying Insurance with AI", href: "/blog/affina",
-    image: "/assets/project-thumbnails/affina-pink-meadow-en.webp", tag: "Insurance journey · Product design",
-  };
-  if (/zoan|\bai\b|motion|animation/.test(query)) return {
-    text: "At Zoan AI, Thuy designed clearer content-creation flows across web and mobile, including UI system foundations and motion details.",
-    title: "Zoan AI — Designing Clearer AI Workflows", href: "/blog/zoan",
-    image: "/assets/project-thumbnails/zoan.png", tag: "AI product · UI system",
-  };
-  if (/medhunt|developer|handoff|collaborat|team/.test(query)) return {
-    text: "Thuy works with developers early to clarify flows, edge cases and reusable UI states. In MedHunt, she mapped a complex recruitment workflow into an interactive handoff system.",
-    title: "MedHunt — Healthcare Recruitment OS", href: "/blog/medhunt",
-    image: "/assets/project-thumbnails/medhunt-monitor.png", tag: "Collaboration · Developer handoff",
-  };
-  if (/mcdonald|kiosk|\bux\b|research|process|approach/.test(query)) return {
-    text: "Thuy starts by clarifying the task and business rules, then maps the journey, explores flows and prototypes the interaction. Her kiosk study shows that process in a self-ordering experience.",
-    title: "McDonald’s — Making Self-Ordering Easier", href: "/blog/mcdonalds-kiosk",
-    image: "/assets/kiosk/thumbnail-mockup.png", tag: "UX process · Research exploration",
-  };
-  if (/4oranges|reward|loyalty|qr/.test(query)) return {
-    text: "For 4Oranges, Thuy designed a mobile rewards experience built around QR scans, with a UI kit to keep the app consistent.",
-    title: "4Oranges — Turning QR Scans into Rewards", href: "/blog/4oranges",
-    image: "/assets/project-thumbnails/4oranges.png", tag: "Mobile app · UI kit",
-  };
-  return { text: "The AI guide is unavailable right now. You can explore Thuy’s projects below, or ask about Affina, Zoan AI, her UX process or developer handoff for a quick portfolio summary." };
-}
 
 export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
   const [draft, setDraft] = useState("");
