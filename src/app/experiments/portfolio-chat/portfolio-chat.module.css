@@ -103,6 +103,9 @@
 .loadingDots i:nth-child(2) { animation-delay: 140ms; }
 .loadingDots i:nth-child(3) { animation-delay: 280ms; }
 .chatComposer { flex: 0 0 auto; margin-top: 18px; }
+.exploreProjects { position: absolute; z-index: 3; left: 50%; bottom: 24px; display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 8px 12px; transform: translateX(-50%); border: 0; border-radius: 999px; background: rgba(255,255,255,.54); backdrop-filter: blur(12px); color: #345a6d; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 180ms ease, transform 180ms ease; }
+.exploreProjects:hover { background: rgba(255,255,255,.85); transform: translate(-50%, 2px); }
+.exploreProjects:focus-visible { outline: 2px solid #187bc6; outline-offset: 3px; }
 .projects { position: relative; z-index: 2; padding-top: 64px; background: #fff; color: #29303B; }
 .projectsInner { display: flex; flex-direction: column; gap: 48px; width: 100%; padding-bottom: 80px; }
 @keyframes thinking { to { opacity: .3; transform: translateY(-3px); } }

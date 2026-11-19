@@ -95,8 +95,10 @@ export async function POST(request: NextRequest) {
       signal: AbortSignal.timeout(18_000),
     });
     if (!response.ok) {
-      console.error("Portfolio chat upstream status", response.status);
-      return NextResponse.json({ error: "AI is temporarily unavailable." }, { status: 502 });
+      const upstream = await response.json().catch(() => null) as { error?: { code?: string; type?: string } } | null;
+      const code = upstream?.error?.code || upstream?.error?.type || "unknown";
+      console.error("Portfolio chat upstream error", response.status, code);
+      return NextResponse.json({ error: "AI is temporarily unavailable.", upstreamStatus: response.status, upstreamCode: code }, { status: 502 });
     }
     const rawResponse = await response.json() as OpenAIResponse;
     const text = outputText(rawResponse);

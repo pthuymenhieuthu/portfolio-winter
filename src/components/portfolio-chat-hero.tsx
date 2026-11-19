@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUp, ArrowUpRight, Code2, RotateCcw, Route, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpRight, Code2, RotateCcw, Route, ShieldCheck, Sparkles } from "lucide-react";
 import { FluidTyping, type FluidTypingHandle } from "@/components/reactdrops/fluid-typing";
 import { setScrollPosition } from "@/hooks/useLenis";
 import styles from "@/app/experiments/portfolio-chat/portfolio-chat.module.css";
@@ -287,6 +287,16 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
             </div>
           )}
         </FluidTyping>
+        <button
+          type="button"
+          className={styles.exploreProjects}
+          onClick={() => document.getElementById("projects")?.scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+            block: "start",
+          })}
+        >
+          Explore projects <ArrowDown size={17} aria-hidden="true" />
+        </button>
       </div>
     </section>
   );
