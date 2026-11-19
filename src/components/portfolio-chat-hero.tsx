@@ -1,10 +1,11 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUp, ArrowUpRight, Code2, RotateCcw, Route, ShieldCheck, Sparkles } from "lucide-react";
 import { FluidTyping, type FluidTypingHandle } from "@/components/reactdrops/fluid-typing";
+import { setScrollPosition } from "@/hooks/useLenis";
 import styles from "@/app/experiments/portfolio-chat/portfolio-chat.module.css";
 
 type Reply = { text: string; title: string; href: string; image: string; tag: string };
@@ -141,6 +142,10 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
   };
 
   const hasConversation = turns.length > 0;
+
+  useLayoutEffect(() => {
+    if (hasConversation) setScrollPosition(0);
+  }, [hasConversation]);
 
   return (
     <section id="hero" className={styles.hero}>
