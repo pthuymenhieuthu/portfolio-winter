@@ -736,6 +736,7 @@ export function AffinaCaseStudy() {
       <AffinaStickyIndicator />
 
       <ProjectCaseStudyHero
+        appearance="light"
         background={<AffinaMockupHero />}
         summary="Simplifying insurance journeys through product design, a shared design system, and a clearer digital identity."
         summaryLines={["Simplifying insurance journeys through", "product design, a shared design system,", "and a clearer digital identity."]}

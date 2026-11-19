@@ -31,6 +31,9 @@ type ProjectCaseStudyHeroProps = {
   background?: React.ReactNode;
   backgroundSrc?: string;
   posterSrc?: string;
+  appearance?: "dark" | "light";
+  desktopTitleSize?: number;
+  glassTone?: "blue" | "silver";
 };
 
 function LinkIcon({ icon }: { icon: ProjectHeroLink["icon"] }) {
@@ -56,10 +59,14 @@ export function ProjectCaseStudyHero({
   background,
   backgroundSrc,
   posterSrc,
+  appearance = "light",
+  desktopTitleSize = 52,
+  glassTone = "silver",
   links = [],
 }: ProjectCaseStudyHeroProps) {
   const reduceMotion = useReducedMotion();
   const hasBackground = Boolean(background || backgroundSrc);
+  const isLight = hasBackground && appearance === "light";
   const isAnimated = Boolean(backgroundSrc?.match(/\.gif(?:[?#]|$)/i));
   const mediaSrc = isAnimated && !reduceMotion ? backgroundSrc : posterSrc || backgroundSrc;
   const heading = useRef<HTMLHeadingElement>(null);
@@ -69,7 +76,7 @@ export function ProjectCaseStudyHero({
     const element = heading.current;
     if (!element) return;
     const fit = () => {
-      const base = window.matchMedia("(min-width: 640px)").matches ? 52 : 36;
+      const base = window.matchMedia("(min-width: 640px)").matches ? desktopTitleSize : 36;
       const current = parseFloat(getComputedStyle(element).fontSize);
       const widest = Math.max(...Array.from(element.children, (line) => line.getBoundingClientRect().width));
       if (!widest || !element.clientWidth) return;
@@ -81,34 +88,44 @@ export function ProjectCaseStudyHero({
     void document.fonts.ready.then(() => { if (mounted) fit(); });
     fit();
     return () => { mounted = false; observer.disconnect(); };
-  }, [titleLines]);
+  }, [titleLines, desktopTitleSize]);
 
   return (
     <>
-    <header id={id} data-project-hero="true" className={hasBackground ? "relative isolate flex h-[100dvh] w-full items-end overflow-hidden bg-black text-white" : "text-[#1d1d1d]"}>
+    <header id={id} data-project-hero="true" className={hasBackground ? cn("relative isolate flex h-[100dvh] w-full items-end overflow-hidden", isLight ? "bg-white text-[#111827]" : "bg-black text-white") : "text-[#1d1d1d]"}>
       {hasBackground && (
         <>
-          {background || (mediaSrc && (isAnimated
-            ? <Image src={mediaSrc} alt="" fill unoptimized priority sizes="100vw" className="pointer-events-none select-none object-cover object-center" />
-            : <ProjectMockupBackground src={mediaSrc} />))}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] bg-black/60" />
-          <div aria-hidden="true" className="project-hero-reading-backdrop pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[min(85%,560px)]" />
-          <div aria-hidden="true" className="project-hero-noise pointer-events-none absolute inset-0 z-[2]" />
+          {background || (mediaSrc && (
+            <div className={isLight ? "absolute inset-x-0 top-0 h-[55%] [mask-image:linear-gradient(to_bottom,#000_0%,#000_70%,transparent_100%)] sm:inset-0 sm:h-full sm:[mask-image:none]" : "contents"}>
+              {isAnimated
+                ? <Image src={mediaSrc} alt="" fill unoptimized priority sizes="100vw" className="pointer-events-none select-none object-cover object-center" />
+                : <ProjectMockupBackground src={mediaSrc} />}
+            </div>
+          ))}
+          {isLight ? (
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(255,255,255,0.70)_0%,rgba(255,255,255,0.28)_36%,transparent_68%),radial-gradient(ellipse_75%_48%_at_0%_85%,rgba(255,255,255,0.82),transparent),linear-gradient(180deg,rgba(255,255,255,0.42)_0%,rgba(255,255,255,0.18)_34%,rgba(255,255,255,0.38)_58%,rgba(255,255,255,0.95)_100%)]" />
+          ) : (
+            <>
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] bg-black/60" />
+              <div aria-hidden="true" className="project-hero-reading-backdrop pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[min(85%,560px)]" />
+              <div aria-hidden="true" className="project-hero-noise pointer-events-none absolute inset-0 z-[2]" />
+            </>
+          )}
         </>
       )}
-      <div className={cn("relative z-10 mx-auto grid w-full grid-cols-1 items-end gap-8 px-5 sm:px-8 lg:grid-cols-[minmax(0,1fr)_auto]", hasBackground ? "pb-28 pt-24 lg:px-12 lg:pb-12" : "max-w-[1040px] pb-10 pt-24 sm:pb-12 sm:pt-28")}>
+      <div className={cn("relative z-10 mx-auto grid w-full grid-cols-1 items-end gap-8 px-5 sm:px-8", hasBackground ? (isLight ? "pb-32 pt-24 lg:px-12 lg:pb-32" : "pb-28 pt-24 lg:grid-cols-[minmax(0,1fr)_auto] lg:px-12 lg:pb-12") : "max-w-[1040px] pb-10 pt-24 sm:pb-12 sm:pt-28")}>
         <div className="min-w-0">
-        <h1 ref={heading} aria-label={title} style={{ fontSize: titleSize }} className={cn("max-w-[1050px] font-[var(--font-heading)] text-[36px] font-medium leading-[1.12] tracking-[-0.035em] sm:text-[52px]", hasBackground && "text-white")}>
+        <h1 ref={heading} aria-label={title} style={{ fontSize: titleSize }} className={cn("max-w-[1050px] font-[var(--font-heading)] text-[36px] font-medium leading-[1.12] tracking-[-0.035em] sm:text-[52px]", hasBackground && (isLight ? "text-[#111827]" : "text-white"))}>
           {titleLines.map((line) => <span key={line} className="block w-max whitespace-nowrap">{line}</span>)}
         </h1>
-        {(summary || summaryLines) && <p className={cn("mt-6 max-w-[46ch] text-sm leading-relaxed sm:text-base", hasBackground ? "text-white" : "text-[#626773]")}>{summaryLines ? summaryLines.map((line) => <span key={line} className="block whitespace-nowrap">{line}{" "}</span>) : summary}</p>}
+        {(summary || summaryLines) && <p className={cn("mt-6 max-w-[46ch] text-sm leading-relaxed sm:text-base", hasBackground ? (isLight ? "text-[#334155]" : "text-white") : "text-[#626773]")}>{summaryLines ? summaryLines.map((line) => <span key={line} className="block whitespace-nowrap">{line}{" "}</span>) : summary}</p>}
         </div>
         {links.length > 0 && (
-          <div className="flex flex-wrap gap-3 lg:justify-self-end">
+          <div className={cn("flex flex-wrap gap-3", !isLight && "lg:justify-self-end")}>
             {links.map((link) => (
               <a
                 aria-label={link.href.startsWith("/") || link.href.startsWith("#") ? `Go to ${link.label}` : `Open ${link.label} in a new tab`}
-                className={cn("inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4", hasBackground ? "border-white/40 text-white hover:bg-white/15 focus-visible:outline-white" : "border-black/15 hover:bg-black/5 focus-visible:outline-[#29303B]")}
+                className={cn("inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4", hasBackground ? (isLight ? cn("project-hero-glass-link text-[#17324a] focus-visible:outline-[#3BA0FF]", glassTone === "silver" && "project-hero-glass-link--silver") : "border-white/40 text-white hover:bg-white/15 focus-visible:outline-white") : "border-black/15 hover:bg-black/5 focus-visible:outline-[#29303B]")}
                 href={link.href}
                 key={`${link.label}-${link.href}`}
                 rel={link.href.startsWith("/") || link.href.startsWith("#") ? undefined : "noreferrer"}

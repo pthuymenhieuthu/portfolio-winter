@@ -1177,6 +1177,7 @@ export function AffinaPartnerFlowCaseStudy() {
       <ProjectNavigation />
 
       <ProjectCaseStudyHero
+        desktopTitleSize={44}
         backgroundSrc="/assets/affina-partner-flow/partner-thumbnail.png"
         summaryLines={["One insurance journey for families,", "across self-service and assisted sales,", "with clear rules and responsive states."]}
         summary={<>

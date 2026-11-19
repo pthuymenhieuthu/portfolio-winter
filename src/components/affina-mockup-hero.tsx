@@ -47,5 +47,11 @@ export function ProjectMockupBackground({ src, alt = "" }: { src: string; alt?: 
 }
 
 export function AffinaMockupHero() {
-  return <ProjectMockupBackground src="/assets/project-thumbnails/affina-pink-meadow-en.webp" />;
+  return (
+    <div aria-hidden="true" className="absolute inset-0 bg-[#e9f5ff]">
+      <div className="absolute inset-x-0 top-0 h-[66%] [mask-image:linear-gradient(to_bottom,#000_0%,#000_73%,transparent_100%)] sm:inset-0 sm:h-full sm:[mask-image:none]">
+        <ProjectMockupBackground src="/assets/project-thumbnails/affina-pink-meadow-en.webp" />
+      </div>
+    </div>
+  );
 }
