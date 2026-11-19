@@ -77,22 +77,22 @@ const journeySteps = [
         detail: "Introduce the journey before asking for personal preferences.",
       },
       {
-        src: "/assets/affina/ai-journey/01-insurance-type.webp?v=en-final",
+        src: "/assets/affina/ai-journey/01-insurance-type.webp?v=figma-20261119",
         label: "01 / 04 · Insurance type",
         detail: "Choose the insurance product to explore.",
       },
       {
-        src: "/assets/affina/ai-journey/02-insured-person.webp?v=en-final",
+        src: "/assets/affina/ai-journey/02-insured-person.webp?v=figma-20261119",
         label: "02 / 04 · Insured person",
         detail: "Provide the protected person's gender and birth year.",
       },
       {
-        src: "/assets/affina/ai-journey/03-monthly-budget.webp?v=en-final",
+        src: "/assets/affina/ai-journey/03-monthly-budget.webp?v=figma-20261119",
         label: "03 / 04 · Monthly budget",
         detail: "Choose an expected monthly budget from four clear ranges.",
       },
       {
-        src: "/assets/affina/ai-journey/04-preferred-insurer.webp?v=en-final",
+        src: "/assets/affina/ai-journey/04-preferred-insurer.webp?v=figma-20261119",
         label: "04 / 04 · Preferred insurers",
         detail: "Select preferred providers using familiar insurer logos.",
       },
@@ -204,7 +204,7 @@ const healthcareRows = [
 
 const insuranceProductFlow = [
   { number: "01", title: "App home", detail: "Bring healthcare services and insurance discovery into one app entry point.", src: "/assets/affina/affina-app-home.webp" },
-  { number: "02", title: "Choose protection", detail: "Use clear option cards and pink selection cues to capture insurance needs.", src: "/assets/affina/ai-journey/01-insurance-type.webp?v=en-final" },
+  { number: "02", title: "Choose protection", detail: "Use clear option cards and pink selection cues to capture insurance needs.", src: "/assets/affina/ai-journey/01-insurance-type.webp?v=figma-20261119" },
   { number: "03", title: "Review recommendations", detail: "Show the plan, insurer and starting price before asking for a decision.", src: "/assets/affina/ai-journey/06-recommendations.webp" },
   { number: "04", title: "Compare plans", detail: "Reuse the same colors and controls to distinguish coverage and compare fees.", src: "/assets/affina/ai-journey/07-comparison.webp?v=en-final" },
 ] as const;
