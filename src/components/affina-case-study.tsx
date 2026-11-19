@@ -77,22 +77,22 @@ const journeySteps = [
         detail: "Introduce the journey before asking for personal preferences.",
       },
       {
-        src: "/assets/affina/ai-journey/01-insurance-type.webp?v=en-final",
+        src: "/assets/affina/ai-journey/01-insurance-type.webp?v=figma-20261119",
         label: "01 / 04 · Insurance type",
         detail: "Choose the insurance product to explore.",
       },
       {
-        src: "/assets/affina/ai-journey/02-insured-person.webp?v=en-final",
+        src: "/assets/affina/ai-journey/02-insured-person.webp?v=figma-20261119",
         label: "02 / 04 · Insured person",
         detail: "Provide the protected person's gender and birth year.",
       },
       {
-        src: "/assets/affina/ai-journey/03-monthly-budget.webp?v=en-final",
+        src: "/assets/affina/ai-journey/03-monthly-budget.webp?v=figma-20261119",
         label: "03 / 04 · Monthly budget",
         detail: "Choose an expected monthly budget from four clear ranges.",
       },
       {
-        src: "/assets/affina/ai-journey/04-preferred-insurer.webp?v=en-final",
+        src: "/assets/affina/ai-journey/04-preferred-insurer.webp?v=figma-20261119",
         label: "04 / 04 · Preferred insurers",
         detail: "Select preferred providers using familiar insurer logos.",
       },
@@ -204,27 +204,10 @@ const healthcareRows = [
 
 const insuranceProductFlow = [
   { number: "01", title: "App home", detail: "Bring healthcare services and insurance discovery into one app entry point.", src: "/assets/affina/affina-app-home.webp" },
-  { number: "02", title: "Choose protection", detail: "Use clear option cards and pink selection cues to capture insurance needs.", src: "/assets/affina/ai-journey/01-insurance-type.webp?v=en-final" },
+  { number: "02", title: "Choose protection", detail: "Use clear option cards and pink selection cues to capture insurance needs.", src: "/assets/affina/ai-journey/01-insurance-type.webp?v=figma-20261119" },
   { number: "03", title: "Review recommendations", detail: "Show the plan, insurer and starting price before asking for a decision.", src: "/assets/affina/ai-journey/06-recommendations.webp" },
   { number: "04", title: "Compare plans", detail: "Reuse the same colors and controls to distinguish coverage and compare fees.", src: "/assets/affina/ai-journey/07-comparison.webp?v=en-final" },
 ] as const;
-
-function NeutralSurveyHeader({ src }: { src: string }) {
-  if (!/\/ai-journey\/0[1-4]-/.test(src)) return null;
-
-  return (
-    <Image
-      src={src}
-      alt=""
-      aria-hidden="true"
-      width={1533}
-      height={3317}
-      unoptimized
-      className="pointer-events-none absolute inset-0 h-full w-full object-cover object-top grayscale"
-      style={{ clipPath: "inset(0 0 88.63% 0)" }}
-    />
-  );
-}
 
 const designSystemLayers = [
   {
@@ -472,18 +455,15 @@ function JourneyScreenFlow({
               <figure className={cn("shrink-0 snap-start", screen.wide ? "w-[82vw] max-w-[640px]" : "w-[62vw] max-w-[240px]")}>
                 <ImageZoom zoomImg={{ src: screen.src }}>
                   <div className="overflow-hidden rounded-[24px] border border-[#cfd0d4] bg-white shadow-sm">
-                    <div className="relative">
-                      <Image
-                        src={screen.src}
-                        alt={`${title}: ${screen.label}`}
-                        width={screen.width ?? 1533}
-                        height={screen.height ?? 3317}
-                        unoptimized
-                        className="block h-auto w-full"
-                        sizes={screen.wide ? "(max-width: 768px) 82vw, 640px" : "(max-width: 768px) 62vw, 240px"}
-                      />
-                      <NeutralSurveyHeader src={screen.src} />
-                    </div>
+                    <Image
+                      src={screen.src}
+                      alt={`${title}: ${screen.label}`}
+                      width={screen.width ?? 1533}
+                      height={screen.height ?? 3317}
+                      unoptimized
+                      className="block h-auto w-full"
+                      sizes={screen.wide ? "(max-width: 768px) 82vw, 640px" : "(max-width: 768px) 62vw, 240px"}
+                    />
                   </div>
                 </ImageZoom>
                 <figcaption className="mt-5">
@@ -512,7 +492,6 @@ function InsuranceProductFlow() {
           <ImageZoom zoomImg={{ src: step.src }}>
             <div className="relative mx-auto aspect-[390/844] w-full max-w-[190px] overflow-hidden rounded-[18px] border border-[#e8e3ed] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.09)]">
               <Image src={step.src} alt={step.title} width={1533} height={3317} className="h-full w-full object-cover object-top" sizes="(max-width: 768px) 42vw, 190px" />
-              <NeutralSurveyHeader src={step.src} />
             </div>
           </ImageZoom>
           <figcaption className="mt-3">

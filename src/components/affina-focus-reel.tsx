@@ -101,7 +101,7 @@ export function AffinaFocusReel() {
               transition={{ duration: reduceMotion ? 0 : 0.65, ease: [0.16, 1, 0.3, 1] }}
             >
               <Image
-                src={`/assets/affina/ai-journey/${screens[index]}.webp?v=en-final`}
+                src={`/assets/affina/ai-journey/${screens[index]}.webp?v=figma-20261119`}
                 alt={`Affina interface, screen ${index + 1}`}
                 fill
                 unoptimized
