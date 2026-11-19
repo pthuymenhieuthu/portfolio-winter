@@ -78,7 +78,7 @@
 .suggestion svg { flex: 0 0 auto; color: var(--suggestion-icon, #238fe8); }
 .suggestion:hover { background: white; transform: translateY(-1px); }
 
-.chatMode :global(.fluid-typing-stage) { justify-content: flex-start; padding-top: 102px; padding-bottom: 148px; }
+.chatMode :global(.fluid-typing-stage) { justify-content: flex-start; padding-top: 152px; padding-bottom: 148px; }
 .chatMode :global(.fluid-typing-copy) { font-size: clamp(28px, 3vw, 40px); }
 .chat { display: flex; flex-direction: column; align-items: center; width: min(100%, 760px); min-height: 0; flex: 1; }
 .chatGuide { margin: 10px 0 25px; font-size: 15px; color: #456579; text-align: center; }
