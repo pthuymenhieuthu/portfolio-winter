@@ -112,7 +112,7 @@
 .projectMeta { display: flex; flex: 1; flex-direction: column; gap: 4px; min-width: 0; }
 .projectTag { color: #4a6879; font-size: 12px; }
 .projectMeta strong { font-size: 14px; line-height: 1.3; font-weight: 650; }
-.loadingBubble { display: flex; align-items: center; justify-content: center; min-width: 110px; min-height: 56px; padding: 18px 24px; border: 0; border-radius: 24px; background: rgba(255,255,255,.94); box-shadow: 0 12px 26px -15px rgba(21,70,106,.2); }
+.loadingBubble { display: flex; align-items: center; justify-content: center; min-width: 72px; min-height: 46px; padding: 11px 18px; border: 0; border-radius: 22px; background: rgba(255,255,255,.94); box-shadow: 0 12px 26px -15px rgba(21,70,106,.2); }
 .loadingDots { position: relative; z-index: 1; display: flex; align-items: center; gap: 7px; }
 .loadingDots i { width: 7px; height: 7px; border-radius: 50%; background: #5689a4; animation: thinking 950ms ease-in-out infinite alternate; }
 .loadingDots i:nth-child(2) { animation-delay: 140ms; }
@@ -180,3 +180,5 @@
 
 .answerText { white-space: pre-line; }
 .answerText strong { font-weight: 650; }
+
+.answerCopy { display: flex; flex-direction: column; gap: 12px; }

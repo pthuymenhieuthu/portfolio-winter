@@ -10,6 +10,7 @@ import { PortfolioBubbleScrollbar } from "@/components/portfolio-bubble-scrollba
 import { ArrowDown, ArrowUp, ArrowUpRight, Code2, RotateCcw, Route, ShieldCheck, Sparkles } from "lucide-react";
 import { FluidTyping, type FluidTypingHandle } from "@/components/reactdrops/fluid-typing";
 import { fallbackFor, type PortfolioReply } from "@/lib/portfolio-chat-fallback";
+import { portfolioAnswerParagraphs } from "@/lib/portfolio-answer-format";
 import { setScrollPosition } from "@/hooks/useLenis";
 import styles from "@/app/experiments/portfolio-chat/portfolio-chat.module.css";
 
@@ -394,7 +395,7 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
                     {turn.reply ? (
                       <div className={styles.answerBubble}>
                         <div className={styles.answerInner}>
-                          <p className={styles.answerText}>{turn.reply.text.split(/(\*\*[^*\n]+\*\*)/g).map((part, index) => part.startsWith("**") && part.endsWith("**") ? <strong key={index}>{part.slice(2, -2)}</strong> : part)}</p>
+                          <div className={styles.answerCopy}>{portfolioAnswerParagraphs(turn.reply.text).map((paragraph, paragraphIndex) => <p key={paragraphIndex} className={styles.answerText}>{paragraph.split(/(\*\*[^*\n]+\*\*)/g).map((part, index) => part.startsWith("**") && part.endsWith("**") ? <strong key={index}>{part.slice(2, -2)}</strong> : part)}</p>)}</div>
                             {turn.reply.showPricing && <ChatFreelancePricing vietnamese={/[à-ỹđ]/i.test(turn.reply.text)} />}
                             {turn.reply.href && !turn.reply.image && turn.reply.title && <Link href={turn.reply.href} className={styles.serviceLink}>{turn.reply.title}<ArrowUpRight size={17} aria-hidden="true" /></Link>}
                           {(turn.reply.projects ?? (turn.reply.href && turn.reply.image && turn.reply.title ? [{ href: turn.reply.href, image: turn.reply.image, title: turn.reply.title, tag: turn.reply.tag }] : [])).map((project) => <Link key={project.href} href={project.href} className={styles.projectLink}>
