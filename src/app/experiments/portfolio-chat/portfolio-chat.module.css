@@ -71,13 +71,13 @@
 .sendButton:focus-visible, .suggestion:focus-visible { outline: 2px solid #187bc6; outline-offset: 3px; }
 .sendButton:disabled { background: #cde8fa; color: #5c8094; box-shadow: none; cursor: not-allowed; }
 .suggestions { display: flex; flex-wrap: wrap; justify-content: center; align-self: center; gap: 10px; width: min(100%, 650px); margin-top: 18px; }
-.suggestion { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 43px; padding-inline: 17px; border: 1px solid rgba(59,160,255,.25); border-radius: 999px; background: rgba(255,255,255,.74); backdrop-filter: blur(14px); box-shadow: 0 6px 16px rgba(31,88,126,.07); color: #24495b; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 180ms ease, transform 180ms ease; }
+.suggestion { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 43px; padding-inline: 17px; border: 1px solid rgba(59,160,255,.16); border-radius: 999px; background: rgba(255,255,255,.36); backdrop-filter: blur(14px); box-shadow: 0 6px 16px rgba(31,88,126,.035); color: #24495b; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 180ms ease, transform 180ms ease; }
 .suggestion[data-tone="peach"] { --suggestion-icon: #d88462; }
 .suggestion[data-tone="blue"] { --suggestion-icon: #6199d5; }
 .suggestion[data-tone="lilac"] { --suggestion-icon: #a37bc9; }
 .suggestion[data-tone="mint"] { --suggestion-icon: #5da991; }
 .suggestion svg { flex: 0 0 auto; color: var(--suggestion-icon, #238fe8); }
-.suggestion:hover { background: white; transform: translateY(-1px); }
+.suggestion:hover { background: rgba(255,255,255,.58); transform: translateY(-1px); }
 
 .chatMode :global(.fluid-typing-stage) { justify-content: flex-start; padding-top: clamp(100px, 16dvh, 152px); padding-bottom: 84px; }
 .chatMode :global(.fluid-typing-copy) { flex-shrink: 0; }
