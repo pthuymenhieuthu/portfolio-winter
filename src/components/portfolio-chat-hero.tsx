@@ -228,6 +228,7 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
 
   const hasConversation = turns.length > 0;
   useLayoutEffect(() => {
+    if (!hasConversation) return;
     const root = surfaceRef.current;
     const composer = root?.querySelector<HTMLFormElement>("form");
     if (!root || !composer) return;
@@ -246,6 +247,7 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
     observer.observe(composer);
     return () => observer.disconnect();
   }, [hasConversation, session]);
+
 
   useLayoutEffect(() => {
     if (hasConversation) setScrollPosition(0);
@@ -445,7 +447,7 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
         </FluidTyping>
         <button
           type="button"
-          className={styles.exploreProjects}
+          className={`${styles.exploreProjects} ${hasConversation ? styles.chatExploreProjects : ""}`}
           aria-label="Explore projects"
           onClick={() => document.getElementById("projects")?.scrollIntoView({
             behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",

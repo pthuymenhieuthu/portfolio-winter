@@ -170,15 +170,12 @@
 
 @media (prefers-reduced-motion: reduce) { .exploreProjects, .exploreProjects svg { transition: none; } .exploreProjects:hover svg { transform: none; } }
 
-/* Keep the project cue level with the active composer in both hero states. */
-.exploreProjects { top: var(--composer-center); bottom: auto; transform: translateY(-50%); }
-@media (max-width: 767px) {
-  .composer { width: calc(100% - 64px); margin-right: 64px; }
-  .exploreProjects { right: 24px; }
-}
-@media (max-width: 640px) { .exploreProjects { right: 18px; } }
-
 .answerText { white-space: pre-line; }
 .answerText strong { font-weight: 650; }
 
 .answerCopy { display: flex; flex-direction: column; gap: 12px; }
+
+/* Only desktop chat aligns the project cue with its composer. */
+@media (min-width: 768px) {
+  .chatExploreProjects { top: var(--composer-center); bottom: auto; transform: translateY(-50%); }
+}
