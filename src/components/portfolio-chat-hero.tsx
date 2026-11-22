@@ -226,6 +226,25 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
   };
 
   const hasConversation = turns.length > 0;
+  useLayoutEffect(() => {
+    const root = surfaceRef.current;
+    const composer = root?.querySelector<HTMLFormElement>("form");
+    if (!root || !composer) return;
+    const syncArrow = () => {
+      let top = composer.offsetHeight / 2;
+      let element: HTMLElement | null = composer;
+      while (element && element !== root) {
+        top += element.offsetTop;
+        element = element.offsetParent as HTMLElement | null;
+      }
+      root.style.setProperty("--composer-center", `${top}px`);
+    };
+    syncArrow();
+    const observer = new ResizeObserver(syncArrow);
+    observer.observe(root);
+    observer.observe(composer);
+    return () => observer.disconnect();
+  }, [hasConversation, session]);
 
   useLayoutEffect(() => {
     if (hasConversation) setScrollPosition(0);
