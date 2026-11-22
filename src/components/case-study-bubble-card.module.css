@@ -1,0 +1,47 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, .62);
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(159, 215, 255, .12), transparent 60%),
+    radial-gradient(ellipse at 100% 100%, rgba(231, 192, 244, .07), transparent 55%),
+    rgba(255, 255, 255, .08);
+  box-shadow: 0 8px 24px -18px rgba(61, 91, 124, .22),
+    inset 0 1px 0 rgba(255, 255, 255, .8),
+    inset 0 -1px 0 rgba(167, 190, 216, .1);
+}
+
+.card > .film {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: transparent;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.card > .film:not([data-soap-bubble-ready]) {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+@media (forced-colors: active) {
+  .card { border-color: CanvasText; }
+  .film { display: none; }
+}
+
+.card[data-static-film]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(145deg, #ffffff 2%, #cfe8f9 23%, #e4dcf4 49%, #d9edf4 76%, #ffffff 98%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}

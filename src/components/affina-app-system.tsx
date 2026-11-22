@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { CaseStudyBubbleCard } from "@/components/case-study-bubble-card";
 
 // Figma 60:19006: sky-blue radial stops fading into the white app surface.
 export const affinaAppGradient =
@@ -9,7 +10,7 @@ const buttonShadow =
 
 export function AffinaAppDesignSystem() {
   return (
-    <div id="affina-app-design-system" className="overflow-hidden rounded-3xl border border-[#cce6f7] font-[var(--font-sans)] text-[#2e2222]" style={{ background: affinaAppGradient }}>
+    <CaseStudyBubbleCard id="affina-app-design-system" className="overflow-hidden font-[var(--font-sans)] text-[#2e2222]" style={{ background: affinaAppGradient }}>
       <div className="flex items-center justify-between gap-6 p-5 sm:p-8 lg:p-10">
         <p className="text-xs font-bold uppercase tracking-[0.08em]">Affina app · Visual foundations</p>
         <Image alt="Affina" className="h-auto w-[72px] sm:w-[92px]" height={60} src="/assets/affina/brand-wordmark-after.svg" width={300} />
@@ -79,6 +80,6 @@ export function AffinaAppDesignSystem() {
           </div>
         </article>
       </div>
-    </div>
+    </CaseStudyBubbleCard>
   );
 }

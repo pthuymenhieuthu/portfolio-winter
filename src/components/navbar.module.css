@@ -1,0 +1,9 @@
+.homeBar {
+  max-width: 100%;
+  transition: max-width 720ms cubic-bezier(.22, 1, .36, 1);
+}
+.homeBar[data-nav-size="compact"] { max-width: 760px; }
+@media (max-width: 767px) {
+  .homeBar[data-nav-size="compact"] { max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .homeBar { transition: none; } }

@@ -1,6 +1,7 @@
 "use client";
 
 import { EXPERIMENTS, type Experiment } from "@/data/experiments";
+import { SoapBubbleSurface } from "@/components/reactdrops/soap-bubble";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Play, Shapes } from "lucide-react";
 import Image from "next/image";
@@ -169,7 +170,12 @@ export function ProjectGallery({ children }: { children: ReactNode }) {
   return (
     <div className="mx-auto w-full max-w-[800px] px-4 sm:px-0">
       <div className="mb-8 flex justify-center sm:mb-10">
-        <div role="tablist" aria-label="Project collections" className="inline-flex gap-1 rounded-full bg-[#F2F4F7] p-1">
+        <SoapBubbleSurface role="tablist" aria-label="Project collections" data-theme="light"
+          radius={9999} environment="soft" interactive={false} paused
+          tint="#ffffff00" opacity={0} clearCenter={1} glass={0.6} bevel={8}
+          iridescence={0.85} oilOpacity={0.25} soapShadeColor="#a7c8df"
+          reflectivity={1.1} windowLight={false} bottomShade={false}
+          className="inline-flex gap-1 rounded-full border border-white/70 p-2 !shadow-[0_5px_18px_-12px_rgba(73,135,181,0.3)]">
           {TABS.map((tab, index) => (
             <button
               key={tab.id}
@@ -182,13 +188,13 @@ export function ProjectGallery({ children }: { children: ReactNode }) {
               tabIndex={activeTab === tab.id ? 0 : -1}
               onClick={() => setActiveTab(tab.id)}
               onKeyDown={(event) => handleTabKeyDown(event, index)}
-              className={`relative isolate min-h-11 rounded-full px-5 py-2.5 text-sm transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0096F7] ${activeTab === tab.id ? "text-[#29303B]" : "text-[#697686] hover:text-[#29303B]"}`}
+              className={`relative isolate min-h-11 rounded-full px-6 py-2.5 text-sm transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0096F7] ${activeTab === tab.id ? "text-[#29303B]" : "text-[#697686] hover:text-[#29303B]"}`}
             >
               {activeTab === tab.id && (
                 <motion.span
                   aria-hidden="true"
                   layoutId="projects-active-tab"
-                  className="absolute inset-0 -z-10 rounded-full bg-white shadow-[0_1px_3px_rgba(41,48,59,0.08)]"
+                  className="absolute inset-0 -z-10 rounded-full border border-white/90 bg-white/45 shadow-[0_2px_8px_rgba(53,75,92,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]"
                   transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
                 />
               )}
@@ -196,7 +202,7 @@ export function ProjectGallery({ children }: { children: ReactNode }) {
               {tab.label}
             </button>
           ))}
-        </div>
+        </SoapBubbleSurface>
       </div>
 
       <div

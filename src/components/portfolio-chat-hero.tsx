@@ -1,8 +1,12 @@
 "use client";
 
-import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { ChatFreelancePricing } from "@/components/chat-freelance-pricing";
+import { FormEvent, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { gsap } from "gsap";
+import { createEntranceWash } from "@/components/portfolio-entrance";
+import { PortfolioBubbleScrollbar } from "@/components/portfolio-bubble-scrollbar";
 import { ArrowDown, ArrowUp, ArrowUpRight, Code2, RotateCcw, Route, ShieldCheck, Sparkles } from "lucide-react";
 import { FluidTyping, type FluidTypingHandle } from "@/components/reactdrops/fluid-typing";
 import { fallbackFor, type PortfolioReply } from "@/lib/portfolio-chat-fallback";
@@ -20,20 +24,33 @@ const SUGGESTIONS = [
 ];
 
 const CHAT_STORAGE_KEY = "thuy-portfolio-chat-v1";
+const INTRO_PHRASES = [
+  "Hi, I’m Thuy.",
+  "A Product Designer & Maker.",
+  "I simplify complex UX.",
+  "I build design systems.",
+  "I bring UI to life.",
+];
 
 export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
   const [draft, setDraft] = useState("");
   const [turns, setTurns] = useState<Turn[]>([]);
   const [isAnswering, setIsAnswering] = useState(false);
   const [introReady, setIntroReady] = useState(false);
+  const [entranceReady, setEntranceReady] = useState(false);
   const [session, setSession] = useState(0);
   const [restored, setRestored] = useState(false);
   const [aiUnavailable, setAiUnavailable] = useState(false);
   const fluidRef = useRef<FluidTypingHandle>(null);
   const surfaceRef = useRef<HTMLDivElement>(null);
+  const entranceVeilRef = useRef<HTMLCanvasElement>(null);
   const sendRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const requestRef = useRef<AbortController | null>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
+  const conversationId = useId();
+  const composerBounds = useRef<DOMRect | null>(null);
+  const titleBounds = useRef<DOMRect | null>(null);
 
   useEffect(() => {
     try {
@@ -41,7 +58,10 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
       if (saved) {
         const parsed = JSON.parse(saved) as { turns?: Turn[]; draft?: string };
         if (Array.isArray(parsed.turns)) {
-          setTurns(parsed.turns.filter((turn) => typeof turn.question === "string" && turn.reply).slice(-12));
+          setTurns(parsed.turns.filter((turn) => typeof turn.question === "string" && turn.reply).slice(-12).map((turn) => {
+            const preparedReply = fallbackFor(turn.question);
+            return preparedReply.showPricing ? { ...turn, reply: preparedReply } : turn;
+          }));
         }
         if (typeof parsed.draft === "string") setDraft(parsed.draft.slice(0, 180));
       }
@@ -55,10 +75,63 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
     catch { /* Private browsing can block session storage. */ }
   }, [turns, draft, restored]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIntroReady(true), 1550);
-    return () => clearTimeout(timer);
+  useLayoutEffect(() => {
+    const veil = entranceVeilRef.current;
+    if (!veil) return;
+    const media = gsap.matchMedia();
+    media.add({ motion: "(prefers-reduced-motion: no-preference)", reduce: "(prefers-reduced-motion: reduce)" }, (context) => {
+      if (context.conditions?.reduce) {
+        gsap.set(veil, { opacity: 0 });
+        setEntranceReady(true);
+        return;
+      }
+      const wash = createEntranceWash(veil);
+      if (!wash) {
+        gsap.set(veil, { opacity: 0 });
+        setEntranceReady(true);
+        return;
+      }
+      gsap.set(veil, { opacity: 1, backgroundColor: "transparent" });
+      const flow = { progress: 0 };
+      let firstWave = false, secondWave = false;
+      gsap.to(flow, {
+        progress: 1,
+        duration: 1.8,
+        ease: "sine.inOut",
+        onUpdate: () => {
+          wash.draw(flow.progress);
+          if (!firstWave && flow.progress > 0.24) {
+            fluidRef.current?.rippleAt(0.32, 0.12, 0.45, 2.3);
+            firstWave = true;
+          }
+          if (!secondWave && flow.progress > 0.55) {
+            fluidRef.current?.rippleAt(0.69, 0.34, 0.35, 2.1);
+            secondWave = true;
+          }
+        },
+        onComplete: () => {
+          wash.dispose();
+          gsap.set(veil, { opacity: 0 });
+          setEntranceReady(true);
+        },
+      });
+      return () => wash.dispose();
+    });
+    return () => media.revert();
   }, [session]);
+
+  useEffect(() => {
+    if (!entranceReady) return;
+    const stage = surfaceRef.current?.querySelector<HTMLElement>(".fluid-typing-stage");
+    if (!stage) return;
+    const sync = () => {
+      if (["holding", "done"].includes(stage.dataset.fluidTypingState ?? "")) setIntroReady(true);
+    };
+    sync();
+    const observer = new MutationObserver(sync);
+    observer.observe(stage, { attributes: true, attributeFilter: ["data-fluid-typing-state"] });
+    return () => observer.disconnect();
+  }, [entranceReady, session]);
 
   useEffect(() => {
     const stage = surfaceRef.current?.querySelector<HTMLElement>(".fluid-typing-stage");
@@ -106,6 +179,8 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
       .map((turn) => ({ question: turn.question, answer: turn.reply!.text }));
     const controller = new AbortController();
     requestRef.current = controller;
+    composerBounds.current = surfaceRef.current?.querySelector<HTMLFormElement>("form")?.getBoundingClientRect() ?? null;
+    titleBounds.current = surfaceRef.current?.querySelector<HTMLElement>(".fluid-typing-copy")?.getBoundingClientRect() ?? null;
     setTurns((current) => [...current, { question }]);
     setDraft("");
     setIsAnswering(true);
@@ -146,6 +221,7 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
     setDraft("");
     setIsAnswering(false);
     setIntroReady(false);
+    setEntranceReady(false);
     setSession((current) => current + 1);
   };
 
@@ -154,6 +230,61 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
   useLayoutEffect(() => {
     if (hasConversation) setScrollPosition(0);
   }, [hasConversation]);
+
+  useLayoutEffect(() => {
+    const root = surfaceRef.current;
+    if (!root || !hasConversation) return;
+    const media = gsap.matchMedia();
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+      const title = root.querySelector<HTMLElement>(".fluid-typing-copy");
+      const previousTitle = titleBounds.current;
+      if (title && previousTitle) {
+        const nextTitle = title.getBoundingClientRect();
+        gsap.fromTo(title, {
+          y: previousTitle.top + previousTitle.height / 2 - nextTitle.top - nextTitle.height / 2,
+          scale: nextTitle.width ? previousTitle.width / nextTitle.width : 1,
+          transformOrigin: "center center",
+        }, { y: 0, scale: 1, duration: 0.48, ease: "power3.out", clearProps: "transform,transformOrigin" });
+      }
+      const composer = root.querySelector<HTMLFormElement>("form");
+      const before = composerBounds.current;
+      if (composer && before) {
+        const after = composer.getBoundingClientRect();
+        gsap.fromTo(composer, { x: before.left - after.left, y: before.top - after.top },
+          { x: 0, y: 0, duration: 0.48, ease: "power3.out", clearProps: "transform" });
+      }
+      gsap.fromTo(root.querySelector(`.${styles.chatGuide}`), { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.3, delay: 0.1, clearProps: "opacity,transform" });
+    });
+    composerBounds.current = null;
+    titleBounds.current = null;
+    return () => media.revert();
+  }, [hasConversation]);
+
+  useLayoutEffect(() => {
+    const messages = messagesRef.current;
+    const latest = messages?.lastElementChild;
+    if (!messages || !latest) return;
+    const media = gsap.matchMedia();
+    const bubbles = Array.from(latest.children).filter((bubble) => !bubble.hasAttribute("data-revealed"));
+    bubbles.forEach((bubble) => bubble.setAttribute("data-revealed", "true"));
+    const target = latest.lastElementChild?.getBoundingClientRect();
+    const viewport = messages.getBoundingClientRect();
+    // Keep the beginning of a long answer visible rather than jumping to its end.
+    const scrollTop = target ? Math.min(messages.scrollHeight - messages.clientHeight,
+      messages.scrollTop + target.top - viewport.top - 12) : 0;
+    media.add({ motion: "(prefers-reduced-motion: no-preference)", reduce: "(prefers-reduced-motion: reduce)" }, (context) => {
+      if (context.conditions?.reduce) {
+        messages.scrollTop = scrollTop;
+        return;
+      }
+      gsap.fromTo(bubbles, { opacity: 0, y: 12, scale: 0.985 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.34, stagger: 0.07, ease: "power2.out", clearProps: "opacity,transform" });
+    });
+    const scrollTween = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? null
+      : gsap.to(messages, { scrollTop, duration: 0.4, ease: "power2.out", overwrite: "auto" });
+    return () => { scrollTween?.kill(); media.revert(); };
+  }, [turns]);
 
   return (
     <section id="hero" className={styles.hero}>
@@ -169,14 +300,19 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
         </div>
       </div>}
 
-      <div ref={surfaceRef} className={styles.surface}>
+      <div ref={surfaceRef} className={`${styles.surface} ${!entranceReady ? styles.opening : ""}`}>
+        <canvas ref={entranceVeilRef} className={styles.entranceVeil} aria-hidden="true" />
         <FluidTyping
           key={session}
           ref={fluidRef}
           text="Hi, I’m Thuy."
-          loop={false}
+          phrases={INTRO_PHRASES}
+          loop
+          deleteSpeed={28}
+          holdDuration={2400}
           introWave={false}
           introPause={0}
+          typingPaused={!entranceReady}
           typeSpeed={82}
           palette="auto"
           theme="light"
@@ -193,7 +329,6 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
           {!hasConversation ? (
             <div className={`${styles.intro} ${introReady ? styles.introReady : ""}`}>
               <h1 className="sr-only">Hi, I’m Thuy</h1>
-              <p className={styles.introCopy}>A designer who turns complex journeys<br />into clear experiences.</p>
               <form className={styles.composer} onSubmit={sendQuestion}>
                 <div className={styles.inputBubble}>
                   <input
@@ -233,7 +368,8 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
           ) : (
             <div className={styles.chat}>
               <p className={styles.chatGuide}>Ask about my projects, process, or experience.</p>
-              <div className={styles.messages} data-lenis-prevent tabIndex={0} role="log" aria-label="Conversation" aria-live="polite">
+              <div className={styles.conversationViewport}>
+              <div id={conversationId} ref={messagesRef} className={styles.messages} data-lenis-prevent tabIndex={0} role="log" aria-label="Conversation" aria-live="polite">
                 {turns.map((turn, index) => (
                   <div className={styles.turn} key={`${index}-${turn.question}`}>
                     <div className={styles.questionBubble}>
@@ -243,7 +379,8 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
                       <div className={styles.answerBubble}>
                         <div className={styles.answerInner}>
                           <p className={styles.answerText}>{turn.reply.text}</p>
-                          {turn.error && <p className={styles.fallbackNote}>Portfolio summary · AI temporarily unavailable</p>}
+                            {turn.reply.showPricing && <ChatFreelancePricing vietnamese={/[à-ỹđ]/i.test(turn.reply.text)} />}
+                            {turn.reply.href && !turn.reply.image && turn.reply.title && <Link href={turn.reply.href} className={styles.serviceLink}>{turn.reply.title}<ArrowUpRight size={17} aria-hidden="true" /></Link>}
                           {turn.reply.href && turn.reply.image && turn.reply.title && <Link href={turn.reply.href} className={styles.projectLink}>
                             <span className={styles.projectImage}><Image src={turn.reply.image} alt="" fill sizes="64px" /></span>
                             <span className={styles.projectMeta}>
@@ -261,6 +398,8 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
                     )}
                   </div>
                 ))}
+              </div>
+              <PortfolioBubbleScrollbar scrollRef={messagesRef} controls={conversationId} />
               </div>
               <form className={`${styles.composer} ${styles.chatComposer}`} onSubmit={sendQuestion}>
                 <div className={styles.inputBubble}>

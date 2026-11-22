@@ -35,12 +35,18 @@ export const DATA = {
 
         navbar: true,
       },
+      Muzli: {
+        name: "Muzli",
+        url: "https://me.muz.li/thuy-nguyen",
+        icon: Icons.muzli,
+        navbar: true,
+      },
       email: {
         name: "Send Email",
         url: "mailto:phuongthuy101222@gmail.com",
         icon: Icons.email,
 
-        navbar: true,
+        navbar: false,
       },
     },
   },

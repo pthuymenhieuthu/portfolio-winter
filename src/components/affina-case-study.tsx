@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CaseStudyBubbleCard } from "@/components/case-study-bubble-card";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
@@ -367,7 +368,7 @@ const nextMeasurementSteps = [
 ];
 
 const styles = {
-  sectionPill: caseStudyStyles.eyebrow,
+  sectionPill: "w-fit rounded-full border border-white/80 bg-[#dff1ff]/65 px-3 py-1 text-sm font-normal text-[#245d83] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]",
   accentLabel: "text-xs font-semibold uppercase tracking-[0.12em] text-[#737373]",
   mutedLabel: "text-xs font-semibold uppercase tracking-[0.1em] text-[#737373]",
   sectionTitle: caseStudyStyles.sectionTitle,
@@ -513,7 +514,7 @@ function AffinaHealthcareRow({
   return (
     <div className="grid items-start gap-8 md:grid-cols-[0.88fr_1.12fr] lg:gap-[45px]">
       <div className="flex flex-col items-start gap-2">
-        <div className="flex size-[29px] items-center justify-center rounded-full bg-[#08090a] text-base font-bold leading-none text-white">
+        <div className="flex size-[29px] items-center justify-center rounded-full border border-white/80 bg-[#dff1ff]/75 text-base font-bold leading-none text-[#245d83] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
           {row.number}
         </div>
         <h3 className="font-[var(--font-heading)] text-lg font-normal leading-[1.25] tracking-normal text-[#08090a] sm:text-xl">
@@ -588,7 +589,7 @@ function ComparisonRow({
   return (
     <div>
       <div className="mb-4 flex justify-center">
-        <div className="whitespace-nowrap rounded-xl bg-[#0d0d0d] px-4 py-1.5 text-center text-sm font-normal text-white sm:text-base">
+        <div className="whitespace-nowrap rounded-full border border-white/80 bg-[#dff1ff]/65 px-4 py-1.5 text-center text-sm font-normal text-[#245d83] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] sm:text-base">
           {title}
         </div>
       </div>
@@ -651,8 +652,11 @@ function NextProjectCard({
   return (
     <Link
       href={project.href || "#"}
+      className="group block rounded-3xl transition duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0293f4]"
+    >
+      <CaseStudyBubbleCard
       className={cn(
-        "group block overflow-hidden rounded-3xl border border-black/10 bg-white/65 transition duration-300 hover:-translate-y-1 hover:shadow-xl",
+        "overflow-hidden",
         featured && "md:grid md:grid-cols-[1.15fr_0.85fr] md:items-stretch"
       )}
     >
@@ -726,6 +730,7 @@ function NextProjectCard({
           ))}
         </div>
       </div>
+      </CaseStudyBubbleCard>
     </Link>
   );
 }
@@ -792,19 +797,19 @@ export function AffinaCaseStudy() {
                 Affina wanted to move more of its insurance journey online.
               </p>
             </article>
-            <article className="rounded-xl bg-[#08090a] p-6 text-white shadow-sm sm:p-8 lg:p-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#ffd360]">
+            <CaseStudyBubbleCard as="article" className="p-6 text-[#08090a] sm:p-8 lg:p-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#2366b7]">
                 Our solution
               </p>
-              <p className="mt-4 max-w-[900px] text-base leading-[1.6] text-white/85 sm:text-[17px]">
+              <p className="mt-4 max-w-[900px] text-base leading-[1.6] text-[#354b5c] sm:text-[17px]">
                 Instead of simply digitising the sales form, we built an{" "}
-                <CaseStudyScrollHighlight inverted>
+                <CaseStudyScrollHighlight>
                   AI-assisted journey
                 </CaseStudyScrollHighlight>{" "}
                 that narrowed choices, recommended suitable plans, and made
                 comparison easier.
               </p>
-            </article>
+            </CaseStudyBubbleCard>
           </CaseStudyScrollReveal>
 
           <CaseStudyScrollReveal>
@@ -875,7 +880,8 @@ export function AffinaCaseStudy() {
             </div>
           </CaseStudyScrollReveal>
 
-          <CaseStudyScrollReveal className="rounded-2xl bg-white p-6 shadow-sm sm:p-8">
+          <CaseStudyScrollReveal>
+            <CaseStudyBubbleCard className="p-6 sm:p-8">
             <p className={styles.accentLabel}>
               How I solved it
             </p>
@@ -884,16 +890,16 @@ export function AffinaCaseStudy() {
             </h3>
             <div className="scrollbar-none mt-8 overflow-x-auto pb-2">
               <div className="relative flex w-max items-center gap-3 pr-20">
-                <div className="pointer-events-none absolute left-3 right-6 top-1/2 h-px -translate-y-1/2 bg-[#08090a]/25">
-                  <span className="absolute right-[-1px] top-1/2 size-2.5 -translate-y-1/2 rotate-45 border-r border-t border-[#08090a]/35" />
+                <div className="pointer-events-none absolute left-3 right-6 top-1/2 h-px -translate-y-1/2 bg-[#83b5d9]/45">
+                  <span className="absolute right-[-1px] top-1/2 size-2.5 -translate-y-1/2 rotate-45 border-r border-t border-[#83b5d9]/65" />
                 </div>
                 {processSteps.map((step) => (
                   <span
                     className={cn(
-                      "relative z-10 rounded-full px-5 py-3 text-sm leading-none",
+                      "relative z-10 rounded-full border border-white/80 px-5 py-3 text-sm leading-none shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]",
                       step.active
-                        ? "bg-[#08090a] text-white"
-                        : "bg-[#e6e6e8] text-[#18181b]"
+                        ? "bg-[#dff1ff]/80 text-[#245d83]"
+                        : "bg-white/35 text-[#526677]"
                     )}
                     key={step.label}
                   >
@@ -902,17 +908,18 @@ export function AffinaCaseStudy() {
                 ))}
               </div>
             </div>
+          </CaseStudyBubbleCard>
           </CaseStudyScrollReveal>
 
           <div className="flex flex-col gap-0">
             {journeySteps.map((step, stepIndex) => (
               <article className="grid scroll-mt-24 grid-cols-[29px_1fr] gap-5" id={`affina-journey-${step.number}`} key={step.number}>
                 <div className="flex flex-col items-center">
-                  <div className="flex size-[29px] items-center justify-center rounded-full bg-[#08090a] text-base font-bold leading-none text-white">
+                  <div className="flex size-[29px] items-center justify-center rounded-full border border-white/80 bg-[#dff1ff]/75 text-base font-bold leading-none text-[#245d83] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
                     {step.number}
                   </div>
                   {stepIndex < journeySteps.length - 1 && (
-                    <div className="h-full min-h-[64px] w-px bg-[#08090a]/25" />
+                    <div className="h-full min-h-[64px] w-px bg-[#83b5d9]/40" />
                   )}
                 </div>
 
@@ -962,7 +969,7 @@ export function AffinaCaseStudy() {
           </div>
 
           <CaseStudyScrollReveal>
-            <div id="affina-measured-behavior" className="rounded-3xl border border-[#cce6f7] p-6 text-[#2e2222] shadow-sm sm:p-8 lg:p-10" style={{ background: affinaAppGradient }}>
+            <CaseStudyBubbleCard id="affina-measured-behavior" className="p-6 text-[#2e2222] sm:p-8 lg:p-10">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#2366b7]">
@@ -980,22 +987,21 @@ export function AffinaCaseStudy() {
 
             <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-5">
               {measuredBehaviorStats.map((stat) => (
-                <div
-                  className="rounded-xl border border-white/80 bg-white/65 p-4"
-                  key={stat.label}
-                >
+                <CaseStudyBubbleCard radius={16}
+                  className="p-4"
+                  key={stat.label}>
                   <p className="font-[var(--font-affina-heading)] text-[30px] font-medium leading-none tracking-normal text-[#2e2222] sm:text-[34px]">
                     {stat.value}
                   </p>
                   <p className="mt-3 text-xs font-bold uppercase tracking-[0.08em] text-[#526677]">
                     {stat.label}
                   </p>
-                </div>
+                </CaseStudyBubbleCard>
               ))}
             </div>
 
             <div className="mt-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
-              <div className="rounded-xl bg-white p-5 text-[#08090a]">
+              <CaseStudyBubbleCard radius={20} className="p-5 text-[#08090a]">
                 <p className="font-[var(--font-affina-heading)] text-[52px] font-medium leading-none tracking-[-0.05em] text-[#08090a]">
                   61.4%
                 </p>
@@ -1003,9 +1009,9 @@ export function AffinaCaseStudy() {
                   of sessions that reached recommendations continued to{" "}
                   <CaseStudyScrollHighlight>Buy Now</CaseStudyScrollHighlight>.
                 </p>
-              </div>
+              </CaseStudyBubbleCard>
 
-              <div className="rounded-xl border border-white/80 bg-white/45 p-5">
+              <CaseStudyBubbleCard radius={20} className="p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#526677]">
                   What&apos;s next
                 </p>
@@ -1017,9 +1023,9 @@ export function AffinaCaseStudy() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </CaseStudyBubbleCard>
             </div>
-            </div>
+            </CaseStudyBubbleCard>
           </CaseStudyScrollReveal>
         </section>
 
@@ -1046,14 +1052,14 @@ export function AffinaCaseStudy() {
             text="Principles guide the rules. Rules shape the elements. Real product use keeps the system honest."
           />
 
-          <CaseStudyScrollReveal className="rounded-2xl border border-[#e4e4e7] bg-white p-5 sm:p-8 lg:p-10">
+          <CaseStudyScrollReveal>
+            <CaseStudyBubbleCard className="p-5 sm:p-8 lg:p-10">
             <p className={styles.accentLabel}>System architecture</p>
             <div className="mt-8 grid gap-4 lg:grid-cols-3">
               {designSystemLayers.map((layer, index) => (
-                <div
-                  className="relative flex min-w-0 flex-col rounded-3xl border border-black/10 bg-white p-3"
-                  key={layer.label}
-                >
+                <CaseStudyBubbleCard
+                  className="flex min-w-0 flex-col p-3"
+                  key={layer.label}>
                   <DesignSystemLayerVisual kind={layer.kind} />
                   <div className="px-2 pb-3 pt-5">
                     <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#0096f7]">
@@ -1066,9 +1072,10 @@ export function AffinaCaseStudy() {
                       {layer.detail}
                     </p>
                   </div>
-                </div>
+                </CaseStudyBubbleCard>
               ))}
             </div>
+          </CaseStudyBubbleCard>
           </CaseStudyScrollReveal>
 
           <CaseStudyScrollReveal>
@@ -1079,7 +1086,7 @@ export function AffinaCaseStudy() {
                   What I built first — and why
                 </h3>
               </div>
-              <div className="grid overflow-hidden rounded-2xl border border-[#e4e4e7] bg-white sm:grid-cols-2 lg:grid-cols-4">
+              <CaseStudyBubbleCard className="grid overflow-hidden sm:grid-cols-2 lg:grid-cols-4">
                 {designSystemBuildOrder.map((step) => (
                   <article
                     className="border-b border-[#e4e4e7] p-6 last:border-b-0 sm:border-r sm:[&:nth-child(2)]:border-r-0 lg:border-b-0 lg:[&:nth-child(2)]:border-r lg:last:border-r-0"
@@ -1096,7 +1103,7 @@ export function AffinaCaseStudy() {
                     </p>
                   </article>
                 ))}
-              </div>
+              </CaseStudyBubbleCard>
             </div>
           </CaseStudyScrollReveal>
 

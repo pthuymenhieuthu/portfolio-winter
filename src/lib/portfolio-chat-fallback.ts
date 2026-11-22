@@ -1,6 +1,7 @@
 import { portfolioProjects, type PortfolioProjectId } from "@/lib/portfolio-chat-knowledge";
+import { findPortfolioFaq, isVietnameseQuestion } from "@/lib/portfolio-chat-faq";
 
-export type PortfolioReply = { text: string; title?: string; href?: string; image?: string; tag?: string };
+export type PortfolioReply = { text: string; title?: string; href?: string; image?: string; tag?: string; showPricing?: boolean };
 
 function withProject(text: string, id: PortfolioProjectId): PortfolioReply {
   const { title, href, image, tag } = portfolioProjects[id];
@@ -12,7 +13,7 @@ type Answer = { pattern: RegExp; reply: PortfolioReply };
 // Specific projects come before broader topics so a named case study wins.
 const answers: Answer[] = [
   { pattern: /contact|email|reach (her|you)|get in touch|hire|can we collaborat|lien he/, reply: {
-    text: "You can reach Thuy at phuongthuy101222@gmail.com or use the contact form near the bottom of this page.",
+    text: "You can reach Thuy at phuongthuy101222@gmail.com or choose a package in the freelance pricing section below.",
   } },
   { pattern: /available|availability|open to work|remote|freelanc|full.time|part.time|contract|time.zone overlap/, reply: {
     text: "Thuy is available for UI, UX, UI/UX and Product Designer roles, including remote full-time, part-time and contract work from Ho Chi Minh City, Vietnam (UTC+7). Contact her at phuongthuy101222@gmail.com to discuss a role and time-zone overlap.",
@@ -88,8 +89,18 @@ const answers: Answer[] = [
 ];
 
 export function fallbackFor(question: string): PortfolioReply {
+  const faq = findPortfolioFaq(question);
+  if (faq && ["freelance-services", "freelance-pricing"].includes(faq.id)) {
+    return { text: isVietnameseQuestion(question) ? faq.answerVi : faq.answer, showPricing: true };
+  }
+  if (faq) {
+    const text = isVietnameseQuestion(question) ? faq.answerVi : faq.answer;
+    return faq.project ? withProject(text, faq.project) : faq.id.startsWith("freelance-") ? { text, title: isVietnameseQuestion(question) ? "Xem các gói freelance" : "View freelance packages", href: "/#services" } : { text };
+  }
   const query = question.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
   return answers.find(({ pattern }) => pattern.test(query))?.reply ?? {
-    text: "The AI guide is unavailable right now, and the portfolio does not provide a verified answer to that question. Try asking about a project, UX process or developer handoff, or explore the work below.",
+    text: isVietnameseQuestion(question)
+      ? "Portfolio hiện chưa có thông tin xác nhận cho câu hỏi này. Bạn có thể hỏi về dự án, quy trình thiết kế hoặc dịch vụ freelance; với yêu cầu cụ thể, hãy liên hệ Thuy qua phuongthuy101222@gmail.com."
+      : "That detail is not documented in Thuy's portfolio yet. Ask about a project, design process or freelance services, or contact her at phuongthuy101222@gmail.com for specifics.",
   };
 }

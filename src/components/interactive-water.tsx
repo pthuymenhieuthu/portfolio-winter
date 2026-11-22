@@ -2,7 +2,7 @@
 
 import { ShaderMount, waterPresets } from "@paper-design/shaders-react";
 import { getShaderColorFromString, waterFragmentShader, ShaderFitOptions, type PaperShaderElement } from "@paper-design/shaders";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 const RIPPLE_COUNT = 12;
 const RIPPLE_LIFETIME = 2;
@@ -62,8 +62,26 @@ const uniforms = {
   u_cursorRipples: emptyRipples(),
 };
 
-export function InteractiveWater() {
+// Match the existing project hero's wave speed, envelope, frequency and decay.
+const projectFragmentShader = fragmentShader
+  .replace("age > 2.", "age > 1.8")
+  .replace("age * .24", "age * .25")
+  .replace("front * front * 150.", "front * front * 210.")
+  .replace("age * 2.2", "age * 2.5")
+  .replace("smoothstep(1.3, 2., age)", "smoothstep(1.2, 1.8, age)")
+  .replace("front * 76.", "front * 86.")
+  .replace("max(distanceFromCursor, .008)", "max(distanceFromCursor, .012)")
+  .replace("wave * .024", "wave * .014");
+
+export function InteractiveWater({ transparent = false, projectRipple = false, speed = 0.42, maxPixelCount = 1280 * 720 }: {
+  transparent?: boolean; projectRipple?: boolean; speed?: number; maxPixelCount?: number;
+} = {}) {
   const surface = useRef<PaperShaderElement>(null);
+  const surfaceUniforms = useMemo(() => ({
+    ...uniforms,
+    u_colorBack: getShaderColorFromString(transparent ? "#e6f6ff00" : "#e6f6ff"),
+    u_highlights: transparent ? 0.3 : uniforms.u_highlights,
+  }), [transparent]);
 
   useEffect(() => {
     const element = surface.current;
@@ -104,12 +122,12 @@ export function InteractiveWater() {
       if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) return;
       const now = clock();
       const distance = Math.hypot(event.clientX - lastX, event.clientY - lastY);
-      if (now - lastStamp < 0.04 || distance < 6) return;
+      if (now - lastStamp < (projectRipple ? 0.045 : 0.04) || distance < (projectRipple ? 8 : 6)) return;
       ripples[next] = [
         (event.clientX - bounds.left) / bounds.width,
         1 - (event.clientY - bounds.top) / bounds.height,
         now,
-        Math.min(1.25, 0.65 + distance / 100),
+        projectRipple ? Math.min(1, 0.5 + distance / 180) : Math.min(1.25, 0.65 + distance / 100),
       ];
       next = (next + 1) % RIPPLE_COUNT;
       lastX = event.clientX;
@@ -138,7 +156,7 @@ export function InteractiveWater() {
       window.removeEventListener("resize", clear);
       document.removeEventListener("visibilitychange", clear);
     };
-  }, []);
+  }, [projectRipple]);
 
-  return <ShaderMount ref={surface} data-interactive-water="true" data-water-response="idle" fragmentShader={fragmentShader} uniforms={uniforms} mipmaps={["u_image"]} speed={0.42} maxPixelCount={1280 * 720} className="h-full w-full" style={{ height: "100%", width: "100%" }} />;
+  return <ShaderMount ref={surface} data-interactive-water="true" data-water-response="idle" fragmentShader={projectRipple ? projectFragmentShader : fragmentShader} uniforms={surfaceUniforms} mipmaps={["u_image"]} speed={speed} maxPixelCount={maxPixelCount} className="h-full w-full" style={{ height: "100%", width: "100%" }} />;
 }

@@ -112,6 +112,10 @@ export type FluidTypingMode = 'auto' | 'manual' | 'static';
 export type FluidTypingProps = Omit<FluidRipplesProps, 'typing'> & {
   /** An array creates consecutive lines in the same text. */
   text?: string | string[];
+  /** Rotate through these phrases after each complete type/hold/delete cycle. */
+  phrases?: readonly string[];
+  /** Hold the typing cursor while allowing the fluid background to keep moving. */
+  typingPaused?: boolean;
   typeSpeed?: number;
   deleteSpeed?: number;
   holdDuration?: number;
@@ -342,6 +346,8 @@ function replaceInput(node: HTMLElement, value: string) {
 export const FluidTyping = forwardRef<FluidTypingHandle, FluidTypingProps>(function FluidTyping(
   {
     text = fluidTypingDefaults.text,
+    phrases,
+    typingPaused = false,
     typeSpeed = 110,
     deleteSpeed = 50,
     holdDuration = 1800,
@@ -370,6 +376,8 @@ export const FluidTyping = forwardRef<FluidTypingHandle, FluidTypingProps>(funct
   ref,
 ) {
   const fullText = Array.isArray(text) ? text.join('\n') : text;
+  const phraseKey = JSON.stringify(phrases?.filter((phrase) => phrase.trim()) ?? []);
+  const reserveText = phrases?.reduce((longest, phrase) => phrase.length > longest.length ? phrase : longest, fullText) ?? fullText;
   const mode =
     typingMode === 'manual' ? 'manual' : typingMode === 'static' || !autoType ? 'static' : 'auto';
   const animated = mode === 'auto';
@@ -395,9 +403,10 @@ export const FluidTyping = forwardRef<FluidTypingHandle, FluidTypingProps>(funct
   } | null>(null);
   const editClock = useRef({ at: -Infinity, roll: seededRandom('', 0) });
   const playbackOverride = useRef<boolean | null>(null);
-  const previousPaused = useRef(paused);
+  const pauseTyping = paused || typingPaused;
+  const previousPaused = useRef(pauseTyping);
   const timing = {
-    paused,
+    paused: pauseTyping,
     typeSpeed,
     deleteSpeed,
     holdDuration,
@@ -423,7 +432,7 @@ export const FluidTyping = forwardRef<FluidTypingHandle, FluidTypingProps>(funct
         engine.current?.play();
         controller.current?.sync();
       },
-      rippleAt: (x, y, strength) => engine.current?.rippleAt(x, y, strength),
+      rippleAt: (x, y, strength, size) => engine.current?.rippleAt(x, y, strength, size),
     }),
     [],
   );
@@ -435,7 +444,8 @@ export const FluidTyping = forwardRef<FluidTypingHandle, FluidTypingProps>(funct
       anchor = caret.current;
     const host = root?.closest<HTMLElement>('.fluid-ripples');
     if (!root || !host || (mode !== 'manual' && (!node || !anchor))) return;
-    const symbols = graphemes(fullText);
+    const cyclePhrases = JSON.parse(phraseKey) as string[];
+    let symbols = graphemes(cyclePhrases[0] ?? fullText);
     const media = matchMedia('(prefers-reduced-motion: reduce)');
     let reduced = media.matches,
       visible = isVisible(host),
@@ -544,7 +554,10 @@ export const FluidTyping = forwardRef<FluidTypingHandle, FluidTypingProps>(funct
         if (index) phase = 'deleting';
         else {
           // The message is gone: the lone cursor opens the next cycle with a new rhythm.
-          typist = createTypist(fullText, ++cycle);
+          ++cycle;
+          const nextText = cyclePhrases[cycle % cyclePhrases.length] ?? fullText;
+          symbols = graphemes(nextText);
+          typist = createTypist(nextText, cycle);
           dropped = false;
           phase = opening();
         }
@@ -622,7 +635,7 @@ export const FluidTyping = forwardRef<FluidTypingHandle, FluidTypingProps>(funct
       document.removeEventListener('visibilitychange', onVisibility);
       controller.current = null;
     };
-  }, [fullText, mode, animated, prefix, introWave]);
+  }, [fullText, phraseKey, mode, animated, prefix, introWave]);
 
   useLayoutEffect(() => {
     const node = editor.current,
@@ -710,10 +723,10 @@ export const FluidTyping = forwardRef<FluidTypingHandle, FluidTypingProps>(funct
   };
 
   useEffect(() => {
-    if (previousPaused.current !== paused) playbackOverride.current = null;
-    previousPaused.current = paused;
+    if (previousPaused.current !== pauseTyping) playbackOverride.current = null;
+    previousPaused.current = pauseTyping;
     controller.current?.sync();
-  }, [paused, typeSpeed, deleteSpeed, holdDuration, loop]);
+  }, [pauseTyping, typeSpeed, deleteSpeed, holdDuration, loop]);
 
   return (
     <FluidRipples
@@ -779,7 +792,7 @@ export const FluidTyping = forwardRef<FluidTypingHandle, FluidTypingProps>(funct
               </span>
               <span className="fluid-typing-reserve" aria-hidden="true">
                 {prefix && <span className="fluid-typing-fixed">{prefix}</span>}
-                {fullText.split('\n').map((line, index) => (
+                {reserveText.split('\n').map((line, index) => (
                   <span key={index}>
                     {index > 0 && <br />}
                     {graphemes(line).map((symbol, symbolIndex) => (
