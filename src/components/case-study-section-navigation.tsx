@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { scrollToPosition } from "@/hooks/useLenis";
 import { cn } from "@/lib/utils";
 
 export type CaseStudySection = {
@@ -25,12 +26,10 @@ export function CaseStudySectionNavigation({
 
   const scrollToSection = (id: string) => {
     setActiveId(id);
-    document.getElementById(id)?.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
-      block: "start",
-    });
+    const target = document.getElementById(id);
+    if (!target) return;
+    const margin = Number.parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    scrollToPosition(window.scrollY + target.getBoundingClientRect().top - margin);
   };
 
   useEffect(() => {

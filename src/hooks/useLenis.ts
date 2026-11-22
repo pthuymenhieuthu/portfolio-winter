@@ -12,6 +12,16 @@ export function setScrollPosition(top: number) {
   window.scrollTo({ top, left: 0, behavior: "instant" as ScrollBehavior });
 }
 
+export function scrollToPosition(top: number) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    setScrollPosition(top);
+  } else if (activeLenis) {
+    activeLenis.scrollTo(top, { duration: 0.9, force: true });
+  } else {
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+}
+
 export function useLenis() {
   useEffect(() => {
     // ❌ Bỏ qua nếu đang chạy trên server
