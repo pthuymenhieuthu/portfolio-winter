@@ -253,8 +253,6 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
         gsap.fromTo(composer, { x: before.left - after.left, y: before.top - after.top },
           { x: 0, y: 0, duration: 0.48, ease: "power3.out", clearProps: "transform" });
       }
-      gsap.fromTo(root.querySelector(`.${styles.chatGuide}`), { opacity: 0, y: 8 },
-        { opacity: 1, y: 0, duration: 0.3, delay: 0.1, clearProps: "opacity,transform" });
     });
     composerBounds.current = null;
     titleBounds.current = null;
@@ -367,7 +365,6 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
             </div>
           ) : (
             <div className={styles.chat}>
-              <p className={styles.chatGuide}>Ask about my projects, process, or experience.</p>
               <div className={styles.conversationViewport}>
               <div id={conversationId} ref={messagesRef} className={styles.messages} data-lenis-prevent tabIndex={0} role="log" aria-label="Conversation" aria-live="polite">
                 {turns.map((turn, index) => (
@@ -429,12 +426,13 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
         <button
           type="button"
           className={styles.exploreProjects}
+          aria-label="Explore projects"
           onClick={() => document.getElementById("projects")?.scrollIntoView({
             behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
             block: "start",
           })}
         >
-          Explore projects <ArrowDown size={17} aria-hidden="true" />
+          <ArrowDown size={20} strokeWidth={1.6} aria-hidden="true" />
         </button>
       </div>
     </section>
