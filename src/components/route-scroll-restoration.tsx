@@ -20,9 +20,18 @@ export function RouteScrollRestoration() {
     const top = isHome(pathname) ? homeScrollPosition : pathname.startsWith("/blog/") ? 0 : null;
     if (top === null) return;
     let frame = 0;
+    const restore = () => {
+      // Explicit navigation to Projects wins over the remembered home position.
+      const projects = isHome(pathname) && window.location.hash === "#projects"
+        ? document.getElementById("projects") : null;
+      const destination = projects
+        ? window.scrollY + projects.getBoundingClientRect().top - (parseFloat(getComputedStyle(projects).scrollMarginTop) || 0)
+        : top;
+      setScrollPosition(Math.max(0, destination));
+    };
     const timer = setTimeout(() => {
-      setScrollPosition(top);
-      frame = requestAnimationFrame(() => setScrollPosition(top));
+      restore();
+      frame = requestAnimationFrame(restore);
     }, 0);
     return () => { clearTimeout(timer); cancelAnimationFrame(frame); };
   }, [pathname]);
