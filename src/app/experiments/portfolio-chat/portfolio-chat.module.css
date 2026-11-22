@@ -177,3 +177,6 @@
   .exploreProjects { right: 24px; }
 }
 @media (max-width: 640px) { .exploreProjects { right: 18px; } }
+
+.answerText { white-space: pre-line; }
+.answerText strong { font-weight: 650; }

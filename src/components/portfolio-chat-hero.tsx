@@ -60,7 +60,7 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
         if (Array.isArray(parsed.turns)) {
           setTurns(parsed.turns.filter((turn) => typeof turn.question === "string" && turn.reply).slice(-12).map((turn) => {
             const preparedReply = fallbackFor(turn.question);
-            return preparedReply.showPricing ? { ...turn, reply: preparedReply } : turn;
+            return turn.error || preparedReply.showPricing ? { ...turn, reply: preparedReply } : turn;
           }));
         }
         if (typeof parsed.draft === "string") setDraft(parsed.draft.slice(0, 180));
@@ -394,17 +394,17 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
                     {turn.reply ? (
                       <div className={styles.answerBubble}>
                         <div className={styles.answerInner}>
-                          <p className={styles.answerText}>{turn.reply.text}</p>
+                          <p className={styles.answerText}>{turn.reply.text.split(/(\*\*[^*\n]+\*\*)/g).map((part, index) => part.startsWith("**") && part.endsWith("**") ? <strong key={index}>{part.slice(2, -2)}</strong> : part)}</p>
                             {turn.reply.showPricing && <ChatFreelancePricing vietnamese={/[à-ỹđ]/i.test(turn.reply.text)} />}
                             {turn.reply.href && !turn.reply.image && turn.reply.title && <Link href={turn.reply.href} className={styles.serviceLink}>{turn.reply.title}<ArrowUpRight size={17} aria-hidden="true" /></Link>}
-                          {turn.reply.href && turn.reply.image && turn.reply.title && <Link href={turn.reply.href} className={styles.projectLink}>
-                            <span className={styles.projectImage}><Image src={turn.reply.image} alt="" fill sizes="64px" /></span>
+                          {(turn.reply.projects ?? (turn.reply.href && turn.reply.image && turn.reply.title ? [{ href: turn.reply.href, image: turn.reply.image, title: turn.reply.title, tag: turn.reply.tag }] : [])).map((project) => <Link key={project.href} href={project.href} className={styles.projectLink}>
+                            <span className={styles.projectImage}><Image src={project.image} alt="" fill sizes="64px" /></span>
                             <span className={styles.projectMeta}>
-                              {turn.reply.tag && <span className={styles.projectTag}>{turn.reply.tag}</span>}
-                              <strong>{turn.reply.title}</strong>
+                              {project.tag && <span className={styles.projectTag}>{project.tag}</span>}
+                              <strong>{project.title}</strong>
                             </span>
                             <ArrowUpRight size={18} aria-hidden="true" />
-                          </Link>}
+                          </Link>)}
                         </div>
                       </div>
                     ) : (

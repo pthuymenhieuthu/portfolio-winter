@@ -3,7 +3,7 @@ import type { PortfolioProjectId } from "@/lib/portfolio-chat-knowledge";
 
 export type PortfolioFaq = {
   id: string; group: string; question: string; questionVi: string;
-  answer: string; answerVi: string; aliases: string[]; project?: PortfolioProjectId;
+  answer: string; answerVi: string; aliases: string[]; project?: PortfolioProjectId; projects?: PortfolioProjectId[];
 };
 
 export const portfolioFaq: readonly PortfolioFaq[] = data as PortfolioFaq[];

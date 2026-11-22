@@ -1,52 +1,850 @@
 [
-  {"id":"about","group":"About Thuy","question":"Who is Thuy?","questionVi":"Thuy là ai?","answer":"Thuy Nguyen is a UI/UX and product designer based in Ho Chi Minh City. Her work combines product thinking, reusable UI, prototyping, motion and implementation.","answerVi":"Thuy Nguyen là UI/UX và Product Designer tại TP.HCM. Công việc của Thuy kết hợp tư duy sản phẩm, hệ thống UI, prototype, motion và triển khai giao diện.","aliases":["who are you","about thuy","introduce yourself","gioi thieu ban than","ban la ai"]},
-  {"id":"experience","group":"About Thuy","question":"How much design experience does Thuy have?","questionVi":"Thuy có bao nhiêu năm kinh nghiệm thiết kế?","answer":"Thuy has around two years of design experience. Her portfolio covers insurance, AI products, healthcare recruitment, mobile apps and e-commerce.","answerVi":"Thuy có khoảng hai năm kinh nghiệm thiết kế. Portfolio gồm các dự án bảo hiểm, sản phẩm AI, tuyển dụng y tế, ứng dụng di động và thương mại điện tử.","aliases":["years of experience","how experienced","kinh nghiem thiet ke","may nam kinh nghiem"]},
-  {"id":"location","group":"About Thuy","question":"Where is Thuy based?","questionVi":"Thuy đang ở đâu?","answer":"Thuy is based in Ho Chi Minh City, Vietnam, in the UTC+7 time zone. Working-hour overlap can be discussed for each project.","answerVi":"Thuy đang ở TP.HCM, Việt Nam, theo múi giờ UTC+7. Khung giờ phối hợp sẽ được trao đổi theo từng dự án.","aliases":["where do you live","your location","time zone","mui gio","song o dau"]},
-  {"id":"roles","group":"About Thuy","question":"What roles is Thuy open to?","questionVi":"Thuy đang tìm vị trí công việc nào?","answer":"Thuy is open to UI Designer, UX Designer, UI/UX Designer and Product Designer opportunities. Contact her to discuss the role, scope and current availability.","answerVi":"Thuy quan tâm các vị trí UI Designer, UX Designer, UI/UX Designer và Product Designer. Bạn có thể liên hệ để trao đổi về vai trò, phạm vi công việc và lịch hiện tại.","aliases":["open to work","looking for a role","hiring thuy","tim viec","vi tri ung tuyen"]},
-  {"id":"remote","group":"About Thuy","question":"Can Thuy work remotely?","questionVi":"Thuy có nhận làm việc remote không?","answer":"Thuy is open to remote opportunities from Vietnam. Time-zone overlap, working hours and the collaboration setup should be agreed directly with her.","answerVi":"Thuy có cân nhắc cơ hội remote từ Việt Nam. Múi giờ, khung giờ làm việc và cách phối hợp cần được thống nhất trực tiếp với Thuy.","aliases":["remote work","work remotely","lam remote","lam viec tu xa"]},
-  {"id":"strengths","group":"About Thuy","question":"What are Thuy's design strengths?","questionVi":"Thế mạnh thiết kế của Thuy là gì?","answer":"Her portfolio highlights simplifying complex workflows, building consistent UI systems and making ideas tangible through prototypes, motion and code. Affina and MedHunt show that combination in context.","answerVi":"Thế mạnh thể hiện trong portfolio là làm rõ luồng phức tạp, xây dựng UI nhất quán và hiện thực hóa ý tưởng bằng prototype, motion và code. Affina và MedHunt là hai ví dụ phù hợp.","aliases":["your strengths","what makes you different","all rounder","the manh","diem manh"]},
-  {"id":"tools","group":"About Thuy","question":"What design tools does Thuy use?","questionVi":"Thuy sử dụng công cụ thiết kế nào?","answer":"Her portfolio lists Figma for interface design and systems, Rive and After Effects for motion, and interactive HTML for prototypes and developer handoff.","answerVi":"Portfolio của Thuy có Figma cho UI và design system, Rive và After Effects cho motion, cùng HTML tương tác để làm prototype và trao đổi với developer.","aliases":["design tools","what tools","dung cong cu","phan mem thiet ke","figma"]},
-  {"id":"coding","group":"About Thuy","question":"Can Thuy code her designs?","questionVi":"Thuy có thể code giao diện không?","answer":"Thuy uses code to prototype and clarify UI behavior. Affina includes UI implementation, while MedHunt uses interactive HTML for handoff; production requirements should be scoped for each engagement.","answerVi":"Thuy dùng code để làm prototype và thể hiện hành vi UI. Affina có phần triển khai giao diện, còn MedHunt dùng HTML tương tác để handoff; yêu cầu triển khai thực tế cần được chốt theo từng dự án.","project":"medhunt","aliases":["can you code","design and code","frontend skills","biet code","code giao dien","html prototype"]},
-  {"id":"motion","group":"About Thuy","question":"Does Thuy do motion design?","questionVi":"Thuy có làm motion design không?","answer":"Yes. Her work includes interface motion, interactive prototypes and product showreels. She lists Rive and After Effects among her motion tools.","answerVi":"Có. Công việc của Thuy gồm motion cho giao diện, prototype tương tác và showreel sản phẩm. Rive và After Effects nằm trong các công cụ motion được giới thiệu trong portfolio.","project":"zoan","aliases":["motion design","rive","after effects","interface animation","lam motion","animation giao dien"]},
-  {"id":"contact","group":"About Thuy","question":"How can I contact Thuy?","questionVi":"Liên hệ với Thuy bằng cách nào?","answer":"Email phuongthuy101222@gmail.com. For freelance work, browse the pricing section first, then choose a package to email Thuy with the scope prefilled.","answerVi":"Gửi email đến phuongthuy101222@gmail.com. Với dự án freelance, bạn có thể xem bảng giá trước rồi chọn gói để mở email có sẵn thông tin phạm vi.","aliases":["contact thuy","your email","get in touch","lien he","email cua thuy"]},
-  {"id":"process","group":"Design process","question":"How does Thuy start a design project?","questionVi":"Thuy bắt đầu một dự án thiết kế như thế nào?","answer":"She starts by clarifying the user task, business goals and product rules, then maps the journey before exploring flows and interfaces. Prototypes help review the direction with stakeholders and developers.","answerVi":"Thuy bắt đầu bằng việc làm rõ tác vụ người dùng, mục tiêu kinh doanh và quy tắc sản phẩm, sau đó vẽ hành trình trước khi phát triển flow và UI. Prototype giúp trao đổi hướng thiết kế với các bên và developer.","aliases":["design process","approach ux","start a project","quy trinh thiet ke","bat dau du an"]},
-  {"id":"research","group":"Design process","question":"How does Thuy approach user research?","questionVi":"Thuy tiếp cận nghiên cứu người dùng như thế nào?","answer":"She uses research to understand tasks and friction before refining a flow. The kiosk case shows a research exploration; it should not be presented as a large-scale validation study.","answerVi":"Thuy dùng nghiên cứu để hiểu tác vụ và điểm vướng trước khi chỉnh flow. Case kiosk là một nghiên cứu khám phá, không được giới thiệu như một nghiên cứu kiểm chứng quy mô lớn.","project":"kiosk","aliases":["user research","usability testing","user interviews","nghien cuu nguoi dung","kiem thu nguoi dung"]},
-  {"id":"journeys","group":"Design process","question":"How does Thuy map user journeys?","questionVi":"Thuy xây dựng user journey như thế nào?","answer":"She connects the user's main task with roles, decisions, states and exceptions. Affina's survey-to-payment journey and MedHunt's recruitment lifecycle show this at different levels of complexity.","answerVi":"Thuy nối tác vụ chính với các vai trò, quyết định, trạng thái và ngoại lệ. Luồng khảo sát đến thanh toán của Affina và vòng đời tuyển dụng của MedHunt thể hiện cách làm này ở hai bối cảnh khác nhau.","project":"affina","aliases":["user journey","journey mapping","map a flow","hanh trinh nguoi dung","xay dung user flow"]},
-  {"id":"complexity","group":"Design process","question":"How does Thuy simplify complex products?","questionVi":"Thuy đơn giản hóa sản phẩm phức tạp bằng cách nào?","answer":"She breaks a large decision into smaller steps and makes the next action clear. At Affina, survey, recommendations, comparison, declarations and payment become a guided sequence.","answerVi":"Thuy chia quyết định lớn thành các bước nhỏ và làm rõ hành động tiếp theo. Ở Affina, khảo sát, gợi ý, so sánh, khai báo và thanh toán được tổ chức thành một hành trình có hướng dẫn.","project":"affina","aliases":["simplify complex","complex ux","simplify a flow","don gian hoa","luong phuc tap"]},
-  {"id":"business","group":"Design process","question":"How does Thuy balance user needs and business goals?","questionVi":"Thuy cân bằng nhu cầu người dùng và mục tiêu kinh doanh thế nào?","answer":"She makes business rules explicit and translates them into understandable choices and UI states. Affina's customer and partner journeys show how she works with business, BA and developers on those constraints.","answerVi":"Thuy làm rõ quy tắc kinh doanh rồi chuyển chúng thành lựa chọn và trạng thái UI dễ hiểu. Luồng khách hàng và đối tác của Affina thể hiện cách Thuy phối hợp với business, BA và developer để xử lý các ràng buộc đó.","project":"affinaPartner","aliases":["business goals","business constraints","business rules","muc tieu kinh doanh","quy tac nghiep vu"]},
-  {"id":"edge-cases","group":"Design process","question":"How does Thuy handle edge cases?","questionVi":"Thuy xử lý các trường hợp ngoại lệ như thế nào?","answer":"She maps exceptions alongside the happy path rather than leaving them until handoff. Her Affina partner work documents rules and responsive states, while MedHunt makes roles and statuses explicit.","answerVi":"Thuy vẽ các ngoại lệ cùng với happy path thay vì để đến lúc handoff mới xử lý. Dự án Affina partner có tài liệu quy tắc và responsive states; MedHunt làm rõ vai trò và trạng thái.","project":"affinaPartner","aliases":["edge cases","happy path","error states","truong hop ngoai le","ngoai le"]},
-  {"id":"prototypes","group":"Design process","question":"What does Thuy use prototypes for?","questionVi":"Thuy dùng prototype để làm gì?","answer":"Prototypes make flows, states and interactions easier to review before implementation. Her work ranges from Figma prototypes and motion details to interactive HTML for developer alignment.","answerVi":"Prototype giúp các bên dễ xem và trao đổi về flow, trạng thái và tương tác trước khi triển khai. Thuy dùng cả prototype Figma, motion và HTML tương tác để thống nhất với developer.","project":"medhunt","aliases":["interactive prototype","prototyping approach","why prototype","lam prototype","dung prototype"]},
-  {"id":"handoff","group":"Design process","question":"How does Thuy work with developers?","questionVi":"Thuy phối hợp với developer như thế nào?","answer":"She reviews flows, edge cases and reusable UI states with developers early. MedHunt's interactive HTML helps clarify behavior and handoff details with BA, operations and engineering.","answerVi":"Thuy trao đổi sớm với developer về flow, ngoại lệ và các trạng thái UI dùng lại được. HTML tương tác trong MedHunt giúp làm rõ hành vi và chi tiết handoff với BA, vận hành và kỹ thuật.","project":"medhunt","aliases":["work with developers","developer handoff","engineering collaboration","handoff cho dev","phoi hop voi developer"]},
-  {"id":"responsive","group":"Design process","question":"Has Thuy designed for both web and mobile?","questionVi":"Thuy có thiết kế cả web và mobile không?","answer":"Yes. Zoan AI includes web and mobile creation workflows, and Affina includes responsive purchase journeys and a shared UI foundation.","answerVi":"Có. Zoan AI gồm luồng tạo nội dung trên web và mobile; Affina gồm hành trình mua bảo hiểm responsive và nền tảng UI dùng chung.","project":"zoan","aliases":["web and mobile","responsive design","cross platform","web va mobile","thiet ke responsive"]},
-  {"id":"systems","group":"Design process","question":"How does Thuy build a design system?","questionVi":"Thuy xây dựng design system như thế nào?","answer":"Her Affina case follows an audit, foundations, components and governance. It connects primitives and semantic tokens with reusable UI, documentation and implementation.","answerVi":"Case Affina đi từ audit, foundation, component đến governance. Thuy kết nối primitive và semantic token với UI dùng lại được, tài liệu sử dụng và phần triển khai.","project":"affina","aliases":["design system","component library","design tokens","he thong thiet ke","thu vien component"]},
-  {"id":"affina-overview","group":"Affina","question":"What did Thuy design at Affina?","questionVi":"Thuy đã thiết kế gì ở Affina?","answer":"She designed a guided insurance journey from a four-question survey through recommendations, comparison, declarations and payment. Her scope also includes a reusable UI foundation and responsive delivery.","answerVi":"Thuy thiết kế hành trình mua bảo hiểm từ khảo sát bốn câu hỏi đến gợi ý, so sánh, khai báo và thanh toán. Phạm vi còn gồm nền tảng UI dùng lại được và triển khai responsive.","project":"affina","aliases":["affina work","affina project","designed at affina","lam gi o affina"]},
-  {"id":"affina-survey","group":"Affina","question":"Why does the Affina survey have four questions?","questionVi":"Vì sao khảo sát Affina chỉ có bốn câu hỏi?","answer":"The survey asks only what shapes the match: insurance type, insured person, monthly budget and preferred insurers. It keeps the first decision focused before showing recommendations.","answerVi":"Khảo sát tập trung vào bốn yếu tố định hướng gợi ý: loại bảo hiểm, người được bảo hiểm, ngân sách tháng và nhà bảo hiểm ưu tiên. Cách này giữ bước đầu gọn trước khi hiển thị các gợi ý.","project":"affina","aliases":["four questions","affina survey","survey questions","bon cau hoi","khao sat affina"]},
-  {"id":"affina-recommendations","group":"Affina","question":"How did Thuy design Affina's recommendations?","questionVi":"Thuy thiết kế phần gợi ý bảo hiểm Affina ra sao?","answer":"The design brings three best-fit plans together, puts the best match first and shows price and core benefits upfront. Explanations of why a plan fits are available when needed.","answerVi":"Thiết kế đặt ba gói phù hợp cạnh nhau, ưu tiên gói phù hợp nhất và đưa giá cùng quyền lợi chính lên trước. Người dùng có thể xem thêm giải thích vì sao gói đó phù hợp.","project":"affina","aliases":["affina recommendations","recommended plans","three best fit","goi y bao hiem","ba goi bao hiem"]},
-  {"id":"affina-comparison","group":"Affina","question":"How does Affina's plan comparison work on mobile?","questionVi":"Phần so sánh gói Affina hoạt động thế nào trên mobile?","answer":"It keeps three recommended plans in a horizontal comparison, groups benefits into readable rows and keeps benefit labels beside the columns. Coverage and optional benefits have distinct states.","answerVi":"Ba gói gợi ý được đặt trong bảng so sánh cuộn ngang, nhóm quyền lợi thành các hàng dễ đọc và giữ nhãn cạnh các cột. Quyền lợi được bao gồm và quyền lợi tùy chọn có trạng thái phân biệt.","project":"affina","aliases":["affina comparison","compare insurance","compare plans","so sanh goi","bang so sanh"]},
-  {"id":"affina-checkout","group":"Affina","question":"What happens after a customer selects Buy Now at Affina?","questionVi":"Sau khi chọn Mua ngay ở Affina thì có những bước gì?","answer":"The flow covers health-declaration consent, health questions, answer review, OTP verification and buyer/payment details. The recording shown in the case ends at QR payment instructions.","answerVi":"Luồng gồm đồng ý khai báo sức khỏe, trả lời câu hỏi, kiểm tra lại thông tin, xác minh OTP và điền thông tin người mua/thanh toán. Bản ghi trong case kết thúc tại hướng dẫn thanh toán QR.","project":"affina","aliases":["affina checkout","health declaration","affina payment","khai bao suc khoe","thanh toan affina"]},
-  {"id":"affina-ai-scope","group":"Affina","question":"Did Thuy build Affina's AI recommendation model?","questionVi":"Thuy có xây mô hình AI gợi ý bảo hiểm của Affina không?","answer":"Her documented scope is the experience around AI-assisted recommendations: flows, information hierarchy, comparison and responsive UI. It does not include building the ranking model.","answerVi":"Phạm vi được ghi nhận là trải nghiệm quanh gợi ý có AI hỗ trợ: flow, phân cấp thông tin, so sánh và UI responsive. Thuy không nhận là người xây mô hình xếp hạng gói.","project":"affina","aliases":["recommendation model","ranking model","affina ai model","mo hinh ai affina","thuat toan goi y"]},
-  {"id":"affina-metrics","group":"Affina","question":"What measurable results does the Affina case show?","questionVi":"Case Affina có những số liệu kết quả nào?","answer":"It shows an earlier live web funnel with 1,567 users, 2,046 sessions, 29 leads and a 1.42% lead conversion rate over 30 days. These figures do not measure the newer screens or prove a redesign uplift.","answerVi":"Case có funnel web cũ trong 30 ngày: 1.567 người dùng, 2.046 phiên, 29 lead và tỷ lệ chuyển đổi lead 1,42%. Các số này không đo các màn hình mới và không chứng minh mức tăng nhờ redesign.","project":"affina","aliases":["affina metrics","affina results","conversion rate","funnel snapshot","so lieu affina","ket qua affina"]},
-  {"id":"affina-feedback","group":"Affina","question":"What does Affina's customer feedback reveal?","questionVi":"Phản hồi khách hàng Affina cho thấy điều gì?","answer":"The case includes a post-claim survey with 11,479 rated responses, a 4.13/5 average and 75.9% satisfied scores. It provides context for the wider app experience, separate from the purchase funnel.","answerVi":"Case có khảo sát sau bồi thường với 11.479 lượt đánh giá, điểm trung bình 4,13/5 và 75,9% hài lòng. Đây là bối cảnh cho trải nghiệm ứng dụng rộng hơn, tách biệt với funnel mua bảo hiểm.","project":"affina","aliases":["customer feedback","post claim survey","affina satisfaction","phan hoi khach hang","hai long affina"]},
-  {"id":"affina-partner","group":"Affina","question":"What is the Affina customer and partner journey project?","questionVi":"Dự án hành trình khách hàng và đối tác Affina là gì?","answer":"It covers a family-insurance purchase model across self-service web and sales-assisted Affina Pro, including multiple insured people, product rules, states and handoff details.","answerVi":"Dự án xây dựng luồng mua bảo hiểm gia đình trên web tự phục vụ và Affina Pro có tư vấn hỗ trợ, gồm nhiều người được bảo hiểm, quy tắc sản phẩm, trạng thái và chi tiết handoff.","project":"affinaPartner","aliases":["affina pro","affina partner","family insurance","doi tac affina","bao hiem gia dinh"]},
-  {"id":"affina-collaboration","group":"Affina","question":"Who did Thuy collaborate with on Affina's partner flows?","questionVi":"Thuy phối hợp với ai trong luồng đối tác Affina?","answer":"She worked with BA, business owners, product and developers to clarify insurance rules, map happy paths and edge cases, and document responsive states for delivery.","answerVi":"Thuy làm việc với BA, business owner, product và developer để làm rõ quy tắc bảo hiểm, vẽ happy path cùng ngoại lệ và tài liệu hóa các trạng thái responsive để triển khai.","project":"affinaPartner","aliases":["affina stakeholders","affina collaboration","affina team","team affina","phoi hop affina"]},
-  {"id":"zoan-overview","group":"Other projects","question":"What did Thuy work on at Zoan AI?","questionVi":"Thuy làm gì ở Zoan AI?","answer":"She designed interfaces for an early-stage AI content-creation system, focusing on clearer tasks and workflows. The scope includes UI foundations, high-fidelity screens, prototypes and motion details.","answerVi":"Thuy thiết kế giao diện cho hệ thống tạo nội dung AI giai đoạn đầu, tập trung làm rõ tác vụ và workflow. Phạm vi gồm nền tảng UI, màn hình chi tiết, prototype và motion.","project":"zoan","aliases":["zoan ai","zoan project","zoan work","du an zoan"]},
-  {"id":"zoan-platforms","group":"Other projects","question":"Did Zoan AI include both desktop and mobile design?","questionVi":"Zoan AI có cả thiết kế desktop và mobile không?","answer":"Yes. Thuy's Zoan work covers web and mobile workflows, with shared design-system foundations to connect the interfaces across platforms.","answerVi":"Có. Phần việc Zoan của Thuy gồm workflow web và mobile, với nền tảng design system dùng chung để kết nối giao diện giữa các nền tảng.","project":"zoan","aliases":["zoan mobile","zoan desktop","zoan web","zoan cross platform"]},
-  {"id":"zoan-deliverables","group":"Other projects","question":"What did Thuy deliver for Zoan AI?","questionVi":"Thuy bàn giao những gì cho Zoan AI?","answer":"The documented outputs include tokens and components, layout standards, task flows with happy and edge cases, high-fidelity screens, prototypes and motion details for alignment and handoff.","answerVi":"Các đầu ra được ghi nhận gồm token và component, quy chuẩn layout, task flow với happy path và ngoại lệ, màn hình chi tiết, prototype và motion để thống nhất và handoff.","project":"zoan","aliases":["zoan deliverables","zoan outputs","zoan ban giao"]},
-  {"id":"medhunt-overview","group":"Other projects","question":"What is the MedHunt project?","questionVi":"Dự án MedHunt là gì?","answer":"MedHunt is a healthcare recruitment operating-system case. Thuy mapped requests, candidate search, interviews, placements, warranty and service fees, with clear roles and statuses.","answerVi":"MedHunt là case về hệ thống vận hành tuyển dụng y tế. Thuy kết nối yêu cầu tuyển dụng, tìm ứng viên, phỏng vấn, nhận việc, bảo hành và phí dịch vụ, đồng thời làm rõ vai trò và trạng thái.","project":"medhunt","aliases":["medhunt project","what is medhunt","healthcare recruitment","du an medhunt","tuyen dung y te"]},
-  {"id":"medhunt-html","group":"Other projects","question":"Why did Thuy use interactive HTML for MedHunt?","questionVi":"Vì sao Thuy dùng HTML tương tác cho MedHunt?","answer":"Interactive HTML made roles, statuses and workflow behavior concrete for review. It supported iteration with BA, operations and engineering and clarified what developers needed to implement.","answerVi":"HTML tương tác giúp các bên xem rõ vai trò, trạng thái và hành vi của workflow. Cách này hỗ trợ chỉnh sửa cùng BA, vận hành và kỹ thuật, đồng thời làm rõ phần developer cần triển khai.","project":"medhunt","aliases":["medhunt html","medhunt prototype","medhunt interactive","html medhunt"]},
-  {"id":"medhunt-complexity","group":"Other projects","question":"What makes the MedHunt workflow complex?","questionVi":"Điều gì khiến workflow MedHunt phức tạp?","answer":"It spans multiple roles and stages beyond finding a candidate: requests, interviews, placement, warranty and fees. Thuy's work connects those stages with explicit statuses and edge cases.","answerVi":"Workflow liên quan nhiều vai trò và cả những bước sau khi tìm được ứng viên: yêu cầu, phỏng vấn, nhận việc, bảo hành và phí. Thuy kết nối các giai đoạn bằng trạng thái và ngoại lệ rõ ràng.","project":"medhunt","aliases":["medhunt workflow","medhunt complexity","medhunt roles","quy trinh medhunt"]},
-  {"id":"kiosk-independent","group":"Other projects","question":"Was the McDonald's kiosk project commissioned by McDonald's?","questionVi":"McDonald's có thuê Thuy làm dự án kiosk không?","answer":"No. It is an independent mini case study and design exploration. It should not be described as commissioned McDonald's work or a confirmed production redesign.","answerVi":"Không. Đây là mini case study độc lập và nghiên cứu thiết kế. Dự án không được giới thiệu là công việc do McDonald's thuê hay một bản redesign đã triển khai thực tế.","project":"kiosk","aliases":["commissioned mcdonald","mcdonald client","kiosk independent","mcdonald thue","kiosk doc lap"]},
-  {"id":"kiosk-goal","group":"Other projects","question":"What problem does the kiosk case explore?","questionVi":"Case kiosk giải quyết vấn đề gì?","answer":"It explores how first-time and occasional kiosk users can find, choose and collect meals with more confidence. The focus is a clearer self-ordering journey.","answerVi":"Case khám phá cách giúp người dùng lần đầu hoặc ít dùng kiosk tìm, chọn và nhận món tự tin hơn. Trọng tâm là hành trình tự gọi món rõ ràng hơn.","project":"kiosk","aliases":["kiosk problem","kiosk goal","self ordering","mcdonald kiosk","van de kiosk"]},
-  {"id":"four-oranges","group":"Other projects","question":"What did Thuy design for 4Oranges?","questionVi":"Thuy thiết kế gì cho 4Oranges?","answer":"She designed a mobile rewards experience built around scanning QR codes, supported by a UI kit to keep the app consistent.","answerVi":"Thuy thiết kế trải nghiệm tích điểm/đổi thưởng trên mobile xoay quanh thao tác quét QR, cùng UI kit để giữ giao diện ứng dụng nhất quán.","project":"fourOranges","aliases":["4oranges","4 oranges","qr rewards","loyalty app","quet qr doi thuong"]},
-  {"id":"trueprofit","group":"Other projects","question":"What was Thuy's role on TrueProfit?","questionVi":"Vai trò của Thuy trong TrueProfit là gì?","answer":"During her Product Design internship at FireGroup, she contributed to TrueProfit's landing page and onboarding illustrations. The portfolio does not claim ownership of the whole product.","answerVi":"Trong kỳ thực tập Product Design tại FireGroup, Thuy đóng góp cho landing page và minh họa onboarding của TrueProfit. Portfolio không nhận Thuy là người phụ trách toàn bộ sản phẩm.","project":"trueProfit","aliases":["trueprofit","firegroup","shopify onboarding","thuc tap product design"]},
-  {"id":"pizzy","group":"Other projects","question":"What is Pizzy?","questionVi":"Pizzy là dự án gì?","answer":"Pizzy is a social shared-budget app concept. It explores making shared spending with friends easier through mobile UI, prototypes and motion.","answerVi":"Pizzy là concept ứng dụng quản lý ngân sách chung với bạn bè. Dự án khám phá cách làm trải nghiệm chi tiêu chung dễ dùng hơn qua UI mobile, prototype và motion.","aliases":["pizzy","shared budget","social budget","ngan sach chung"]},
-  {"id":"mingg","group":"Other projects","question":"What was the Mingg design challenge?","questionVi":"Mingg Challenge là gì?","answer":"It was a six-week UI design challenge in which Thuy created one landing page each week from a brief, exploring web design, motion and prototypes.","answerVi":"Đây là thử thách UI trong sáu tuần: mỗi tuần Thuy thiết kế một landing page theo brief, khám phá web design, motion và prototype.","aliases":["mingg","landing page challenge","six week challenge","thu thach landing page"]},
-  {"id":"edtech","group":"Other projects","question":"Has Thuy worked on education apps?","questionVi":"Thuy có từng thiết kế ứng dụng giáo dục không?","answer":"Yes. Her portfolio includes UI improvements, motion and App Store graphics for language-learning apps, including the Trum Chinese app.","answerVi":"Có. Portfolio có phần cải thiện UI, motion và hình ảnh App Store cho các ứng dụng học ngôn ngữ, trong đó có Trùm Chinese.","aliases":["edtech","education apps","language learning","trum chinese","ung dung giao duc","app hoc ngon ngu"]},
-  {"id":"cake","group":"Other projects","question":"What did Thuy design for the CakeBank assignment?","questionVi":"Thuy thiết kế gì trong bài tập CakeBank?","answer":"She explored a round-up savings feature that helps users save through everyday spending. It was a Product Designer take-home assignment, not a claimed shipped banking feature.","answerVi":"Thuy thiết kế tính năng tiết kiệm bằng cách làm tròn giao dịch chi tiêu hằng ngày. Đây là bài tập tuyển dụng Product Designer, không được giới thiệu là tính năng ngân hàng đã ra mắt.","aliases":["cakebank","cake bank","round up savings","take home assignment","tiet kiem lam tron"]},
-  {"id":"dpox","group":"Other projects","question":"What was Thuy's contribution to the DpoX film?","questionVi":"Thuy đóng góp gì trong video DpoX?","answer":"The experiment covers generating first frames and assembling AI video clips. It was collaborative work, with post-production handled by a motion designer.","answerVi":"Thử nghiệm gồm tạo first frame và tập hợp các clip video AI. Đây là công việc phối hợp; phần hậu kỳ do một motion designer thực hiện.","aliases":["dpox","ai film","ai video experiment","video ai","phim dpox"]},
-  {"id":"education","group":"Career and freelance","question":"What is Thuy's education background?","questionVi":"Thuy có nền tảng học vấn như thế nào?","answer":"Her portfolio lists a bachelor's degree with honors from UEH University, followed by UI/UX learning through Google UX coursework, colorME, Lollypop and DAS.","answerVi":"Portfolio ghi nhận Thuy tốt nghiệp cử nhân loại giỏi tại Đại học UEH, cùng quá trình học UI/UX qua các khóa Google UX, colorME, Lollypop và DAS.","aliases":["education background","what did you study","ueh","hoc van","hoc truong nao"]},
-  {"id":"english","group":"Career and freelance","question":"What English qualification does Thuy list?","questionVi":"Thuy có chứng chỉ tiếng Anh nào?","answer":"Her portfolio lists a TOEIC score of 920. For a role's day-to-day communication requirements, it is best to speak with her directly rather than infer a fluency level from the score alone.","answerVi":"Portfolio ghi nhận điểm TOEIC 920. Bạn nên trao đổi trực tiếp với Thuy về yêu cầu giao tiếp của công việc thay vì suy ra toàn bộ khả năng sử dụng tiếng Anh chỉ từ điểm số.","aliases":["english qualification","english level","toeic","tieng anh","chung chi ngoai ngu"]},
-  {"id":"freelance-services","group":"Career and freelance","question":"What freelance services does Thuy offer?","questionVi":"Thuy nhận những dịch vụ freelance nào?","answer":"Thuy offers UI/UX, prototyping, motion and code. Here are the App UI and Landing page packages, starting prices in USD. Every package includes one visual direction; scope and schedule are confirmed before work begins.","answerVi":"Thuy nhận UI/UX, prototype, motion và code. Đây là các gói App UI và Landing page, với giá khởi điểm bằng USD. Mỗi gói đều có một hướng visual; phạm vi và lịch sẽ được xác nhận trước khi bắt đầu.","aliases":["freelance services","what services","hire you for","dich vu freelance","nhan lam gi","nhan freelance","freelance","services","dich vu","freelance packages","cac goi freelance"]},
-  {"id":"freelance-pricing","group":"Career and freelance","question":"How much does Thuy charge for freelance work?","questionVi":"Thuy báo giá freelance như thế nào?","answer":"Thuy offers UI/UX, prototyping, motion and code. Here are the App UI and Landing page packages, starting prices in USD. Every package includes one visual direction; scope and schedule are confirmed before work begins.","answerVi":"Thuy nhận UI/UX, prototype, motion và code. Đây là các gói App UI và Landing page, với giá khởi điểm bằng USD. Mỗi gói đều có một hướng visual; phạm vi và lịch sẽ được xác nhận trước khi bắt đầu.","aliases":["freelance rates","how much do you charge","pricing","price quote","bao gia","chi phi thiet ke","bang gia"]},
-  {"id":"freelance-timing","group":"Career and freelance","question":"How soon can Thuy start and how long will a project take?","questionVi":"Khi nào Thuy có thể bắt đầu và dự án mất bao lâu?","answer":"The draft packages estimate 4–15 business days depending on scope, starting after the brief and assets are ready. Availability and the final schedule are confirmed directly before work begins.","answerVi":"Các gói nháp dự kiến 4–15 ngày làm việc tùy phạm vi, tính từ khi có đủ brief và tài nguyên. Lịch trống và thời gian chính thức sẽ được xác nhận trực tiếp trước khi bắt đầu.","aliases":["start date","turnaround time","project timeline","when can you start","bao gio bat dau","mat bao lau","tien do du an"]}
+  {
+    "id": "about",
+    "group": "About Thuy",
+    "question": "Who is Thuy?",
+    "questionVi": "Thuy là ai?",
+    "answer": "Thuy Nguyen is a **UI/UX and product designer** based in Ho Chi Minh City. At Affina she designed a guided insurance purchase journey; at MedHunt she used interactive HTML to clarify recruitment workflows and developer handoff.",
+    "answerVi": "Thuy Nguyen là **UI/UX và Product Designer** tại TP.HCM. Ở Affina, Thuy thiết kế hành trình mua bảo hiểm có hướng dẫn; ở MedHunt, Thuy dùng HTML tương tác để làm rõ workflow tuyển dụng và handoff cho developer.",
+    "aliases": [
+      "who are you",
+      "about thuy",
+      "introduce yourself",
+      "gioi thieu ban than",
+      "ban la ai"
+    ],
+    "projects": [
+      "affina",
+      "medhunt"
+    ],
+    "project": "affina"
+  },
+  {
+    "id": "experience",
+    "group": "About Thuy",
+    "question": "How much design experience does Thuy have?",
+    "questionVi": "Thuy có bao nhiêu năm kinh nghiệm thiết kế?",
+    "answer": "Thuy has around **two years of design experience**. Her portfolio includes Affina’s insurance purchase journey, Zoan AI’s web and mobile creation workflows, and MedHunt’s recruitment operations.",
+    "answerVi": "Thuy có khoảng **hai năm kinh nghiệm thiết kế**. Portfolio có hành trình mua bảo hiểm Affina, workflow tạo nội dung web và mobile của Zoan AI, cùng hệ thống vận hành tuyển dụng MedHunt.",
+    "aliases": [
+      "years of experience",
+      "how experienced",
+      "kinh nghiem thiet ke",
+      "may nam kinh nghiem"
+    ],
+    "projects": [
+      "affina",
+      "zoan"
+    ],
+    "project": "affina"
+  },
+  {
+    "id": "location",
+    "group": "About Thuy",
+    "question": "Where is Thuy based?",
+    "questionVi": "Thuy đang ở đâu?",
+    "answer": "Thuy is based in **Ho Chi Minh City, Vietnam**, in the UTC+7 time zone. Working-hour overlap can be discussed for each project.",
+    "answerVi": "Thuy đang ở **TP.HCM, Việt Nam**, theo múi giờ UTC+7. Khung giờ phối hợp sẽ được trao đổi theo từng dự án.",
+    "aliases": [
+      "where do you live",
+      "your location",
+      "time zone",
+      "mui gio",
+      "song o dau"
+    ]
+  },
+  {
+    "id": "roles",
+    "group": "About Thuy",
+    "question": "What roles is Thuy open to?",
+    "questionVi": "Thuy đang tìm vị trí công việc nào?",
+    "answer": "Thuy is open to **UI Designer, UX Designer, UI/UX Designer and Product Designer** opportunities. Contact her to discuss the role, scope and current availability.",
+    "answerVi": "Thuy quan tâm các vị trí **UI Designer, UX Designer, UI/UX Designer và Product Designer**. Bạn có thể liên hệ để trao đổi về vai trò, phạm vi công việc và lịch hiện tại.",
+    "aliases": [
+      "open to work",
+      "looking for a role",
+      "hiring thuy",
+      "tim viec",
+      "vi tri ung tuyen"
+    ]
+  },
+  {
+    "id": "remote",
+    "group": "About Thuy",
+    "question": "Can Thuy work remotely?",
+    "questionVi": "Thuy có nhận làm việc remote không?",
+    "answer": "Thuy is open to **remote opportunities from Vietnam**. Time-zone overlap, working hours and the collaboration setup should be agreed directly with her.",
+    "answerVi": "Thuy có cân nhắc **cơ hội remote từ Việt Nam**. Múi giờ, khung giờ làm việc và cách phối hợp cần được thống nhất trực tiếp với Thuy.",
+    "aliases": [
+      "remote work",
+      "work remotely",
+      "lam remote",
+      "lam viec tu xa"
+    ]
+  },
+  {
+    "id": "strengths",
+    "group": "About Thuy",
+    "question": "What are Thuy's design strengths?",
+    "questionVi": "Thế mạnh thiết kế của Thuy là gì?",
+    "answer": "Her strength is **turning complex workflows into clear steps and UI states**. At Affina, that means guiding people from a four-question survey to plan comparison and payment; at MedHunt, it means connecting recruitment requests, interviews, placements, warranty and fees.",
+    "answerVi": "Thế mạnh của Thuy là **chuyển workflow phức tạp thành các bước và trạng thái UI rõ ràng**. Ở Affina, đó là hành trình từ khảo sát bốn câu hỏi đến so sánh gói và thanh toán; ở MedHunt, đó là kết nối yêu cầu tuyển dụng, phỏng vấn, nhận việc, bảo hành và phí.",
+    "aliases": [
+      "your strengths",
+      "what makes you different",
+      "all rounder",
+      "the manh",
+      "diem manh"
+    ],
+    "projects": [
+      "affina",
+      "medhunt"
+    ],
+    "project": "affina"
+  },
+  {
+    "id": "tools",
+    "group": "About Thuy",
+    "question": "What design tools does Thuy use?",
+    "questionVi": "Thuy sử dụng công cụ thiết kế nào?",
+    "answer": "Thuy uses **Figma for UI and systems**, and lists Rive and After Effects for motion. Zoan AI shows task flows, prototypes and motion details across web and mobile; MedHunt shows interactive HTML used to review roles, statuses and handoff behavior.",
+    "answerVi": "Thuy dùng **Figma cho UI và hệ thống thiết kế**, cùng Rive và After Effects cho motion. Zoan AI có task flow, prototype và motion trên web/mobile; MedHunt thể hiện HTML tương tác để trao đổi về vai trò, trạng thái và hành vi khi handoff.",
+    "aliases": [
+      "design tools",
+      "what tools",
+      "dung cong cu",
+      "phan mem thiet ke",
+      "figma"
+    ],
+    "projects": [
+      "zoan",
+      "medhunt"
+    ],
+    "project": "zoan"
+  },
+  {
+    "id": "coding",
+    "group": "About Thuy",
+    "question": "Can Thuy code her designs?",
+    "questionVi": "Thuy có thể code giao diện không?",
+    "answer": "Thuy uses **code to prototype and clarify UI behavior**. Affina includes UI implementation, while MedHunt uses interactive HTML for handoff; production requirements should be scoped for each engagement.",
+    "answerVi": "Thuy dùng **code để làm prototype và thể hiện hành vi UI**. Affina có phần triển khai giao diện, còn MedHunt dùng HTML tương tác để handoff; yêu cầu triển khai thực tế cần được chốt theo từng dự án.",
+    "project": "medhunt",
+    "aliases": [
+      "can you code",
+      "design and code",
+      "frontend skills",
+      "biet code",
+      "code giao dien",
+      "html prototype"
+    ],
+    "projects": [
+      "medhunt",
+      "affina"
+    ]
+  },
+  {
+    "id": "motion",
+    "group": "About Thuy",
+    "question": "Does Thuy do motion design?",
+    "questionVi": "Thuy có làm motion design không?",
+    "answer": "Yes. She uses **motion and prototypes to explain interactions**. Zoan AI includes prototypes and motion details for web and mobile creation workflows; her language-learning work also includes UI motion and App Store graphics.",
+    "answerVi": "Có. Thuy dùng **motion và prototype để thể hiện tương tác**. Zoan AI có prototype và chi tiết motion cho workflow tạo nội dung trên web/mobile; các dự án học ngôn ngữ còn có motion UI và hình ảnh App Store.",
+    "project": "zoan",
+    "aliases": [
+      "motion design",
+      "rive",
+      "after effects",
+      "interface animation",
+      "lam motion",
+      "animation giao dien"
+    ],
+    "projects": [
+      "zoan"
+    ]
+  },
+  {
+    "id": "contact",
+    "group": "About Thuy",
+    "question": "How can I contact Thuy?",
+    "questionVi": "Liên hệ với Thuy bằng cách nào?",
+    "answer": "Email **phuongthuy101222@gmail.com**. For freelance work, browse the pricing section first, then choose a package to email Thuy with the scope prefilled.",
+    "answerVi": "Gửi email đến **phuongthuy101222@gmail.com**. Với dự án freelance, bạn có thể xem bảng giá trước rồi chọn gói để mở email có sẵn thông tin phạm vi.",
+    "aliases": [
+      "contact thuy",
+      "your email",
+      "get in touch",
+      "lien he",
+      "email cua thuy"
+    ]
+  },
+  {
+    "id": "process",
+    "group": "Design process",
+    "question": "How does Thuy start a design project?",
+    "questionVi": "Thuy bắt đầu một dự án thiết kế như thế nào?",
+    "answer": "She starts with **the user’s task and the product’s rules**, then maps the journey, prototypes the flow and reviews it with developers. At Affina, she broke insurance selection into survey → recommendations → comparison → payment. At MedHunt, she mapped recruitment roles and statuses in interactive HTML so BA, operations and engineering could review behavior together.",
+    "answerVi": "Thuy bắt đầu từ **tác vụ người dùng và quy tắc sản phẩm**, rồi vẽ hành trình, làm prototype và trao đổi với developer. Ở Affina, Thuy chia việc chọn bảo hiểm thành khảo sát → gợi ý → so sánh → thanh toán. Ở MedHunt, Thuy thể hiện vai trò và trạng thái tuyển dụng bằng HTML tương tác để BA, vận hành và kỹ thuật cùng xem hành vi.",
+    "aliases": [
+      "design process",
+      "approach ux",
+      "start a project",
+      "quy trinh thiet ke",
+      "bat dau du an"
+    ],
+    "projects": [
+      "affina",
+      "medhunt"
+    ],
+    "project": "affina"
+  },
+  {
+    "id": "research",
+    "group": "Design process",
+    "question": "How does Thuy approach user research?",
+    "questionVi": "Thuy tiếp cận nghiên cứu người dùng như thế nào?",
+    "answer": "She uses **research to identify tasks and friction before refining a flow**. Her independent McDonald’s kiosk case explores how first-time and occasional users find, choose and collect meals. It is an exploration, not a large-scale validation study or commissioned McDonald’s work.",
+    "answerVi": "Thuy dùng **nghiên cứu để hiểu tác vụ và điểm vướng trước khi chỉnh flow**. Case McDonald’s kiosk độc lập khám phá cách người dùng lần đầu hoặc ít dùng kiosk tìm, chọn và nhận món. Đây là nghiên cứu khám phá, không phải kiểm chứng quy mô lớn hay dự án do McDonald’s thuê.",
+    "project": "kiosk",
+    "aliases": [
+      "user research",
+      "usability testing",
+      "user interviews",
+      "nghien cuu nguoi dung",
+      "kiem thu nguoi dung"
+    ],
+    "projects": [
+      "kiosk"
+    ]
+  },
+  {
+    "id": "journeys",
+    "group": "Design process",
+    "question": "How does Thuy map user journeys?",
+    "questionVi": "Thuy xây dựng user journey như thế nào?",
+    "answer": "She connects the user's main task with **roles, decisions, states and exceptions**. Affina's survey-to-payment journey and MedHunt's recruitment lifecycle show this at different levels of complexity.",
+    "answerVi": "Thuy nối tác vụ chính với các **vai trò, quyết định, trạng thái và ngoại lệ**. Luồng khảo sát đến thanh toán của Affina và vòng đời tuyển dụng của MedHunt thể hiện cách làm này ở hai bối cảnh khác nhau.",
+    "project": "affina",
+    "aliases": [
+      "user journey",
+      "journey mapping",
+      "map a flow",
+      "hanh trinh nguoi dung",
+      "xay dung user flow"
+    ],
+    "projects": [
+      "affina",
+      "medhunt"
+    ]
+  },
+  {
+    "id": "complexity",
+    "group": "Design process",
+    "question": "How does Thuy simplify complex products?",
+    "questionVi": "Thuy đơn giản hóa sản phẩm phức tạp bằng cách nào?",
+    "answer": "She **breaks a large decision into smaller steps** and makes the next action clear. At Affina, survey, recommendations, comparison, declarations and payment become a guided sequence.",
+    "answerVi": "Thuy **chia quyết định lớn thành các bước nhỏ** và làm rõ hành động tiếp theo. Ở Affina, khảo sát, gợi ý, so sánh, khai báo và thanh toán được tổ chức thành một hành trình có hướng dẫn.",
+    "project": "affina",
+    "aliases": [
+      "simplify complex",
+      "complex ux",
+      "simplify a flow",
+      "don gian hoa",
+      "luong phuc tap"
+    ],
+    "projects": [
+      "affina"
+    ]
+  },
+  {
+    "id": "business",
+    "group": "Design process",
+    "question": "How does Thuy balance user needs and business goals?",
+    "questionVi": "Thuy cân bằng nhu cầu người dùng và mục tiêu kinh doanh thế nào?",
+    "answer": "She makes **business rules explicit** and translates them into understandable choices and UI states. Affina's customer and partner journeys show how she works with business, BA and developers on those constraints.",
+    "answerVi": "Thuy **làm rõ quy tắc kinh doanh** rồi chuyển chúng thành lựa chọn và trạng thái UI dễ hiểu. Luồng khách hàng và đối tác của Affina thể hiện cách Thuy phối hợp với business, BA và developer để xử lý các ràng buộc đó.",
+    "project": "affinaPartner",
+    "aliases": [
+      "business goals",
+      "business constraints",
+      "business rules",
+      "muc tieu kinh doanh",
+      "quy tac nghiep vu"
+    ],
+    "projects": [
+      "affinaPartner"
+    ]
+  },
+  {
+    "id": "edge-cases",
+    "group": "Design process",
+    "question": "How does Thuy handle edge cases?",
+    "questionVi": "Thuy xử lý các trường hợp ngoại lệ như thế nào?",
+    "answer": "She maps **exceptions alongside the happy path** rather than leaving them until handoff. Her Affina partner work documents rules and responsive states, while MedHunt makes roles and statuses explicit.",
+    "answerVi": "Thuy vẽ các **ngoại lệ cùng với happy path** thay vì để đến lúc handoff mới xử lý. Dự án Affina partner có tài liệu quy tắc và responsive states; MedHunt làm rõ vai trò và trạng thái.",
+    "project": "affinaPartner",
+    "aliases": [
+      "edge cases",
+      "happy path",
+      "error states",
+      "truong hop ngoai le",
+      "ngoai le"
+    ],
+    "projects": [
+      "affinaPartner",
+      "medhunt"
+    ]
+  },
+  {
+    "id": "prototypes",
+    "group": "Design process",
+    "question": "What does Thuy use prototypes for?",
+    "questionVi": "Thuy dùng prototype để làm gì?",
+    "answer": "She uses **prototypes to make behavior concrete before implementation**. In Zoan AI, prototypes and motion details explain creation workflows across web and mobile. In MedHunt, interactive HTML makes recruitment roles, statuses and edge cases easier to review with BA, operations and developers.",
+    "answerVi": "Thuy dùng **prototype để thể hiện rõ hành vi trước khi triển khai**. Ở Zoan AI, prototype và motion giải thích workflow tạo nội dung trên web/mobile. Ở MedHunt, HTML tương tác giúp BA, vận hành và developer cùng xem vai trò, trạng thái và ngoại lệ của luồng tuyển dụng.",
+    "project": "zoan",
+    "aliases": [
+      "interactive prototype",
+      "prototyping approach",
+      "why prototype",
+      "lam prototype",
+      "dung prototype"
+    ],
+    "projects": [
+      "zoan",
+      "medhunt"
+    ]
+  },
+  {
+    "id": "handoff",
+    "group": "Design process",
+    "question": "How does Thuy work with developers?",
+    "questionVi": "Thuy phối hợp với developer như thế nào?",
+    "answer": "She aligns with developers early on **flows, edge cases and reusable UI states**. MedHunt uses interactive HTML to clarify recruitment behavior with BA, operations and engineering. Affina’s partner journey adds documented insurance rules, happy paths, exceptions and responsive states for handoff.",
+    "answerVi": "Thuy trao đổi sớm với developer về **flow, ngoại lệ và các trạng thái UI dùng lại được**. MedHunt dùng HTML tương tác để làm rõ hành vi tuyển dụng cùng BA, vận hành và kỹ thuật. Luồng đối tác Affina có thêm tài liệu về quy tắc bảo hiểm, happy path, ngoại lệ và trạng thái responsive để handoff.",
+    "project": "medhunt",
+    "aliases": [
+      "work with developers",
+      "developer handoff",
+      "engineering collaboration",
+      "handoff cho dev",
+      "phoi hop voi developer"
+    ],
+    "projects": [
+      "medhunt",
+      "affinaPartner"
+    ]
+  },
+  {
+    "id": "responsive",
+    "group": "Design process",
+    "question": "Has Thuy designed for both web and mobile?",
+    "questionVi": "Thuy có thiết kế cả web và mobile không?",
+    "answer": "Yes. Zoan AI includes **web and mobile creation workflows**, and Affina includes responsive purchase journeys and a shared UI foundation.",
+    "answerVi": "Có. Zoan AI gồm **luồng tạo nội dung trên web và mobile**; Affina gồm hành trình mua bảo hiểm responsive và nền tảng UI dùng chung.",
+    "project": "zoan",
+    "aliases": [
+      "web and mobile",
+      "responsive design",
+      "cross platform",
+      "web va mobile",
+      "thiet ke responsive"
+    ],
+    "projects": [
+      "zoan",
+      "affina"
+    ]
+  },
+  {
+    "id": "systems",
+    "group": "Design process",
+    "question": "How does Thuy build a design system?",
+    "questionVi": "Thuy xây dựng design system như thế nào?",
+    "answer": "She builds **reusable foundations, components and documented states**. Affina’s system connects an audit, primitives and semantic tokens with reusable web/mobile UI and governance. Zoan AI also includes shared tokens, components and layout standards for its creation workflows.",
+    "answerVi": "Thuy xây dựng **foundation, component và các trạng thái có tài liệu để dùng lại**. Hệ thống Affina kết nối audit, primitive và semantic token với UI web/mobile cùng quy tắc quản lý. Zoan AI cũng có token, component và quy chuẩn layout dùng chung cho workflow tạo nội dung.",
+    "project": "affina",
+    "aliases": [
+      "design system",
+      "component library",
+      "design tokens",
+      "he thong thiet ke",
+      "thu vien component"
+    ],
+    "projects": [
+      "affina",
+      "zoan"
+    ]
+  },
+  {
+    "id": "affina-overview",
+    "group": "Affina",
+    "question": "What did Thuy design at Affina?",
+    "questionVi": "Thuy đã thiết kế gì ở Affina?",
+    "answer": "She designed a guided insurance journey from **a four-question survey** through recommendations, comparison, declarations and payment. Her scope also includes a reusable UI foundation and responsive delivery.",
+    "answerVi": "Thuy thiết kế hành trình mua bảo hiểm từ **khảo sát bốn câu hỏi** đến gợi ý, so sánh, khai báo và thanh toán. Phạm vi còn gồm nền tảng UI dùng lại được và triển khai responsive.",
+    "project": "affina",
+    "aliases": [
+      "affina work",
+      "affina project",
+      "designed at affina",
+      "lam gi o affina"
+    ]
+  },
+  {
+    "id": "affina-survey",
+    "group": "Affina",
+    "question": "Why does the Affina survey have four questions?",
+    "questionVi": "Vì sao khảo sát Affina chỉ có bốn câu hỏi?",
+    "answer": "The survey asks only what shapes the match: **insurance type, insured person, monthly budget and preferred insurers**. It keeps the first decision focused before showing recommendations.",
+    "answerVi": "Khảo sát tập trung vào bốn yếu tố định hướng gợi ý: **loại bảo hiểm, người được bảo hiểm, ngân sách tháng và nhà bảo hiểm ưu tiên**. Cách này giữ bước đầu gọn trước khi hiển thị các gợi ý.",
+    "project": "affina",
+    "aliases": [
+      "four questions",
+      "affina survey",
+      "survey questions",
+      "bon cau hoi",
+      "khao sat affina"
+    ]
+  },
+  {
+    "id": "affina-recommendations",
+    "group": "Affina",
+    "question": "How did Thuy design Affina's recommendations?",
+    "questionVi": "Thuy thiết kế phần gợi ý bảo hiểm Affina ra sao?",
+    "answer": "The design brings three best-fit plans together, puts the best match first and shows **price and core benefits upfront**. Explanations of why a plan fits are available when needed.",
+    "answerVi": "Thiết kế đặt ba gói phù hợp cạnh nhau, ưu tiên gói phù hợp nhất và đưa **giá cùng quyền lợi chính lên trước**. Người dùng có thể xem thêm giải thích vì sao gói đó phù hợp.",
+    "project": "affina",
+    "aliases": [
+      "affina recommendations",
+      "recommended plans",
+      "three best fit",
+      "goi y bao hiem",
+      "ba goi bao hiem"
+    ]
+  },
+  {
+    "id": "affina-comparison",
+    "group": "Affina",
+    "question": "How does Affina's plan comparison work on mobile?",
+    "questionVi": "Phần so sánh gói Affina hoạt động thế nào trên mobile?",
+    "answer": "It keeps **three recommended plans** in a horizontal comparison, groups benefits into readable rows and keeps benefit labels beside the columns. Coverage and optional benefits have distinct states.",
+    "answerVi": "**Ba gói gợi ý** được đặt trong bảng so sánh cuộn ngang, nhóm quyền lợi thành các hàng dễ đọc và giữ nhãn cạnh các cột. Quyền lợi được bao gồm và quyền lợi tùy chọn có trạng thái phân biệt.",
+    "project": "affina",
+    "aliases": [
+      "affina comparison",
+      "compare insurance",
+      "compare plans",
+      "so sanh goi",
+      "bang so sanh"
+    ]
+  },
+  {
+    "id": "affina-checkout",
+    "group": "Affina",
+    "question": "What happens after a customer selects Buy Now at Affina?",
+    "questionVi": "Sau khi chọn Mua ngay ở Affina thì có những bước gì?",
+    "answer": "The flow covers health-declaration consent, health questions, **answer review, OTP verification** and buyer/payment details. The recording shown in the case ends at QR payment instructions.",
+    "answerVi": "Luồng gồm đồng ý khai báo sức khỏe, trả lời câu hỏi, **kiểm tra lại thông tin, xác minh OTP** và điền thông tin người mua/thanh toán. Bản ghi trong case kết thúc tại hướng dẫn thanh toán QR.",
+    "project": "affina",
+    "aliases": [
+      "affina checkout",
+      "health declaration",
+      "affina payment",
+      "khai bao suc khoe",
+      "thanh toan affina"
+    ]
+  },
+  {
+    "id": "affina-ai-scope",
+    "group": "Affina",
+    "question": "Did Thuy build Affina's AI recommendation model?",
+    "questionVi": "Thuy có xây mô hình AI gợi ý bảo hiểm của Affina không?",
+    "answer": "Her documented scope is the **experience around AI-assisted recommendations**: flows, information hierarchy, comparison and responsive UI. It does not include building the ranking model.",
+    "answerVi": "Phạm vi được ghi nhận là **trải nghiệm quanh gợi ý có AI hỗ trợ**: flow, phân cấp thông tin, so sánh và UI responsive. Thuy không nhận là người xây mô hình xếp hạng gói.",
+    "project": "affina",
+    "aliases": [
+      "recommendation model",
+      "ranking model",
+      "affina ai model",
+      "mo hinh ai affina",
+      "thuat toan goi y"
+    ]
+  },
+  {
+    "id": "affina-metrics",
+    "group": "Affina",
+    "question": "What measurable results does the Affina case show?",
+    "questionVi": "Case Affina có những số liệu kết quả nào?",
+    "answer": "It shows **an earlier live web funnel** with 1,567 users, 2,046 sessions, 29 leads and a 1.42% lead conversion rate over 30 days. These figures do not measure the newer screens or prove a redesign uplift.",
+    "answerVi": "Case có **funnel web cũ** trong 30 ngày: 1.567 người dùng, 2.046 phiên, 29 lead và tỷ lệ chuyển đổi lead 1,42%. Các số này không đo các màn hình mới và không chứng minh mức tăng nhờ redesign.",
+    "project": "affina",
+    "aliases": [
+      "affina metrics",
+      "affina results",
+      "conversion rate",
+      "funnel snapshot",
+      "so lieu affina",
+      "ket qua affina"
+    ]
+  },
+  {
+    "id": "affina-feedback",
+    "group": "Affina",
+    "question": "What does Affina's customer feedback reveal?",
+    "questionVi": "Phản hồi khách hàng Affina cho thấy điều gì?",
+    "answer": "The case includes a post-claim survey with 11,479 rated responses, a 4.13/5 average and 75.9% satisfied scores. It provides context for the wider app experience, **separate from the purchase funnel**.",
+    "answerVi": "Case có khảo sát sau bồi thường với 11.479 lượt đánh giá, điểm trung bình 4,13/5 và 75,9% hài lòng. Đây là bối cảnh cho trải nghiệm ứng dụng rộng hơn, **tách biệt với funnel mua bảo hiểm**.",
+    "project": "affina",
+    "aliases": [
+      "customer feedback",
+      "post claim survey",
+      "affina satisfaction",
+      "phan hoi khach hang",
+      "hai long affina"
+    ]
+  },
+  {
+    "id": "affina-partner",
+    "group": "Affina",
+    "question": "What is the Affina customer and partner journey project?",
+    "questionVi": "Dự án hành trình khách hàng và đối tác Affina là gì?",
+    "answer": "It covers a family-insurance purchase model across self-service web and sales-assisted Affina Pro, including **multiple insured people, product rules, states and handoff details**.",
+    "answerVi": "Dự án xây dựng luồng mua bảo hiểm gia đình trên web tự phục vụ và Affina Pro có tư vấn hỗ trợ, gồm **nhiều người được bảo hiểm, quy tắc sản phẩm, trạng thái và chi tiết handoff**.",
+    "project": "affinaPartner",
+    "aliases": [
+      "affina pro",
+      "affina partner",
+      "family insurance",
+      "doi tac affina",
+      "bao hiem gia dinh"
+    ]
+  },
+  {
+    "id": "affina-collaboration",
+    "group": "Affina",
+    "question": "Who did Thuy collaborate with on Affina's partner flows?",
+    "questionVi": "Thuy phối hợp với ai trong luồng đối tác Affina?",
+    "answer": "She worked with **BA, business owners, product and developers** to clarify insurance rules, map happy paths and edge cases, and document responsive states for delivery.",
+    "answerVi": "Thuy làm việc với **BA, business owner, product và developer** để làm rõ quy tắc bảo hiểm, vẽ happy path cùng ngoại lệ và tài liệu hóa các trạng thái responsive để triển khai.",
+    "project": "affinaPartner",
+    "aliases": [
+      "affina stakeholders",
+      "affina collaboration",
+      "affina team",
+      "team affina",
+      "phoi hop affina"
+    ]
+  },
+  {
+    "id": "zoan-overview",
+    "group": "Other projects",
+    "question": "What did Thuy work on at Zoan AI?",
+    "questionVi": "Thuy làm gì ở Zoan AI?",
+    "answer": "She designed interfaces for an early-stage AI content-creation system, focusing on **clearer tasks and workflows**. The scope includes UI foundations, high-fidelity screens, prototypes and motion details.",
+    "answerVi": "Thuy thiết kế giao diện cho hệ thống tạo nội dung AI giai đoạn đầu, tập trung **làm rõ tác vụ và workflow**. Phạm vi gồm nền tảng UI, màn hình chi tiết, prototype và motion.",
+    "project": "zoan",
+    "aliases": [
+      "zoan ai",
+      "zoan project",
+      "zoan work",
+      "du an zoan"
+    ]
+  },
+  {
+    "id": "zoan-platforms",
+    "group": "Other projects",
+    "question": "Did Zoan AI include both desktop and mobile design?",
+    "questionVi": "Zoan AI có cả thiết kế desktop và mobile không?",
+    "answer": "Yes. Thuy's Zoan work covers web and mobile workflows, with **shared design-system foundations** to connect the interfaces across platforms.",
+    "answerVi": "Có. Phần việc Zoan của Thuy gồm workflow web và mobile, với **nền tảng design system dùng chung** để kết nối giao diện giữa các nền tảng.",
+    "project": "zoan",
+    "aliases": [
+      "zoan mobile",
+      "zoan desktop",
+      "zoan web",
+      "zoan cross platform"
+    ]
+  },
+  {
+    "id": "zoan-deliverables",
+    "group": "Other projects",
+    "question": "What did Thuy deliver for Zoan AI?",
+    "questionVi": "Thuy bàn giao những gì cho Zoan AI?",
+    "answer": "The documented outputs include tokens and components, layout standards, **task flows with happy and edge cases**, high-fidelity screens, prototypes and motion details for alignment and handoff.",
+    "answerVi": "Các đầu ra được ghi nhận gồm token và component, quy chuẩn layout, **task flow với happy path và ngoại lệ**, màn hình chi tiết, prototype và motion để thống nhất và handoff.",
+    "project": "zoan",
+    "aliases": [
+      "zoan deliverables",
+      "zoan outputs",
+      "zoan ban giao"
+    ]
+  },
+  {
+    "id": "medhunt-overview",
+    "group": "Other projects",
+    "question": "What is the MedHunt project?",
+    "questionVi": "Dự án MedHunt là gì?",
+    "answer": "MedHunt is a healthcare recruitment operating-system case. Thuy mapped requests, candidate search, interviews, placements, warranty and service fees, with **clear roles and statuses**.",
+    "answerVi": "MedHunt là case về hệ thống vận hành tuyển dụng y tế. Thuy kết nối yêu cầu tuyển dụng, tìm ứng viên, phỏng vấn, nhận việc, bảo hành và phí dịch vụ, đồng thời **làm rõ vai trò và trạng thái**.",
+    "project": "medhunt",
+    "aliases": [
+      "medhunt project",
+      "what is medhunt",
+      "healthcare recruitment",
+      "du an medhunt",
+      "tuyen dung y te"
+    ]
+  },
+  {
+    "id": "medhunt-html",
+    "group": "Other projects",
+    "question": "Why did Thuy use interactive HTML for MedHunt?",
+    "questionVi": "Vì sao Thuy dùng HTML tương tác cho MedHunt?",
+    "answer": "Interactive HTML made **roles, statuses and workflow behavior concrete** for review. It supported iteration with BA, operations and engineering and clarified what developers needed to implement.",
+    "answerVi": "HTML tương tác giúp các bên **xem rõ vai trò, trạng thái và hành vi của workflow**. Cách này hỗ trợ chỉnh sửa cùng BA, vận hành và kỹ thuật, đồng thời làm rõ phần developer cần triển khai.",
+    "project": "medhunt",
+    "aliases": [
+      "medhunt html",
+      "medhunt prototype",
+      "medhunt interactive",
+      "html medhunt"
+    ]
+  },
+  {
+    "id": "medhunt-complexity",
+    "group": "Other projects",
+    "question": "What makes the MedHunt workflow complex?",
+    "questionVi": "Điều gì khiến workflow MedHunt phức tạp?",
+    "answer": "It spans **multiple roles and stages** beyond finding a candidate: requests, interviews, placement, warranty and fees. Thuy's work connects those stages with explicit statuses and edge cases.",
+    "answerVi": "Workflow liên quan **nhiều vai trò** và cả những bước sau khi tìm được ứng viên: yêu cầu, phỏng vấn, nhận việc, bảo hành và phí. Thuy kết nối các giai đoạn bằng trạng thái và ngoại lệ rõ ràng.",
+    "project": "medhunt",
+    "aliases": [
+      "medhunt workflow",
+      "medhunt complexity",
+      "medhunt roles",
+      "quy trinh medhunt"
+    ]
+  },
+  {
+    "id": "kiosk-independent",
+    "group": "Other projects",
+    "question": "Was the McDonald's kiosk project commissioned by McDonald's?",
+    "questionVi": "McDonald's có thuê Thuy làm dự án kiosk không?",
+    "answer": "No. It is an **independent mini case study and design exploration**. It should not be described as commissioned McDonald's work or a confirmed production redesign.",
+    "answerVi": "Không. Đây là **mini case study độc lập và nghiên cứu thiết kế**. Dự án không được giới thiệu là công việc do McDonald's thuê hay một bản redesign đã triển khai thực tế.",
+    "project": "kiosk",
+    "aliases": [
+      "commissioned mcdonald",
+      "mcdonald client",
+      "kiosk independent",
+      "mcdonald thue",
+      "kiosk doc lap"
+    ]
+  },
+  {
+    "id": "kiosk-goal",
+    "group": "Other projects",
+    "question": "What problem does the kiosk case explore?",
+    "questionVi": "Case kiosk giải quyết vấn đề gì?",
+    "answer": "It explores how first-time and occasional kiosk users can **find, choose and collect meals** with more confidence. The focus is a clearer self-ordering journey.",
+    "answerVi": "Case khám phá cách giúp người dùng lần đầu hoặc ít dùng kiosk **tìm, chọn và nhận món** tự tin hơn. Trọng tâm là hành trình tự gọi món rõ ràng hơn.",
+    "project": "kiosk",
+    "aliases": [
+      "kiosk problem",
+      "kiosk goal",
+      "self ordering",
+      "mcdonald kiosk",
+      "van de kiosk"
+    ]
+  },
+  {
+    "id": "four-oranges",
+    "group": "Other projects",
+    "question": "What did Thuy design for 4Oranges?",
+    "questionVi": "Thuy thiết kế gì cho 4Oranges?",
+    "answer": "She designed a mobile rewards experience built around **scanning QR codes**, supported by a UI kit to keep the app consistent.",
+    "answerVi": "Thuy thiết kế trải nghiệm tích điểm/đổi thưởng trên mobile xoay quanh **thao tác quét QR**, cùng UI kit để giữ giao diện ứng dụng nhất quán.",
+    "project": "fourOranges",
+    "aliases": [
+      "4oranges",
+      "4 oranges",
+      "qr rewards",
+      "loyalty app",
+      "quet qr doi thuong"
+    ]
+  },
+  {
+    "id": "trueprofit",
+    "group": "Other projects",
+    "question": "What was Thuy's role on TrueProfit?",
+    "questionVi": "Vai trò của Thuy trong TrueProfit là gì?",
+    "answer": "During her Product Design internship at FireGroup, she **contributed** to TrueProfit's landing page and onboarding illustrations. The portfolio does not claim ownership of the whole product.",
+    "answerVi": "Trong kỳ thực tập Product Design tại FireGroup, Thuy **đóng góp** cho landing page và minh họa onboarding của TrueProfit. Portfolio không nhận Thuy là người phụ trách toàn bộ sản phẩm.",
+    "project": "trueProfit",
+    "aliases": [
+      "trueprofit",
+      "firegroup",
+      "shopify onboarding",
+      "thuc tap product design"
+    ]
+  },
+  {
+    "id": "pizzy",
+    "group": "Other projects",
+    "question": "What is Pizzy?",
+    "questionVi": "Pizzy là dự án gì?",
+    "answer": "Pizzy is a **social shared-budget app concept**. It explores making shared spending with friends easier through mobile UI, prototypes and motion.",
+    "answerVi": "Pizzy là **concept ứng dụng quản lý ngân sách chung** với bạn bè. Dự án khám phá cách làm trải nghiệm chi tiêu chung dễ dùng hơn qua UI mobile, prototype và motion.",
+    "aliases": [
+      "pizzy",
+      "shared budget",
+      "social budget",
+      "ngan sach chung"
+    ]
+  },
+  {
+    "id": "mingg",
+    "group": "Other projects",
+    "question": "What was the Mingg design challenge?",
+    "questionVi": "Mingg Challenge là gì?",
+    "answer": "It was a six-week UI design challenge in which Thuy created **one landing page each week** from a brief, exploring web design, motion and prototypes.",
+    "answerVi": "Đây là thử thách UI trong sáu tuần: mỗi tuần Thuy thiết kế **một landing page theo brief**, khám phá web design, motion và prototype.",
+    "aliases": [
+      "mingg",
+      "landing page challenge",
+      "six week challenge",
+      "thu thach landing page"
+    ]
+  },
+  {
+    "id": "edtech",
+    "group": "Other projects",
+    "question": "Has Thuy worked on education apps?",
+    "questionVi": "Thuy có từng thiết kế ứng dụng giáo dục không?",
+    "answer": "Yes. Her portfolio includes **UI improvements, motion and App Store graphics** for language-learning apps, including the Trum Chinese app.",
+    "answerVi": "Có. Portfolio có phần **cải thiện UI, motion và hình ảnh App Store** cho các ứng dụng học ngôn ngữ, trong đó có Trùm Chinese.",
+    "aliases": [
+      "edtech",
+      "education apps",
+      "language learning",
+      "trum chinese",
+      "ung dung giao duc",
+      "app hoc ngon ngu"
+    ]
+  },
+  {
+    "id": "cake",
+    "group": "Other projects",
+    "question": "What did Thuy design for the CakeBank assignment?",
+    "questionVi": "Thuy thiết kế gì trong bài tập CakeBank?",
+    "answer": "She explored a round-up savings feature that helps users save through everyday spending. It was a **Product Designer take-home assignment**, not a claimed shipped banking feature.",
+    "answerVi": "Thuy thiết kế tính năng tiết kiệm bằng cách làm tròn giao dịch chi tiêu hằng ngày. Đây là **bài tập tuyển dụng Product Designer**, không được giới thiệu là tính năng ngân hàng đã ra mắt.",
+    "aliases": [
+      "cakebank",
+      "cake bank",
+      "round up savings",
+      "take home assignment",
+      "tiet kiem lam tron"
+    ]
+  },
+  {
+    "id": "dpox",
+    "group": "Other projects",
+    "question": "What was Thuy's contribution to the DpoX film?",
+    "questionVi": "Thuy đóng góp gì trong video DpoX?",
+    "answer": "The experiment covers generating first frames and assembling AI video clips. It was collaborative work, with **post-production handled by a motion designer**.",
+    "answerVi": "Thử nghiệm gồm tạo first frame và tập hợp các clip video AI. Đây là công việc phối hợp; **phần hậu kỳ do một motion designer thực hiện**.",
+    "aliases": [
+      "dpox",
+      "ai film",
+      "ai video experiment",
+      "video ai",
+      "phim dpox"
+    ]
+  },
+  {
+    "id": "education",
+    "group": "Career and freelance",
+    "question": "What is Thuy's education background?",
+    "questionVi": "Thuy có nền tảng học vấn như thế nào?",
+    "answer": "Her portfolio lists a **bachelor's degree with honors from UEH University**, followed by UI/UX learning through Google UX coursework, colorME, Lollypop and DAS.",
+    "answerVi": "Portfolio ghi nhận Thuy tốt nghiệp **cử nhân loại giỏi tại Đại học UEH**, cùng quá trình học UI/UX qua các khóa Google UX, colorME, Lollypop và DAS.",
+    "aliases": [
+      "education background",
+      "what did you study",
+      "ueh",
+      "hoc van",
+      "hoc truong nao"
+    ]
+  },
+  {
+    "id": "english",
+    "group": "Career and freelance",
+    "question": "What English qualification does Thuy list?",
+    "questionVi": "Thuy có chứng chỉ tiếng Anh nào?",
+    "answer": "Her portfolio lists a **TOEIC score of 920**. For a role's day-to-day communication requirements, it is best to speak with her directly rather than infer a fluency level from the score alone.",
+    "answerVi": "Portfolio ghi nhận điểm **TOEIC 920**. Bạn nên trao đổi trực tiếp với Thuy về yêu cầu giao tiếp của công việc thay vì suy ra toàn bộ khả năng sử dụng tiếng Anh chỉ từ điểm số.",
+    "aliases": [
+      "english qualification",
+      "english level",
+      "toeic",
+      "tieng anh",
+      "chung chi ngoai ngu"
+    ]
+  },
+  {
+    "id": "freelance-services",
+    "group": "Career and freelance",
+    "question": "What freelance services does Thuy offer?",
+    "questionVi": "Thuy nhận những dịch vụ freelance nào?",
+    "answer": "Thuy offers **UI/UX, prototyping, motion and code**. Here are the App UI and Landing page packages, starting prices in USD. Every package includes one visual direction; scope and schedule are confirmed before work begins.",
+    "answerVi": "Thuy nhận **UI/UX, prototype, motion và code**. Đây là các gói App UI và Landing page, với giá khởi điểm bằng USD. Mỗi gói đều có một hướng visual; phạm vi và lịch sẽ được xác nhận trước khi bắt đầu.",
+    "aliases": [
+      "freelance services",
+      "what services",
+      "hire you for",
+      "dich vu freelance",
+      "nhan lam gi",
+      "nhan freelance",
+      "freelance",
+      "services",
+      "dich vu",
+      "freelance packages",
+      "cac goi freelance"
+    ]
+  },
+  {
+    "id": "freelance-pricing",
+    "group": "Career and freelance",
+    "question": "How much does Thuy charge for freelance work?",
+    "questionVi": "Thuy báo giá freelance như thế nào?",
+    "answer": "Thuy offers **UI/UX, prototyping, motion and code**. Here are the App UI and Landing page packages, starting prices in USD. Every package includes one visual direction; scope and schedule are confirmed before work begins.",
+    "answerVi": "Thuy nhận **UI/UX, prototype, motion và code**. Đây là các gói App UI và Landing page, với giá khởi điểm bằng USD. Mỗi gói đều có một hướng visual; phạm vi và lịch sẽ được xác nhận trước khi bắt đầu.",
+    "aliases": [
+      "freelance rates",
+      "how much do you charge",
+      "pricing",
+      "price quote",
+      "bao gia",
+      "chi phi thiet ke",
+      "bang gia"
+    ]
+  },
+  {
+    "id": "freelance-timing",
+    "group": "Career and freelance",
+    "question": "How soon can Thuy start and how long will a project take?",
+    "questionVi": "Khi nào Thuy có thể bắt đầu và dự án mất bao lâu?",
+    "answer": "The draft packages estimate **4–15 business days depending on scope**, starting after the brief and assets are ready. Availability and the final schedule are confirmed directly before work begins.",
+    "answerVi": "Các gói nháp dự kiến **4–15 ngày làm việc tùy phạm vi**, tính từ khi có đủ brief và tài nguyên. Lịch trống và thời gian chính thức sẽ được xác nhận trực tiếp trước khi bắt đầu.",
+    "aliases": [
+      "start date",
+      "turnaround time",
+      "project timeline",
+      "when can you start",
+      "bao gio bat dau",
+      "mat bao lau",
+      "tien do du an"
+    ]
+  }
 ]
