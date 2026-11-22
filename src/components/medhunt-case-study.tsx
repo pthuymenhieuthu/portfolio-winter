@@ -25,12 +25,25 @@ import {
 } from "lucide-react";
 
 import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
 import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 import { DATA } from "@/data/resume";
 import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
+
+const sections = [
+  { id: "medhunt-overview", label: "Overview" },
+  { id: "medhunt-architecture", label: "Architecture" },
+  { id: "medhunt-workflow", label: "Working process" },
+  { id: "medhunt-dashboard", label: "Dashboard" },
+  { id: "medhunt-core", label: "Core workflows" },
+  { id: "medhunt-system", label: "Design system" },
+  { id: "medhunt-outcome", label: "Outcome" },
+  { id: "medhunt-next", label: "Next projects" },
+  { id: "medhunt-contact", label: "Get in touch" },
+] as const;
 
 const journey = [
   "Customer",
@@ -457,7 +470,7 @@ function NextProjectCard({ project, featured = false }: { project: Project; feat
 export function MedhuntCaseStudy() {
   return (
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f5f7fb] text-[#111827] selection:bg-[#c9d8ff] selection:text-[#10285f]">
-
+      <CaseStudySectionNavigation heroId="medhunt-hero" sections={sections} />
       <ProjectCaseStudyHero
         backgroundSrc="/assets/project-thumbnails/medhunt-monitor.png"
         summaryLines={["Connecting healthcare recruitment", "in one workspace, from candidates", "to placements and service fees."]}

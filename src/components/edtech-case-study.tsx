@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DATA } from "@/data/resume";
 import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
@@ -32,6 +33,16 @@ const theme = {
   hero:
     "radial-gradient(circle at 18% 18%, #12CD83 0%, transparent 30%), radial-gradient(circle at 82% 24%, #BCECDB 0%, transparent 30%), linear-gradient(135deg, #092014 0%, #12CD83 42%, #15D590 100%)",
 };
+
+const sections = [
+  { id: "edtech-work", label: "Overview" },
+  { id: "edtech-motion", label: "Motion showcase" },
+  { id: "edtech-speak", label: "Speak Chinese UI showcase" },
+  { id: "edtech-graphics", label: "App Store graphics" },
+  { id: "edtech-tools", label: "Tools" },
+  { id: "edtech-next", label: "Next projects" },
+  { id: "edtech-contact", label: "Get in touch" },
+];
 
 const assets = {
   hero: "/speakchinese-mobile-poster.jpg",
@@ -114,6 +125,12 @@ function CaseImage({
   );
 }
 
+function EdTechStickyIndicator() {
+  return (
+    <CaseStudySectionNavigation heroId="edtech-overview" sections={sections} />
+  );
+}
+
 function NextProjectCard({
   project,
   featured = false,
@@ -180,6 +197,7 @@ function NextProjectCard({
 export function EdTechCaseStudy() {
   return (
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-sans text-[#08090a]">
+      <EdTechStickyIndicator />
 
       <ProjectCaseStudyHero
         summaryLines={["Building clearer, friendlier learning", "through mobile UI, motion, and", "App Store graphics."]}
@@ -208,6 +226,7 @@ export function EdTechCaseStudy() {
 
       <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 pb-24 pt-[120px] sm:gap-40 sm:px-8 lg:pb-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="edtech-work">
+
 
           <CaseStudyStatementReveal className="tracking-[-1px]" text="Clarity, motivation, and friendly interaction for language learning apps used by global learners every day." />
 

@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { caseStudyStyles } from "@/lib/case-study-styles";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
 import { PartnerJourneyDiagram } from "@/components/partner-journey-diagram";
 import { projectMeshPalettes } from "@/components/project-mesh-gradient";
@@ -22,6 +23,17 @@ type CaseProject = {
   technologies: readonly string[];
   image?: string;
 };
+
+const sections = [
+  { id: "partner-overview", label: "Overview" },
+  { id: "partner-user", label: "User" },
+  { id: "partner-journey", label: "Journey" },
+  { id: "partner-problem", label: "Design Problem" },
+  { id: "partner-pro", label: "Affina Pro" },
+  { id: "partner-web", label: "Web App" },
+  { id: "partner-rules", label: "Edge Cases" },
+  { id: "partner-handoff", label: "Handoff" },
+] as const;
 
 const nextProjects = getNextProjects(
   DATA.projects as readonly CaseProject[],
@@ -187,6 +199,16 @@ const recoveryStates: FlowScreen[] = [
 
 const partnerHowMightWe =
   "How might one insurance journey adapt to every family member?";
+
+function ProjectNavigation() {
+  return (
+    <CaseStudySectionNavigation
+      heroId="partner-overview"
+      revealAfter={460}
+      sections={sections}
+    />
+  );
+}
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -1152,6 +1174,7 @@ function NextProjectCard({
 export function AffinaPartnerFlowCaseStudy() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-white font-[var(--font-affina-body)] text-[#08090a]">
+      <ProjectNavigation />
 
       <ProjectCaseStudyHero
         desktopTitleSize={44}

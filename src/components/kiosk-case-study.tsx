@@ -2,8 +2,20 @@ import { KioskJourneyIllustration } from "@/components/kiosk-journey-illustratio
 import { KioskPrototype } from "@/components/kiosk-prototype";
 import { KioskCustomerJourney } from "@/components/kiosk-customer-journey";
 import { CaseStudyNextProjects } from "@/components/case-study-next-projects";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
 import { caseStudyStyles as styles } from "@/lib/case-study-styles";
+
+const sections = [
+  { id: "kiosk-overview", label: "Overview" },
+  { id: "kiosk-problem", label: "Problem statement" },
+  { id: "kiosk-journey", label: "Customer journey" },
+  { id: "kiosk-challenge", label: "Design challenge" },
+  { id: "kiosk-research", label: "Research focus" },
+  { id: "kiosk-directions", label: "Design directions" },
+  { id: "kiosk-validation", label: "Validation" },
+  { id: "kiosk-next", label: "Next projects" },
+];
 
 const stages = [
   { name: "Find", question: "Where can I find it?", barrier: "Categories and scrolling are difficult to discover.", research: "Can users find the item they want without assistance?", title: "Clearer navigation", direction: "Recognizable categories, visible selection states, and discoverable scrolling.", task: "Find an item", detail: "Ask participants to locate a specific menu item without prompting." },
@@ -18,7 +30,7 @@ function SectionHeading({ index, title }: { index: string; title: string }) {
 export function KioskCaseStudy() {
   return (
     <main className="bg-white pb-32 text-[#08090a]">
-
+      <CaseStudySectionNavigation heroId="kiosk-hero" sections={sections} />
       <ProjectCaseStudyHero
         id="kiosk-hero"
         title="McDonald’s — Making Self-Ordering Easier"

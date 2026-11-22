@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { DATA } from "@/data/resume";
 import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
+import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import {
   CaseStudyRevealSection,
   CaseStudyScrollReveal,
@@ -28,6 +29,23 @@ import { Icons } from "@/components/icons";
 import { AffinaAppDesignSystem, affinaAppGradient } from "@/components/affina-app-system";
 
 const PROJECT_HERO_DELAY = 0.36;
+
+const sections = [
+  { id: "affina-work", label: "Overview" },
+  { id: "affina-system", label: "Design challenges" },
+  {
+    id: "affina-challenge-01",
+    label: "AI journey",
+  },
+  { id: "affina-customer-evidence", label: "Customer feedback" },
+  {
+    id: "affina-challenge-02",
+    label: "Healthcare system",
+  },
+  { id: "affina-brand", label: "Brand foundation" },
+  { id: "affina-next", label: "Next projects" },
+  { id: "affina-contact", label: "Get in touch" },
+];
 
 const journeySteps = [
   {
@@ -326,6 +344,7 @@ const designSystemBuildOrder = [
   },
 ] as const;
 
+
 const processSteps = [
   { label: "Survey", active: true },
   { label: "Recommend", active: true },
@@ -614,6 +633,15 @@ function ComparisonRow({
   );
 }
 
+function AffinaStickyIndicator() {
+  return (
+    <CaseStudySectionNavigation
+      heroId="affina-overview"
+      sections={sections}
+    />
+  );
+}
+
 function NextProjectCard({
   project,
   featured = false,
@@ -710,6 +738,7 @@ function NextProjectCard({
 export function AffinaCaseStudy() {
   return (
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-[var(--font-affina-body)] text-[#08090a]">
+      <AffinaStickyIndicator />
 
       <ProjectCaseStudyHero
         appearance="light"
