@@ -23,7 +23,6 @@ import { DATA } from "@/data/resume";
 import { getNextProjects } from "@/lib/next-projects";
 import BlurFade from "@/components/magicui/blur-fade";
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
-import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { cn } from "@/lib/utils";
@@ -40,17 +39,6 @@ const brandLogos = [
   { name: "SUPORSEAL", src: "/assets/4oranges/brands/suporseal.png", width: 638, height: 168 },
 ] as const;
 
-const sections = [
-  { id: "four-oranges-overview", label: "Overview" },
-  { id: "four-oranges-empathize", label: "Empathize" },
-  { id: "four-oranges-define", label: "Define" },
-  { id: "four-oranges-ideate", label: "Ideate" },
-  { id: "four-oranges-prototype", label: "Prototype" },
-  { id: "four-oranges-test", label: "Test & refine" },
-  { id: "four-oranges-ui-kit", label: "UI kit" },
-  { id: "four-oranges-outcome", label: "Outcome" },
-];
-
 type CaseProject = {
   title: string;
   href?: string;
@@ -65,10 +53,6 @@ const nextProjects = getNextProjects(
   DATA.projects as readonly CaseProject[],
   "/blog/4oranges"
 );
-
-function ProjectNavigation() {
-  return <CaseStudySectionNavigation heroId="four-oranges-hero" sections={sections} />;
-}
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -430,7 +414,6 @@ function NextProjectCard({ project, featured = false }: { project: CaseProject; 
 export function FourOrangesCaseStudy() {
   return (
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-[var(--font-affina-body)] text-[#351303]">
-      <ProjectNavigation />
 
       <ProjectCaseStudyHero
         backgroundSrc="/assets/project-thumbnails/4oranges.png"

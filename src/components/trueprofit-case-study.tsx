@@ -6,7 +6,6 @@ import { ChevronRight } from "lucide-react";
 import { DATA } from "@/data/resume";
 import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
-import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
@@ -35,15 +34,6 @@ type CaseProject = {
   image?: string;
   video?: string;
 };
-
-const sections = [
-  { id: "trueprofit-work", label: "Overview" },
-  { id: "trueprofit-task-01", label: "Landing page" },
-  { id: "trueprofit-task-02", label: "Onboarding" },
-  { id: "trueprofit-outcome", label: "Outcome" },
-  { id: "trueprofit-next", label: "Next projects" },
-  { id: "trueprofit-contact", label: "Get in touch" },
-];
 
 const assets = {
   hero: "/trueprofit-mobile-poster.jpg",
@@ -136,15 +126,6 @@ function CaseImage({
   );
 }
 
-function TrueProfitStickyIndicator() {
-  return (
-    <CaseStudySectionNavigation
-      heroId="trueprofit-overview"
-      sections={sections}
-    />
-  );
-}
-
 function NextProjectCard({
   project,
   featured = false,
@@ -211,7 +192,6 @@ function NextProjectCard({
 export function TrueProfitCaseStudy() {
   return (
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-sans text-[#08090a]">
-      <TrueProfitStickyIndicator />
 
       <ProjectCaseStudyHero
         summaryLines={["Connecting landing page visuals", "and in-app onboarding through", "one consistent design language."]}
@@ -237,7 +217,6 @@ export function TrueProfitCaseStudy() {
 
       <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 pb-24 pt-[120px] sm:gap-40 sm:px-8 lg:pb-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-work">
-
 
           <CaseStudyStatementReveal className="tracking-[-1px]" text="Translate abstract product goals into clear visual storytelling while staying aligned with the existing design system and marketing direction." />
 

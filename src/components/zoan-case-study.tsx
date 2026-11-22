@@ -5,7 +5,6 @@ import Link from "next/link";
 import { DATA } from "@/data/resume";
 import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
-import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
@@ -24,17 +23,6 @@ const theme = {
   accent2: "#B0F1ED",
   dark: "#07111f",
 };
-
-const sections = [
-  { id: "zoan-work", label: "Overview" },
-  { id: "zoan-foundations", label: "System foundations" },
-  { id: "zoan-platform", label: "Cross-platform application" },
-  { id: "zoan-deployment", label: "Deployment dashboard" },
-  { id: "zoan-motion", label: "Motion & micro-interactions" },
-  { id: "zoan-outcome", label: "Outcome" },
-  { id: "zoan-next", label: "Next projects" },
-  { id: "zoan-contact", label: "Get in touch" },
-];
 
 const zoanAssets = {
   hero: "/Frame_2147225273_isnnjf.png",
@@ -201,12 +189,6 @@ function CaseImage({
   );
 }
 
-function ZoanStickyIndicator() {
-  return (
-    <CaseStudySectionNavigation heroId="zoan-overview" sections={sections} />
-  );
-}
-
 function NextProjectCard({
   project,
   featured = false,
@@ -273,7 +255,6 @@ function NextProjectCard({
 export function ZoanCaseStudy() {
   return (
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-sans text-[#08090a]">
-      <ZoanStickyIndicator />
 
       <ProjectCaseStudyHero
         summaryLines={["Making AI workflows clearer through", "cross-platform UI, a shared system,", "and purposeful motion."]}
@@ -300,7 +281,6 @@ export function ZoanCaseStudy() {
 
       <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 pb-24 pt-[120px] sm:gap-40 sm:px-8 lg:pb-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-work">
-
 
           <CaseStudyStatementReveal className="tracking-[-1px]" text="I wasn’t being replaced by AI. I was designing the interface for an AI platform." />
 

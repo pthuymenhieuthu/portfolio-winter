@@ -11,7 +11,6 @@ import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlig
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
 import {
-  CaseStudySectionNavigation,
   type CaseStudySection,
 } from "@/components/case-study-section-navigation";
 import BlurFade from "@/components/magicui/blur-fade";
@@ -401,9 +400,9 @@ function CaseShell({
   date,
   summary,
   theme,
-  sections,
   children,
   hero,
+  sections,
 }: {
   currentHref: string;
   title: string;
@@ -419,10 +418,7 @@ function CaseShell({
       className="min-h-screen w-full max-w-full overflow-x-hidden font-sans"
       style={{ backgroundColor: theme.page, color: theme.ink }}
     >
-      <CaseStudySectionNavigation
-        heroId="legacy-project-overview"
-        sections={sections}
-      />
+
       {hero ? (
         <ProjectCaseStudyHero
           {...hero}

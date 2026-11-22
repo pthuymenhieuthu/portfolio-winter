@@ -5,7 +5,6 @@ import Link from "next/link";
 import { DATA } from "@/data/resume";
 import { getNextProjects } from "@/lib/next-projects";
 import { cn } from "@/lib/utils";
-import { CaseStudySectionNavigation } from "@/components/case-study-section-navigation";
 import { CaseStudyScrollHighlight } from "@/components/case-study-scroll-highlight";
 import { CaseStudyStatementReveal } from "@/components/case-study-statement-reveal";
 import { CaseStudyRevealSection } from "@/components/case-study-scroll-reveal";
@@ -33,15 +32,6 @@ const theme = {
   hero:
     "radial-gradient(circle at 18% 18%, #ff6313 0%, transparent 30%), radial-gradient(circle at 82% 24%, #ebdfaf 0%, transparent 30%), linear-gradient(135deg, #21120a 0%, #ff6313 52%, #ebdfaf 100%)",
 };
-
-const sections = [
-  { id: "series-context", label: "Series overview" },
-  { id: "series-brief", label: "Competition brief" },
-  { id: "series-process", label: "Design process" },
-  { id: "series-picks", label: "Top picks" },
-  { id: "series-next", label: "Next projects" },
-  { id: "series-contact", label: "Get in touch" },
-];
 
 const assets = {
   hero: "/uidesignseries-mobile-poster.jpg",
@@ -136,12 +126,6 @@ function CaseImage({
   );
 }
 
-function SeriesStickyIndicator() {
-  return (
-    <CaseStudySectionNavigation heroId="series-overview" sections={sections} />
-  );
-}
-
 function NextProjectCard({
   project,
   featured = false,
@@ -208,7 +192,6 @@ function NextProjectCard({
 export function UiDesignSeriesCaseStudy() {
   return (
     <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f7f8] font-sans text-[#08090a]">
-      <SeriesStickyIndicator />
 
       <ProjectCaseStudyHero
         summaryLines={["Six weeks. Six landing-page briefs.", "Exploring visual design and motion,", "with a reusable Framer library."]}
@@ -234,7 +217,6 @@ export function UiDesignSeriesCaseStudy() {
 
       <section className="relative z-10 mx-auto flex w-full max-w-[1040px] flex-col gap-32 px-5 pb-24 pt-[120px] sm:gap-40 sm:px-8 lg:pb-36">
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="series-context">
-
 
           <CaseStudyStatementReveal className="tracking-[-1px]" text="One landing page per week, shaped by a different brief." />
 
