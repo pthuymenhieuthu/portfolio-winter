@@ -12,6 +12,7 @@ import { CaseStudySectionNavigation } from "@/components/case-study-section-navi
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
 import { PartnerJourneyDiagram } from "@/components/partner-journey-diagram";
 import { projectMeshPalettes } from "@/components/project-mesh-gradient";
+import { GalleryNextButton, HorizontalScreenGallery } from "@/components/horizontal-screen-gallery";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -391,10 +392,10 @@ function ScreenFlow({
   device: "mobile" | "web";
 }) {
   return (
-    <div className="scrollbar-none -mx-5 mt-12 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
-      <div className="flex w-max snap-x snap-mandatory items-start gap-4 pb-4">
+    <HorizontalScreenGallery label={device === "mobile" ? "Affina Pro screens" : "Affina web app screens"} className="-mx-5 mt-12 sm:-mx-8 lg:mx-0">
+      <div className="flex w-max items-start gap-4 pb-4">
         {screens.map((screen, index) => (
-          <div className="flex items-center gap-4" key={screen.src}>
+          <div className="flex items-center gap-4" key={screen.src} data-gallery-item>
             <article
               className={cn(
                 "snap-start overflow-hidden rounded-2xl border border-[#e1e6ea] bg-white shadow-[0_18px_50px_rgba(20,45,65,0.08)]",
@@ -404,7 +405,7 @@ function ScreenFlow({
               <a
                 data-app-screen-preview="true"
                 className={cn(
-                  "scrollbar-none block overflow-y-auto overscroll-contain bg-[#f2f6fa]",
+                  "scrollbar-none block overflow-y-auto overscroll-y-contain bg-[#f2f6fa]",
                   device === "mobile"
                     ? "h-[720px] sm:h-[780px]"
                     : "h-[520px] sm:h-[580px]"
@@ -443,14 +444,12 @@ function ScreenFlow({
               </div>
             </article>
             {index < screens.length - 1 && (
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#baddff] bg-white text-xl text-[#0293f4]">
-                →
-              </span>
+              <GalleryNextButton index={index} />
             )}
           </div>
         ))}
       </div>
-    </div>
+    </HorizontalScreenGallery>
   );
 }
 
@@ -506,12 +505,13 @@ function RecoveryStatesSection() {
           eyebrow="Designing beyond the happy path"
           title="Rules become clear next actions"
         />
-        <div className="scrollbar-none -mx-5 mt-12 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
-          <div className="flex w-max snap-x snap-mandatory items-stretch gap-5 pb-4">
+        <HorizontalScreenGallery label="Affina recovery states" className="-mx-5 mt-12 sm:-mx-8 lg:mx-0">
+          <div className="flex w-max items-stretch gap-5 pb-4">
             {recoveryStates.map((screen, index) => (
               <article
                 className="w-[280px] snap-start rounded-2xl border border-[#d8ebff] bg-white p-5 shadow-[0_14px_40px_rgba(20,45,65,0.07)]"
                 key={screen.src}
+                data-gallery-item
               >
                 <div className="flex h-[330px] items-center justify-center overflow-hidden rounded-xl bg-[#f7f7f8] p-4">
                   <Image
@@ -535,7 +535,7 @@ function RecoveryStatesSection() {
               </article>
             ))}
           </div>
-        </div>
+        </HorizontalScreenGallery>
       </div>
     </section>
   );
