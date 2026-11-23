@@ -1,4 +1,5 @@
 "use client";
+import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -108,7 +109,7 @@ function CaseImage({
   const [width, height] = assetDimensions[src] ?? [1440, 810];
 
   return (
-    <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
+    <CaseStudyBubbleCard staticFilm className="overflow-hidden">
       <ImageZoom>
         <ResponsiveMotionImage
           src={src}
@@ -121,7 +122,7 @@ function CaseImage({
           sizes="(max-width: 768px) 90vw, 934px"
         />
       </ImageZoom>
-    </div>
+    </CaseStudyBubbleCard>
   );
 }
 
@@ -139,10 +140,10 @@ function NextProjectCard({
   featured?: boolean;
 }) {
   return (
-    <Link
+    <CaseStudyBubbleLink
       href={project.href || "#"}
       className={cn(
-        "group block overflow-hidden rounded-3xl border border-black/10 bg-white/65 transition duration-300 hover:-translate-y-1 hover:shadow-xl",
+        "group block overflow-hidden transition duration-300 hover:-translate-y-1",
         featured && "md:grid md:grid-cols-[1.15fr_0.85fr] md:items-stretch"
       )}
     >
@@ -190,7 +191,7 @@ function NextProjectCard({
           ))}
         </div>
       </div>
-    </Link>
+    </CaseStudyBubbleLink>
   );
 }
 
@@ -328,14 +329,14 @@ export function EdTechCaseStudy() {
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="edtech-tools">
-          <div className="rounded-xl bg-[#092014] p-6 text-white shadow-sm sm:p-8 lg:p-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#ffd360]">
+          <CaseStudyBubbleCard staticFilm tone="accent" className="p-6 text-[#526677] sm:p-8 lg:p-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#245d83]">
               Tools
             </p>
             <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Figma, Rive, and After Effects
             </h2>
-          </div>
+          </CaseStudyBubbleCard>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="edtech-next">

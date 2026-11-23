@@ -1,3 +1,5 @@
+import { CaseStudyBubbleCard } from "@/components/case-study-bubble-card";
+import { HorizontalScreenGallery } from "@/components/horizontal-screen-gallery";
 import { KioskJourneyIllustration } from "@/components/kiosk-journey-illustration";
 import { KioskPrototype } from "@/components/kiosk-prototype";
 import { KioskCustomerJourney } from "@/components/kiosk-customer-journey";
@@ -72,13 +74,15 @@ export function KioskCaseStudy() {
         <section id="kiosk-research" className="scroll-mt-28">
           <SectionHeading index="04" title="Research focus" />
           <p className={`${styles.body} max-w-[800px]`}>Secondary research suggests three potential barriers to investigate in Vietnam. These are starting hypotheses to validate through local observation and usability testing.</p>
-          <div className="mt-9 overflow-x-auto rounded-lg border border-[#dedede]">
+          <HorizontalScreenGallery label="kiosk content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="mt-9">
+            <CaseStudyBubbleCard staticFilm className="min-w-[620px] overflow-hidden">
             <table className="w-full min-w-[620px] text-left text-sm leading-relaxed">
               <caption className="sr-only">Potential barriers and research questions across the three ordering stages</caption>
-              <thead className="bg-[#f7f7f7]"><tr><th scope="col" className="p-5 font-medium">Stage</th><th scope="col" className="p-5 font-medium">Potential barrier</th><th scope="col" className="p-5 font-medium">Research question</th></tr></thead>
+              <thead className="bg-[#e7f3fc]/50"><tr><th scope="col" className="p-5 font-medium">Stage</th><th scope="col" className="p-5 font-medium">Potential barrier</th><th scope="col" className="p-5 font-medium">Research question</th></tr></thead>
               <tbody>{stages.map(stage => <tr key={stage.name} className="border-t border-[#dedede] align-top"><th scope="row" className="p-5 font-medium">{stage.name}</th><td className="w-[40%] p-5 text-[#525252]">{stage.barrier}</td><td className="p-5 text-[#525252]">{stage.research}</td></tr>)}</tbody>
             </table>
-          </div>
+            </CaseStudyBubbleCard>
+          </HorizontalScreenGallery>
           <p className="mt-5 max-w-[800px] text-sm leading-relaxed text-[#737373]">The published case studies below provide context from other projects and markets. They do not establish how today’s kiosks perform in Vietnam.</p>
         </section>
 
@@ -93,7 +97,7 @@ export function KioskCaseStudy() {
           <SectionHeading index="06" title="Validation" />
           <p className={`${styles.body} max-w-[800px]`}>Compare the current experience with the prototype using three tasks: find an item, choose a suitable meal, and explain the pickup process.</p>
           <ol className="mt-8 grid gap-7 sm:grid-cols-3">{stages.map((stage, index) => <li key={stage.name} className="border-t-2 border-[#08090a] pt-5"><p className="text-xs text-[#737373]">Task 0{index + 1}</p><h3 className="mt-3 text-lg font-medium">{stage.task}</h3><p className="mt-3 text-sm leading-relaxed text-[#737373]">{stage.detail}</p></li>)}</ol>
-          <div className="mt-10 rounded-lg bg-[#f7f7f7] p-6 sm:p-8"><h3 className="text-lg font-medium">What to assess</h3><p className="mt-3 text-base leading-relaxed text-[#525252]">Task completion, errors, requests for assistance, and user confidence.</p><p className="mt-5 text-sm leading-relaxed text-[#737373]">Validation is planned. No participant results or measured improvements are reported at this stage.</p></div>
+          <CaseStudyBubbleCard staticFilm className="mt-10 p-6 sm:p-8"><h3 className="text-lg font-medium">What to assess</h3><p className="mt-3 text-base leading-relaxed text-[#525252]">Task completion, errors, requests for assistance, and user confidence.</p><p className="mt-5 text-sm leading-relaxed text-[#737373]">Validation is planned. No participant results or measured improvements are reported at this stage.</p></CaseStudyBubbleCard>
         </section>
 
         <aside className="border-t border-[#dedede] pt-8">

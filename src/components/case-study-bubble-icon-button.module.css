@@ -1,0 +1,16 @@
+.button.button {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0;
+  color: #345e7a;
+  border: 1px solid rgba(255, 255, 255, .75);
+  border-radius: 999px;
+}
+.button.button:not([data-soap-bubble-ready]) {
+  background: radial-gradient(ellipse at 15% 10%, rgba(204, 234, 255, .45), transparent 65%), rgba(255, 255, 255, .28);
+}
+.button.button:disabled { opacity: .35; cursor: default; }
+.button.button:focus-visible { outline: 2px solid #2979b5; outline-offset: 4px; }
+@media (forced-colors: active) { .button.button { border-color: ButtonText; } }

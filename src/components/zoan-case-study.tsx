@@ -1,4 +1,5 @@
 "use client";
+import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -183,7 +184,7 @@ function CaseImage({
   const [width, height] = zoanAssetDimensions[src] ?? [1440, 810];
 
   return (
-    <div className={cn("overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm", className)}>
+    <CaseStudyBubbleCard staticFilm className={cn("overflow-hidden", className)}>
       <ImageZoom>
         <ResponsiveMotionImage
           src={src}
@@ -197,7 +198,7 @@ function CaseImage({
           sizes="(max-width: 768px) 90vw, 934px"
         />
       </ImageZoom>
-    </div>
+    </CaseStudyBubbleCard>
   );
 }
 
@@ -215,10 +216,10 @@ function NextProjectCard({
   featured?: boolean;
 }) {
   return (
-    <Link
+    <CaseStudyBubbleLink
       href={project.href || "#"}
       className={cn(
-        "group block overflow-hidden rounded-3xl border border-black/10 bg-white/65 transition duration-300 hover:-translate-y-1 hover:shadow-xl",
+        "group block overflow-hidden transition duration-300 hover:-translate-y-1",
         featured && "md:grid md:grid-cols-[1.15fr_0.85fr] md:items-stretch"
       )}
     >
@@ -266,7 +267,7 @@ function NextProjectCard({
           ))}
         </div>
       </div>
-    </Link>
+    </CaseStudyBubbleLink>
   );
 }
 
@@ -470,7 +471,7 @@ export function ZoanCaseStudy() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-[#07111f]/10 bg-white p-5 sm:p-7">
+          <CaseStudyBubbleCard staticFilm className="p-5 sm:p-7">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#737373]">
               Product lifecycle
             </p>
@@ -484,7 +485,7 @@ export function ZoanCaseStudy() {
                 </div>
               ))}
             </div>
-          </div>
+          </CaseStudyBubbleCard>
 
           <CaseStudyStatementReveal
             className="tracking-[-1px]"
@@ -559,21 +560,21 @@ export function ZoanCaseStudy() {
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-outcome">
-          <div className="rounded-xl bg-[#07111f] p-6 text-white shadow-sm sm:p-8 lg:p-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#ffd360]">
+          <CaseStudyBubbleCard staticFilm tone="accent" className="p-6 text-[#526677] sm:p-8 lg:p-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#245d83]">
               Outcome
             </p>
             <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Designers shape how humans interact with AI
             </h2>
-            <p className="mt-6 text-base leading-[1.6] text-white/85 sm:text-[17px]">
+            <p className="mt-6 text-base leading-[1.6] text-[#526677] sm:text-[17px]">
               The renewed system provided a scalable foundation for future
               development, reduced design-engineering friction, and established
               a strong visual identity for fundraising and go-to-market. Working
               on Zoan AI didn&apos;t show me that AI replaces designers. It showed me
               that designers shape how humans interact with AI.
             </p>
-          </div>
+          </CaseStudyBubbleCard>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="zoan-next">

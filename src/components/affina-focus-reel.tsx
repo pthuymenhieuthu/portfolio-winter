@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { CaseStudyBubbleIconButton } from "@/components/case-study-bubble-icon-button";
 
 const screens = [
   "00-intro", "01-insurance-type", "02-insured-person", "03-monthly-budget",
@@ -16,6 +17,8 @@ export function AffinaFocusReel() {
   const inView = useInView(root, { amount: 0.35 });
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const [width, setWidth] = useState(260);
   const [paused, setPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -114,20 +117,18 @@ export function AffinaFocusReel() {
         })}
       </motion.div>
       <div className="mt-5 flex items-center justify-center gap-2">
-        <button type="button" aria-label="Previous screen" onClick={() => move(-1)} className={controlClass}>
+        <CaseStudyBubbleIconButton type="button" aria-label="Previous screen" onClick={() => move(-1)}>
           <ChevronLeft size={18} aria-hidden="true" />
-        </button>
-        {!reduceMotion && (
-          <button type="button" aria-label={paused ? "Play slideshow" : "Pause slideshow"} onClick={() => setPaused(!paused)} className={controlClass}>
+        </CaseStudyBubbleIconButton>
+        {!(mounted && reduceMotion) && (
+          <CaseStudyBubbleIconButton type="button" aria-label={paused ? "Play slideshow" : "Pause slideshow"} onClick={() => setPaused(!paused)}>
             {paused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
-          </button>
+          </CaseStudyBubbleIconButton>
         )}
-        <button type="button" aria-label="Next screen" onClick={() => move(1)} className={controlClass}>
+        <CaseStudyBubbleIconButton type="button" aria-label="Next screen" onClick={() => move(1)}>
           <ChevronRight size={18} aria-hidden="true" />
-        </button>
+        </CaseStudyBubbleIconButton>
       </div>
     </div>
   );
 }
-
-const controlClass = "flex size-11 items-center justify-center rounded-full text-[#737373] transition-colors hover:bg-black/[0.05] hover:text-[#08090a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0293f4]";

@@ -1,4 +1,6 @@
 "use client";
+import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
+import { HorizontalScreenGallery } from "@/components/horizontal-screen-gallery";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -102,9 +104,9 @@ function SectionHeading({
 
 function ProductFrame({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("overflow-hidden rounded-2xl bg-[#e8edf6] p-2 shadow-[0_20px_50px_rgba(36,87,197,0.12)] sm:p-3", className)}>
+    <CaseStudyBubbleCard staticFilm className={cn("overflow-hidden p-2 sm:p-3", className)}>
       <div className="overflow-hidden rounded-xl bg-[#f6f8fc] ring-1 ring-[#d7dfec]">{children}</div>
-    </div>
+    </CaseStudyBubbleCard>
   );
 }
 
@@ -460,10 +462,10 @@ function WarrantyMockup() {
 
 function NextProjectCard({ project, featured = false }: { project: Project; featured?: boolean }) {
   return (
-    <Link className={cn("group grid overflow-hidden rounded-2xl bg-white ring-1 ring-[#d9e0eb] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_42px_rgba(17,24,39,0.12)]", featured && "md:grid-cols-[1.2fr_1fr]")} href={project.href || "#"}>
+    <CaseStudyBubbleLink className={cn("group grid overflow-hidden transition duration-300 hover:-translate-y-1", featured && "md:grid-cols-[1.2fr_1fr]")} href={project.href || "#"}>
       {project.image && <div className={cn("relative aspect-[4/3] overflow-hidden bg-[#edf1f7]", featured && "md:aspect-auto md:min-h-[300px]")}><Image alt="" className="object-cover transition duration-500 group-hover:scale-[1.02]" fill sizes={featured ? "(max-width: 768px) 100vw, 600px" : "(max-width: 768px) 100vw, 480px"} src={project.image} /></div>}
       <div className="flex flex-col justify-between p-6 sm:p-8"><div><p className="text-sm text-[#708097]">{project.dates}</p><h3 className="mt-3 font-[var(--font-heading)] text-2xl leading-tight tracking-[-0.02em] text-[#111827]">{project.title}</h3><p className="mt-4 text-sm leading-6 text-[#66758d]">{project.description}</p></div><span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#2457c5]">View case study <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></span></div>
-    </Link>
+    </CaseStudyBubbleLink>
   );
 }
 
@@ -501,34 +503,34 @@ export function MedhuntCaseStudy() {
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-architecture">
           <div>
             <h3 className="font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">Service journey and system spine</h3>
-            <div className="mt-8 overflow-x-auto pb-4">
+            <HorizontalScreenGallery label="medhunt content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="mt-8 pb-4">
               <div className="flex min-w-[900px] items-center">
-                {journey.map((item, index) => <div className="flex flex-1 items-center" key={item}><div className="flex min-h-24 flex-1 flex-col justify-between border-y border-[#cfd8e6] bg-white px-4 py-4"><span className="text-xs font-bold tabular-nums text-[#2457c5]">{String(index + 1).padStart(2,"0")}</span><span className="mt-5 text-sm font-semibold text-[#27334b]">{item}</span></div>{index < journey.length - 1 && <ArrowRight className="mx-2 size-4 shrink-0 text-[#8592a6]" />}</div>)}
+                {journey.map((item, index) => <div className="flex flex-1 items-center" key={item}><CaseStudyBubbleCard staticFilm className="flex min-h-24 flex-1 flex-col justify-between px-4 py-4"><span className="text-xs font-bold tabular-nums text-[#2457c5]">{String(index + 1).padStart(2,"0")}</span><span className="mt-5 text-sm font-semibold text-[#27334b]">{item}</span></CaseStudyBubbleCard>{index < journey.length - 1 && <ArrowRight className="mx-2 size-4 shrink-0 text-[#8592a6]" />}</div>)}
               </div>
-            </div>
+            </HorizontalScreenGallery>
           </div>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-workflow">
           <SectionHeading title="From business rules to working HTML prototypes" />
-          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl bg-[#d7deea] ring-1 ring-[#d7deea] md:grid-cols-5">
-            {process.map(({ icon: Icon, title }, index) => <article className="bg-white p-5" key={title}><div className="flex items-center justify-between"><Icon className="size-5 text-[#2457c5]" strokeWidth={1.8} /><span className="text-xs font-bold tabular-nums text-[#9aa5b5]">{String(index + 1).padStart(2,"0")}</span></div><h3 className="mt-8 text-sm font-semibold">{title}</h3></article>)}
+          <div className="mt-12 grid gap-5 md:grid-cols-5">
+            {process.map(({ icon: Icon, title }, index) => <CaseStudyBubbleCard staticFilm as="article" className="p-5" key={title}><div className="flex items-center justify-between"><Icon className="size-5 text-[#2457c5]" strokeWidth={1.8} /><span className="text-xs font-bold tabular-nums text-[#9aa5b5]">{String(index + 1).padStart(2,"0")}</span></div><h3 className="mt-8 text-sm font-semibold">{title}</h3></CaseStudyBubbleCard>)}
           </div>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-dashboard">
           <SectionHeading title="A dashboard that leads with work, not reporting" />
-          <div className="mt-12 overflow-x-auto pb-4"><ProductScreenshot alt="MedHunt dashboard showing today’s work, open requests, active cases, and outstanding fees" src="/assets/medhunt/screens/dashboard.png" /></div>
+          <HorizontalScreenGallery label="medhunt content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="mt-12 pb-4"><ProductScreenshot alt="MedHunt dashboard showing today’s work, open requests, active cases, and outstanding fees" src="/assets/medhunt/screens/dashboard.png" /></HorizontalScreenGallery>
           <p className="mt-5 text-sm leading-6 text-[#728097]">Synthetic demonstration data.</p>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-core">
           <SectionHeading title="Core workflows stay close to the decision" />
           <div className="mt-16 space-y-24 sm:space-y-32">
-            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">01. Request intake and tracking</h3><div className="overflow-x-auto pb-4"><ProductScreenshot alt="MedHunt recruitment request list with status metrics and operational table" src="/assets/medhunt/screens/requests.png?v=cards-3" /></div></article>
-            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">02. Candidate pool visibility</h3><div className="overflow-x-auto pb-4"><ProductScreenshot alt="MedHunt candidate pool with profile status, specialty, experience, and license information" src="/assets/medhunt/screens/candidates.png?v=cards-3" /></div></article>
-            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">03. Pipeline visibility</h3><div className="overflow-x-auto pb-4"><ProductScreenshot alt="MedHunt recruitment pipeline showing candidate stages and next milestones" src="/assets/medhunt/screens/pipeline.png?v=cards-3" /></div></article>
-            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">04. Fees and recruitment funnel</h3><div className="overflow-x-auto pb-4"><ProductScreenshot alt="MedHunt fee collection and recruitment funnel dashboard" src="/assets/medhunt/screens/fees-funnel.png?v=cards-3" /></div></article>
+            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">01. Request intake and tracking</h3><HorizontalScreenGallery label="medhunt content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="pb-4"><ProductScreenshot alt="MedHunt recruitment request list with status metrics and operational table" src="/assets/medhunt/screens/requests.png?v=cards-3" /></HorizontalScreenGallery></article>
+            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">02. Candidate pool visibility</h3><HorizontalScreenGallery label="medhunt content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="pb-4"><ProductScreenshot alt="MedHunt candidate pool with profile status, specialty, experience, and license information" src="/assets/medhunt/screens/candidates.png?v=cards-3" /></HorizontalScreenGallery></article>
+            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">03. Pipeline visibility</h3><HorizontalScreenGallery label="medhunt content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="pb-4"><ProductScreenshot alt="MedHunt recruitment pipeline showing candidate stages and next milestones" src="/assets/medhunt/screens/pipeline.png?v=cards-3" /></HorizontalScreenGallery></article>
+            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">04. Fees and recruitment funnel</h3><HorizontalScreenGallery label="medhunt content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="pb-4"><ProductScreenshot alt="MedHunt fee collection and recruitment funnel dashboard" src="/assets/medhunt/screens/fees-funnel.png?v=cards-3" /></HorizontalScreenGallery></article>
           </div>
         </CaseStudyRevealSection>
 
@@ -541,12 +543,12 @@ export function MedhuntCaseStudy() {
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-outcome">
-          <div className="rounded-2xl bg-[#10285f] p-7 text-white sm:p-10 lg:p-12">
+          <CaseStudyBubbleCard staticFilm tone="accent" className="p-7 text-[#526677] sm:p-10 lg:p-12">
             <CheckCircle2 className="size-7 text-[#73d3e7]" />
             <h2 className="mt-7 max-w-[780px] text-balance font-[var(--font-heading)] text-[30px] leading-[1.2] tracking-[-0.02em] sm:text-[40px]">The result is a clearer product model and a more testable handoff.</h2>
-            <div className="mt-10 grid gap-8 border-t border-white/20 pt-8 md:grid-cols-3">{[['Connected system','Requests, candidates, interviews, placements, warranty, and fees share a visible relationship.'],['Browser-tested decisions','Real layout density, responsive behavior, and UI states can be reviewed before implementation.'],['Living handoff','Developers receive more than static screens: they can inspect behavior and state logic in context.']].map(([title,text])=><div key={title}><p className="text-sm font-semibold text-white">{title}</p><p className="mt-3 text-sm leading-6 text-[#cbd6ed]">{text}</p></div>)}</div>
-            <p className="mt-10 max-w-[72ch] text-sm leading-6 text-[#aebdd9]">MedHunt is presented as a prototype in development. The outcome described here is the design and collaboration foundation, not a claim of measured production impact.</p>
-          </div>
+            <div className="mt-10 grid gap-8 border-t border-white/20 pt-8 md:grid-cols-3">{[['Connected system','Requests, candidates, interviews, placements, warranty, and fees share a visible relationship.'],['Browser-tested decisions','Real layout density, responsive behavior, and UI states can be reviewed before implementation.'],['Living handoff','Developers receive more than static screens: they can inspect behavior and state logic in context.']].map(([title,text])=><div key={title}><p className="text-sm font-semibold text-[#526677]">{title}</p><p className="mt-3 text-sm leading-6 text-[#526677]">{text}</p></div>)}</div>
+            <p className="mt-10 max-w-[72ch] text-sm leading-6 text-[#526677]">MedHunt is presented as a prototype in development. The outcome described here is the design and collaboration foundation, not a claim of measured production impact.</p>
+          </CaseStudyBubbleCard>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-next">

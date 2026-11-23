@@ -1,4 +1,5 @@
 "use client";
+import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -218,7 +219,7 @@ function CaseImage({
   mobilePosterSrc,
 }: ImageItem) {
   return (
-    <div className="overflow-hidden rounded-xl border border-[#cfd0d4] bg-white shadow-sm">
+    <CaseStudyBubbleCard staticFilm className="overflow-hidden">
       <ImageZoom>
         <ResponsiveMotionImage
           src={src}
@@ -235,7 +236,7 @@ function CaseImage({
           sizes="(max-width: 768px) 90vw, 934px"
         />
       </ImageZoom>
-    </div>
+    </CaseStudyBubbleCard>
   );
 }
 
@@ -287,13 +288,12 @@ function NextProjectCard({
   featured?: boolean;
 }) {
   return (
-    <Link
+    <CaseStudyBubbleLink
       href={project.href || "#"}
       className={cn(
-        "group block overflow-hidden rounded-3xl border bg-white/65 transition duration-300 hover:-translate-y-1 hover:shadow-xl",
+        "group block overflow-hidden transition duration-300 hover:-translate-y-1",
         featured && "md:grid md:grid-cols-[1.15fr_0.85fr] md:items-stretch"
       )}
-      style={{ borderColor: `${theme.ink}1a` }}
     >
       <div
         className={cn(
@@ -351,7 +351,7 @@ function NextProjectCard({
           ))}
         </div>
       </div>
-    </Link>
+    </CaseStudyBubbleLink>
   );
 }
 

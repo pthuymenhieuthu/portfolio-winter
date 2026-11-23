@@ -1,4 +1,5 @@
 "use client";
+import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -289,16 +290,11 @@ function FlowNode({
   dark?: boolean;
 }) {
   return (
-    <div
-      className={cn(
-        "flex min-h-14 flex-1 items-center justify-center rounded-lg border px-3 py-3 text-center text-xs font-semibold leading-5",
-        active && "border-[#0293f4] bg-[#f2f6fa]",
-        dark && "border-[#08090a] bg-[#08090a] text-white",
-        !active && !dark && "border-[#e1e6ea] bg-[#f7f7f8]"
-      )}
+    <CaseStudyBubbleCard staticFilm tone={active || dark ? "accent" : "neutral"}
+      className="flex min-h-14 flex-1 items-center justify-center px-3 py-3 text-center text-xs font-semibold leading-5"
     >
       {children}
-    </div>
+    </CaseStudyBubbleCard>
   );
 }
 
@@ -333,37 +329,37 @@ function ProblemModel() {
         <h3 className={cn("mb-8 text-center", caseStudyStyles.subsectionTitle)}>
           We turn family details into the right coverage.
         </h3>
-        <div className="rounded-xl bg-[#f7f7f8] p-5">
+        <CaseStudyBubbleCard staticFilm className="p-5">
           <b>Input factors</b>
           <p className="mt-3 text-sm">Age · Relationship · Eligibility · Pricing</p>
-        </div>
+        </CaseStudyBubbleCard>
         <div className="py-5 text-center font-bold text-[#0293f4]">
           ↓ &nbsp; MATCH SUITABLE PLAN &nbsp; ↓
         </div>
         <div className="space-y-3">
-          <div className="rounded-xl bg-[#f7f7f8] p-5">
+          <CaseStudyBubbleCard staticFilm className="p-5">
             <b>Output</b>
             <p className="mt-3 text-sm">
               Different benefits for each member — optimized for the whole family.
             </p>
-          </div>
-          <div className="rounded-xl bg-[#f7f7f8] p-5">
+          </CaseStudyBubbleCard>
+          <CaseStudyBubbleCard staticFilm className="p-5">
             <b>Key principle</b>
             <p className="mt-3 text-sm">
               The right benefits for the right person, at the right price.
             </p>
-          </div>
+          </CaseStudyBubbleCard>
         </div>
       </div>
       <div>
-        <div className="overflow-hidden rounded-xl border border-[#d4d4d4]">
-          <div className="grid grid-cols-2 bg-[#1e1e1e] p-4 text-sm font-bold text-white">
+        <CaseStudyBubbleCard staticFilm className="overflow-hidden">
+          <div className="grid grid-cols-2 border-b border-[#83b5d9]/20 bg-[#dff1ff]/40 p-4 text-sm font-semibold text-[#245d83]">
             <span>Member</span>
             <span>Example benefits</span>
           </div>
           {members.map(([member, role, benefit]) => (
             <div
-              className="grid grid-cols-2 border-t border-[#d4d4d4] p-4 text-sm"
+              className="grid grid-cols-2 border-t border-[#83b5d9]/15 p-4 text-sm"
               key={member}
             >
               <p>
@@ -374,7 +370,7 @@ function ProblemModel() {
               <p>{benefit}</p>
             </div>
           ))}
-        </div>
+        </CaseStudyBubbleCard>
         <h3 className="mt-6 text-xl font-bold">Why this matters</h3>
         <p className="mt-3 text-sm leading-6">
           Each member may have different health needs and benefit preferences.
@@ -508,12 +504,12 @@ function RecoveryStatesSection() {
         <HorizontalScreenGallery label="Affina recovery states" className="-mx-5 mt-12 sm:-mx-8 lg:mx-0">
           <div className="flex w-max items-stretch gap-5 pb-4">
             {recoveryStates.map((screen, index) => (
-              <article
-                className="w-[280px] snap-start rounded-2xl border border-[#d8ebff] bg-white p-5 shadow-[0_14px_40px_rgba(20,45,65,0.07)]"
+              <CaseStudyBubbleCard staticFilm as="article"
+                className="w-[280px] snap-start p-5"
                 key={screen.src}
                 data-gallery-item
               >
-                <div className="flex h-[330px] items-center justify-center overflow-hidden rounded-xl bg-[#f7f7f8] p-4">
+                <CaseStudyBubbleCard staticFilm className="flex h-[330px] items-center justify-center overflow-hidden p-4">
                   <Image
                     alt={screen.title}
                     className="max-h-full w-auto object-contain"
@@ -522,7 +518,7 @@ function RecoveryStatesSection() {
                     unoptimized
                     width={screen.width}
                   />
-                </div>
+                </CaseStudyBubbleCard>
                 <p className="mt-5 text-xs font-bold text-[#0293f4]">
                   STATE {String(index + 1).padStart(2, "0")}
                 </p>
@@ -532,7 +528,7 @@ function RecoveryStatesSection() {
                 <p className="mt-2 text-sm leading-6 text-[#737373]">
                   {screen.description}
                 </p>
-              </article>
+              </CaseStudyBubbleCard>
             ))}
           </div>
         </HorizontalScreenGallery>
@@ -1135,10 +1131,10 @@ function NextProjectCard({
   featured?: boolean;
 }) {
   return (
-    <Link
+    <CaseStudyBubbleLink
       href={project.href || "#"}
       className={cn(
-        "group overflow-hidden rounded-3xl border border-[#e1e6ea] bg-white/65 transition hover:-translate-y-1 hover:shadow-xl",
+        "group overflow-hidden transition hover:-translate-y-1",
         featured && "md:grid md:grid-cols-[1.15fr_0.85fr]"
       )}
     >
@@ -1167,7 +1163,7 @@ function NextProjectCard({
         </h3>
         <p className="mt-4 text-sm leading-6 text-[#737373]">{project.description}</p>
       </div>
-    </Link>
+    </CaseStudyBubbleLink>
   );
 }
 
@@ -1232,18 +1228,18 @@ This flow expanded the insurance journey from one insured person to{" "}
             }
           />
           <div className="mt-12 grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
-            <div className="rounded-xl border border-[#e1e6ea] bg-white p-6">
+            <CaseStudyBubbleCard staticFilm className="p-6">
               <p className="text-xs font-bold tracking-[0.1em] text-[#0293f4]">
                 FAMILY RELATIONSHIP
               </p>
               <p className="mt-5 font-[var(--font-affina-heading)] text-2xl leading-relaxed">
                 Self → Spouse → Child → Parent / other family member
               </p>
-            </div>
-            <div className="rounded-xl bg-[#08090a] p-7 text-lg leading-8 text-white">
+            </CaseStudyBubbleCard>
+            <CaseStudyBubbleCard staticFilm tone="accent" className="p-7 text-lg leading-8 text-[#526677]">
               This created an opportunity for Affina to support multi-insured purchases
               within one health insurance journey.
-            </div>
+            </CaseStudyBubbleCard>
           </div>
         </div>
       </section>
@@ -1329,7 +1325,7 @@ This flow expanded the insurance journey from one insured person to{" "}
             eyebrow="From rules to production"
             title="Turning business logic into a design that could ship"
           />
-          <div className="mt-12 flex flex-col gap-3 rounded-xl border border-[#e1e6ea] bg-white p-6 md:flex-row md:items-center">
+          <CaseStudyBubbleCard staticFilm className="mt-12 flex flex-col gap-3 p-6 md:flex-row md:items-center">
             {[
               "BRD / Business request",
               "Clarify rules with BA & Owner",
@@ -1344,7 +1340,7 @@ This flow expanded the insurance journey from one insured person to{" "}
                 {index < items.length - 1 && <Arrow />}
               </div>
             ))}
-          </div>
+          </CaseStudyBubbleCard>
           <p className="mt-4 text-xs leading-5 text-[#737373]">
             * Every decision was backed by technical constraints and underwriting rules
             mapped beforehand.
@@ -1367,8 +1363,8 @@ This flow expanded the insurance journey from one insured person to{" "}
                 "Specified validation, switching, pricing updates, and exception flows.",
               ],
             ].map(([tag, title, body]) => (
-              <article
-                className="rounded-xl border border-[#e1e6ea] bg-white p-7"
+              <CaseStudyBubbleCard staticFilm as="article"
+                className="p-7"
                 key={tag}
               >
                 <p className="text-xs font-bold text-[#0293f4]">{tag}</p>
@@ -1376,7 +1372,7 @@ This flow expanded the insurance journey from one insured person to{" "}
                   {title}
                 </h3>
                 <p className="mt-4 text-sm leading-6 text-[#737373]">{body}</p>
-              </article>
+              </CaseStudyBubbleCard>
             ))}
           </div>
         </div>

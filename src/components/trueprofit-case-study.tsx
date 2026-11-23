@@ -1,4 +1,5 @@
 "use client";
+import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -119,7 +120,7 @@ function CaseImage({
   const [width, height] = assetDimensions[src] ?? [1440, 810];
 
   return (
-    <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
+    <CaseStudyBubbleCard staticFilm className="overflow-hidden">
       <ImageZoom>
         <ResponsiveMotionImage
           src={src}
@@ -132,7 +133,7 @@ function CaseImage({
           sizes="(max-width: 768px) 90vw, 934px"
         />
       </ImageZoom>
-    </div>
+    </CaseStudyBubbleCard>
   );
 }
 
@@ -153,10 +154,10 @@ function NextProjectCard({
   featured?: boolean;
 }) {
   return (
-    <Link
+    <CaseStudyBubbleLink
       href={project.href || "#"}
       className={cn(
-        "group block overflow-hidden rounded-3xl border border-black/10 bg-white/65 transition duration-300 hover:-translate-y-1 hover:shadow-xl",
+        "group block overflow-hidden transition duration-300 hover:-translate-y-1",
         featured && "md:grid md:grid-cols-[1.15fr_0.85fr] md:items-stretch"
       )}
     >
@@ -204,7 +205,7 @@ function NextProjectCard({
           ))}
         </div>
       </div>
-    </Link>
+    </CaseStudyBubbleLink>
   );
 }
 
@@ -255,7 +256,7 @@ export function TrueProfitCaseStudy() {
             </h2>
           </div>
 
-          <div className="grid overflow-hidden rounded-xl border border-[#e4e4e7] bg-white px-6 lg:grid-cols-2 lg:gap-x-[51px]">
+          <CaseStudyBubbleCard staticFilm className="grid overflow-hidden px-6 lg:grid-cols-2 lg:gap-x-[51px]">
             {focusAreas.map((item, index) => (
               <article
                 className="relative flex min-w-0 flex-col gap-5 border-b border-[#e4e4e7] py-6 last:border-b-0 lg:border-b-0"
@@ -283,7 +284,7 @@ export function TrueProfitCaseStudy() {
                 </div>
               </article>
             ))}
-          </div>
+          </CaseStudyBubbleCard>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-task-01">
@@ -306,16 +307,16 @@ export function TrueProfitCaseStudy() {
                 illustration and layout support to complete the visual design.
               </p>
             </article>
-            <article className="rounded-xl bg-[#071b14] p-6 text-white shadow-sm sm:p-8 lg:p-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#ffd360]">My contribution</p>
-              <p className="mt-4 text-base leading-[1.6] text-white/85 sm:text-[17px]">
+            <CaseStudyBubbleCard staticFilm as="article" tone="accent" className="p-6 text-[#526677] sm:p-8 lg:p-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#245d83]">My contribution</p>
+              <p className="mt-4 text-base leading-[1.6] text-[#526677] sm:text-[17px]">
                 From November until the website launch in January, I created
                 illustrations for the Home and Features pages, drafted layout and
                 illustration concepts for the Partners page, and ensured every
                 illustration followed the established brand system and in-app
                 onboarding style.
               </p>
-            </article>
+            </CaseStudyBubbleCard>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2">
@@ -386,14 +387,14 @@ export function TrueProfitCaseStudy() {
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-outcome">
-          <div className="rounded-xl bg-[#071b14] p-6 text-white shadow-sm sm:p-8 lg:p-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#ffd360]">
+          <CaseStudyBubbleCard staticFilm tone="accent" className="p-6 text-[#526677] sm:p-8 lg:p-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#245d83]">
               Outcome
             </p>
             <h2 className="mt-5 font-[var(--font-heading)] text-[26px] font-normal leading-[1.2] tracking-normal sm:text-[30px]">
               Final outcomes
             </h2>
-            <p className="mt-6 text-base leading-[1.6] text-white/85 sm:text-[17px]">
+            <p className="mt-6 text-base leading-[1.6] text-[#526677] sm:text-[17px]">
               Delivered final illustrations for the Home and Features pages,
               produced layout and visual drafts for the Partners page, and
               contributed to a cohesive website experience for the January
@@ -401,11 +402,11 @@ export function TrueProfitCaseStudy() {
               users through the flow instead of distracting them, and supported
               the goals of increasing survey completions and reducing skips.
             </p>
-            <p className="mt-4 text-base leading-[1.6] text-white/70 sm:text-[17px]">
+            <p className="mt-4 text-base leading-[1.6] text-[#526677] sm:text-[17px]">
               Nov 2024 – Jan 2025: marketing landing page. Jan – Feb 2025:
               in-app onboarding illustrations.
             </p>
-          </div>
+          </CaseStudyBubbleCard>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-8 sm:gap-10" id="trueprofit-next">

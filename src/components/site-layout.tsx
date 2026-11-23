@@ -57,7 +57,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
           >
             {children}
           </div>
-          {isFullBleed && !isHome && !isKioskDemo && <BackToTopButton />}
+          {isFullBleed && !isHome && !isKioskDemo && <BackToTopButton bubble={isCaseStudy} />}
           {!isKioskDemo && <Navbar />}
           <RouteScrollRestoration />
         </TooltipProvider>

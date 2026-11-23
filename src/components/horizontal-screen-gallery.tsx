@@ -4,13 +4,15 @@ import { createContext, useContext, useEffect, useId, useRef, useState, type Poi
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import styles from "./horizontal-screen-gallery.module.css";
+import { CaseStudyBubbleIconButton } from "@/components/case-study-bubble-icon-button";
 
 const GalleryNavigation = createContext<(index: number) => void>(() => {});
 
-export function HorizontalScreenGallery({ children, label, className }: {
+export function HorizontalScreenGallery({ children, label, className, viewportClassName }: {
   children: ReactNode;
   label: string;
   className?: string;
+  viewportClassName?: string;
 }) {
   const id = useId();
   const viewport = useRef<HTMLDivElement>(null);
@@ -36,7 +38,9 @@ export function HorizontalScreenGallery({ children, label, className }: {
     if (!element) return [];
     const left = element.getBoundingClientRect().left;
     const padding = parseFloat(getComputedStyle(element).paddingLeft);
-    return Array.from(element.querySelectorAll<HTMLElement>("[data-gallery-item]"))
+    const marked = element.querySelectorAll<HTMLElement>("[data-gallery-item]");
+    const items = marked.length ? Array.from(marked) : Array.from(element.firstElementChild?.children ?? []) as HTMLElement[];
+    return items
       .map(item => item.getBoundingClientRect().left - left + element.scrollLeft - padding);
   };
   const scrollTo = (left: number) => viewport.current?.scrollTo({ left,
@@ -47,7 +51,7 @@ export function HorizontalScreenGallery({ children, label, className }: {
     const points = positions();
     const next = direction > 0 ? points.find(left => left > element.scrollLeft + 4)
       : points.reverse().find(left => left < element.scrollLeft - 4);
-    scrollTo(next ?? (direction > 0 ? element.scrollWidth : 0));
+    scrollTo(next ?? element.scrollLeft + direction * element.clientWidth * 0.85);
   };
   const finishDrag = (event: PointerEvent<HTMLDivElement>) => {
     if (drag.current?.moved) suppressClick.current = true;
@@ -62,12 +66,12 @@ export function HorizontalScreenGallery({ children, label, className }: {
         <div className="mb-4 flex items-center justify-between gap-3 px-5 sm:px-8 lg:px-0">
           <p className="text-xs text-[#737373]"><span className="hidden sm:inline">Drag or use the arrows to explore</span><span className="sm:hidden">Swipe to explore</span></p>
           <div className="flex gap-2">
-            <button className={styles.control} type="button" aria-label="Previous screens" aria-controls={id} disabled={edges.start} onClick={() => step(-1)}><ArrowLeft size={18} aria-hidden="true" /></button>
-            <button className={styles.control} type="button" aria-label="Next screens" aria-controls={id} disabled={edges.end} onClick={() => step(1)}><ArrowRight size={18} aria-hidden="true" /></button>
+            <CaseStudyBubbleIconButton aria-label="Previous screens" aria-controls={id} disabled={edges.start} onClick={() => step(-1)}><ArrowLeft size={18} aria-hidden="true" /></CaseStudyBubbleIconButton>
+            <CaseStudyBubbleIconButton aria-label="Next screens" aria-controls={id} disabled={edges.end} onClick={() => step(1)}><ArrowRight size={18} aria-hidden="true" /></CaseStudyBubbleIconButton>
           </div>
         </div>
         <div ref={viewport} id={id} data-gallery-viewport data-lenis-prevent-wheel
-          className={cn(styles.viewport, "px-5 pb-3 sm:px-8 lg:px-0")}
+          className={cn(styles.viewport, "px-5 pb-3 sm:px-8 lg:px-0", viewportClassName)}
           tabIndex={0} aria-label={`${label} scroll area`}
           onKeyDown={event => {
             if (event.target !== event.currentTarget) return;
@@ -110,5 +114,5 @@ export function HorizontalScreenGallery({ children, label, className }: {
 
 export function GalleryNextButton({ index }: { index: number }) {
   const goTo = useContext(GalleryNavigation);
-  return <button type="button" className={cn(styles.control, "shrink-0")} aria-label={`Show screen ${index + 2}`} onClick={() => goTo(index + 1)}><ArrowRight size={20} aria-hidden="true" /></button>;
+  return <CaseStudyBubbleIconButton aria-label={`Show screen ${index + 2}`} onClick={() => goTo(index + 1)}><ArrowRight size={20} aria-hidden="true" /></CaseStudyBubbleIconButton>;
 }

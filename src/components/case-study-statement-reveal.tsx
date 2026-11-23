@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import type { MotionValue } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -52,6 +52,8 @@ export function CaseStudyStatementReveal({
 }) {
   const target = useRef<HTMLQuoteElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const { scrollYProgress } = useScroll({
     target,
     offset: ["start 0.88", "end 0.34"],
@@ -79,7 +81,7 @@ export function CaseStudyStatementReveal({
           key={`${word}-${index}`}
           mutedColor={mutedColor}
           progress={progress}
-          reduceMotion={Boolean(shouldReduceMotion)}
+          reduceMotion={mounted && Boolean(shouldReduceMotion)}
           total={words.length}
           word={word}
         />

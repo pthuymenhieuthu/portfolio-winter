@@ -1,4 +1,5 @@
 "use client";
+import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -150,13 +151,13 @@ function FlowSteps() {
   return (
     <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {steps.map((step, index) => (
-          <div className="relative rounded-2xl border border-[#351303]/10 bg-white/55 p-4" key={step}>
+          <CaseStudyBubbleCard staticFilm className="relative p-4" key={step}>
             <span className="text-xs text-[#fba919]">{String(index + 1).padStart(2, "0")}</span>
             <p className="mt-8 text-sm font-medium leading-5 text-[#351303]">{step}</p>
             {index < steps.length - 1 && (
               <ArrowDown className="absolute right-3 top-3 size-4 -rotate-90 text-[#351303]/25" />
             )}
-          </div>
+          </CaseStudyBubbleCard>
         ))}
     </div>
   );
@@ -184,7 +185,7 @@ const typographyScale = [
 
 function TypographySystem() {
   return (
-    <div className="rounded-3xl border border-[#351303]/10 bg-white/60 p-6 sm:p-8">
+    <CaseStudyBubbleCard staticFilm className="p-6 sm:p-8">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#9a7057]">Typography</p>
         <p className="text-xs text-[#9a7057]">SF Pro (iOS) · Inter (cross-platform)</p>
@@ -208,7 +209,7 @@ function TypographySystem() {
           </div>
         ))}
       </div>
-    </div>
+    </CaseStudyBubbleCard>
   );
 }
 
@@ -281,7 +282,7 @@ function LinearScreenFlow({
   screens: FlowScreen[];
 }) {
   return (
-    <div className="rounded-[32px] border border-[#351303]/10 bg-white/65 p-5 sm:p-8">
+    <CaseStudyBubbleCard staticFilm className="p-5 sm:p-8">
       <div className="mb-10">
         <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#f86706]">
           {title}
@@ -305,7 +306,7 @@ function LinearScreenFlow({
           </div>
         ))}
       </div>
-    </div>
+    </CaseStudyBubbleCard>
   );
 }
 
@@ -377,7 +378,7 @@ const bankScreens: FlowScreen[] = [
 
 function AccountBranchFlow() {
   return (
-    <div className="rounded-[32px] border border-[#351303]/10 bg-white/65 p-5 sm:p-8">
+    <CaseStudyBubbleCard staticFilm className="p-5 sm:p-8">
       <div className="mb-10">
         <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#f86706]">
           Account &amp; payout setup
@@ -398,16 +399,16 @@ function AccountBranchFlow() {
           ))}
         </div>
       </div>
-    </div>
+    </CaseStudyBubbleCard>
   );
 }
 
 function NextProjectCard({ project, featured = false }: { project: CaseProject; featured?: boolean }) {
   return (
-    <Link
+    <CaseStudyBubbleLink
       href={project.href || "#"}
       className={cn(
-        "group block overflow-hidden rounded-3xl border border-[#351303]/10 bg-white/65 transition duration-300 hover:-translate-y-1 hover:shadow-xl",
+        "group block overflow-hidden transition duration-300 hover:-translate-y-1",
         featured && "md:grid md:grid-cols-[1.15fr_0.85fr]"
       )}
     >
@@ -423,7 +424,7 @@ function NextProjectCard({ project, featured = false }: { project: CaseProject; 
           <p className="mt-4 text-sm leading-6 text-[#754426]">{project.description}</p>
         </div>
       </div>
-    </Link>
+    </CaseStudyBubbleLink>
   );
 }
 
@@ -459,7 +460,7 @@ export function FourOrangesCaseStudy() {
           <div className="grid gap-4 sm:grid-cols-3">
             {[[ScanLine, "Fast entry", "Scan or enter a serial code."], [CheckCircle2, "Clear result", "Know whether the code worked."], [WalletCards, "Visible money", "Track rewards and transfers."]].map(([Icon, title, body]) => {
               const IconComponent = Icon as typeof ScanLine;
-              return <div className="rounded-3xl border border-[#351303]/10 bg-white/60 p-6" key={String(title)}><IconComponent className="size-6 text-[#f86706]" /><h3 className="mt-8 text-lg font-semibold">{String(title)}</h3><p className="mt-2 text-sm leading-6 text-[#754426]">{String(body)}</p></div>;
+              return <CaseStudyBubbleCard staticFilm className="p-6" key={String(title)}><IconComponent className="size-6 text-[#f86706]" /><h3 className="mt-8 text-lg font-semibold">{String(title)}</h3><p className="mt-2 text-sm leading-6 text-[#754426]">{String(body)}</p></CaseStudyBubbleCard>;
             })}
           </div>
         </CaseSection>
@@ -473,7 +474,7 @@ export function FourOrangesCaseStudy() {
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[[QrCode, "Scan & enter code"], [UserRound, "Profile"], [CreditCard, "Bank account"], [WalletCards, "Rewards"], [History, "Transactions"], [CheckCircle2, "Rules & support"]].map(([Icon, label]) => {
               const IconComponent = Icon as typeof QrCode;
-              return <div className="flex items-center gap-4 rounded-2xl border border-[#351303]/10 bg-white/55 p-5" key={String(label)}><div className="flex size-11 items-center justify-center rounded-xl bg-[#fba919]/25"><IconComponent className="size-5 text-[#f86706]" /></div><span className="text-sm font-medium">{String(label)}</span></div>;
+              return <CaseStudyBubbleCard staticFilm className="flex items-center gap-4 p-5" key={String(label)}><div className="flex size-11 items-center justify-center rounded-xl bg-[#fba919]/25"><IconComponent className="size-5 text-[#f86706]" /></div><span className="text-sm font-medium">{String(label)}</span></CaseStudyBubbleCard>;
             })}
           </div>
         </CaseSection>
@@ -506,13 +507,13 @@ export function FourOrangesCaseStudy() {
         <CaseSection id="four-oranges-ui-kit" number="UI kit" title="A system built from the product" copy="Foundations, components and states were created alongside the real flows so the interface stayed consistent through implementation.">
           <TypographySystem />
           <div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-            <div className="rounded-3xl border border-[#351303]/10 bg-white/60 p-6 sm:p-8">
+            <CaseStudyBubbleCard staticFilm className="p-6 sm:p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#9a7057]">Color system</p>
               <div className="mt-8 grid grid-cols-2 gap-3">
                 {[ ["#FBA919", "Brand yellow"], ["#F86706", "Brand orange"], ["#FFF4DA", "Warm canvas"], ["#351303", "Ink"] ].map(([hex, name]) => <div key={hex}><div className="aspect-[4/3] rounded-2xl border border-[#351303]/10" style={{ backgroundColor: hex }} /><p className="mt-3 text-xs font-semibold text-[#351303]">{hex}</p><p className="mt-1 text-[11px] text-[#9a7057]">{name}</p></div>)}
               </div>
-            </div>
-            <div className="rounded-3xl border border-[#351303]/10 bg-white/60 p-6 sm:p-8">
+            </CaseStudyBubbleCard>
+            <CaseStudyBubbleCard staticFilm className="p-6 sm:p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#9a7057]">Core components</p>
               <div className="mt-8 grid gap-7 sm:grid-cols-2">
                 <div className="space-y-3">
@@ -535,13 +536,13 @@ export function FourOrangesCaseStudy() {
                   </div>
                 </div>
               </div>
-            </div>
+            </CaseStudyBubbleCard>
           </div>
         </CaseSection>
 
         <CaseSection id="four-oranges-outcome" number="Outcome" title="A complete reward journey" copy="The final design covered the customer journey from registration to withdrawal, supported by reusable components and implementation-ready states.">
           <div className="grid gap-4 sm:grid-cols-3">
-            {["End-to-end mobile flow", "Reusable UI system", "Clear reward states"].map((item, index) => <div className="rounded-3xl border border-[#351303]/10 bg-white/60 p-6" key={item}><span className="text-sm text-[#f86706]">0{index + 1}</span><p className="mt-10 font-[var(--font-affina-heading)] text-2xl leading-tight">{item}</p></div>)}
+            {["End-to-end mobile flow", "Reusable UI system", "Clear reward states"].map((item, index) => <CaseStudyBubbleCard staticFilm className="p-6" key={item}><span className="text-sm text-[#f86706]">0{index + 1}</span><p className="mt-10 font-[var(--font-affina-heading)] text-2xl leading-tight">{item}</p></CaseStudyBubbleCard>)}
           </div>
         </CaseSection>
 

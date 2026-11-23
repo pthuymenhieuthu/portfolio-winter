@@ -2,12 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { CaseStudyBubbleIconButton } from "@/components/case-study-bubble-icon-button";
+import { ArrowUp } from "lucide-react";
 
-export function BackToTopButton({ targetId }: { targetId?: string }) {
+export function BackToTopButton({ targetId, bubble = false }: { targetId?: string; bubble?: boolean }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isOverFooter, setIsOverFooter] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const label = targetId === "projects" ? "Back to projects" : "Back to top";
+  const Button = bubble ? CaseStudyBubbleIconButton : "button";
 
   const scrollBack = () => {
     const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -63,11 +66,12 @@ export function BackToTopButton({ targetId }: { targetId?: string }) {
   }, []);
 
   return (
-    <button
+    <Button
       aria-label={label}
       ref={buttonRef}
       className={cn(
-        "fixed bottom-28 right-5 z-50 flex h-[68px] w-12 items-center justify-center bg-transparent transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 sm:right-8",
+        "fixed bottom-28 right-5 z-50 flex items-center justify-center transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 sm:right-8",
+        !bubble && "h-[68px] w-12 bg-transparent",
         isOverFooter
           ? "text-[#29303B] focus-visible:ring-[#29303B]/30"
           : "text-[#1E1E1E] focus-visible:ring-[#1E1E1E]/30",
@@ -79,7 +83,7 @@ export function BackToTopButton({ targetId }: { targetId?: string }) {
       title={label}
       type="button"
     >
-      <svg
+      {bubble ? <ArrowUp size={20} aria-hidden="true" /> : <svg
         aria-hidden="true"
         fill="none"
         height="68"
@@ -94,7 +98,7 @@ export function BackToTopButton({ targetId }: { targetId?: string }) {
           strokeLinejoin="round"
           strokeWidth="2"
         />
-      </svg>
-    </button>
+      </svg>}
+    </Button>
   );
 }

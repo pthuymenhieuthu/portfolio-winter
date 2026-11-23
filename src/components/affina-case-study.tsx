@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CaseStudyBubbleCard } from "@/components/case-study-bubble-card";
+import { GalleryNextButton, HorizontalScreenGallery } from "@/components/horizontal-screen-gallery";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
@@ -449,11 +450,11 @@ function JourneyScreenFlow({
 }) {
   return (
     <div className="-mx-5 overflow-hidden sm:mx-0">
-      <div className="scrollbar-none overflow-x-auto pb-4">
+      <HorizontalScreenGallery label={`${title} screens`} viewportClassName="px-0 sm:px-0 pb-4">
         <div className="flex w-max snap-x snap-mandatory items-start px-5 sm:px-0">
           {screens.map((screen, index) => (
             <div className="contents" key={screen.src}>
-              <figure className={cn("shrink-0 snap-start", screen.wide ? "w-[82vw] max-w-[640px]" : "w-[62vw] max-w-[240px]")}>
+              <figure data-gallery-item className={cn("shrink-0 snap-start", screen.wide ? "w-[82vw] max-w-[640px]" : "w-[62vw] max-w-[240px]")}>
                 <ImageZoom zoomImg={{ src: screen.src }}>
                   <div className="overflow-hidden rounded-[24px] border border-[#cfd0d4] bg-white shadow-sm">
                     <Image
@@ -473,14 +474,12 @@ function JourneyScreenFlow({
                 </figcaption>
               </figure>
               {index < screens.length - 1 && (
-                <div className="mx-4 mt-48 flex size-10 shrink-0 items-center justify-center rounded-full border border-[#0293f4]/20 bg-white text-[#0293f4] shadow-sm sm:mx-6">
-                  <ChevronRight aria-hidden="true" className="size-5" strokeWidth={1.8} />
-                </div>
+                <div className="mx-4 mt-48 shrink-0 sm:mx-6"><GalleryNextButton index={index} /></div>
               )}
             </div>
           ))}
         </div>
-      </div>
+      </HorizontalScreenGallery>
     </div>
   );
 }
@@ -888,7 +887,7 @@ export function AffinaCaseStudy() {
             <h3 className="mt-4 font-[var(--font-affina-heading)] text-lg font-normal leading-[1.25] tracking-normal sm:text-xl">
               I broke the decision into smaller, clearer steps.
             </h3>
-            <div className="scrollbar-none mt-8 overflow-x-auto pb-2">
+            <HorizontalScreenGallery label="Affina design process" className="mt-8" viewportClassName="px-0 sm:px-0 pb-2">
               <div className="relative flex w-max items-center gap-3 pr-20">
                 <div className="pointer-events-none absolute left-3 right-6 top-1/2 h-px -translate-y-1/2 bg-[#83b5d9]/45">
                   <span className="absolute right-[-1px] top-1/2 size-2.5 -translate-y-1/2 rotate-45 border-r border-t border-[#83b5d9]/65" />
@@ -907,7 +906,7 @@ export function AffinaCaseStudy() {
                   </span>
                 ))}
               </div>
-            </div>
+            </HorizontalScreenGallery>
           </CaseStudyBubbleCard>
           </CaseStudyScrollReveal>
 
