@@ -53,7 +53,7 @@
 }
 .fluid :global(.fluid-typing-copy) {
   font-family: var(--font-heading), Arial, sans-serif;
-  font-size: clamp(48px, 6.2vw, 90px);
+  font-size: clamp(48px, 6.2vw, 80px);
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.035em;
