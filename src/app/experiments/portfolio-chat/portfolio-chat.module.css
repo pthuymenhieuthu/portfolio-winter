@@ -43,7 +43,9 @@
 .fluid::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(20,104,185,.1) 0%, transparent 46%, rgba(255,255,255,.2) 70%, #fff 100%); }
 .fluid :global(.fluid-typing-stage) {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 1fr auto 1fr;
+  justify-content: center;
   justify-items: center;
   align-content: stretch;
   gap: 0;
@@ -82,7 +84,7 @@
 .suggestion svg { flex: 0 0 auto; color: var(--suggestion-icon, #238fe8); }
 .suggestion:hover { background: rgba(255,255,255,.58); transform: translateY(-1px); }
 
-.chatMode :global(.fluid-typing-stage) { display: flex; justify-content: flex-start; padding-top: clamp(208px, 30dvh, 260px); padding-bottom: 84px; }
+.chatMode :global(.fluid-typing-stage) { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: clamp(208px, 30dvh, 260px); padding-bottom: 84px; }
 .chatMode :global(.fluid-typing-copy) { position: absolute; left: 50%; translate: -50% 0; bottom: calc(100% - clamp(176px, 25dvh, 220px)); align-self: center; width: max-content; max-width: calc(100% - 48px); }
 .chatMode :global(.fluid-typing-copy) { font-size: clamp(28px, 3vw, 40px); }
 .chat { display: flex; flex-direction: column; align-items: center; width: min(100%, 760px); min-height: 0; flex: 1; }
