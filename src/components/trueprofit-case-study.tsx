@@ -1,4 +1,5 @@
 "use client";
+import { CaseStudyImageCarousel } from "@/components/case-study-image-carousel";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
@@ -319,10 +320,19 @@ export function TrueProfitCaseStudy() {
             </CaseStudyBubbleCard>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2">
-            <CaseImage src={assets.keywords} alt="TrueProfit illustration keyword references" />
-            <CaseImage src={assets.feeling} alt="TrueProfit visual feeling references" />
-          </div>
+          <CaseStudyImageCarousel
+            label="trueprofit project screens"
+            images={[
+              {
+                src: assets.keywords,
+                alt: "TrueProfit illustration keyword references",
+              },
+              {
+                src: assets.feeling,
+                alt: "TrueProfit visual feeling references",
+              },
+            ]}
+          />
 
           <div className="grid gap-6 md:grid-cols-2">
             {landingSteps.map((item, index) => (
@@ -335,10 +345,19 @@ export function TrueProfitCaseStudy() {
             ))}
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2">
-            <CaseImage src={assets.landingOutcome} alt="TrueProfit landing illustration outcome" />
-            <CaseImage src={assets.landingResult} alt="TrueProfit landing page result" />
-          </div>
+          <CaseStudyImageCarousel
+            label="trueprofit project screens"
+            images={[
+              {
+                src: assets.landingOutcome,
+                alt: "TrueProfit landing illustration outcome",
+              },
+              {
+                src: assets.landingResult,
+                alt: "TrueProfit landing page result",
+              },
+            ]}
+          />
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-task-02">
@@ -373,12 +392,27 @@ export function TrueProfitCaseStudy() {
             ))}
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2">
-            <CaseImage src={assets.empathyMap} alt="TrueProfit empathy map" />
-            <CaseImage src={assets.journeyMap} alt="TrueProfit onboarding journey map" />
-            <CaseImage src={assets.brandAlignment} alt="TrueProfit brand alignment" />
-            <CaseImage src={assets.handoff} alt="TrueProfit developer handoff" />
-          </div>
+          <CaseStudyImageCarousel
+            label="trueprofit project screens"
+            images={[
+              {
+                src: assets.empathyMap,
+                alt: "TrueProfit empathy map",
+              },
+              {
+                src: assets.journeyMap,
+                alt: "TrueProfit onboarding journey map",
+              },
+              {
+                src: assets.brandAlignment,
+                alt: "TrueProfit brand alignment",
+              },
+              {
+                src: assets.handoff,
+                alt: "TrueProfit developer handoff",
+              },
+            ]}
+          />
 
           <CaseImage
             src={assets.onboardingOutcome}

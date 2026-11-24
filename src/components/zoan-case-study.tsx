@@ -1,4 +1,5 @@
 "use client";
+import { CaseStudyImageCarousel } from "@/components/case-study-image-carousel";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
@@ -323,16 +324,19 @@ export function ZoanCaseStudy() {
             </p>
           </div>
 
-          <div className="grid gap-6">
-            <CaseImage
-              src={zoanAssets.workMockup1}
-              alt="Zoan mobile app held in hand, showing mini apps and Zoan IDs"
-            />
-            <CaseImage
-              src={zoanAssets.workMockup2}
-              alt="Zoan cat app icon on an iPhone alongside the mint brand identity"
-            />
-          </div>
+          <CaseStudyImageCarousel
+            label="zoan project screens"
+            images={[
+              {
+                src: zoanAssets.workMockup1,
+                alt: "Zoan mobile app held in hand, showing mini apps and Zoan IDs",
+              },
+              {
+                src: zoanAssets.workMockup2,
+                alt: "Zoan cat app icon on an iPhone alongside the mint brand identity",
+              },
+            ]}
+          />
 
           <div className="grid gap-6 sm:grid-cols-3">
             {responsibilities.map((item) => (
@@ -365,17 +369,19 @@ export function ZoanCaseStudy() {
             </h3>
           </div>
 
-          <div className="flex flex-col gap-6">
-            <CaseImage
-              src={zoanAssets.typographyColors}
-              alt="Zoan typography and color foundations: BD StreetSign Sans headings, SF Pro UI text, and a mint-led pastel palette"
-            />
-            <CaseImage
-              src={zoanAssets.tokens}
-              alt="Zoan variable token system"
-              className="mx-auto w-full max-w-[720px]"
-            />
-          </div>
+          <CaseStudyImageCarousel
+            label="zoan project screens"
+            images={[
+              {
+                src: zoanAssets.typographyColors,
+                alt: "Zoan typography and color foundations: BD StreetSign Sans headings, SF Pro UI text, and a mint-led pastel palette",
+              },
+              {
+                src: zoanAssets.tokens,
+                alt: "Zoan variable token system",
+              },
+            ]}
+          />
 
           <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
             A scalable token structure ensured consistency across both desktop
@@ -428,10 +434,19 @@ export function ZoanCaseStudy() {
             ))}
           </div>
 
-          <div className="grid gap-6">
-            <CaseImage src={zoanAssets.platformShowcase1} alt="Zoan desktop workflow showcase" />
-            <CaseImage src={zoanAssets.platformShowcase2} alt="Zoan mobile workflow showcase" />
-          </div>
+          <CaseStudyImageCarousel
+            label="zoan project screens"
+            images={[
+              {
+                src: zoanAssets.platformShowcase1,
+                alt: "Zoan desktop workflow showcase",
+              },
+              {
+                src: zoanAssets.platformShowcase2,
+                alt: "Zoan mobile workflow showcase",
+              },
+            ]}
+          />
 
           <div className="flex flex-col gap-8">
             <h3 className="font-[var(--font-heading)] text-2xl font-normal leading-[1.2] tracking-normal">
@@ -441,17 +456,22 @@ export function ZoanCaseStudy() {
               Home brings app discovery and social conversations together, while
               Mini Apps gives community creations a dedicated place to explore.
             </p>
-            <CaseImage
-              src={zoanAssets.homeSocial}
-              alt="Zoan Home and Talk screens showing pinned shortcuts, trending agents, live activity, and a social feed"
-            />
-            <CaseImage
-              src={zoanAssets.miniApps}
-              alt="Zoan Mini Apps screens showing the app hub, welcome flow, featured apps, and app directory"
-            />
-            <CaseImage
-              src={zoanAssets.socialMockup}
-              alt="Two iPhone mockups showing Zoan's social feed and mint cat-logo launch screen"
+            <CaseStudyImageCarousel
+              label="zoan project screens"
+              images={[
+                {
+                  src: zoanAssets.homeSocial,
+                  alt: "Zoan Home and Talk screens showing pinned shortcuts, trending agents, live activity, and a social feed",
+                },
+                {
+                  src: zoanAssets.miniApps,
+                  alt: "Zoan Mini Apps screens showing the app hub, welcome flow, featured apps, and app directory",
+                },
+                {
+                  src: zoanAssets.socialMockup,
+                  alt: "Two iPhone mockups showing Zoan's social feed and mint cat-logo launch screen",
+                },
+              ]}
             />
           </div>
         </CaseStudyRevealSection>
@@ -514,16 +534,7 @@ export function ZoanCaseStudy() {
                   </div>
                 </div>
 
-                <div className="grid items-start gap-5 lg:grid-cols-2">
-                  {stage.images.map((image) => (
-                    <CaseImage
-                      className="bg-white"
-                      key={image.src}
-                      src={image.src}
-                      alt={image.alt}
-                    />
-                  ))}
-                </div>
+                <CaseStudyImageCarousel label={`${stage.title} screens`} images={stage.images} />
               </article>
             ))}
           </div>
@@ -545,18 +556,19 @@ export function ZoanCaseStudy() {
             </p>
           </div>
 
-          <div className="grid gap-6">
-            <CaseImage
-              src={zoanAssets.timelineMotion}
-              alt="Zoan timeline motion"
-              preserveAnimation
-            />
-            <CaseImage
-              src={zoanAssets.appMotion}
-              alt="Zoan app transition motion"
-              preserveAnimation
-            />
-          </div>
+          <CaseStudyImageCarousel
+            label="zoan project screens"
+            images={[
+              {
+                src: zoanAssets.timelineMotion,
+                alt: "Zoan timeline motion",
+              },
+              {
+                src: zoanAssets.appMotion,
+                alt: "Zoan app transition motion",
+              },
+            ]}
+          />
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-outcome">

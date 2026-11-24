@@ -1,4 +1,5 @@
 "use client";
+import { CaseStudyImageCarousel } from "@/components/case-study-image-carousel";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
@@ -290,10 +291,19 @@ export function UiDesignSeriesCaseStudy() {
             ))}
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2">
-            <CaseImage src={assets.direction} alt="UI Design Series direction setting" />
-            <CaseImage src={assets.draft} alt="UI Design Series draft hero and layout" />
-          </div>
+          <CaseStudyImageCarousel
+            label="ui-design-series project screens"
+            images={[
+              {
+                src: assets.direction,
+                alt: "UI Design Series direction setting",
+              },
+              {
+                src: assets.draft,
+                alt: "UI Design Series draft hero and layout",
+              },
+            ]}
+          />
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="series-picks">
@@ -309,33 +319,16 @@ export function UiDesignSeriesCaseStudy() {
             </p>
           </div>
 
-          <div className="grid gap-6">
-            {topPicks.map((item) => (
-              <Link
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block border-t border-[#21120a]/10 pt-6 transition duration-300 hover:-translate-y-1"
-                key={item.href}
-              >
-                <div className="overflow-hidden rounded-xl border border-[#cfd0d4] shadow-sm">
-                  <ImageZoom>
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      width={assetDimensions[item.image]?.[0] ?? 1440}
-                      height={assetDimensions[item.image]?.[1] ?? 810}
-                      unoptimized
-                      className="h-auto w-full object-contain transition duration-500 group-hover:scale-[1.03]"
-                      sizes="(max-width: 768px) 90vw, 934px"
-                    />
-                  </ImageZoom>
-                </div>
-                <h3 className="mt-5 font-[var(--font-heading)] text-2xl font-bold leading-[1.2] tracking-normal">
-                  {item.title}
-                </h3>
-              </Link>
-            ))}
+          <CaseStudyImageCarousel label="UI Design Series top picks"
+            images={topPicks.map(item => ({ src: item.image, alt: item.title,
+              width: assetDimensions[item.image]?.[0] ?? 1440,
+              height: assetDimensions[item.image]?.[1] ?? 810,
+            }))} />
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
+            {topPicks.map(item => <Link key={item.href} href={item.href} target="_blank"
+              rel="noopener noreferrer" className="text-sm underline underline-offset-4">
+              {item.title} · View prototype
+            </Link>)}
           </div>
         </CaseStudyRevealSection>
 

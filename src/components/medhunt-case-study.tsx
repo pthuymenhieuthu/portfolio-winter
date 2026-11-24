@@ -1,4 +1,5 @@
 "use client";
+import { CaseStudyImageCarousel } from "@/components/case-study-image-carousel";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 import { HorizontalScreenGallery } from "@/components/horizontal-screen-gallery";
 
@@ -110,22 +111,6 @@ function ProductFrame({ children, className }: { children: React.ReactNode; clas
   );
 }
 
-function ProductScreenshot({ src, alt }: { src: string; alt: string }) {
-  return (
-    <ProductFrame>
-      <div className="relative min-w-[820px] aspect-[16/10] bg-white">
-        <Image
-          alt={alt}
-          className="object-cover"
-          fill
-          priority={src.endsWith("dashboard.png")}
-          sizes="(max-width: 1040px) 100vw, 1040px"
-          src={src}
-        />
-      </div>
-    </ProductFrame>
-  );
-}
 
 const navGroups = [
   {
@@ -520,18 +505,21 @@ export function MedhuntCaseStudy() {
 
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-dashboard">
           <SectionHeading title="A dashboard that leads with work, not reporting" />
-          <HorizontalScreenGallery label="medhunt content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="mt-12 pb-4"><ProductScreenshot alt="MedHunt dashboard showing today’s work, open requests, active cases, and outstanding fees" src="/assets/medhunt/screens/dashboard.png" /></HorizontalScreenGallery>
+          <CaseStudyImageCarousel label="MedHunt dashboard" className="mt-12" images={[{
+            src: "/assets/medhunt/screens/dashboard.png", alt: "Dashboard",
+            description: "Today’s work, open requests, active cases, and outstanding fees.",
+          }]} />
           <p className="mt-5 text-sm leading-6 text-[#728097]">Synthetic demonstration data.</p>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-core">
           <SectionHeading title="Core workflows stay close to the decision" />
-          <div className="mt-16 space-y-24 sm:space-y-32">
-            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">01. Request intake and tracking</h3><HorizontalScreenGallery label="medhunt content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="pb-4"><ProductScreenshot alt="MedHunt recruitment request list with status metrics and operational table" src="/assets/medhunt/screens/requests.png?v=cards-3" /></HorizontalScreenGallery></article>
-            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">02. Candidate pool visibility</h3><HorizontalScreenGallery label="medhunt content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="pb-4"><ProductScreenshot alt="MedHunt candidate pool with profile status, specialty, experience, and license information" src="/assets/medhunt/screens/candidates.png?v=cards-3" /></HorizontalScreenGallery></article>
-            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">03. Pipeline visibility</h3><HorizontalScreenGallery label="medhunt content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="pb-4"><ProductScreenshot alt="MedHunt recruitment pipeline showing candidate stages and next milestones" src="/assets/medhunt/screens/pipeline.png?v=cards-3" /></HorizontalScreenGallery></article>
-            <article><h3 className="mb-5 font-[var(--font-heading)] text-[26px] tracking-[-0.02em]">04. Fees and recruitment funnel</h3><HorizontalScreenGallery label="medhunt content gallery" viewportClassName="px-0 sm:px-0 pb-4" className="pb-4"><ProductScreenshot alt="MedHunt fee collection and recruitment funnel dashboard" src="/assets/medhunt/screens/fees-funnel.png?v=cards-3" /></HorizontalScreenGallery></article>
-          </div>
+          <CaseStudyImageCarousel label="MedHunt core workflow screens" className="mt-12" images={[
+            { src: "/assets/medhunt/screens/requests.png?v=cards-3", alt: "Request intake and tracking", description: "Recruitment requests, status metrics, and the operational table." },
+            { src: "/assets/medhunt/screens/candidates.png?v=cards-3", alt: "Candidate pool visibility", description: "Profile status, specialty, experience, and license information." },
+            { src: "/assets/medhunt/screens/pipeline.png?v=cards-3", alt: "Pipeline visibility", description: "Candidate stages and the next recruitment milestones." },
+            { src: "/assets/medhunt/screens/fees-funnel.png?v=cards-3", alt: "Fees and recruitment funnel", description: "Fee collection and the recruitment funnel in one view." },
+          ]} />
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-system">

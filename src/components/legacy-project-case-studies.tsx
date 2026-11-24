@@ -1,4 +1,5 @@
 "use client";
+import { CaseStudyImageCarousel } from "@/components/case-study-image-carousel";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
@@ -240,20 +241,8 @@ function CaseImage({
   );
 }
 
-function ImageGrid({
-  images,
-  columns = "md:grid-cols-2",
-}: {
-  images: ImageItem[];
-  columns?: string;
-}) {
-  return (
-    <div className={cn("grid gap-6", columns)}>
-      {images.map((image) => (
-        <CaseImage key={image.src} {...image} />
-      ))}
-    </div>
-  );
+function ImageGrid({ images }: { images: ImageItem[]; columns?: string }) {
+  return <CaseStudyImageCarousel label="Project showcase screens" images={images} />;
 }
 
 function BulletList({

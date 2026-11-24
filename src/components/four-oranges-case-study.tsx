@@ -1,4 +1,5 @@
 "use client";
+import { ScreenFocusCarousel } from "@/components/screen-focus-carousel";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
@@ -222,56 +223,6 @@ type FlowScreen = {
   height: number;
 };
 
-function ScreenCard({ screen, compact = false }: { screen: FlowScreen; compact?: boolean }) {
-  return (
-    <figure
-      className={cn(
-        "w-full min-w-0 justify-self-center",
-        compact ? "max-w-[210px] sm:max-w-[220px] lg:max-w-[200px]" : "max-w-[280px]"
-      )}
-    >
-      <div
-        className={cn(
-          "w-full overflow-hidden rounded-[22px]",
-          compact && "flex items-start justify-center"
-        )}
-      >
-        <Image
-          src={screen.src}
-          alt={screen.alt}
-          width={screen.width}
-          height={screen.height}
-          unoptimized
-          className={cn(
-            "block",
-            compact ? "h-auto w-full object-cover object-top" : "h-auto w-full"
-          )}
-          sizes="(max-width: 640px) 76vw, 260px"
-        />
-      </div>
-      <figcaption className="mt-5">
-        <p className="text-sm font-semibold text-[#351303]">{screen.label}</p>
-        <p className="mt-1 text-xs leading-5 text-[#8d684f]">{screen.detail}</p>
-      </figcaption>
-    </figure>
-  );
-}
-
-function FlowArrow({ label }: { label?: string }) {
-  return (
-    <div className="flex shrink-0 flex-col items-center justify-center gap-2 self-center py-2 text-[#f86706]">
-      {label && (
-        <span className="max-w-24 text-center text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a7057]">
-          {label}
-        </span>
-      )}
-      <span className="flex size-10 items-center justify-center rounded-full border border-[#f86706]/25 bg-white text-xl shadow-sm max-lg:rotate-90">
-        →
-      </span>
-    </div>
-  );
-}
-
 function LinearScreenFlow({
   title,
   copy,
@@ -289,23 +240,10 @@ function LinearScreenFlow({
         </p>
         <p className="mt-3 max-w-[620px] text-sm leading-6 text-[#754426]">{copy}</p>
       </div>
-      <div
-        className={cn(
-          "grid items-start gap-5",
-          screens.length === 1
-            ? "lg:grid-cols-1"
-            : screens.length === 2
-            ? "lg:grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)]"
-            : "lg:grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)_48px_minmax(0,1fr)_48px_minmax(0,1fr)]"
-        )}
-      >
-        {screens.map((screen, index) => (
-          <div className="contents" key={screen.src}>
-            <ScreenCard screen={screen} compact={screens.length === 4} />
-            {index < screens.length - 1 && <FlowArrow />}
-          </div>
-        ))}
-      </div>
+      <ScreenFocusCarousel label={title} screens={screens.map(screen => ({
+        src: screen.src, title: screen.label, description: screen.detail,
+        width: screen.width, height: screen.height,
+      }))} />
     </CaseStudyBubbleCard>
   );
 }
@@ -387,18 +325,11 @@ function AccountBranchFlow() {
           The account path handles both returning users with a verified bank and first-time setup.
         </p>
       </div>
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,0.8fr)_64px_minmax(0,1.8fr)] lg:items-start">
-        <ScreenCard screen={accountScreen} />
-        <div className="flex h-full min-h-20 flex-col items-center justify-center gap-2 text-[#f86706]">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a7057]">Bank account</span>
-          <span className="text-2xl max-lg:rotate-90">→</span>
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2">
-          {bankScreens.map((screen) => (
-            <ScreenCard screen={screen} key={screen.src} />
-          ))}
-        </div>
-      </div>
+      <ScreenFocusCarousel label="4Oranges account and bank screens"
+        screens={[accountScreen, ...bankScreens].map(screen => ({
+          src: screen.src, title: screen.label, description: screen.detail,
+          width: screen.width, height: screen.height,
+        }))} />
     </CaseStudyBubbleCard>
   );
 }

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { CaseStudyBubbleIconButton } from "@/components/case-study-bubble-icon-button";
 
 export type FocusScreen = {
@@ -14,10 +14,11 @@ export type FocusScreen = {
   height: number;
 };
 
-export function ScreenFocusCarousel({ screens, label, device = "mobile", className = "", id }: {
+export function ScreenFocusCarousel({ screens, label, device = "mobile", fit = "scroll", className = "", id }: {
   screens: readonly FocusScreen[];
   label: string;
   device?: "mobile" | "web";
+  fit?: "scroll" | "contain";
   className?: string;
   id?: string;
 }) {
@@ -33,7 +34,6 @@ export function ScreenFocusCarousel({ screens, label, device = "mobile", classNa
   const [visible, setVisible] = useState(true);
   const [mounted, setMounted] = useState(false);
   const index = ((active % screens.length) + screens.length) % screens.length;
-  const current = screens[index];
 
   useEffect(() => {
     setMounted(true);
@@ -88,11 +88,11 @@ export function ScreenFocusCarousel({ screens, label, device = "mobile", classNa
           style={{ width, height, marginLeft: -width / 2, zIndex: 3 - distance }} initial={false}
           animate={{ x, scale: distance === 0 ? 1 : sideScale, opacity: distance > 1 ? 0.65 : 1 }}
           transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.16, 1, 0.3, 1] }}>
-          <div className="h-full overflow-y-auto overscroll-y-contain" data-lenis-prevent-wheel
-            tabIndex={offset === 0 ? 0 : -1} aria-label={offset === 0 ? `${screen.title} preview, scroll to view` : undefined}
+          <div className={fit === "contain" ? "h-full overflow-hidden" : "h-full overflow-y-auto overscroll-y-contain"} data-lenis-prevent-wheel
+            tabIndex={offset === 0 ? 0 : -1} aria-label={offset === 0 ? `${screen.title} preview${fit === "scroll" ? ", scroll to view" : ""}` : undefined}
             aria-hidden={offset !== 0 || undefined}>
             <Image src={screen.src} alt={screen.title} width={screen.width} height={screen.height}
-              unoptimized draggable={false} className="pointer-events-none block h-auto w-full select-none" sizes={device === "web" ? "500px" : "210px"} />
+              unoptimized draggable={false} className={`pointer-events-none block w-full select-none ${fit === "contain" ? "h-full object-contain" : "h-auto"}`} sizes={device === "web" ? "500px" : "210px"} />
           </div>
           {offset !== 0 && <button type="button" className="absolute inset-0 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-[#0293f4]"
             tabIndex={-1} aria-label={`Show ${screen.title}`} onClick={() => { if (!dragged.current) select(position); }} />}
@@ -110,11 +110,15 @@ export function ScreenFocusCarousel({ screens, label, device = "mobile", classNa
     </div>}
     <div className="mx-auto mt-6 flex max-w-[680px] flex-col items-center px-5 text-center" aria-live={paused || focused || hovered ? "polite" : "off"} aria-atomic="true">
       <p className="text-xs tabular-nums text-[#526677]">{String(index + 1).padStart(2, "0")} / {String(screens.length).padStart(2, "0")}</p>
-      <div className="mt-3 min-h-[100px] sm:min-h-[80px]">
-        <h3 className="font-[var(--font-affina-heading)] text-xl font-medium leading-7 text-[#173b4b]">{current.title}</h3>
-        <p className="mt-2 text-sm leading-6 text-[#526677]">{current.description}</p>
+      <div className="mt-3 grid min-h-[56px]">
+        {screens.map((screen, screenIndex) => (
+          <div key={`${screen.src}-${screenIndex}`} className={`col-start-1 row-start-1 ${screenIndex === index ? "" : "invisible"}`}
+            aria-hidden={screenIndex !== index || undefined}>
+            <h3 className="font-[var(--font-affina-heading)] text-xl font-medium leading-7 text-[#173b4b]">{screen.title}</h3>
+            {screen.description && <p className="mt-2 text-sm leading-6 text-[#526677]">{screen.description}</p>}
+          </div>
+        ))}
       </div>
-      <a href={current.src} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-[#2366b7] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4">Open full screen <ArrowUpRight size={15} aria-hidden="true" /></a>
     </div>
   </div>;
 }
