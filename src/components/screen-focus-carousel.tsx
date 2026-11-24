@@ -16,6 +16,10 @@ export type FocusScreen = {
   height: number;
 };
 
+function screenTitle(title: string) {
+  return title.replace(/^\s*\d{1,2}\s*(?:\/\s*\d{1,2}\s*)?[·.\-–—:]\s*/, "");
+}
+
 function ScreenPreview({ screen, active, fit, onImageSize }: {
   screen: FocusScreen;
   active: boolean;
@@ -28,9 +32,9 @@ function ScreenPreview({ screen, active, fit, onImageSize }: {
     <div className="h-full w-full overflow-hidden rounded-[20px] border border-white/80 bg-white shadow-[0_12px_40px_-24px_rgba(40,76,106,0.25)]">
       <div ref={scroller} id={id} data-app-screen-preview data-lenis-prevent-wheel
         className={fit === "contain" ? "h-full overflow-hidden" : "h-full overflow-x-hidden overflow-y-auto overscroll-y-contain"}
-        tabIndex={active ? 0 : -1} aria-label={active ? `${screen.title} preview` : undefined}
+        tabIndex={active ? 0 : -1} aria-label={active ? `${screenTitle(screen.title)} preview` : undefined}
         aria-hidden={!active || undefined}>
-        <Image src={screen.src} alt={screen.title} width={screen.width} height={screen.height}
+        <Image src={screen.src} alt={screenTitle(screen.title)} width={screen.width} height={screen.height}
           unoptimized draggable={false}
           onLoad={event => onImageSize(screen.src, event.currentTarget.naturalWidth, event.currentTarget.naturalHeight)}
           className={`pointer-events-none block w-full select-none ${fit === "contain" ? "h-full object-contain" : "h-auto"}`}
@@ -38,7 +42,7 @@ function ScreenPreview({ screen, active, fit, onImageSize }: {
       </div>
     </div>
     {active && fit === "scroll" && <PortfolioBubbleScrollbar scrollRef={scroller} controls={id}
-      label={`Scroll ${screen.title} preview`} className={styles.previewScrollbar} />}
+      label={`Scroll ${screenTitle(screen.title)} preview`} className={styles.previewScrollbar} />}
   </>;
 }
 
@@ -78,7 +82,7 @@ export function ScreenFocusCarousel({ screens, label, device = "mobile", fit = "
 
   useEffect(() => {
     if (!inView || !visible || paused || hovered || focused || reducedMotion || screens.length < 2) return;
-    const timer = window.setInterval(() => setActive(value => value + 1), 1500);
+    const timer = window.setInterval(() => setActive(value => value + 1), 800);
     return () => window.clearInterval(timer);
   }, [active, inView, visible, paused, hovered, focused, reducedMotion, screens.length]);
 
@@ -136,10 +140,10 @@ export function ScreenFocusCarousel({ screens, label, device = "mobile", fit = "
           style={{ width: frame.width, height: frame.height, top: 16 + (height - frame.height) / 2,
             marginLeft: -frame.width / 2, zIndex: 3 - distance }} initial={false}
           animate={{ x, scale: distance === 0 ? 1 : sideScale, opacity: distance > 1 ? 0.65 : 1 }}
-          transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.16, 1, 0.3, 1] }}>
+          transition={{ duration: reducedMotion ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] }}>
           <ScreenPreview screen={screen} active={offset === 0} fit={fit} onImageSize={imageSize} />
           {offset !== 0 && <button type="button" className="absolute inset-0 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-[#0293f4]"
-            tabIndex={-1} aria-label={`Show ${screen.title}`} onClick={() => { if (!dragged.current) select(position); }} />}
+            tabIndex={-1} aria-label={`Show ${screenTitle(screen.title)}`} onClick={() => { if (!dragged.current) select(position); }} />}
         </motion.div>;
       })}
     </motion.div>
@@ -153,12 +157,15 @@ export function ScreenFocusCarousel({ screens, label, device = "mobile", fit = "
       <CaseStudyBubbleIconButton aria-label="Next screen" disabled={screens.length < 2} onClick={() => select(active + 1)}><ChevronRight size={18} aria-hidden="true" /></CaseStudyBubbleIconButton>
     </div>}
     <div className="mx-auto mt-6 flex max-w-[680px] flex-col items-center px-5 text-center" aria-live={paused || focused || hovered ? "polite" : "off"} aria-atomic="true">
-      <p className="text-xs tabular-nums text-[#526677]">{String(index + 1).padStart(2, "0")} / {String(screens.length).padStart(2, "0")}</p>
-      <div className="mt-3 grid min-h-[56px]">
+      <div className="grid min-h-[56px]">
         {screens.map((screen, screenIndex) => (
           <div key={`${screen.src}-${screenIndex}`} className={`col-start-1 row-start-1 ${screenIndex === index ? "" : "invisible"}`}
             aria-hidden={screenIndex !== index || undefined}>
-            <h3 className="font-[var(--font-affina-heading)] text-xl font-medium leading-7 text-[#173b4b]">{screen.title}</h3>
+            <h3 className="font-[var(--font-affina-heading)] text-xl font-medium leading-7 text-[#173b4b]">
+              {screens.length > 1 && <span className="mr-3 inline-block align-middle text-xs font-normal tabular-nums text-[#526677]"
+                aria-label={`Screen ${screenIndex + 1} of ${screens.length}`}>{screenIndex + 1}/{screens.length}</span>}
+              <span>{screenTitle(screen.title)}</span>
+            </h3>
             {screen.description && <p className="mt-2 text-sm leading-6 text-[#526677]">{screen.description}</p>}
           </div>
         ))}
