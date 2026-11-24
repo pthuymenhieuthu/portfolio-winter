@@ -13,7 +13,7 @@ import { CaseStudySectionNavigation } from "@/components/case-study-section-navi
 import { ProjectCaseStudyHero } from "@/components/project-case-study-hero";
 import { PartnerJourneyDiagram } from "@/components/partner-journey-diagram";
 import { projectMeshPalettes } from "@/components/project-mesh-gradient";
-import { GalleryNextButton, HorizontalScreenGallery } from "@/components/horizontal-screen-gallery";
+import { ScreenFocusCarousel } from "@/components/screen-focus-carousel";
 
 const PROJECT_HERO_DELAY = 0.36;
 
@@ -348,66 +348,9 @@ function ScreenFlow({
   screens: FlowScreen[];
   device: "mobile" | "web";
 }) {
-  return (
-    <HorizontalScreenGallery label={device === "mobile" ? "Affina Pro screens" : "Affina web app screens"} className="-mx-5 mt-12 sm:-mx-8 lg:mx-0">
-      <div className="flex w-max items-start gap-4 pb-4">
-        {screens.map((screen, index) => (
-          <div className="flex items-center gap-4" key={screen.src} data-gallery-item>
-            <article
-              className={cn(
-                "snap-start overflow-hidden rounded-2xl border border-[#e1e6ea] bg-white shadow-[0_18px_50px_rgba(20,45,65,0.08)]",
-                device === "mobile" ? "w-[280px] sm:w-[300px]" : "w-[520px] sm:w-[620px]"
-              )}
-            >
-              <a
-                data-app-screen-preview="true"
-                className={cn(
-                  "scrollbar-none block overflow-y-auto overscroll-y-contain bg-[#f2f6fa]",
-                  device === "mobile"
-                    ? "h-[720px] sm:h-[780px]"
-                    : "h-[520px] sm:h-[580px]"
-                )}
-                href={screen.src}
-                rel="noreferrer"
-                target="_blank"
-                title="Open the full screen"
-              >
-                <Image
-                  alt={`${index + 1}. ${screen.title}`}
-                  className="h-auto w-full"
-                  height={screen.height}
-                  src={screen.src}
-                  unoptimized
-                  width={screen.width}
-                />
-              </a>
-              <div className="border-t border-[#e1e6ea] p-5">
-                <div className="flex items-start gap-3">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0293f4] text-xs font-bold text-white">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="font-[var(--font-affina-heading)] text-lg font-semibold text-[#08090a]">
-                      {screen.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-6 text-[#737373]">
-                      {screen.description}
-                    </p>
-                    <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.08em] text-[#0293f4]">
-                      Scroll screen · open full ↗
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            {index < screens.length - 1 && (
-              <GalleryNextButton index={index} />
-            )}
-          </div>
-        ))}
-      </div>
-    </HorizontalScreenGallery>
-  );
+  return <ScreenFocusCarousel screens={screens} device={device}
+    label={device === "mobile" ? "Affina Pro screens" : "Affina web app screens"}
+    className="-mx-5 mt-12 sm:-mx-8 lg:mx-0" />;
 }
 
 function ProductFlowSection({

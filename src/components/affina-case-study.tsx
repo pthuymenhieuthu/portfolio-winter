@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { CaseStudyBubbleCard } from "@/components/case-study-bubble-card";
-import { GalleryNextButton, HorizontalScreenGallery } from "@/components/horizontal-screen-gallery";
+import { HorizontalScreenGallery } from "@/components/horizontal-screen-gallery";
+import { ScreenFocusCarousel } from "@/components/screen-focus-carousel";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
@@ -448,40 +449,11 @@ function JourneyScreenFlow({
   screens: readonly JourneyFlowScreen[];
   title: string;
 }) {
-  return (
-    <div className="-mx-5 overflow-hidden sm:mx-0">
-      <HorizontalScreenGallery label={`${title} screens`} viewportClassName="px-0 sm:px-0 pb-4">
-        <div className="flex w-max snap-x snap-mandatory items-start px-5 sm:px-0">
-          {screens.map((screen, index) => (
-            <div className="contents" key={screen.src}>
-              <figure data-gallery-item className={cn("shrink-0 snap-start", screen.wide ? "w-[82vw] max-w-[640px]" : "w-[62vw] max-w-[240px]")}>
-                <ImageZoom zoomImg={{ src: screen.src }}>
-                  <div className="overflow-hidden rounded-[24px] border border-[#cfd0d4] bg-white shadow-sm">
-                    <Image
-                      src={screen.src}
-                      alt={`${title}: ${screen.label}`}
-                      width={screen.width ?? 1533}
-                      height={screen.height ?? 3317}
-                      unoptimized
-                      className="block h-auto w-full"
-                      sizes={screen.wide ? "(max-width: 768px) 82vw, 640px" : "(max-width: 768px) 62vw, 240px"}
-                    />
-                  </div>
-                </ImageZoom>
-                <figcaption className="mt-5">
-                  <p className="text-sm font-semibold text-[#08090a]">{screen.label}</p>
-                  <p className="mt-1 text-xs leading-5 text-[#737373]">{screen.detail}</p>
-                </figcaption>
-              </figure>
-              {index < screens.length - 1 && (
-                <div className="mx-4 mt-48 shrink-0 sm:mx-6"><GalleryNextButton index={index} /></div>
-              )}
-            </div>
-          ))}
-        </div>
-      </HorizontalScreenGallery>
-    </div>
-  );
+  return <ScreenFocusCarousel label={`${title} screens`}
+    device={screens.some(screen => screen.wide) ? "web" : "mobile"}
+    screens={screens.map(screen => ({ src: screen.src, title: screen.label,
+      description: screen.detail, width: screen.width ?? 1533, height: screen.height ?? 3317 }))}
+    className="-mx-5 sm:mx-0" />;
 }
 
 function InsuranceProductFlow() {
