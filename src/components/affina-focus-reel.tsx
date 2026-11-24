@@ -17,6 +17,7 @@ export function AffinaFocusReel() {
     className="-mx-5 sm:-mx-8"
     screens={screens.map(([name, title, description]) => ({
       src: `/assets/affina/ai-journey/${name}.webp?v=figma-20261119`,
-      title, description, width: 1533, height: 3317,
+      title, description, width: name === "07-comparison" ? 1508 : 1533,
+      height: name === "07-comparison" ? 4096 : 3317,
     }))} />;
 }

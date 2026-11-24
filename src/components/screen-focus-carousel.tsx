@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { CaseStudyBubbleIconButton } from "@/components/case-study-bubble-icon-button";
+import { PortfolioBubbleScrollbar } from "@/components/portfolio-bubble-scrollbar";
+import styles from "./screen-focus-carousel.module.css";
 
 export type FocusScreen = {
   src: string;
@@ -13,6 +15,32 @@ export type FocusScreen = {
   width: number;
   height: number;
 };
+
+function ScreenPreview({ screen, active, fit, onImageSize }: {
+  screen: FocusScreen;
+  active: boolean;
+  fit: "scroll" | "contain";
+  onImageSize: (src: string, width: number, height: number) => void;
+}) {
+  const scroller = useRef<HTMLDivElement>(null);
+  const id = useId();
+  return <>
+    <div className="h-full w-full overflow-hidden rounded-[20px] border border-white/80 bg-white shadow-[0_12px_40px_-24px_rgba(40,76,106,0.25)]">
+      <div ref={scroller} id={id} data-app-screen-preview data-lenis-prevent-wheel
+        className={fit === "contain" ? "h-full overflow-hidden" : "h-full overflow-x-hidden overflow-y-auto overscroll-y-contain"}
+        tabIndex={active ? 0 : -1} aria-label={active ? `${screen.title} preview` : undefined}
+        aria-hidden={!active || undefined}>
+        <Image src={screen.src} alt={screen.title} width={screen.width} height={screen.height}
+          unoptimized draggable={false}
+          onLoad={event => onImageSize(screen.src, event.currentTarget.naturalWidth, event.currentTarget.naturalHeight)}
+          className={`pointer-events-none block w-full select-none ${fit === "contain" ? "h-full object-contain" : "h-auto"}`}
+          sizes="(max-width: 640px) 76vw, 500px" />
+      </div>
+    </div>
+    {active && fit === "scroll" && <PortfolioBubbleScrollbar scrollRef={scroller} controls={id}
+      label={`Scroll ${screen.title} preview`} className={styles.previewScrollbar} />}
+  </>;
+}
 
 export function ScreenFocusCarousel({ screens, label, device = "mobile", fit = "scroll", className = "", id }: {
   screens: readonly FocusScreen[];
@@ -27,6 +55,7 @@ export function ScreenFocusCarousel({ screens, label, device = "mobile", fit = "
   const inView = useInView(root, { amount: 0.35 });
   const reducedMotion = useReducedMotion();
   const [active, setActive] = useState(0);
+  const [imageSizes, setImageSizes] = useState<Record<string, { width: number; height: number }>>({});
   const [available, setAvailable] = useState(900);
   const [paused, setPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -57,7 +86,19 @@ export function ScreenFocusCarousel({ screens, label, device = "mobile", fit = "
   const compact = available < 640;
   const width = device === "web" ? Math.min(500, available * (compact ? 0.76 : 0.55))
     : Math.min(210, available * 0.46);
-  const height = device === "web" ? width * 0.7 : width * 2.1;
+  const height = device === "web" ? width * 0.7 : width * 2.2;
+  const imageSize = (src: string, naturalWidth: number, naturalHeight: number) => {
+    if (!naturalWidth || !naturalHeight) return;
+    setImageSizes(previous => previous[src]?.width === naturalWidth && previous[src]?.height === naturalHeight
+      ? previous : { ...previous, [src]: { width: naturalWidth, height: naturalHeight } });
+  };
+  const frameSize = (screen: FocusScreen) => {
+    const natural = imageSizes[screen.src] ?? screen;
+    const ratio = natural.height / natural.width;
+    const frameWidth = fit === "contain" ? Math.min(width, Math.ceil((height - 2) / ratio) + 2) : width;
+    return { width: frameWidth, height: Math.min(height, Math.ceil((frameWidth - 2) * ratio) + 2) };
+  };
+  const centerWidth = frameSize(screens[index]).width;
   const sideScale = device === "web" ? 0.64 : 0.62;
   const gap = compact ? 12 : 24;
   const offsets = screens.length > 4 ? [-2, -1, 0, 1, 2] : screens.length > 2 ? [-1, 0, 1] : screens.length === 2 ? [0, 1] : [0];
@@ -68,6 +109,7 @@ export function ScreenFocusCarousel({ screens, label, device = "mobile", fit = "
     onFocusCapture={event => { if (!(event.target as Element).closest("[data-carousel-playback]")) setFocused(true); }}
     onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
     onKeyDown={event => {
+      if ((event.target as Element).closest("[role=scrollbar]")) return;
       if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
         event.preventDefault(); select(active + (event.key === "ArrowRight" ? 1 : -1));
       }
@@ -82,18 +124,20 @@ export function ScreenFocusCarousel({ screens, label, device = "mobile", fit = "
         const screenIndex = ((position % screens.length) + screens.length) % screens.length;
         const screen = screens[screenIndex];
         const distance = Math.abs(offset);
-        const x = distance === 0 ? 0 : Math.sign(offset) * (width / 2 + gap + width * sideScale / 2 + (distance - 1) * (width * sideScale + gap));
+        const frame = frameSize(screen);
+        let x = distance === 0 ? 0 : centerWidth / 2 + gap + frame.width * sideScale / 2;
+        for (let step = 1; step < distance; step++) {
+          const adjacentIndex = ((active + Math.sign(offset) * step) % screens.length + screens.length) % screens.length;
+          x += frameSize(screens[adjacentIndex]).width * sideScale + gap;
+        }
+        x *= Math.sign(offset);
         return <motion.div key={position} data-carousel-slide data-screen-index={screenIndex}
-          className="absolute left-1/2 top-4 overflow-hidden rounded-[20px] border border-white/80 bg-white shadow-[0_12px_40px_-24px_rgba(40,76,106,0.25)]"
-          style={{ width, height, marginLeft: -width / 2, zIndex: 3 - distance }} initial={false}
+          className="absolute left-1/2"
+          style={{ width: frame.width, height: frame.height, top: 16 + (height - frame.height) / 2,
+            marginLeft: -frame.width / 2, zIndex: 3 - distance }} initial={false}
           animate={{ x, scale: distance === 0 ? 1 : sideScale, opacity: distance > 1 ? 0.65 : 1 }}
           transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.16, 1, 0.3, 1] }}>
-          <div className={fit === "contain" ? "h-full overflow-hidden" : "h-full overflow-y-auto overscroll-y-contain"} data-lenis-prevent-wheel
-            tabIndex={offset === 0 ? 0 : -1} aria-label={offset === 0 ? `${screen.title} preview${fit === "scroll" ? ", scroll to view" : ""}` : undefined}
-            aria-hidden={offset !== 0 || undefined}>
-            <Image src={screen.src} alt={screen.title} width={screen.width} height={screen.height}
-              unoptimized draggable={false} className={`pointer-events-none block w-full select-none ${fit === "contain" ? "h-full object-contain" : "h-auto"}`} sizes={device === "web" ? "500px" : "210px"} />
-          </div>
+          <ScreenPreview screen={screen} active={offset === 0} fit={fit} onImageSize={imageSize} />
           {offset !== 0 && <button type="button" className="absolute inset-0 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-[#0293f4]"
             tabIndex={-1} aria-label={`Show ${screen.title}`} onClick={() => { if (!dragged.current) select(position); }} />}
         </motion.div>;

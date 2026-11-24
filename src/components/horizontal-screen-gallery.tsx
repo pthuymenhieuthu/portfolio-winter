@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import styles from "./horizontal-screen-gallery.module.css";
 import { CaseStudyBubbleIconButton } from "@/components/case-study-bubble-icon-button";
+import { PortfolioBubbleScrollbar } from "@/components/portfolio-bubble-scrollbar";
 
 const GalleryNavigation = createContext<(index: number) => void>(() => {});
 
@@ -70,6 +71,7 @@ export function HorizontalScreenGallery({ children, label, className, viewportCl
             <CaseStudyBubbleIconButton aria-label="Next screens" aria-controls={id} disabled={edges.end} onClick={() => step(1)}><ArrowRight size={18} aria-hidden="true" /></CaseStudyBubbleIconButton>
           </div>
         </div>
+        <div className={styles.scrollArea}>
         <div ref={viewport} id={id} data-gallery-viewport data-lenis-prevent-wheel
           className={cn(styles.viewport, "px-5 pb-3 sm:px-8 lg:px-0", viewportClassName)}
           tabIndex={0} aria-label={`${label} scroll area`}
@@ -107,6 +109,8 @@ export function HorizontalScreenGallery({ children, label, className, viewportCl
             event.preventDefault(); event.stopPropagation(); suppressClick.current = false;
           }}
         >{children}</div>
+        <PortfolioBubbleScrollbar scrollRef={viewport} controls={id} orientation="horizontal" label={`Scroll ${label}`} />
+        </div>
       </div>
     </GalleryNavigation.Provider>
   );

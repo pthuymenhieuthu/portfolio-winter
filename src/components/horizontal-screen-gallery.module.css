@@ -1,12 +1,11 @@
+.scrollArea { position: relative; }
 .viewport {
   min-width: 0;
   overflow-x: auto;
   overscroll-behavior-x: contain;
-  scrollbar-width: thin;
-  scrollbar-color: #baddff transparent;
+  scrollbar-width: none;
   cursor: grab;
 }
 .viewport[data-dragging] { cursor: grabbing; user-select: none; }
 .viewport:focus-visible { outline: 2px solid #0293f4; outline-offset: 4px; border-radius: 8px; }
-.viewport::-webkit-scrollbar { height: 8px; }
-.viewport::-webkit-scrollbar-thumb { border-radius: 999px; background: #baddff; }
+.viewport::-webkit-scrollbar { display: none; width: 0; height: 0; }
