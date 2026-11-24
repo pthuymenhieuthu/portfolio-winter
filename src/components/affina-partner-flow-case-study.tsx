@@ -33,7 +33,6 @@ const sections = [
   { id: "partner-problem", label: "Design Problem" },
   { id: "partner-pro", label: "Affina Pro" },
   { id: "partner-web", label: "Web App" },
-  { id: "partner-rules", label: "Edge Cases" },
   { id: "partner-handoff", label: "Handoff" },
 ] as const;
 
@@ -158,44 +157,6 @@ const selfServiceFlow: FlowScreen[] = [
     height: 2504,
     title: "Complete the family",
     description: "Confirm buyer and insured-member details in one place.",
-  },
-];
-
-const recoveryStates: FlowScreen[] = [
-  {
-    src: "/assets/affina-partner-flow/flows/state-01-age-warning.png",
-    width: 344,
-    height: 460,
-    title: "Age rule",
-    description: "Explain eligibility constraints at the moment they matter.",
-  },
-  {
-    src: "/assets/affina-partner-flow/flows/state-02-family-warning.png",
-    width: 344,
-    height: 468,
-    title: "Family validation",
-    description: "Show which member blocks the current configuration.",
-  },
-  {
-    src: "/assets/affina-partner-flow/flows/state-03-add-success.png",
-    width: 390,
-    height: 504,
-    title: "Add insured person",
-    description: "Collect a family member’s name, gender and date of birth before adding them.",
-  },
-  {
-    src: "/assets/affina-partner-flow/flows/state-04-upload-warning.png",
-    width: 344,
-    height: 503,
-    title: "Incomplete upload",
-    description: "Identify missing rows and offer a direct recovery path.",
-  },
-  {
-    src: "/assets/affina-partner-flow/flows/state-05-upload-failed.png",
-    width: 344,
-    height: 423,
-    title: "Upload failed",
-    description: "State the file problem and provide a clear retry action.",
   },
 ];
 
@@ -481,57 +442,6 @@ function ProductFlowSection({
           title={title}
         />
         <ScreenFlow device={device} screens={screens} />
-      </div>
-    </section>
-  );
-}
-
-function RecoveryStatesSection() {
-  return (
-    <section className="scroll-mt-20 bg-[#f2f6fa]" id="partner-rules">
-      <div className="mx-auto max-w-[1100px] px-5 py-24 sm:px-8 lg:py-36">
-        <SectionHeader
-          description={
-            <>
-              The happy path stays readable because eligibility, family composition and
-              upload issues are explained as{" "}
-              <CaseStudyScrollHighlight>focused recovery states</CaseStudyScrollHighlight>.
-            </>
-          }
-          eyebrow="Designing beyond the happy path"
-          title="Rules become clear next actions"
-        />
-        <HorizontalScreenGallery label="Affina recovery states" className="-mx-5 mt-12 sm:-mx-8 lg:mx-0">
-          <div className="flex w-max items-stretch gap-5 pb-4">
-            {recoveryStates.map((screen, index) => (
-              <CaseStudyBubbleCard staticFilm as="article"
-                className="w-[280px] snap-start p-5"
-                key={screen.src}
-                data-gallery-item
-              >
-                <CaseStudyBubbleCard staticFilm className="flex h-[330px] items-center justify-center overflow-hidden p-4">
-                  <Image
-                    alt={screen.title}
-                    className="max-h-full w-auto object-contain"
-                    height={screen.height}
-                    src={screen.src}
-                    unoptimized
-                    width={screen.width}
-                  />
-                </CaseStudyBubbleCard>
-                <p className="mt-5 text-xs font-bold text-[#0293f4]">
-                  STATE {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-2 font-[var(--font-affina-heading)] text-lg font-semibold">
-                  {screen.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-[#737373]">
-                  {screen.description}
-                </p>
-              </CaseStudyBubbleCard>
-            ))}
-          </div>
-        </HorizontalScreenGallery>
       </div>
     </section>
   );
@@ -1314,7 +1224,6 @@ This flow expanded the insurance journey from one insured person to{" "}
         screens={selfServiceFlow}
         title="Give customers ownership without exposing the complexity"
       />
-      <RecoveryStatesSection />
 
       <section
         className="scroll-mt-20 border-y border-[#e1e6ea] bg-[#f7f7f8]"
