@@ -1,3 +1,13 @@
+.previewViewport { outline: none; }
+.previewViewport:focus-visible { outline: 2px solid #2979b5; outline-offset: -4px; }
+.softEdges::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 2px #fff, inset 0 0 5px 2px rgba(255, 255, 255, .9);
+  pointer-events: none;
+}
 .previewScrollbar.previewScrollbar {
   top: 8px;
   bottom: 8px;

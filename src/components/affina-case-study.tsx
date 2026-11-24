@@ -151,10 +151,10 @@ const journeySteps = [
     eyebrow: "From Buy Now to a verified application",
     body: "Guide the buyer through health declarations, answer review and OTP verification before completing their contact and policyholder details.",
     media: [
-      { src: "/assets/affina/purchase-flow/08-health-consent.webp", width: 489, height: 537, label: "08 · Declaration consent", detail: "Explain the health declaration and obtain consent before continuing." },
-      { src: "/assets/affina/purchase-flow/09-health-declaration.webp", width: 559, height: 537, label: "09 · Health questions", detail: "Present the declaration as focused questions with clear answer choices." },
+      { src: "/assets/affina/purchase-flow/08-health-consent.webp", softenEdges: true, width: 489, height: 537, label: "08 · Declaration consent", detail: "Explain the health declaration and obtain consent before continuing." },
+      { src: "/assets/affina/purchase-flow/09-health-declaration.webp", softenEdges: true, width: 559, height: 537, label: "09 · Health questions", detail: "Present the declaration as focused questions with clear answer choices." },
       { src: "/assets/affina/purchase-flow/10-review-answers.webp", width: 577, height: 788, label: "10 · Review answers", detail: "Let the buyer review and edit their declarations before confirming." },
-      { src: "/assets/affina/purchase-flow/11-verify-otp.webp", width: 559, height: 537, label: "11 · Verify by OTP", detail: "Confirm the declaration using a six-digit verification code." },
+      { src: "/assets/affina/purchase-flow/11-verify-otp.webp", softenEdges: true, width: 559, height: 537, label: "11 · Verify by OTP", detail: "Confirm the declaration using a six-digit verification code." },
       { src: "/assets/affina/purchase-flow/12-buyer-payment-details.webp", width: 1779, height: 785, wide: true, label: "12 · Buyer details & payment method", detail: "Complete policyholder details and choose ATM, credit card or QR payment. Personal information is redacted." },
     ],
   },
@@ -164,7 +164,7 @@ const journeySteps = [
     eyebrow: "Make the next payment action clear",
     body: "Show the amount due, a time-limited QR transfer and step-by-step payment instructions. The recording ends at this payment screen.",
     media: [
-      { src: "/assets/affina/purchase-flow/13-qr-payment.webp", width: 758, height: 430, wide: true, label: "13 · QR payment instructions", detail: "Keep the amount, expiry timer and transfer instructions together. Payment QR codes are redacted." },
+      { src: "/assets/affina/purchase-flow/13-qr-payment.webp", softenEdges: true, width: 758, height: 430, wide: true, label: "13 · QR payment instructions", detail: "Keep the amount, expiry timer and transfer instructions together. Payment QR codes are redacted." },
     ],
   },
 ];
@@ -440,6 +440,7 @@ type JourneyFlowScreen = {
   height?: number;
   width?: number;
   wide?: boolean;
+  softenEdges?: boolean;
 };
 
 function JourneyScreenFlow({
@@ -452,7 +453,8 @@ function JourneyScreenFlow({
   return <ScreenFocusCarousel label={`${title} screens`}
     device={screens.some(screen => screen.wide) ? "web" : "mobile"}
     screens={screens.map(screen => ({ src: screen.src, title: screen.label,
-      description: screen.detail, width: screen.width ?? 1533, height: screen.height ?? 3317 }))}
+      description: screen.detail, width: screen.width ?? 1533, height: screen.height ?? 3317,
+      softenEdges: screen.softenEdges }))}
     className="-mx-5 sm:mx-0" />;
 }
 

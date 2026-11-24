@@ -14,6 +14,7 @@ export type FocusScreen = {
   description: string;
   width: number;
   height: number;
+  softenEdges?: boolean;
 };
 
 function screenTitle(title: string) {
@@ -29,9 +30,9 @@ function ScreenPreview({ screen, active, fit, onImageSize }: {
   const scroller = useRef<HTMLDivElement>(null);
   const id = useId();
   return <>
-    <div className="h-full w-full overflow-hidden rounded-[20px] border border-white/80 bg-white shadow-[0_12px_40px_-24px_rgba(40,76,106,0.25)]">
+    <div className={`relative h-full w-full overflow-hidden rounded-[20px] border border-white/80 bg-white shadow-[0_12px_40px_-24px_rgba(40,76,106,0.25)] ${screen.softenEdges ? styles.softEdges : ""}`}>
       <div ref={scroller} id={id} data-app-screen-preview data-lenis-prevent-wheel
-        className={fit === "contain" ? "h-full overflow-hidden" : "h-full overflow-x-hidden overflow-y-auto overscroll-y-contain"}
+        className={`${styles.previewViewport} ${fit === "contain" ? "h-full overflow-hidden" : "h-full overflow-x-hidden overflow-y-auto overscroll-y-contain"}`}
         tabIndex={active ? 0 : -1} aria-label={active ? `${screenTitle(screen.title)} preview` : undefined}
         aria-hidden={!active || undefined}>
         <Image src={screen.src} alt={screenTitle(screen.title)} width={screen.width} height={screen.height}
