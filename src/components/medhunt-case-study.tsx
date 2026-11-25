@@ -1,5 +1,5 @@
 "use client";
-import { CaseStudyImageCarousel } from "@/components/case-study-image-carousel";
+import { CaseStudyImageGallery } from "@/components/case-study-image-gallery";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 import { HorizontalScreenGallery } from "@/components/horizontal-screen-gallery";
 
@@ -505,7 +505,7 @@ export function MedhuntCaseStudy() {
 
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-dashboard">
           <SectionHeading title="A dashboard that leads with work, not reporting" />
-          <CaseStudyImageCarousel showcase label="MedHunt dashboard" className="mt-12" images={[{
+          <CaseStudyImageGallery label="MedHunt dashboard" className="mt-12" images={[{
             src: "/assets/medhunt/screens/dashboard.png", alt: "Dashboard",
             description: "Today’s work, open requests, active cases, and outstanding fees.",
           }]} />
@@ -514,7 +514,7 @@ export function MedhuntCaseStudy() {
 
         <CaseStudyRevealSection className="scroll-mt-24" id="medhunt-core">
           <SectionHeading title="Core workflows stay close to the decision" />
-          <CaseStudyImageCarousel showcase label="MedHunt core workflow screens" className="mt-12" images={[
+          <CaseStudyImageGallery label="MedHunt core workflow screens" className="mt-12" images={[
             { src: "/assets/medhunt/screens/requests.png?v=cards-3", alt: "Request intake and tracking", description: "Recruitment requests, status metrics, and the operational table." },
             { src: "/assets/medhunt/screens/candidates.png?v=cards-3", alt: "Candidate pool visibility", description: "Profile status, specialty, experience, and license information." },
             { src: "/assets/medhunt/screens/pipeline.png?v=cards-3", alt: "Pipeline visibility", description: "Candidate stages and the next recruitment milestones." },

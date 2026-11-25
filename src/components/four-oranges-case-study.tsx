@@ -1,5 +1,5 @@
 "use client";
-import { ScreenFocusCarousel } from "@/components/screen-focus-carousel";
+import { StaticScreenGallery } from "@/components/case-study-image-gallery";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
@@ -240,7 +240,7 @@ function LinearScreenFlow({
         </p>
         <p className="mt-3 max-w-[620px] text-sm leading-6 text-[#754426]">{copy}</p>
       </div>
-      <ScreenFocusCarousel label={title} screens={screens.map(screen => ({
+      <StaticScreenGallery label={title} screens={screens.map(screen => ({
         src: screen.src, title: screen.label, description: screen.detail,
         width: screen.width, height: screen.height,
       }))} />
@@ -325,7 +325,7 @@ function AccountBranchFlow() {
           The account path handles both returning users with a verified bank and first-time setup.
         </p>
       </div>
-      <ScreenFocusCarousel label="4Oranges account and bank screens"
+      <StaticScreenGallery label="4Oranges account and bank screens"
         screens={[accountScreen, ...bankScreens].map(screen => ({
           src: screen.src, title: screen.label, description: screen.detail,
           width: screen.width, height: screen.height,

@@ -1,5 +1,5 @@
 "use client";
-import { CaseStudyImageCarousel } from "@/components/case-study-image-carousel";
+import { CaseStudyImageGallery } from "@/components/case-study-image-gallery";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
@@ -310,7 +310,7 @@ export function UiDesignSeriesCaseStudy() {
             </p>
           </div>
 
-          <CaseStudyImageCarousel showcase label="UI Design Series top picks"
+          <CaseStudyImageGallery label="UI Design Series top picks"
             images={topPicks.map(item => ({ src: item.image, alt: item.title,
               width: assetDimensions[item.image]?.[0] ?? 1440,
               height: assetDimensions[item.image]?.[1] ?? 810,

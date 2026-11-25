@@ -1,5 +1,5 @@
 "use client";
-import { CaseStudyImageCarousel } from "@/components/case-study-image-carousel";
+import { CaseStudyImageGallery } from "@/components/case-study-image-gallery";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
@@ -429,7 +429,7 @@ export function ZoanCaseStudy() {
             ))}
           </div>
 
-          <CaseStudyImageCarousel showcase
+          <CaseStudyImageGallery
             label="zoan project screens"
             images={[
               {
@@ -451,7 +451,7 @@ export function ZoanCaseStudy() {
               Home brings app discovery and social conversations together, while
               Mini Apps gives community creations a dedicated place to explore.
             </p>
-            <CaseStudyImageCarousel showcase
+            <CaseStudyImageGallery
               label="zoan project screens"
               images={[
                 {
