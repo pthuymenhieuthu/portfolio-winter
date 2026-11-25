@@ -12,7 +12,11 @@ type GalleryImage = {
   mobilePosterSrc?: string;
 };
 
-/** Only for final product-screen showcases; keep introductory mockups, research and UI-kit evidence static. */
+/**
+ * Only for final product UI showcases. Inspect the actual images before opting in;
+ * section labels and filenames alone are not enough. Introductory mockups,
+ * brand boards, research and diagrams stay static.
+ */
 export function CaseStudyImageCarousel({ images, label = "Project screen gallery", device = "web", className }: {
   showcase: true;
   images: readonly GalleryImage[];

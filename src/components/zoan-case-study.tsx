@@ -462,12 +462,10 @@ export function ZoanCaseStudy() {
                   src: zoanAssets.miniApps,
                   alt: "Zoan Mini Apps screens showing the app hub, welcome flow, featured apps, and app directory",
                 },
-                {
-                  src: zoanAssets.socialMockup,
-                  alt: "Two iPhone mockups showing Zoan's social feed and mint cat-logo launch screen",
-                },
               ]}
             />
+            <CaseImage src={zoanAssets.socialMockup}
+              alt="Two iPhone mockups showing Zoan's social feed and mint cat-logo launch screen" />
           </div>
         </CaseStudyRevealSection>
 

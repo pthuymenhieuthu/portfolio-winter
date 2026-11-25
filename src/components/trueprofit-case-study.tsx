@@ -1,5 +1,4 @@
 "use client";
-import { CaseStudyImageCarousel } from "@/components/case-study-image-carousel";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
@@ -336,19 +335,10 @@ export function TrueProfitCaseStudy() {
             ))}
           </div>
 
-          <CaseStudyImageCarousel showcase
-            label="trueprofit project screens"
-            images={[
-              {
-                src: assets.landingOutcome,
-                alt: "TrueProfit landing illustration outcome",
-              },
-              {
-                src: assets.landingResult,
-                alt: "TrueProfit landing page result",
-              },
-            ]}
-          />
+          <div className="grid gap-6 sm:grid-cols-2">
+            <CaseImage src={assets.landingOutcome} alt="TrueProfit landing illustration outcome" />
+            <CaseImage src={assets.landingResult} alt="TrueProfit outcome and measurement overview" />
+          </div>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="trueprofit-task-02">

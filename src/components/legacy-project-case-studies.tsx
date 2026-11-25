@@ -1237,18 +1237,18 @@ export function ZanZanCaseStudy() {
           ]}
           theme={theme}
         />
-        <ImageGrid showcase
+        <ImageGrid
           columns="md:grid-cols-1"
           images={[
             {
               src: "/Ty3w3dbemYK9iAryPI3diN07o_zzjlrc.webp",
-              alt: "ZanZan solution screen",
+              alt: "Zân Zan logo system",
               fit: "contain",
               ratio: "h-auto",
             },
             {
               src: "/HgZgPI0cxFtWtliY7U0k9azu3M_pbv6oc.webp",
-              alt: "ZanZan solution screen",
+              alt: "Zân Zan typography and color palette",
               fit: "contain",
               ratio: "h-auto",
             },
