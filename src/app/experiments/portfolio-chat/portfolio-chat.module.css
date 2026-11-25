@@ -142,7 +142,7 @@
   .topbar { padding: 22px 20px; }
   .exploreProjects { right: 20px; bottom: max(20px, env(safe-area-inset-bottom)); }
   .previewLabel { display: none; }
-  .surface { min-height: 100dvh; height: 100dvh; }
+  .surface { min-height: max(560px, 100dvh); height: 100dvh; }
   .fluid :global(.fluid-typing-stage) { padding: 106px 18px 75px; }
   .fluid :global(.fluid-typing-copy) { font-size: clamp(30px, 7.8vw, 48px); }
   .intro > .composer { margin-top: 48px; }
