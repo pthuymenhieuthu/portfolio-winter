@@ -44,12 +44,12 @@
 .fluid :global(.fluid-typing-stage) {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: 1fr auto 1fr;
+  grid-template-rows: auto auto;
   justify-content: center;
   justify-items: center;
-  align-content: stretch;
+  align-content: center;
   gap: 0;
-  padding: 110px 24px 86px;
+  padding: 140px 24px 60px;
 }
 .fluid :global(.fluid-typing-copy) {
   font-family: var(--font-heading), Arial, sans-serif;
