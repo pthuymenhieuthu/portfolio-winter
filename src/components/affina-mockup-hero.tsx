@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { usePageTransitionActive } from "@/lib/page-transition";
 
 const ImageRippleSurface = dynamic(
   () => import("./image-ripple-surface").then((module) => module.ImageRippleSurface),
@@ -11,15 +12,22 @@ const ImageRippleSurface = dynamic(
 
 export function ProjectMockupBackground({ src, alt = "" }: { src: string; alt?: string }) {
   const [interactive, setInteractive] = useState(false);
+  const transitionActive = usePageTransitionActive();
 
   useEffect(() => {
     const pointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const probe = document.createElement("canvas");
-    const gl = probe.getContext("webgl2");
-    const available = Boolean(gl);
-    gl?.getExtension("WEBGL_lose_context")?.loseContext();
-    const sync = () => setInteractive(available && pointer.matches && !motion.matches);
+    if (transitionActive) return;
+    let available: boolean | undefined;
+    const sync = () => {
+      if (!pointer.matches || motion.matches) { setInteractive(false); return; }
+      if (available === undefined) {
+        const gl = document.createElement("canvas").getContext("webgl2");
+        available = Boolean(gl);
+        gl?.getExtension("WEBGL_lose_context")?.loseContext();
+      }
+      setInteractive(available);
+    };
     sync();
     pointer.addEventListener("change", sync);
     motion.addEventListener("change", sync);
@@ -27,7 +35,7 @@ export function ProjectMockupBackground({ src, alt = "" }: { src: string; alt?: 
       pointer.removeEventListener("change", sync);
       motion.removeEventListener("change", sync);
     };
-  }, []);
+  }, [transitionActive]);
 
   return (
     <div aria-hidden="true" className="absolute inset-0 select-none overflow-hidden bg-[#8fc7ff]">
@@ -41,7 +49,7 @@ export function ProjectMockupBackground({ src, alt = "" }: { src: string; alt?: 
         sizes="100vw"
         className="object-cover object-center"
       />
-      {interactive && <ImageRippleSurface key={src} src={src} />}
+      {interactive && !transitionActive && <ImageRippleSurface key={src} src={src} />}
     </div>
   );
 }

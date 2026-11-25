@@ -29,11 +29,9 @@ export function RouteScrollRestoration() {
         : top;
       setScrollPosition(Math.max(0, destination));
     };
-    const timer = setTimeout(() => {
-      restore();
-      frame = requestAnimationFrame(restore);
-    }, 0);
-    return () => { clearTimeout(timer); cancelAnimationFrame(frame); };
+    restore();
+    frame = requestAnimationFrame(restore);
+    return () => cancelAnimationFrame(frame);
   }, [pathname]);
 
   useEffect(() => {

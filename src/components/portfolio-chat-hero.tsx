@@ -12,6 +12,7 @@ import { FluidTyping, type FluidTypingHandle } from "@/components/reactdrops/flu
 import { fallbackFor, type PortfolioReply } from "@/lib/portfolio-chat-fallback";
 import { portfolioAnswerParagraphs } from "@/lib/portfolio-answer-format";
 import { setScrollPosition } from "@/hooks/useLenis";
+import { usePageTransitionActive } from "@/lib/page-transition";
 import styles from "@/app/experiments/portfolio-chat/portfolio-chat.module.css";
 
 type Reply = PortfolioReply;
@@ -34,6 +35,8 @@ const INTRO_PHRASES = [
 ];
 
 export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
+  const transitionActive = usePageTransitionActive();
+  const skippedEntrance = useRef<number | null>(null);
   const [draft, setDraft] = useState("");
   const [turns, setTurns] = useState<Turn[]>([]);
   const [isAnswering, setIsAnswering] = useState(false);
@@ -79,6 +82,14 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
   useLayoutEffect(() => {
     const veil = entranceVeilRef.current;
     if (!veil) return;
+    if (transitionActive) {
+      skippedEntrance.current = session;
+      gsap.set(veil, { opacity: 0 });
+      setEntranceReady(true);
+      setIntroReady(true);
+      return;
+    }
+    if (skippedEntrance.current === session) return;
     const media = gsap.matchMedia();
     media.add({ motion: "(prefers-reduced-motion: no-preference)", reduce: "(prefers-reduced-motion: reduce)" }, (context) => {
       if (context.conditions?.reduce) {
@@ -119,7 +130,7 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
       return () => wash.dispose();
     });
     return () => media.revert();
-  }, [session]);
+  }, [session, transitionActive]);
 
   useEffect(() => {
     if (!entranceReady) return;
@@ -332,7 +343,8 @@ export function PortfolioChatHero({ preview = false }: { preview?: boolean }) {
           holdDuration={2400}
           introWave={false}
           introPause={0}
-          typingPaused={!entranceReady}
+          paused={transitionActive}
+          typingPaused={!entranceReady || transitionActive}
           typeSpeed={82}
           palette="auto"
           theme="light"
