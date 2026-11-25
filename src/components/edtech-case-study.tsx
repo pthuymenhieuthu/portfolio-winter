@@ -1,5 +1,4 @@
 "use client";
-import { CaseStudyImageCarousel } from "@/components/case-study-image-carousel";
 import { CaseStudyBubbleCard, CaseStudyBubbleLink } from "@/components/case-study-bubble-card";
 
 import Image from "next/image";
@@ -264,19 +263,10 @@ export function EdTechCaseStudy() {
             </p>
           </div>
 
-          <CaseStudyImageCarousel
-            label="edtech project screens"
-            images={[
-              {
-                src: assets.hero,
-                alt: "Splash and mascot motion",
-              },
-              {
-                src: assets.leftRight,
-                alt: "Interactive left and right mascot motion",
-              },
-            ]}
-          />
+          <div className="grid gap-6 sm:grid-cols-2">
+            <CaseImage src={assets.hero} alt="Splash and mascot motion" />
+            <CaseImage src={assets.leftRight} alt="Interactive left and right mascot motion" />
+          </div>
 
           <div className="grid gap-6 md:grid-cols-2">
             {motionPoints.map((item, index) => (
@@ -330,27 +320,12 @@ export function EdTechCaseStudy() {
             ))}
           </div>
 
-          <CaseStudyImageCarousel
-            label="edtech project screens"
-            images={[
-              {
-                src: assets.hsk,
-                alt: "HSK app store graphics",
-              },
-              {
-                src: assets.androidBanner,
-                alt: "Language app feature banner",
-              },
-              {
-                src: assets.graphics1,
-                alt: "App store promotional graphic",
-              },
-              {
-                src: assets.graphics2,
-                alt: "App store promotional graphic",
-              },
-            ]}
-          />
+          <div className="grid gap-6 sm:grid-cols-2">
+            <CaseImage src={assets.hsk} alt="HSK app store graphics" />
+            <CaseImage src={assets.androidBanner} alt="Language app feature banner" />
+            <CaseImage src={assets.graphics1} alt="App store promotional graphic" />
+            <CaseImage src={assets.graphics2} alt="App store promotional graphic" />
+          </div>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="edtech-tools">

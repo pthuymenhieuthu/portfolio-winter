@@ -241,8 +241,15 @@ function CaseImage({
   );
 }
 
-function ImageGrid({ images }: { images: ImageItem[]; columns?: string }) {
-  return <CaseStudyImageCarousel label="Project showcase screens" images={images} />;
+function ImageGrid({ images, columns = "md:grid-cols-2", showcase = false }: {
+  images: ImageItem[];
+  columns?: string;
+  showcase?: boolean;
+}) {
+  if (showcase) return <CaseStudyImageCarousel showcase label="Project showcase screens" images={images} />;
+  return <div className={cn("grid gap-6", columns)}>
+    {images.map(image => <CaseImage key={image.src} {...image} />)}
+  </div>;
 }
 
 function BulletList({
@@ -632,7 +639,7 @@ export function PizzyCaseStudy() {
       ))}
 
       <CaseSection id="pizzy-showcase" label="Showcase" theme={theme} title="Showcase">
-        <ImageGrid
+        <ImageGrid showcase
           columns="md:grid-cols-1"
           images={[
             {
@@ -933,7 +940,7 @@ export function CakeCaseStudy() {
             effortless, not financial or restrictive.
           </p>
         </BodyText>
-        <ImageGrid
+        <ImageGrid showcase
           columns="md:grid-cols-1"
           images={[
             {
@@ -1230,7 +1237,7 @@ export function ZanZanCaseStudy() {
           ]}
           theme={theme}
         />
-        <ImageGrid
+        <ImageGrid showcase
           columns="md:grid-cols-1"
           images={[
             {

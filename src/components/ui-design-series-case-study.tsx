@@ -291,19 +291,10 @@ export function UiDesignSeriesCaseStudy() {
             ))}
           </div>
 
-          <CaseStudyImageCarousel
-            label="ui-design-series project screens"
-            images={[
-              {
-                src: assets.direction,
-                alt: "UI Design Series direction setting",
-              },
-              {
-                src: assets.draft,
-                alt: "UI Design Series draft hero and layout",
-              },
-            ]}
-          />
+          <div className="grid gap-6 sm:grid-cols-2">
+            <CaseImage src={assets.direction} alt="UI Design Series direction setting" />
+            <CaseImage src={assets.draft} alt="UI Design Series draft hero and layout" />
+          </div>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="series-picks">
@@ -319,7 +310,7 @@ export function UiDesignSeriesCaseStudy() {
             </p>
           </div>
 
-          <CaseStudyImageCarousel label="UI Design Series top picks"
+          <CaseStudyImageCarousel showcase label="UI Design Series top picks"
             images={topPicks.map(item => ({ src: item.image, alt: item.title,
               width: assetDimensions[item.image]?.[0] ?? 1440,
               height: assetDimensions[item.image]?.[1] ?? 810,

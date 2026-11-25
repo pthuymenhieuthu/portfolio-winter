@@ -324,19 +324,16 @@ export function ZoanCaseStudy() {
             </p>
           </div>
 
-          <CaseStudyImageCarousel
-            label="zoan project screens"
-            images={[
-              {
-                src: zoanAssets.workMockup1,
-                alt: "Zoan mobile app held in hand, showing mini apps and Zoan IDs",
-              },
-              {
-                src: zoanAssets.workMockup2,
-                alt: "Zoan cat app icon on an iPhone alongside the mint brand identity",
-              },
-            ]}
-          />
+          <div className="grid gap-6">
+            <CaseImage
+              src={zoanAssets.workMockup1}
+              alt="Zoan mobile app held in hand, showing mini apps and Zoan IDs"
+            />
+            <CaseImage
+              src={zoanAssets.workMockup2}
+              alt="Zoan cat app icon on an iPhone alongside the mint brand identity"
+            />
+          </div>
 
           <div className="grid gap-6 sm:grid-cols-3">
             {responsibilities.map((item) => (
@@ -369,19 +366,17 @@ export function ZoanCaseStudy() {
             </h3>
           </div>
 
-          <CaseStudyImageCarousel
-            label="zoan project screens"
-            images={[
-              {
-                src: zoanAssets.typographyColors,
-                alt: "Zoan typography and color foundations: BD StreetSign Sans headings, SF Pro UI text, and a mint-led pastel palette",
-              },
-              {
-                src: zoanAssets.tokens,
-                alt: "Zoan variable token system",
-              },
-            ]}
-          />
+          <div className="flex flex-col gap-6">
+            <CaseImage
+              src={zoanAssets.typographyColors}
+              alt="Zoan typography and color foundations: BD StreetSign Sans headings, SF Pro UI text, and a mint-led pastel palette"
+            />
+            <CaseImage
+              src={zoanAssets.tokens}
+              alt="Zoan variable token system"
+              className="mx-auto w-full max-w-[720px]"
+            />
+          </div>
 
           <p className="max-w-[720px] text-base leading-[1.6] text-[#737373] sm:text-[17px]">
             A scalable token structure ensured consistency across both desktop
@@ -434,7 +429,7 @@ export function ZoanCaseStudy() {
             ))}
           </div>
 
-          <CaseStudyImageCarousel
+          <CaseStudyImageCarousel showcase
             label="zoan project screens"
             images={[
               {
@@ -456,7 +451,7 @@ export function ZoanCaseStudy() {
               Home brings app discovery and social conversations together, while
               Mini Apps gives community creations a dedicated place to explore.
             </p>
-            <CaseStudyImageCarousel
+            <CaseStudyImageCarousel showcase
               label="zoan project screens"
               images={[
                 {
@@ -534,7 +529,16 @@ export function ZoanCaseStudy() {
                   </div>
                 </div>
 
-                <CaseStudyImageCarousel label={`${stage.title} screens`} images={stage.images} />
+                <div className="grid items-start gap-5 lg:grid-cols-2">
+                  {stage.images.map((image) => (
+                    <CaseImage
+                      className="bg-white"
+                      key={image.src}
+                      src={image.src}
+                      alt={image.alt}
+                    />
+                  ))}
+                </div>
               </article>
             ))}
           </div>
@@ -556,19 +560,18 @@ export function ZoanCaseStudy() {
             </p>
           </div>
 
-          <CaseStudyImageCarousel
-            label="zoan project screens"
-            images={[
-              {
-                src: zoanAssets.timelineMotion,
-                alt: "Zoan timeline motion",
-              },
-              {
-                src: zoanAssets.appMotion,
-                alt: "Zoan app transition motion",
-              },
-            ]}
-          />
+          <div className="grid gap-6">
+            <CaseImage
+              src={zoanAssets.timelineMotion}
+              alt="Zoan timeline motion"
+              preserveAnimation
+            />
+            <CaseImage
+              src={zoanAssets.appMotion}
+              alt="Zoan app transition motion"
+              preserveAnimation
+            />
+          </div>
         </CaseStudyRevealSection>
 
         <CaseStudyRevealSection className="flex scroll-mt-24 flex-col gap-16 sm:gap-20" id="zoan-outcome">

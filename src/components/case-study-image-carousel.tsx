@@ -12,7 +12,9 @@ type GalleryImage = {
   mobilePosterSrc?: string;
 };
 
+/** Only for final product-screen showcases; keep introductory mockups, research and UI-kit evidence static. */
 export function CaseStudyImageCarousel({ images, label = "Project screen gallery", device = "web", className }: {
+  showcase: true;
   images: readonly GalleryImage[];
   label?: string;
   device?: "mobile" | "web";

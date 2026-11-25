@@ -320,19 +320,10 @@ export function TrueProfitCaseStudy() {
             </CaseStudyBubbleCard>
           </div>
 
-          <CaseStudyImageCarousel
-            label="trueprofit project screens"
-            images={[
-              {
-                src: assets.keywords,
-                alt: "TrueProfit illustration keyword references",
-              },
-              {
-                src: assets.feeling,
-                alt: "TrueProfit visual feeling references",
-              },
-            ]}
-          />
+          <div className="grid gap-6 sm:grid-cols-2">
+            <CaseImage src={assets.keywords} alt="TrueProfit illustration keyword references" />
+            <CaseImage src={assets.feeling} alt="TrueProfit visual feeling references" />
+          </div>
 
           <div className="grid gap-6 md:grid-cols-2">
             {landingSteps.map((item, index) => (
@@ -345,7 +336,7 @@ export function TrueProfitCaseStudy() {
             ))}
           </div>
 
-          <CaseStudyImageCarousel
+          <CaseStudyImageCarousel showcase
             label="trueprofit project screens"
             images={[
               {
@@ -392,27 +383,12 @@ export function TrueProfitCaseStudy() {
             ))}
           </div>
 
-          <CaseStudyImageCarousel
-            label="trueprofit project screens"
-            images={[
-              {
-                src: assets.empathyMap,
-                alt: "TrueProfit empathy map",
-              },
-              {
-                src: assets.journeyMap,
-                alt: "TrueProfit onboarding journey map",
-              },
-              {
-                src: assets.brandAlignment,
-                alt: "TrueProfit brand alignment",
-              },
-              {
-                src: assets.handoff,
-                alt: "TrueProfit developer handoff",
-              },
-            ]}
-          />
+          <div className="grid gap-6 sm:grid-cols-2">
+            <CaseImage src={assets.empathyMap} alt="TrueProfit empathy map" />
+            <CaseImage src={assets.journeyMap} alt="TrueProfit onboarding journey map" />
+            <CaseImage src={assets.brandAlignment} alt="TrueProfit brand alignment" />
+            <CaseImage src={assets.handoff} alt="TrueProfit developer handoff" />
+          </div>
 
           <CaseImage
             src={assets.onboardingOutcome}
