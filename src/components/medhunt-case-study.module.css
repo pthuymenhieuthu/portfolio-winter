@@ -30,31 +30,13 @@
 .funnelVisual { max-width: 660px; justify-self: center; }
 .learning { display: grid; grid-template-columns: minmax(260px, .37fr) minmax(0, 1fr); gap: 64px; align-items: start; margin-top: 160px; padding-top: 64px; border-top: 1px solid #d7deea; }
 .learningHeading { position: sticky; top: 128px; align-self: start; }
-.learningContent { min-width: 0; }
+.learningContent { display: flex; flex-direction: column; gap: 88px; min-width: 0; }
 .learning h2 { max-width: 340px; font-size: 36px; }
-.learningCopy { display: flex; flex-direction: column; gap: 28px; }
 .takeaway { max-width: 100%; font-family: var(--font-heading), sans-serif; font-size: 25px; line-height: 1.5; color: #17213a; }
-.story { max-width: 100%; color: #5b677c; font-size: 17px; line-height: 1.8; }
-.illustration { margin-top: 56px; }
-.illustrationFrame { padding: 26px 32px 34px; }
-.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; margin-top: 0; }
-.scene { position: relative; min-width: 0; }
-.sketch { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; min-height: 208px; border: 1px dashed #b4c2d5; border-radius: 14px; color: #66758d; }
-.sketchLabel { font-size: 12px; }
-.ruleCard { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1px solid #b4c2d5; border-radius: 8px; font-size: 12px; }
-.statePair, .referencePair { display: flex; gap: 10px; align-items: center; }
-.statePair > div, .referencePair > div { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 90px; padding: 10px; border: 1px solid #b4c2d5; border-radius: 8px; font-size: 12px; }
-.scene > p { display: flex; gap: 10px; margin-top: 20px; font-size: 14px; color: #17213a; }
-.learning .scenes { grid-template-columns: minmax(0, 1fr); gap: 40px; }
-.learning .scene { display: grid; grid-template-columns: minmax(0, .6fr) minmax(0, 1fr); gap: 24px; align-items: center; }
-.learning .sketch { grid-column: 2; grid-row: 1; }
-.learning .scene > p { display: block; grid-column: 1; grid-row: 1; margin-top: 0; font-size: 16px; }
-.learning .sketchLabel { max-width: calc(100% - 16px); text-align: center; }
-.learning .statePair, .learning .referencePair { width: calc(100% - 24px); max-width: 240px; }
-.learning .statePair > div, .learning .referencePair > div { flex: 1; min-width: 0; padding: 8px; }
-.learning .statePair > svg { flex-shrink: 0; }
-.learning .sceneArrow { display: none; }
-.sceneArrow { position: absolute; top: 94px; right: -35px; color: #728097; }
+.storyScene { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.storyScene h3 { font-family: var(--font-heading), sans-serif; font-size: 26px; font-weight: 400; line-height: 1.3; letter-spacing: -.02em; }
+.storyScene > p { color: #5b677c; font-size: 17px; line-height: 1.8; }
+.storySketch { display: block; width: 100%; height: auto; margin-top: 8px; }
 .footer { display: flex; justify-content: space-between; gap: 24px; margin-top: 112px; padding: 32px 0 96px; border-top: 1px solid #d7deea; }
 .footer a { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: #2457c5; }
 .footer a:focus-visible { outline: 2px solid #2457c5; outline-offset: 5px; border-radius: 4px; }
@@ -75,11 +57,6 @@
   .learning { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .learningHeading { position: static; }
   .learning h2 { max-width: 700px; }
-  .learningCopy { gap: 28px; }
-  .scenes { gap: 24px; }
-  .sceneArrow { right: -23px; width: 20px; }
-  .statePair, .referencePair { gap: 5px; }
-  .statePair > div, .referencePair > div { min-width: 60px; padding: 8px; }
 }
 @media (max-width: 767px) {
   .container { width: calc(100% - 40px); }
@@ -90,7 +67,7 @@
   .hero h1 { font-size: 36px; }
   .intro { font-size: 16px; }
   .showcases { gap: 80px; }
-  .showcase, .visualFirst, .learningCopy, .scenes { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .showcase, .visualFirst { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .visualFirst > div, .visualFirst > figure { grid-column: auto; grid-row: auto; }
   .showcaseCopy { max-width: 100%; }
   .productFrame { padding: 7px; }
@@ -98,10 +75,7 @@
   .learning { margin-top: 88px; padding-top: 40px; }
   .learning h2 { font-size: 32px; }
   .takeaway { font-size: 23px; }
-  .illustrationFrame { padding: 24px; }
-  .sceneArrow { display: none; }
-  .learning .scene { grid-template-columns: minmax(0, 1fr); gap: 18px; }
-  .learning .sketch { grid-column: 1; grid-row: 1; }
-  .learning .scene > p { grid-column: 1; grid-row: 2; }
+  .learningContent { gap: 64px; }
+  .storyScene h3 { font-size: 24px; }
   .footer { margin-top: 72px; padding-bottom: 64px; }
 }

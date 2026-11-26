@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Braces, Check, Code2, FileText, UsersRound } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CaseStudyBubbleCard } from "@/components/case-study-bubble-card";
 import styles from "./medhunt-case-study.module.css";
 import { MedhuntPrototype } from "./medhunt-prototype";
@@ -32,41 +32,32 @@ function ShowcaseCopy({ id, title, children }: {
   </div>;
 }
 
-/** Deliberately a replaceable composition frame, not a finished illustration. */
-function TeamIllustrationDraft() {
-  return <figure className={styles.illustration} aria-label="Agree on the rules, prototype the behavior, and build from the reference">
-    <CaseStudyBubbleCard staticFilm className={styles.illustrationFrame}>
-      <div className={styles.scenes}>
-        <div className={styles.scene}>
-          <div className={styles.sketch} aria-hidden="true">
-            <UsersRound size={38} strokeWidth={1.2} />
-            <span className={styles.sketchLabel}>BA + designer</span>
-            <div className={styles.ruleCard}><FileText size={18} strokeWidth={1.2} /><span>Business rule</span><Check size={17} strokeWidth={1.3} /></div>
-          </div>
-          <p>Agree on the rules</p>
-          <ArrowRight className={styles.sceneArrow} size={22} strokeWidth={1.2} aria-hidden="true" />
-        </div>
-        <div className={styles.scene}>
-          <div className={styles.sketch} aria-hidden="true">
-            <Code2 size={32} strokeWidth={1.2} />
-            <span className={styles.sketchLabel}>Designer · HTML prototype</span>
-            <div className={styles.statePair}><div>State A</div><ArrowRight size={17} strokeWidth={1.2} /><div>State B</div></div>
-          </div>
-          <p>Prototype the behavior</p>
-          <ArrowRight className={styles.sceneArrow} size={22} strokeWidth={1.2} aria-hidden="true" />
-        </div>
-        <div className={styles.scene}>
-          <div className={styles.sketch} aria-hidden="true">
-            <Braces size={32} strokeWidth={1.2} />
-            <span className={styles.sketchLabel}>Frontend developer</span>
-            <div className={styles.referencePair}><div><FileText size={20} strokeWidth={1.2} /><span>Prototype</span></div><div><Code2 size={20} strokeWidth={1.2} /><span>Code</span></div></div>
-          </div>
-          <p>Build from the reference</p>
-        </div>
-      </div>
-    </CaseStudyBubbleCard>
-  </figure>;
-}
+const teamStory = [
+  {
+    title: "When UI edits overlapped with evolving logic",
+    copy: "At first, I edited the UI directly in the shared codebase while the frontend developer and BA were still refining the logic. Some of my edits affected that logic, and I had to pull updates frequently to keep up.",
+    image: "01-shared-code",
+    alt: "The BA, designer and frontend developer making changes around the same shared code window, with edits overlapping between UI and logic.",
+  },
+  {
+    title: "Agree on the rules",
+    copy: "We agreed on a different workflow. I clarified the business rules with the BA before translating them into UI behavior.",
+    image: "02-agree-on-rules",
+    alt: "A BA and designer pointing at the same business rule: a passed interview leads to creating an offer.",
+  },
+  {
+    title: "Prototype the behavior",
+    copy: "I used Claude to build a standalone, clickable HTML prototype showing how the interface should respond to those rules.",
+    image: "03-prototype-behavior",
+    alt: "Two concrete MedHunt case states: interview with the record-result action, then passed interview with the create-offer action.",
+  },
+  {
+    title: "Build from the reference",
+    copy: "I shared the prototype with the frontend developer as a reference for implementation.",
+    image: "04-build-reference",
+    alt: "A frontend developer working with the HTML prototype and a code window open side by side.",
+  },
+] as const;
 
 export function MedhuntCaseStudy() {
   return <main className={styles.page}>
@@ -137,11 +128,14 @@ export function MedhuntCaseStudy() {
           <h2 id="medhunt-team-title">What I learned about working with the team</h2>
         </div>
         <div className={styles.learningContent}>
-          <div className={styles.learningCopy}>
-            <p className={styles.takeaway}>A clickable prototype gave our team a concrete way to discuss what the interface should do before implementation.</p>
-            <p className={styles.story}>At first, I edited the UI directly in the shared codebase. Some of my edits affected existing logic while the frontend developer and business analyst were still refining it, and I had to pull updates frequently to keep up. We agreed on a different workflow. I clarified the business rules with the BA, used Claude to build a standalone, clickable HTML prototype, and shared it with the frontend developer as a reference for implementation.</p>
-          </div>
-          <TeamIllustrationDraft />
+          {teamStory.map(scene => <article key={scene.image} className={styles.storyScene}>
+            <h3>{scene.title}</h3>
+            <p>{scene.copy}</p>
+            <Image src={`/assets/medhunt/story/${scene.image}.svg`} alt={scene.alt}
+              width={1020} height={480} unoptimized className={styles.storySketch}
+              sizes="(max-width: 1023px) 90vw, 920px" />
+          </article>)}
+          <p className={styles.takeaway}>A clickable prototype gave our team a concrete way to discuss what the interface should do before implementation.</p>
         </div>
       </section>
 
