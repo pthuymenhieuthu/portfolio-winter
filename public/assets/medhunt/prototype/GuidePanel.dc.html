@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Hướng dẫn từng bước</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.gd{position:fixed;right:20px;bottom:20px;z-index:60;width:372px;max-width:calc(100vw - 32px);max-height:min(76vh,680px);display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 24px 56px -20px rgba(1,5,27,.35);overflow:hidden}
+.gd-h{display:flex;align-items:center;gap:10px;padding:14px 16px 12px;border-bottom:1px solid var(--line-soft)}
+.gd-h b{font-size:15px;font-weight:800}.gd-h .sp{flex:1}
+.gd-bar{height:6px;border-radius:3px;background:var(--surface-2);margin:0 16px 12px;overflow:hidden}.gd-bar i{display:block;height:100%;background:var(--brand);border-radius:3px;transition:width .3s}
+.gd-list{list-style:none;margin:0;padding:4px 8px 12px;overflow:auto;display:flex;flex-direction:column;gap:2px}
+.gd-it{display:flex;gap:12px;padding:10px 8px;border-radius:14px}.gd-it.cur{background:color-mix(in srgb,var(--brand) 7%,#fff)}
+.gd-n{flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:var(--surface-2);color:var(--muted)}
+.gd-it.done .gd-n{background:var(--brand);color:var(--on-brand)}.gd-it.cur .gd-n{background:#fff;color:var(--brand-ink);box-shadow:0 0 0 2px var(--brand)}.gd-it.skip .gd-n{background:var(--surface-2);color:var(--muted)}
+.gd-b{min-width:0;flex:1}.gd-t{font-size:14px;font-weight:600}.gd-it.done .gd-t,.gd-it.skip .gd-t{color:var(--muted);font-weight:500}.gd-it.skip .gd-t{text-decoration:line-through}
+.gd-d{margin:6px 0 0;font-size:13px;line-height:1.5;color:var(--ink-2)}.gd-ref{display:inline-block;margin-top:6px;font-size:11px;font-weight:600;color:var(--muted)}
+.gd-tips{margin:8px 0 0;padding-left:18px;font-size:12.5px;line-height:1.5;color:var(--ink-2)}.gd-tips li{margin:2px 0}.gd-stat{margin:8px 0 0;font-size:12.5px;font-weight:600;color:var(--brand-ink)}
+.gd-note{margin:8px 0 0;font-size:12px;color:var(--warn-ink);background:var(--warn-soft);border-radius:10px;padding:6px 10px}
+.gd-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.gd-pill{position:fixed;right:20px;bottom:20px;z-index:60;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border:0;border-radius:999px;background:var(--brand);color:var(--on-brand);font:inherit;font-weight:700;box-shadow:0 14px 30px -12px rgba(1,5,27,.45);cursor:pointer}
+.gd-end{padding:12px 16px 16px;font-size:14px}
+</style></helmet>
+<sc-if value="{{isFull}}"><section class="gd" aria-label="Hướng dẫn từng bước">
+  <div class="gd-h"><b>Hướng dẫn từng bước</b><span class="muted small tabular">{{doneN}}/12 xong</span><span class="sp"></span>
+    <button class="icon-btn" aria-label="Thu nhỏ hướng dẫn" title="Thu nhỏ" onClick="{{toMin}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg></button>
+    <button class="icon-btn" aria-label="Tắt hướng dẫn" title="Tắt hướng dẫn" onClick="{{toOff}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></div>
+  <div class="gd-bar" role="progressbar" aria-valuenow="{{pct}}" aria-label="Tiến độ hướng dẫn"><i style="{{barStyle}}"></i></div>
+  <ol class="gd-list"><sc-for list="{{steps}}" as="s"><li class="gd-it {{s.cls}}"><span class="gd-n">{{s.mark}}</span><div class="gd-b">
+    <div class="gd-t">{{s.title}}<sc-if value="{{s.skipped}}"> <button class="au-link" onClick="{{s.redo}}">Làm lại</button></sc-if></div>
+    <sc-if value="{{s.cur}}"><p class="gd-d">{{s.desc}}</p><span class="gd-ref">{{s.ref}}</span>
+      <sc-if value="{{s.stat}}"><p class="gd-stat">{{s.stat}}</p></sc-if><sc-if value="{{s.hasTips}}"><ul class="gd-tips"><sc-for list="{{s.tips}}" as="tp"><li>{{tp}}</li></sc-for></ul></sc-if>
+      <sc-if value="{{s.note}}"><p class="gd-note">{{s.note}}</p></sc-if>
+      <div class="gd-acts"><sc-for list="{{s.acts}}" as="a"><button class="btn sm {{a.cls}}" disabled="{{a.off}}" onClick="{{a.go}}">{{a.label}}</button></sc-for><button class="btn sm" onClick="{{s.skipIt}}">Bỏ qua bước này</button></div></sc-if></div></li></sc-for></ol>
+  <sc-if value="{{allDone}}"><div class="gd-end"><b>Xong cả 12 bước.</b> Bạn đã đi từ khách hàng tới hoàn thành yêu cầu.</div></sc-if>
+</section></sc-if>
+<sc-if value="{{isMin}}"><button class="gd-pill" onClick="{{toFull}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"></path></svg>{{pillLabel}}</button></sc-if>
+<sc-if value="{{isOff}}"><button class="gd-pill" style="background:#fff;color:var(--ink-2);box-shadow:0 0 0 1px var(--line),0 14px 30px -12px rgba(1,5,27,.3)" onClick="{{toFull}}">Bật hướng dẫn</button></sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"facts":{"editor":null,"default":{}},"mode":{"editor":null,"default":"full"},"skip":{"editor":null,"default":{}},"onMode":{"editor":null},"onSkip":{"editor":null},"onGo":{"editor":null},"onSample":{"editor":null},"onExpertPass":{"editor":null},"onReply":{"editor":null},"onHire":{"editor":null},"$preview":{"width":420,"height":700}}'>
+class Component extends DCLogic {
+  // 12 bước theo docs BA (hành trình 7 bước, module 03, 04, 06, 07, 08, 09). done lấy từ dữ liệu thật của prototype qua props.facts, không bấm tay.
+  // go = nơi "Làm bước này" đưa tới; need = điều kiện trước (khoá nút và nhắc khi chưa có).
+  static S = [
+    { t: 'Khách hàng', d: 'Dùng khách hàng mẫu hoặc tạo khách hàng mới. Mỗi yêu cầu thuộc một khách hàng.', ref: 'Module 03 · Khách hàng', k: 'client' },
+    { t: 'Tạo yêu cầu tuyển dụng', d: 'Nhập yêu cầu khách gửi qua điện thoại hay email. Người tạo là người phụ trách mặc định; yêu cầu mới ở trạng thái Mới.', ref: 'Module 04 · Yêu cầu tuyển dụng', k: 'request', need: 'client', needMsg: 'Cần có khách hàng trước (bước 1).' },
+    { t: 'Tìm ứng viên', d: 'Mở yêu cầu, vào tab Tìm ứng viên và chọn hồ sơ từ kho.', ref: 'Module 06 · UC-MAT-01', k: 'members', go: 'req:ung-vien', need: 'request', needMsg: 'Cần có yêu cầu trước (bước 2).',
+    tips: ['Bấm Tìm hồ sơ. Bộ lọc đã điền sẵn theo yêu cầu (đối tượng, chuyên khoa, kinh nghiệm, lương, tỉnh); bấm một điều kiện để bỏ bớt hoặc bật lại.', 'Tick hồ sơ rồi bấm Thêm. Hồ sơ vào yêu cầu ở trạng thái chưa duyệt.', 'Yêu cầu Mới tự sang Đang tìm ứng viên ngay lần tìm đầu tiên; từ 08/10/2026 không cần đánh giá khả thi hay hợp đồng trước.', 'Yêu cầu Nháp thì chưa tìm được: gửi yêu cầu trước.'] },
+    { t: 'Duyệt hồ sơ', d: 'Nhân viên sơ vấn và duyệt hồ sơ; có thể gửi chuyên gia đánh giá trước khi gửi khách.', ref: 'Module 06 · UC-MAT-02, 03', k: 'approved', go: 'req:ung-vien', need: 'members', needMsg: 'Cần chọn hồ sơ trước (bước 3).',
+    tips: ['Tick hồ sơ trong bảng rồi bấm Duyệt (nhân viên SMS sơ vấn xong).', 'Muốn qua chuyên gia: bấm Gửi chuyên gia đánh giá, rồi bấm Giả lập chuyên gia kết luận Đạt ngay trong bảng này. Chuyên gia thật làm ở tài khoản riêng nên prototype giả lập tại đây.', 'Hồ sơ bị Loại hoặc Không đạt không gửi được cho khách hàng.'] },
+    { t: 'Gửi cho khách hàng', d: 'Gửi hồ sơ đã duyệt cho khách hàng. Mỗi hồ sơ gửi tạo một ca tuyển.', ref: 'Module 07 · Ca tuyển', k: 'cases', go: 'req:ung-vien', need: 'approved', needMsg: 'Cần duyệt hồ sơ trước (bước 4).',
+    tips: ['Tick hồ sơ đã duyệt rồi bấm Gửi cho khách hàng. Nút khoá nếu khách chưa có tài khoản cổng: khi đó gửi bằng tệp Excel hoặc mời người liên hệ vào cổng ở trang khách hàng.', 'Hồ sơ gửi thẳng, chưa qua chuyên gia, sẽ bỏ qua bước chuyên gia; hộp xác nhận báo trước.', 'Mỗi hồ sơ gửi tạo một ca ở trạng thái Đã gửi cho khách hàng, xem ở tab Tiến trình ca tuyển.', 'Khách hàng xem trên cổng, không thấy số điện thoại hay email của ứng viên.'] },
+    { t: 'Khách hàng phản hồi', d: 'Khách hàng xem hồ sơ và chọn mời phỏng vấn. Nhân viên ghi lại phản hồi đó vào ca tuyển.', ref: 'Module 07 · UC-PIP-02', k: 'replied', go: 'req:tien-trinh', need: 'cases', needMsg: 'Cần có ca tuyển trước (bước 5).',
+    tips: ['Trên cổng, khách chọn một trong bốn: Mời phỏng vấn, Hỏi thêm thông tin, Đưa vào danh sách ngắn, Từ chối (từ chối phải chọn lý do).', 'Prototype không đổi vai: bấm Ghi khách mời phỏng vấn để nhân viên ghi thay theo cuộc gọi hoặc email của khách. Docs cho phép nhân viên ghi lại việc diễn ra ngoài hệ thống.', 'Mỗi phản hồi chỉ ghi một lần; nhân viên và khách cùng ghi thì bên lưu sau bị chặn (ERR-PIP-07).'] },
+    { t: 'Lịch và kết quả phỏng vấn', d: 'Xếp lịch vòng 1, ghi kết quả Đạt rồi chuyển sang offer.', ref: 'Module 07 · UC-PIP-03', k: 'interviewed', go: 'ivs', need: 'replied', needMsg: 'Cần khách mời phỏng vấn trước (bước 6).',
+    tips: ['Vào Phỏng vấn, bấm Ghi lịch phỏng vấn: chọn ca, ngày, giờ, hình thức. Buổi Online cần link họp.', 'Có nhiều vòng. Lịch ở giờ đã qua vẫn ghi được, để ghi kết quả ngay trong lúc làm thử.', 'Mở buổi, bấm Ghi kết quả: đạt. Ca sang Đạt phỏng vấn và chờ offer.', 'Ghi lịch xong ca tự sang Phỏng vấn; không ai chọn trạng thái bằng tay.'] },
+    { t: 'Offer', d: 'Ghi offer với lương và ngày nhận việc; ứng viên nhận offer.', ref: 'Module 07 · UC-PIP-04', k: 'accepted', go: 'offers', need: 'interviewed', needMsg: 'Cần có kết quả phỏng vấn Đạt trước (bước 7).',
+    tips: ['Vào Offer và nhận việc, bấm Ghi offer cho ca Đạt phỏng vấn: nhập mức lương chính thức, ngày nhận việc và % lương thử việc.', 'Offer ghi là đã gửi ngay; ca sang Đã offer và chờ ứng viên trả lời. Mỗi ca chỉ một offer chờ trả lời.', 'Bấm Ứng viên nhận khi ứng viên đồng ý: hộp Xác nhận tuyển dụng mở ra. Nhập bốn ngày a, b, c, d (điền sẵn từ ngày nhận việc), tổng phí và hai đợt 15% với 85%, rồi bấm Lưu thì ca sang Chờ thử việc.', 'Đóng hộp mà chưa lưu thì câu trả lời chưa được ghi, ca vẫn Đã offer. Ứng viên từ chối thì ca dừng.'] },
+    { t: 'Thu phí đợt 1', d: 'Phiếu xác nhận tuyển dụng đã ghi phí hai đợt. Ghi lần thu cho đợt 1 tới khi Đã thu đủ.', ref: 'Module 09 · UC-PAY-02', k: 'fee1', go: 'fin', need: 'accepted', needMsg: 'Cần ứng viên nhận offer và lưu phiếu trước (bước 8).',
+    tips: ['Vào Sổ phí theo ca (hoặc tab Thanh toán của yêu cầu), bấm Ghi lần thu hoặc bấm thẳng ô Đợt 1.', 'Chọn đợt, nhập số tiền, ngày thu (không ở tương lai), hình thức. Số tiền không vượt số còn phải thu của đợt (ERR-PAY-03).', 'Mỗi đợt thấy rõ Chưa thu, Thu một phần, Đã thu đủ hoặc Quá hạn; thanh màu trên ô đợt theo hạn.', 'Mọi đợt phát sinh từ ngày xác nhận tuyển dụng, kể cả đợt có hạn sau thử việc.'] },
+    { t: 'Thử việc và bảo hành', d: 'Bấm Xác nhận đi làm rồi Xác nhận qua thử việc; hệ thống không bắt chờ tới ngày.', ref: 'Module 08 · Bảo hành, theo dõi', k: 'guarantee', go: 'cases', need: 'hired', needMsg: 'Cần có ứng viên nhận việc trước (bước 9).' },
+    { t: 'Thu đợt 2, kết thúc bảo hành', d: 'Ghi lần thu đợt 2 tới Đã thu đủ rồi bấm Kết thúc bảo hành.', ref: 'Module 09 · Thanh toán', k: 'paidAll', go: 'req:thanh-toan', need: 'guarantee', needMsg: 'Cần có ca đang bảo hành trước (bước 10).' },
+    { t: 'Hoàn thành yêu cầu', d: 'Bấm Hoàn thành yêu cầu khi các ca đã xong và phí đã thu đủ. Cần có hợp đồng đã ký: chưa có thì tải và gắn hợp đồng ở tab Tổng quan của yêu cầu.', ref: 'Module 04 · UC-REQ-09', k: 'closed', go: 'req:tien-trinh', need: 'paidAll', needMsg: 'Cần thu đủ phí trước (bước 11).' },
+  ];
+  renderVals() {
+    const P = this.props, f = P.facts || {}, skip = P.skip || {}, S = Component.S, mode = P.mode || 'full';
+    const done = S.map((s) => !!f[s.k]), cur = S.findIndex((s, i) => !done[i] && !skip[i + 1]);
+    // Bấm việc dẫn sang màn khác (tạo yêu cầu, mở tab…) thì bảng tự thu thành nút nhỏ để không che form; bấm nút nhỏ để mở lại
+    const go = (key) => () => { P.onGo && P.onGo(key); P.onMode && P.onMode('min'); };
+    const stat = [null, null, f.memberN ? 'Đã chọn ' + f.memberN + ' hồ sơ vào yêu cầu.' : '', (f.approvedN || f.expertPending) ? 'Đã duyệt ' + (f.approvedN || 0) + ' · đang chờ chuyên gia ' + (f.expertPending || 0) + '.' : '', f.sentN ? 'Đã gửi ' + f.sentN + ' hồ sơ cho khách hàng.' : f.approvedN ? 'Đã duyệt ' + f.approvedN + ' hồ sơ, sẵn sàng gửi cho khách hàng.' + (f.expertPending ? ' Còn ' + f.expertPending + ' hồ sơ chờ chuyên gia.' : '') : '',
+      f.waitReplyN ? f.waitReplyN + ' ca đang chờ khách phản hồi.' : '', f.ivN ? 'Đã ghi ' + f.ivN + ' buổi phỏng vấn, ' + (f.passN || 0) + ' kết quả Đạt.' : '', f.offeredN ? 'Đã ghi ' + f.offeredN + ' offer, chờ ứng viên trả lời.' : '', f.inst1Txt || ''];
+    const steps = S.map((s, i) => {
+      const n = i + 1, isCur = i === cur, dn = done[i], sk = !dn && !!skip[n], draft = i === 2 && !!f.reqDraft, blocked = (!!s.need && !f[s.need]) || draft;
+      const acts = i === 0 ? [{ label: 'Dùng khách hàng mẫu', cls: 'primary', off: false, go: () => P.onSample && P.onSample() }, { label: 'Tạo khách hàng', cls: '', off: false, go: go('newClient') }]
+        : i === 1 ? [{ label: 'Tạo yêu cầu', cls: 'primary', off: blocked, go: go('newReq') }]
+        : i === 3 ? [{ label: 'Làm bước này', cls: 'primary', off: blocked, go: go(s.go) }, { label: 'Giả lập chuyên gia kết luận Đạt', cls: '', off: !f.expertPending, go: () => P.onExpertPass && P.onExpertPass() }]
+        : i === 5 ? [{ label: 'Ghi khách mời phỏng vấn', cls: 'primary', off: blocked || !f.waitReplyN, go: () => P.onReply && P.onReply() }, { label: 'Mở tiến trình ca', cls: '', off: blocked, go: go(s.go) }]
+        : i === 7 ? [{ label: 'Làm bước này', cls: 'primary', off: blocked, go: go(s.go) }, { label: 'Mở phiếu xác nhận', cls: '', off: !f.pendingOfferN, go: () => { P.onHire && P.onHire(); P.onMode && P.onMode('min'); } }]
+        : i === 8 ? [{ label: 'Ghi lần thu đợt 1', cls: 'primary', off: blocked, go: go('fin') }, { label: 'Mở tab Thanh toán', cls: '', off: blocked, go: go('req:thanh-toan') }]
+        : i === 4 && f.expertPending ? [{ label: 'Làm bước này', cls: 'primary', off: blocked, go: go(s.go) }, { label: 'Giả lập chuyên gia kết luận Đạt', cls: '', off: false, go: () => P.onExpertPass && P.onExpertPass() }]
+        : [{ label: 'Làm bước này', cls: 'primary', off: blocked, go: go(s.go) }];
+      return { title: n + '. ' + s.t, mark: dn ? '✓' : String(n), cls: dn ? 'done' : sk ? 'skip' : isCur ? 'cur' : '', cur: isCur, skipped: sk, desc: s.d, ref: s.ref, note: isCur && blocked ? (draft ? 'Yêu cầu đang Nháp: đổi trạng thái sang Gửi yêu cầu (nút trạng thái ở đầu trang yêu cầu) rồi mới tìm ứng viên.' : s.needMsg) : '', stat: isCur ? (stat[i] || '') : '', tips: s.tips || [], hasTips: !!s.tips, acts,
+        skipIt: () => P.onSkip && P.onSkip(n), redo: () => P.onSkip && P.onSkip(n) };
+    });
+    const nDone = done.filter(Boolean).length, setMode = (m) => () => P.onMode && P.onMode(m);
+    return { steps, doneN: nDone, pct: Math.round(nDone / 12 * 100), barStyle: 'width:' + Math.round(nDone / 12 * 100) + '%', allDone: nDone === 12,
+      isFull: mode === 'full', isMin: mode === 'min', isOff: mode === 'off', toMin: setMode('min'), toOff: setMode('off'), toFull: setMode('full'),
+      pillLabel: cur < 0 ? 'Hướng dẫn · xong' : 'Hướng dẫn · bước ' + (cur + 1) + '/12' };
+  }
+}
+</script>
+</body>
+</html>

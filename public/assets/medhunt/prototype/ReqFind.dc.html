@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Tab Tìm ứng viên</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./review-domain.js"></script><script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}tr.dim{opacity:.5;cursor:not-allowed}tr.dim input{cursor:not-allowed}.tiles .tile .roll{display:block;height:1.2em;line-height:1.2;overflow:hidden}.roll .rc{display:flex;flex-direction:column}.roll .rc.roll-a{animation:rollup-a .8s cubic-bezier(.2,.8,.2,1) forwards}.roll .rc.roll-b{animation:rollup-b .8s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes rollup-a{from{transform:translateY(0)}to{transform:translateY(-50%)}}@keyframes rollup-b{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+tr.leave{pointer-events:none}tr.leave>td>*{animation:chout 1.1s ease forwards}tr.leave>td{animation:tdout 1.1s ease forwards}
+@keyframes chout{0%{opacity:1;max-height:3em}60%{opacity:0;max-height:3em}to{opacity:0;max-height:0;font-size:0;padding:0;margin:0;border-width:0}}@keyframes tdout{to{padding-top:0;padding-bottom:0;border-bottom-color:transparent}}
+.snack{position:fixed;right:24px;bottom:24px;z-index:90;display:flex;align-items:center;gap:14px;max-width:min(440px,92vw);padding:10px 10px 10px 16px;border-radius:12px;background:#1f2623;color:#fff;box-shadow:var(--elev-4);font-size:13px}.snack .snk{border:0;background:transparent;color:#7ee8b4;font-weight:700;cursor:pointer;padding:4px 8px;border-radius:8px}.snack .snk:hover{background:rgba(255,255,255,.1)}.snack .snx{border:0;background:transparent;color:#c9d1ce;cursor:pointer;font-size:16px;line-height:1;padding:2px 6px}
+.selbar .btn{white-space:nowrap;flex:none}.selbar{gap:8px}.tiles .tile{box-shadow:none;flex-direction:row;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px}.tiles .tile .muted{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tiles .tile .n{font-size:22px;flex:none}.tiles .tile[aria-pressed="true"]{box-shadow:inset 0 0 0 1.5px var(--brand),inset 0 -3px 0 var(--brand)!important}.tiles .tile:focus-visible{outline:2px solid var(--brand);outline-offset:2px}.selbar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--brand-50);border-bottom:1px solid var(--brand-200);flex-wrap:wrap}.hint{padding:10px 16px;font-size:12px}
+.profile-table-scroll{overflow:auto;max-width:100%}.profile-table-scroll table{min-width:1080px}.profile-table-scroll td:nth-child(3){min-width:140px}.profile-table-scroll td:nth-child(4){min-width:130px}.nc{cursor:pointer}.nc td.na{white-space:normal;min-width:170px;max-width:210px}.nc td.na .btn{margin:2px 4px 2px 0}.nc .tm{font-size:12px}.drw{display:flex;justify-content:flex-end;align-items:stretch;padding:0}.drw aside{width:min(460px,96vw);background:var(--surface);overflow:auto;padding:20px;box-shadow:var(--elev-4);display:flex;flex-direction:column;gap:16px}.drw h3{margin:0 0 6px;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}.drw .rv-card{border:1px solid var(--line-soft);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:4px;font-size:13px}.drw .tmg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 16px;margin:0}.drw .tmg dt{font-size:11px;color:var(--muted)}.drw .tmg dd{margin:0}</style></helmet>
+<div class="col page-in">
+  <div class="row wrap"><label class="field"><span>Vị trí cần tuyển</span><select class="input" aria-label="Vị trí cần tuyển" onChange="{{changePosition}}"><sc-for list="{{positions}}" as="p"><option value="{{p.id}}" selected="{{p.selected}}">{{p.label}}</option></sc-for></select></label></div>
+  <div class="tiles stagger" style="grid-template-columns:repeat(5,minmax(0,1fr))" role="group" aria-label="Lọc theo trạng thái đánh giá">
+    <sc-for list="{{stages}}" as="t"><button class="tile" aria-pressed="{{t.on}}" onClick="{{t.pick}}"><span class="muted small">{{t.label}}</span><span class="n tabular roll"><span class="rc {{t.rollCls}}"><span>{{t.prevN}}</span><span>{{t.n}}</span></span></span></button></sc-for>
+  </div>
+  <div class="row wrap">
+    <input class="input" style="max-width:320px;flex:1" placeholder="Tìm mã, tên ứng viên…" value="{{q}}" onInput="{{onQ}}" aria-label="Tìm mã, tên ứng viên">
+    <button class="btn sm {{filterCls}}" aria-expanded="{{fOpen}}" onClick="{{togF}}">{{filterLabel}}</button>
+    <sc-if value="{{anyFilter}}"><button class="btn sm" onClick="{{clearF}}">Xoá lọc</button></sc-if>
+  </div>
+  <sc-if value="{{fOpen}}"><div class="row wrap" style="padding:12px;border:1px solid var(--line-soft);border-radius:16px;background:var(--surface-2,var(--canvas))">
+    <label class="field" style="min-width:170px;flex:1"><span class="muted small fw5">Trạng thái</span><select class="input" onChange="{{setSt}}"><sc-for list="{{stOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+    <label class="field" style="min-width:170px;flex:1"><span class="muted small fw5">Kinh nghiệm</span><select class="input" onChange="{{setExp}}"><sc-for list="{{expOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+    <label class="field" style="min-width:170px;flex:1"><span class="muted small fw5">CCHN</span><select class="input" onChange="{{setLic}}"><sc-for list="{{licOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+    <label class="field" style="min-width:170px;flex:1"><span class="muted small fw5">Vấn đề</span><select class="input" onChange="{{setIss}}"><sc-for list="{{issOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+  </div></sc-if>
+  <div class="card">
+    <div class="card-h"><h3>Ứng viên của yêu cầu</h3><span class="muted small">{{sub}}</span><span class="spacer"></span><button class="btn sm primary" disabled="{{locked}}" onClick="{{openAdd}}">Tìm hồ sơ</button></div>
+    <sc-if value="{{locked}}"><div class="chip warn alert flat">Chỉ chọn và gửi hồ sơ khi yêu cầu đang ở Đang xử lý (ERR-REQ-35).</div></sc-if>
+    <sc-if value="{{hasSel}}"><div class="selbar"><span class="fw5">Đã chọn {{selN}}</span><span class="spacer"></span>
+      <button class="btn sm" disabled="{{no.send1}}" title="{{tip.send1}}" onClick="{{openSend1}}">{{lbl.send1}}</button>
+      <sc-if value="{{showSecond}}"><button class="btn sm" disabled="{{no.second}}" title="{{tip.second}}" onClick="{{openSecond}}">{{lbl.second}}</button></sc-if>
+      <button class="btn sm primary" disabled="{{no.cust}}" title="{{tip.cust}}" onClick="{{askSend}}">{{lbl.cust}}</button>
+
+      <button class="btn sm" disabled="{{no.rm}}" title="{{tip.rm}}" onClick="{{remove}}">{{lbl.rm}}</button></div></sc-if>
+    <sc-if value="{{noPortal}}"><div class="chip warn alert flat">Khách hàng này chưa có tài khoản cổng đang hoạt động nên chưa gửi được hồ sơ. Mời người liên hệ vào cổng ở trang khách hàng trước.</div></sc-if>
+    <div class="profile-table-scroll" tabindex="0" role="region" aria-label="Bảng hồ sơ theo vị trí"><table><thead><tr><th style="width:40px"><input type="checkbox" checked="{{allRows}}" disabled="{{noRows}}" onChange="{{togAll}}" aria-label="Chọn tất cả"></th><th>Mã</th><th>Họ tên</th><th>Chuyên khoa</th><th>Kinh nghiệm</th><th>Trạng thái</th><th>Thời gian</th><th>Hạn đánh giá</th><th>Việc tiếp theo</th></tr></thead><tbody>
+      <sc-for list="{{rows}}" as="c" hint-placeholder-count="4"><tr class="nc {{c.leave}}" onClick="{{c.openDrawer}}"><td onClick="{{c.stop}}"><input type="checkbox" checked="{{c.checked}}" disabled="{{c.locked}}" onChange="{{c.toggle}}" aria-label="Chọn {{c.name}}"></td>
+        <td class="tabular">{{c.id}}</td><td><div class="fw5">{{c.name}}</div><sc-if value="{{c.hasIssue}}"><div class="small t-danger">{{c.issueText}}</div></sc-if></td><td>{{c.spec}}<div class="small muted">{{c.place}}</div></td><td class="tabular">{{c.exp}} năm</td>
+        <td><span class="{{c.chip}}">{{c.label}}</span><sc-if value="{{c.hasSub}}"><div class="small muted">{{c.sub}}</div></sc-if></td>
+        <td class="tm">{{c.timeTxt}}<sc-if value="{{c.slow}}"><span class="chip warn">Chậm xử lý</span></sc-if></td>
+        <td class="tm tabular">{{c.dueTxt}}<sc-if value="{{c.late}}"><span class="chip bad">Quá hạn</span></sc-if></td>
+        <td class="na" onClick="{{c.stop}}"><sc-if value="{{c.hasAct}}"><button class="btn sm" disabled="{{c.actOff}}" title="{{c.actTip}}" aria-label="{{c.actLabel}} — {{c.id}}" onClick="{{c.doAct}}">{{c.actLabel}}</button></sc-if><sc-if value="{{c.canRelease}}"><button class="btn sm ghost" disabled="{{c.relOff}}" aria-label="Trả lại — {{c.id}}" onClick="{{c.doRelease}}">Trả lại</button></sc-if><sc-if value="{{c.canPrescreen}}"><button class="btn sm" aria-label="Sơ vấn — {{c.id}}" onClick="{{c.doPrescreen}}">Sơ vấn</button></sc-if><sc-if value="{{c.canRemove}}"><button class="btn sm" aria-label="Bỏ — {{c.id}}" onClick="{{c.doRemove}}">Bỏ</button></sc-if></td></tr></sc-for></tbody></table></div>
+    <sc-if value="{{empty}}"><div class="card-b muted">{{emptyMsg}}</div></sc-if>
+    <div class="tfoot">{{footer}}</div>
+  </div>
+  <sc-if value="{{drawer}}"><div class="scrim drw" onClick="{{closeDrawer}}"><aside class="anim-in" role="dialog" aria-label="Hồ sơ {{drawer.name}}" onClick="{{stop}}">
+    <div class="row"><div><div class="fw5" style="font-size:16px">{{drawer.name}}</div><div class="muted small">{{drawer.id}} · {{drawer.spec}} · {{drawer.exp}} năm · {{drawer.place}}</div></div><span class="spacer"></span><button class="btn sm" onClick="{{closeDrawer}}" aria-label="Đóng">Đóng</button></div>
+    <div><span class="{{drawer.chip}}">{{drawer.label}}</span> <span class="muted small">{{drawer.sub}}</span></div>
+    <sc-if value="{{drawer.hasPrescreens}}"><section><h3>Sơ vấn</h3><sc-for list="{{drawer.prescreens}}" as="p"><p class="small">{{p.date}} · {{p.mode}} · {{p.note}}</p></sc-for></section></sc-if><section><h3>Các lượt đánh giá</h3><sc-if value="{{drawer.noRounds}}"><div class="muted small">Hồ sơ chưa gửi đánh giá.</div></sc-if>
+      <div class="col" style="gap:8px"><sc-for list="{{drawer.rounds}}" as="r"><div class="rv-card"><div class="row wrap g6"><b>{{r.name}}</b><span>{{r.who}}</span><span class="chip {{r.tone}}">{{r.stateLabel}}</span><sc-if value="{{r.late}}"><span class="chip bad">Quá hạn</span></sc-if></div>
+        <div class="muted small">{{r.times}}</div>
+        <sc-if value="{{r.hasResult}}"><div class="small"><span class="chip {{r.resTone}}">{{r.resLabel}}</span> <span class="muted">{{r.resAt}}</span> <span>{{r.resProp}}</span><sc-if value="{{r.hasComment}}"><div>{{r.comment}}</div></sc-if></div></sc-if><sc-if value="{{r.hasVersions}}"><details><summary>Các lần kết luận</summary><sc-for list="{{r.verdicts}}" as="v"><p class="small">{{v.at}} · {{v.label}}<br>{{v.comment}}</p></sc-for></details></sc-if></div></sc-for></div></section>
+    <sc-if value="{{drawer.hasLog}}"><section><h3>Lịch sử trạng thái</h3><div class="col" style="gap:6px"><sc-for list="{{drawer.log}}" as="l"><div class="row wrap g6 small"><sc-if value="{{l.hasFrom}}"><span class="chip {{l.fromTone}}">{{l.fromLabel}}</span><span class="muted">→</span></sc-if><span class="chip {{l.toTone}}">{{l.toLabel}}</span><span class="muted">{{l.at}} · {{l.who}}</span></div></sc-for></div></section></sc-if>
+    <sc-if value="{{drawer.hasTiming}}"><section><h3>Thời gian ở từng trạng thái</h3><dl class="tmg"><sc-for list="{{drawer.timing}}" as="t"><div><dt>{{t.label}}</dt><dd class="tabular">{{t.span}}</dd></div></sc-for></dl></section></sc-if>
+  </aside></div></sc-if>
+  <sc-if value="{{confirm}}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Ghi nhận đã gửi khách hàng"><h2>Ghi nhận đã gửi {{custN}} hồ sơ cho khách hàng?</h2>
+    <div class="muted">Mỗi hồ sơ tạo một ca tuyển. Khách hàng xem và phản hồi trên cổng; bạn cũng ghi phản hồi thay được ở tab Tiến trình.</div>
+    <div class="field"><label>Ngày gửi <span class="req">*</span></label><input class="input" value="{{sendDate}}" placeholder="dd/mm/yyyy" onInput="{{onSendDate}}"><span class="err">{{sendErr}}</span></div>
+    <div class="row"><span class="spacer"></span><button class="btn" onClick="{{cancel}}">Huỷ</button><button class="btn primary" onClick="{{doSend}}">Ghi nhận</button></div></div></div></sc-if>
+  <sc-if value="{{addOpen}}"><div class="scrim"><div class="modal anim-scale" style="max-width:760px;width:100%" role="dialog" aria-label="Thêm ứng viên vào yêu cầu"><h2>Thêm ứng viên vào {{reqCode}}</h2>
+    <div class="muted small">Bộ lọc điền sẵn theo yêu cầu. Bấm một điều kiện để bỏ hoặc bật lại.</div>
+    <input class="input" placeholder="Tìm mã, tên, nơi làm…" value="{{aq}}" onInput="{{onAq}}" aria-label="Tìm mã, tên, nơi làm">
+    <div class="row wrap g6"><sc-if value="{{hasConds}}"><span class="muted small">Theo yêu cầu</span></sc-if>
+      <sc-for list="{{conds}}" as="k"><button class="chip {{k.cls}}" aria-pressed="{{k.on}}" onClick="{{k.toggle}}" style="cursor:pointer">{{k.label}} {{k.mark}}</button></sc-for>
+      <sc-if value="{{hasConds}}"><button class="btn sm" onClick="{{restoreConds}}">Khôi phục theo yêu cầu</button><button class="btn sm" onClick="{{wholePool}}">Xem toàn bộ kho</button></sc-if></div>
+    <div class="card" style="max-height:300px;overflow:auto"><table><thead><tr><th style="width:40px"><input type="checkbox" checked="{{allPool}}" disabled="{{noPool}}" onChange="{{togPool}}" aria-label="Chọn tất cả"></th><th>Mã</th><th>Họ tên</th><th>Chuyên khoa</th><th>Kinh nghiệm</th><th>Nơi làm</th></tr></thead><tbody>
+      <sc-for list="{{poolRows}}" as="c"><tr class="nc {{c.rowCls}}" aria-disabled="{{c.inReq}}"><td><input type="checkbox" checked="{{c.checked}}" disabled="{{c.inReq}}" onChange="{{c.toggle}}" aria-label="Chọn {{c.name}}"></td><td class="tabular">{{c.id}}</td><td class="fw5">{{c.name}} <sc-if value="{{c.inReq}}"><span class="chip gray">Đã thêm</span></sc-if></td><td>{{c.spec}}</td><td class="tabular">{{c.exp}} năm</td><td>{{c.place}}</td></tr></sc-for></tbody></table>
+      <sc-if value="{{poolEmpty}}"><div class="card-b muted">Không có hồ sơ khớp tìm kiếm / bộ lọc. Bấm "Xem toàn bộ kho" để bỏ hết điều kiện.</div></sc-if></div>
+    <div class="row"><span class="muted small">{{poolFoot}}</span><span class="spacer"></span><button class="btn" onClick="{{closeAdd}}">Huỷ</button><button class="btn primary" disabled="{{noAdd}}" onClick="{{doAdd}}">Thêm {{addN}} ứng viên</button></div></div></div></sc-if>
+  <sc-if value="{{modal}}"><dc-import name="ReqReview" mode="{{modal}}" count="{{modalN}}" allow-second="{{allowSecond}}" today="{{today}}" due-init="{{dueInit}}" proposed-label="{{proposedLabel}}" round1="{{round1}}" second-release="{{secondRelease}}" on-save="{{saveModal}}" on-close="{{closeModal}}" hint-size="100%,100px"></dc-import></sc-if>
+  <sc-if value="{{profileOn}}"><dc-import name="ProfileActions" mode="{{profileMode}}" has-rounds="{{profileHasRounds}}" today="{{today}}" on-save="{{saveProfile}}" on-close="{{closeProfile}}"></dc-import></sc-if>
+  <sc-if value="{{snack}}"><div class="snack anim-in" role="status"><span>{{snack.msg}}</span><sc-if value="{{snack.canUndo}}"><button class="snk" onClick="{{undo}}">Hoàn tác</button></sc-if><button class="snx" aria-label="Đóng thông báo" onClick="{{closeSnack}}">×</button></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"reviewSettings":{"editor":null,"default":{}},"isAdmin":{"editor":null,"default":false},"onReviewAction":{"editor":null},"request":{"editor":null},"today":{"editor":null,"default":"15/10/2026"},"cands":{"editor":null,"default":[]},"canPortal":{"editor":null},"onSet":{"editor":null},"onSend":{"editor":null},"onRemove":{"editor":null},"onRestore":{"editor":null},"onOpenProgress":{"editor":null},"locked":{"editor":null,"default":false},"pool":{"editor":null,"default":[]},"onAdd":{"editor":null},"$preview":{"width":1100,"height":520}}'>
+class Component extends DCLogic {
+  state = { ghost: [], sendDate: '15/10/2026', sendErr: '', modal: '', addOpen: false, aq: '', aOff: [], aSel: [], sel: [], confirm: false, snack: null, stage: 'tat-ca', q: '', fOpen: false, exp: '', lic: '', iss: '', st: '', drawerId: '' };
+  // Mười trạng thái của hồ sơ trong yêu cầu (module 06 B3.1); màu theo MATCH_STATUS của code
+  static ST = { SCREENING: ['gray', 'Đang sàng lọc'], REVIEW_PENDING: ['warn', 'Chờ đánh giá'], IN_REVIEW: ['info', 'Đang đánh giá'], REVIEW_PASSED: ['ok', 'Đạt đánh giá'], REVIEW_FAILED: ['bad', 'Không đạt đánh giá'],
+    SECOND_REVIEW_REQUESTED: ['ai', 'Đề xuất đánh giá vòng 2'], SECOND_REVIEW_PENDING: ['warn', 'Chờ đánh giá vòng 2'], SECOND_REVIEW_PASSED: ['ok', 'Đạt đánh giá vòng 2'], SECOND_REVIEW_FAILED: ['bad', 'Không đạt đánh giá vòng 2'], SUBMITTED: ['ai', 'Đã gửi khách hàng'] };
+  static GR = { SCREENING: 'sang-loc', REVIEW_PENDING: 'danh-gia', IN_REVIEW: 'danh-gia', SECOND_REVIEW_PENDING: 'danh-gia', REVIEW_PASSED: 'cho-nv', SECOND_REVIEW_REQUESTED: 'cho-nv', SECOND_REVIEW_PASSED: 'cho-nv', REVIEW_FAILED: 'khong-dat', SECOND_REVIEW_FAILED: 'khong-dat', SUBMITTED: 'da-gui' };
+  // Ba trạng thái kết quả đã quay về nhân viên (B2, B3.2 #14): mục "Đang chờ nhân viên" của bộ lọc
+  static WAIT = ['REVIEW_PASSED', 'SECOND_REVIEW_REQUESTED', 'SECOND_REVIEW_PASSED'];
+  // Thời gian ở trạng thái hiện tại: nhóm trạng thái → số đo (B3.1, UC-MAT-02)
+  static TIMING = { REVIEW_PENDING: 'wait', IN_REVIEW: 'rev', SECOND_REVIEW_PENDING: 'rev2', REVIEW_PASSED: 'staff', SECOND_REVIEW_REQUESTED: 'staff', SECOND_REVIEW_PASSED: 'staff', SUBMITTED: 'total' };
+  static TM_LABEL = { wait: 'Chờ nhận', rev: 'Đánh giá', rev2: 'Đánh giá vòng 2', staff: 'Chờ nhân viên', total: 'Tổng' };
+  static R1 = 'BS Tâm'; // người đánh giá vòng đầu mô phỏng
+  static maskDate = (v) => { const d = String(v).replace(/\D/g, '').slice(0, 8); return d.slice(0, 2) + (d.length > 2 ? '/' + d.slice(2, 4) : '') + (d.length > 4 ? '/' + d.slice(4) : ''); };
+  renderVals() {
+    const S = this.state, D = window.MedReview, ps = D.positions(this.props.request || {}), position = ps.find((p) => p.id === S.positionId) || ps[0];
+    const P = { ...this.props, locked: this.props.locked || position.stopped }, ST = Component.ST, all = (P.cands || []).filter((c) => c.positionId === position.id), C = Component;
+    // Thông báo góc phải dưới; thao tác đổi trạng thái hồ sơ kèm nút Hoàn tác trong 8 giây
+    const notify = (msg, snap, readd) => { clearTimeout(this._sn); this.setState({ snack: { msg, snap: snap || null, readd: !!readd, stage: S.stage } }); this._sn = setTimeout(() => this.setState({ snack: null }), snap ? 8000 : 3000); };
+    const say = (msg) => notify(msg);
+    const snapOf = (list) => Object.fromEntries(list.map((c) => [c.id, { status: c.status, meta: c.meta || {} }]));
+    const today = P.today || '15/10/2026', td = /^(\d{2})\/(\d{2})\/(\d{4})/.exec(today) || [0, '15', '10', '2026'];
+    const NOW = new Date(+td[3], +td[2] - 1, +td[1], 9, 0);
+    const grp = (c) => C.GR[c.status];
+    const minExp = +[position.exp, position.years, (P.request || {}).years].find((v) => v !== undefined && v !== '') || 3;
+    const gap = (c) => c.exp < minExp, verify = (c) => c.dup || c.cchn === 'Hết hạn' || !c.cchn;
+    const lic = (c) => (!c.cchn ? 'chua-co' : c.cchn === 'Hết hạn' ? 'het-han' : 'con-han');
+    const issOf = (c) => (gap(c) ? 'chua-dap-ung' : verify(c) ? 'can-xac-minh' : 'khong');
+    const fold = (x) => String(x).normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').toLowerCase(), qq = fold(S.q.trim());
+    const stOk = (c) => !S.st || (S.st === 'cho-nhan-vien' ? C.WAIT.includes(c.status) : c.status === S.st);
+    const matchF = (c) => (!qq || fold(c.id + ' ' + c.name).includes(qq)) && stOk(c) && (!S.exp || (S.exp === 'dat') === (c.exp >= minExp)) && (!S.lic || lic(c) === S.lic) && (!S.iss || (S.iss === 'chua-dap-ung' ? gap(c) : S.iss === 'can-xac-minh' ? verify(c) : !gap(c) && !verify(c)));
+    const shown = all.filter((c) => matchF(c) && (S.stage === 'tat-ca' || grp(c) === S.stage));
+    const STG = [['sang-loc', 'Đang sàng lọc'], ['danh-gia', 'Đang đánh giá'], ['cho-nv', 'Chờ nhân viên'], ['khong-dat', 'Không đạt'], ['da-gui', 'Đã gửi khách']];
+    if (!this._cnt || this._req !== (P.request || {}).code) { this._req = (P.request || {}).code; this._cnt = {}; this._prev = {}; this._tick = {}; }
+    const stages = STG.map(([k, label]) => { const n = all.filter((c) => grp(c) === k).length;
+      if (this._cnt[k] !== undefined && this._cnt[k] !== n) { this._prev[k] = this._cnt[k]; this._tick[k] = (this._tick[k] || 0) + 1; } this._cnt[k] = n;
+      return { label, n, prevN: this._prev[k] !== undefined ? this._prev[k] : n, rollCls: this._tick[k] ? (this._tick[k] % 2 ? 'roll-a' : 'roll-b') : '', on: S.stage === k, pick: () => this.setState({ stage: S.stage === k ? 'tat-ca' : k }) }; });
+    const nF = [S.st, S.exp, S.lic, S.iss].filter(Boolean).length, mk = (arr, cur) => arr.map(([v, l]) => ({ v, l, sel: v === cur }));
+    const parseDue = (due) => { const d = /^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/.exec(due || ''); return d ? new Date(+d[3], +d[2] - 1, +d[1], +d[4], +d[5]) : null; };
+    const dayOf = (v) => D.date(v);
+    const span = (a, b) => a && b ? Math.max(0, (b - a) / 36e5) : null;
+    const spanTxt = (n) => n === null ? '—' : n < 1 ? 'dưới 1 giờ' : (Math.floor(n / 24) ? Math.floor(n / 24) + ' ngày ' : '') + Math.floor(n % 24) + ' giờ';
+    // Vòng đánh giá hiện tại: lượt gửi mới nhất; lượt cũ ở bản mẫu chưa có thì dựng từ trường cũ
+    const roundsOf = (c) => ((c.meta && c.meta.rounds) || []).filter((r) => r.active !== false);
+    const curRound = (c) => { const r = roundsOf(c); return r.length ? r[r.length - 1] : null; };
+    const dueOf = (c) => { const r = curRound(c); return r && r.state === 'PENDING' ? r.due : ((c.meta || {}).due && ['REVIEW_PENDING', 'IN_REVIEW', 'SECOND_REVIEW_PENDING'].includes(c.status) ? c.meta.due : ''); };
+    const lateOf = (due) => { const d = parseDue(due); return !!d && d < NOW; };
+    const note = (m) => (m.comment ? 'Nhận xét: ' + m.comment : '');
+    const subOf = (c) => { const m = c.meta || {}; return c.status === 'SECOND_REVIEW_PENDING' ? (m.reviewer2 || '') : c.status === 'SECOND_REVIEW_REQUESTED' ? [m.proposed && 'Đề xuất: ' + m.proposed, note(m)].filter(Boolean).join(' · ') : ['REVIEW_PASSED', 'REVIEW_FAILED', 'SECOND_REVIEW_PASSED', 'SECOND_REVIEW_FAILED'].includes(c.status) ? note(m) : ''; };
+    // Lịch sử trạng thái do kho ghi mỗi lần đổi; hồ sơ chưa có lịch sử thì dựng một dòng từ mốc vào trạng thái hiện tại
+    const logOf = (c) => { const l = (c.meta && c.meta.log) || []; return l.length ? l : (c.meta && c.meta.since && c.status !== 'SCREENING' ? [{ from: '', to: c.status, at: c.meta.since }] : []); };
+    // Năm số đo thời gian tính lúc đọc (B3.1): cộng thời gian ở từng nhóm trạng thái; Tổng tính từ lúc gửi đánh giá đầu tiên
+    const timingOf = (c) => { const l = logOf(c), t = { wait: 0, rev: 0, rev2: 0, staff: 0, total: null }; if (!l.some((e) => e.to === 'REVIEW_PENDING')) return null;
+      l.forEach((e, i) => { const k = C.TIMING[e.to]; if (!k || k === 'total') return; const end = i + 1 < l.length ? l[i + 1].at : today + ' 09:00', n = span(dayOf(e.at), dayOf(end)); if (n !== null) t[k] += n; });
+      const sub = l.find((e) => e.to === 'SUBMITTED'); t.total = span(dayOf(l.find((e) => e.to === 'REVIEW_PENDING').at), dayOf(sub ? sub.at : today + ' 09:00')); return t; };
+    const timeTxt = (c) => { const k = C.TIMING[c.status], t = k && timingOf(c); return k && t ? C.TM_LABEL[k] + ' ' + spanTxt(t[k]) : '—'; };
+    const rows = shown.map((c) => { const due = dueOf(c), late = !!due && lateOf(due), rel = ['IN_REVIEW', 'SECOND_REVIEW_PENDING'].includes(c.status);
+      const A = { SCREENING: ['send', 'Gửi đánh giá'], SECOND_REVIEW_REQUESTED: ['sendSecond', 'Gửi vòng 2'], REVIEW_PASSED: ['submit', 'Gửi khách hàng'], SECOND_REVIEW_PASSED: ['submit', 'Gửi khách hàng'], REVIEW_PENDING: ['editDue', 'Sửa hạn'], IN_REVIEW: ['editDue', 'Sửa hạn'], SECOND_REVIEW_PENDING: ['editDue', 'Sửa hạn'], REVIEW_FAILED: ['remove', 'Bỏ khỏi yêu cầu'], SECOND_REVIEW_FAILED: ['remove', 'Bỏ khỏi yêu cầu'], SUBMITTED: ['openCase', 'Xem ca tuyển'] }[c.status];
+      const offAct = A[0] === 'openCase' ? false : A[0] === 'remove' ? ['CLOSED', 'CANCELLED'].includes(P.request.status) : !!P.locked || (A[0] === 'submit' && !P.canPortal);
+      const actTip = A[0] === 'openCase' || A[0] === 'remove' ? '' : P.locked ? 'Chỉ làm khi yêu cầu đang Đang xử lý (ERR-REQ-35)' : A[0] === 'submit' && !P.canPortal ? 'Khách hàng chưa có tài khoản cổng đang hoạt động' : '';
+      return { ...c, leave: '', hasIssue: gap(c) || verify(c), issueText: gap(c) ? 'Chưa đạt kinh nghiệm tối thiểu ' + minExp + ' năm' : 'Cần xác minh: ' + (c.dup ? 'trùng hồ sơ' : 'chứng chỉ hành nghề'), chip: 'chip ' + ST[c.status][0], label: ST[c.status][1], checked: S.sel.includes(c.id), locked: c.status === 'SUBMITTED', sub: subOf(c), hasSub: !!subOf(c),
+        timeTxt: timeTxt(c), dueTxt: due ? due : '—', late, hasAct: true, actLabel: A[1], actOff: offAct, actTip, canRelease: rel && P.isAdmin, relOff: !!P.locked,
+        stop: (ev) => ev && ev.stopPropagation && ev.stopPropagation(), slow: !!P.reviewSettings.slowHours && C.WAIT.includes(c.status) && D.date(c.meta.since) && (NOW - D.date(c.meta.since)) / 36e5 > +P.reviewSettings.slowHours, canRemove: c.status !== 'SUBMITTED' && !['CLOSED','CANCELLED'].includes(P.request.status), doRemove: () => doRemove([c]), canPrescreen: c.status !== 'SUBMITTED' && !P.locked, doPrescreen: () => this.setState({ profileMode: 'prescreen', actionIds: [c.id] }), doAct: (ev) => rowAct(c, A[0], ev), doRelease: (ev) => rowAct(c, 'release', ev), openDrawer: () => this.setState({ drawerId: c.id }),
+        toggle: () => this.setState({ sel: S.sel.includes(c.id) ? S.sel.filter((x) => x !== c.id) : [...S.sel, c.id] }) }; });
+    const rowsView = rows.slice(); (S.ghost || []).filter((g) => !rows.some((r) => r.id === g.row.id)).forEach((g) => rowsView.splice(Math.min(g.at, rowsView.length), 0, { ...g.row, leave: 'leave', checked: false, locked: true, toggle: () => {}, doAct: () => {}, doRelease: () => {}, openDrawer: () => {} }));
+    const pickable = rows.filter((c) => !c.locked), allRows = pickable.length > 0 && pickable.every((c) => S.sel.includes(c.id));
+    const togAll = () => this.setState({ sel: allRows ? S.sel.filter((id) => !pickable.some((c) => c.id === id)) : [...new Set([...S.sel, ...pickable.map((c) => c.id)])] });
+    const picked = all.filter((c) => S.sel.includes(c.id));
+    // Mỗi nút áp cho các hồ sơ đủ điều kiện trong số đã chọn (bảng chuyển trạng thái, module 06 B3.1); không có hồ sơ nào đủ điều kiện thì nút mờ kèm lý do
+    const PASS = ['REVIEW_PASSED', 'SECOND_REVIEW_PASSED'], PEND = ['REVIEW_PENDING', 'IN_REVIEW', 'SECOND_REVIEW_PENDING'], lk = !!P.locked;
+    const of = (arr) => picked.filter((c) => arr.includes(c.status)), g1 = of(['SCREENING']), gSec = of(['SECOND_REVIEW_REQUESTED']), gClaim = of(['REVIEW_PENDING']), gSim = of(['IN_REVIEW', 'SECOND_REVIEW_PENDING']), gCust = of(PASS), gDue = of(PEND), gRel = of(['IN_REVIEW', 'SECOND_REVIEW_PENDING']);
+    // Bỏ khỏi yêu cầu: chỉ hồ sơ Đang sàng lọc hoặc Không đạt đánh giá, chưa gửi khách (SHORT-01)
+    const gRm = picked.filter((c) => c.status !== 'SUBMITTED');
+    const no = { send1: lk || !g1.length, second: lk || !gSec.length, cust: lk || !gCust.length || !P.canPortal, claim: lk || !gClaim.length, sim: lk || !gSim.length, rm: ['CLOSED', 'CANCELLED'].includes(P.request.status) || !gRm.length };
+    const lbl = { send1: 'Gửi hồ sơ đánh giá · ' + g1.length, second: 'Gửi đánh giá vòng 2 · ' + gSec.length, cust: 'Ghi nhận đã gửi khách hàng · ' + gCust.length, claim: 'Giả lập nhận hồ sơ · ' + gClaim.length, sim: 'Giả lập kết quả · ' + gSim.length, rm: 'Bỏ khỏi yêu cầu · ' + gRm.length };
+    const LK = 'Chỉ làm khi yêu cầu đang Đang xử lý (ERR-REQ-35)';
+    const tip = { send1: lk ? LK : g1.length ? '' : 'Không có hồ sơ nào ở Đang sàng lọc trong số đã chọn', second: lk ? LK : gSec.length ? '' : 'Không có hồ sơ nào ở Đề xuất đánh giá vòng 2 trong số đã chọn',
+      cust: lk ? LK : !P.canPortal ? 'Khách hàng chưa có tài khoản cổng đang hoạt động' : gCust.length ? '' : 'Không có hồ sơ nào ở Đạt đánh giá hoặc Đạt đánh giá vòng 2 trong số đã chọn',
+      claim: lk ? LK : gClaim.length ? 'Chỉ có ở bản mẫu: thay người đánh giá nội bộ nhận hồ sơ' : 'Không có hồ sơ nào ở Chờ đánh giá trong số đã chọn', sim: lk ? LK : gSim.length ? 'Chỉ có ở bản mẫu: thay người đánh giá chọn kết quả' : 'Không có hồ sơ nào ở Đang đánh giá hoặc Chờ đánh giá vòng 2 trong số đã chọn',
+      rm: 'Chỉ bỏ hồ sơ chưa gửi khách; cần lý do nếu đã có lượt đánh giá' };
+    const ids = (l) => l.map((c) => c.id), modalList = { send1: g1, sim: gSim, second: gSec, due: gDue, release: gRel }[S.modal] || [], modalN = modalList.length, TODAY = NOW;
+    const leave = (map) => { const cur = S.stage; if (cur === 'tat-ca') return { ghost: [] };
+      const out = rows.map((r, i) => ({ r, i })).filter(({ r }) => map[r.id] !== undefined && (map[r.id] === null || C.GR[map[r.id]] !== cur));
+      const left = all.filter((c) => grp(c) === cur && !out.some(({ r }) => r.id === c.id)).length, cnt = {};
+      out.forEach(({ r }) => { const g = map[r.id] ? C.GR[map[r.id]] : null; if (g) cnt[g] = (cnt[g] || 0) + 1; });
+      const target = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a])[0]; setTimeout(() => this.setState({ ghost: [] }), 1200);
+      return { stage: left === 0 && target ? target : cur, ghost: out.map(({ r, i }) => ({ at: i, row: r })) }; };
+    const done = (msg, map, snap, readd) => { this.setState({ sel: [], modal: '', ...(map ? leave(map) : {}) }); notify(msg, snap, readd); };
+    // Sửa lượt đánh giá mới nhất của một hồ sơ: trả bản rounds mới, lượt cũ giữ nguyên
+    const lastRound = (old, patch) => { const r = (old.rounds || []).slice(); if (r.length) r[r.length - 1] = { ...r[r.length - 1], ...patch }; return r; };
+    const setMap = (list, to) => Object.fromEntries(ids(list).map((i) => [i, typeof to === 'function' ? to(list.find((c) => c.id === i)) : to]));
+    const doRemove = (list) => this.setState({ profileMode: 'remove', actionIds: ids(list) });
+    const saveProfile = (data) => {
+      const out = S.profileMode === 'remove' ? P.onRemove(S.actionIds, data.reason) : P.onReviewAction(S.actionIds, 'PRESCREEN', data);
+      if (out.ok) { this.setState({ profileMode: '', drawerId: '', sel: [] }); say(out.message); }
+      return out;
+    };
+    const rowAct = (c, kind, ev) => { ev && ev.stopPropagation && ev.stopPropagation();
+      if (kind === 'openCase') { P.onOpenProgress && P.onOpenProgress(); return; }
+      if (kind === 'remove') { doRemove([c]); return; }
+      if (kind === 'submit') { this.setState({ sel: [c.id], confirm: true, sendErr: '' }); return; }
+      this.setState({ sel: [c.id], modal: { send: 'send1', sendSecond: 'second', editDue: 'due', release: 'release' }[kind] }); };
+    const saveModal = (pl) => {
+      const action = { send1: 'SEND1', second: 'SEND2', due: 'DUE', release: 'RELEASE' }[S.modal];
+      const out = P.onReviewAction(ids(modalList), action, pl);
+      if (out.ok) { this.setState({ modal: '', sel: [] }); say(out.message); } else say(out.message);
+    };
+    // Hộp thoại Tìm hồ sơ: điều kiện lấy từ yêu cầu, mỗi cái bỏ hoặc bật lại được; hồ sơ đã có trong yêu cầu mang dấu Đã chọn và không thêm lần nữa
+    const R0 = P.request || {}, pick = (a, b) => (a !== undefined && a !== '' ? a : b);
+    const rq = { ...R0, ...position, specialty: position.spec || R0.specialty, years: pick(position.exp, pick(position.years, R0.years)), salTo: pick(position.smax, pick(position.salTo, R0.salTo)), group: position.group || R0.group }, GRP = (t) => (/bác sĩ/i.test(t) ? 'Bác sĩ' : /điều dưỡng|hộ sinh/i.test(t) ? 'Điều dưỡng, hộ sinh' : 'Kỹ thuật viên, dược sĩ');
+    const money = (n) => Number(n).toLocaleString('vi-VN'), reqGroup = rq.group ? (/bác sĩ|bác sỹ/i.test(rq.group) ? 'Bác sĩ' : /điều dưỡng|hộ sinh/i.test(rq.group) ? 'Điều dưỡng, hộ sinh' : 'Kỹ thuật viên, dược sĩ') : GRP(rq.title || '');
+    const defs = [rq.title && { k: 'group', label: 'Đối tượng: ' + reqGroup, ok: (c) => GRP(c.target) === reqGroup }, rq.specialty && { k: 'specialty', label: 'Chuyên khoa: ' + rq.specialty, ok: (c) => c.spec === rq.specialty },
+      rq.years && { k: 'minYears', label: 'Kinh nghiệm từ ' + rq.years + ' năm', ok: (c) => c.exp >= +rq.years }, rq.salTo && { k: 'salaryMax', label: 'Lương tối đa ' + money(rq.salTo) + ' VND', ok: (c) => +String(c.salary).replace(/\D/g, '') <= +rq.salTo },
+      rq.province && { k: 'province', label: 'Làm tại ' + rq.province + ' hoặc sẵn sàng chuyển', ok: (c) => !c.province || c.province === rq.province || c.callback }].filter(Boolean);
+    const aqq = fold(S.aq.trim()), onDefs = defs.filter((d) => !S.aOff.includes(d.k));
+    const poolRows = (P.pool || []).map((c) => ({ ...c, inReq: all.some((a) => a.candidateId === c.id) })).filter((c) => (!aqq || fold(c.id + ' ' + c.name + ' ' + c.place).includes(aqq)) && onDefs.every((d) => d.ok(c))).map((c) => ({ ...c, rowCls: c.inReq ? 'dim' : '', checked: c.inReq || S.aSel.includes(c.id),
+      toggle: () => this.setState({ aSel: S.aSel.includes(c.id) ? S.aSel.filter((x) => x !== c.id) : [...S.aSel, c.id] }) }));
+    const conds = defs.map((d) => { const off = S.aOff.includes(d.k); return { label: d.label, on: !off, cls: off ? 'gray' : 'ok', mark: off ? '+' : '×', toggle: () => this.setState({ aOff: off ? S.aOff.filter((x) => x !== d.k) : [...S.aOff, d.k] }) }; });
+    const addable = poolRows.filter((c) => !c.inReq), allPool = addable.length > 0 && addable.every((c) => S.aSel.includes(c.id));
+    const togPool = () => this.setState({ aSel: allPool ? S.aSel.filter((id) => !addable.some((c) => c.id === id)) : [...new Set([...S.aSel, ...addable.map((c) => c.id)])] });
+    const toAdd = S.aSel.filter((id) => poolRows.some((c) => c.id === id && !c.inReq)), closeAdd = () => this.setState({ addOpen: false, aq: '', aOff: [], aSel: [] });
+    // Ngăn xem hồ sơ (UC-MAT-03 bước 7): các lượt đánh giá, lịch sử trạng thái, thời gian ở từng trạng thái
+    const dc = all.find((c) => c.id === S.drawerId), RS = { PENDING: ['warn', 'Chờ đánh giá'], REVIEWED: ['ok', 'Đã kết luận'], WITHDRAWN: ['gray', 'Đã rút'] }, RES = { PASS: ['ok', 'Đạt'], FAIL: ['bad', 'Không đạt'], SECOND: ['ai', 'Đề xuất đánh giá vòng 2'] };
+    const drawer = dc ? (() => { const rs = roundsOf(dc), lg = logOf(dc), tm = timingOf(dc), ST2 = (s) => (s ? ST[s] : null);
+      return { ...dc, name: dc.name, chip: 'chip ' + ST[dc.status][0], label: ST[dc.status][1], sub: subOf(dc), noRounds: (dc.meta.rounds || []).length === 0,
+        prescreens: dc.meta.prescreens || [], hasPrescreens: (dc.meta.prescreens || []).length > 0, rounds: (dc.meta.rounds || []).map((r) => ({ name: (r.n === 1 ? 'Vòng đầu' : 'Vòng 2') + (r.active === false ? ' · Lượt cũ' : ''), who: r.who || 'Chưa có người nhận', tone: RS[r.state][0], stateLabel: RS[r.state][1], late: r.active !== false && r.state === 'PENDING' && lateOf(r.due),
+          times: ['Gửi lúc ' + r.sentAt, r.n === 1 && r.claimedAt ? 'Nhận lúc ' + r.claimedAt : '', 'Hạn ' + r.due].filter(Boolean).join(' · '),
+          hasVersions: (r.verdicts || []).length > 1, verdicts: (r.verdicts || []).map((v) => ({ label: RES[v.result] ? RES[v.result][1] : '', comment: v.comment, at: v.at })), hasResult: !!r.result, resTone: r.result ? RES[r.result][0] : '', resLabel: r.result ? RES[r.result][1] : '', resAt: r.at || '', resProp: r.proposed ? 'Người được đề xuất: ' + r.proposed : '', hasComment: !!r.comment, comment: r.comment || '' })),
+        hasLog: lg.length > 0, log: lg.map((e) => ({ hasFrom: !!e.from, fromTone: ST2(e.from) ? ST2(e.from)[0] : 'gray', fromLabel: ST2(e.from) ? ST2(e.from)[1] : '', toTone: ST[e.to][0], toLabel: ST[e.to][1], at: e.at, who: e.who || '' })),
+        hasTiming: !!tm, timing: tm ? ['wait', 'rev', 'rev2', 'staff', 'total'].map((k) => ({ label: C.TM_LABEL[k], span: spanTxt(tm[k]) })) : [] }; })() : null;
+    const stOpts = mk([['', 'Tất cả trạng thái'], ['cho-nhan-vien', 'Đang chờ nhân viên (' + all.filter((c) => C.WAIT.includes(c.status)).length + ')'], ...Object.keys(ST).map((k) => [k, ST[k][1] + ' (' + all.filter((c) => c.status === k).length + ')'])], S.st);
+    const proposedLabel = gSec.length === 1 && (gSec[0].meta || {}).proposed ? 'Người được đề xuất: ' + gSec[0].meta.proposed : 'Người được đề xuất của từng hồ sơ';
+    const dueInit = S.modal === 'due' && gDue[0] ? (dueOf(gDue[0]) || '') : '';
+    return { positions: ps.map((p) => ({ id: p.id, label: p.title + (p.stopped ? ' · Ngừng tuyển' : ''), selected: p.id === position.id })), changePosition: (e) => this.setState({ positionId: e.target.value, sel: [], drawerId: '', aSel: [], aOff: [] }),
+      profileMode: S.profileMode || '', profileOn: !!S.profileMode, profileHasRounds: all.some((c) => (S.actionIds || []).includes(c.id) && (c.meta.rounds || []).length), saveProfile, closeProfile: () => this.setState({ profileMode: '' }),
+      locked: lk, allRows, noRows: pickable.length === 0, togAll, allPool, noPool: addable.length === 0, togPool, addOpen: S.addOpen, openAdd: () => this.setState({ addOpen: true }), closeAdd, reqCode: rq.code || '', aq: S.aq, onAq: (e) => this.setState({ aq: e.target.value }), conds, hasConds: defs.length > 0,
+      restoreConds: () => this.setState({ aOff: [] }), wholePool: () => this.setState({ aOff: defs.map((d) => d.k) }), poolRows, poolEmpty: poolRows.length === 0, poolFoot: poolRows.length + ' / ' + (P.pool || []).length + ' hồ sơ trong kho',
+      addN: toAdd.length, noAdd: toAdd.length === 0, doAdd: () => { const out = P.onAdd(toAdd, position.id); if (out.ok) closeAdd(); say(out.message); },
+      stages, q: S.q, onQ: (e) => this.setState({ q: e.target.value }), fOpen: S.fOpen, togF: () => this.setState({ fOpen: !S.fOpen }), filterCls: nF ? 'primary' : '', filterLabel: nF ? 'Lọc (' + nF + ')' : 'Lọc', anyFilter: nF > 0 || !!S.q, clearF: () => this.setState({ q: '', st: '', exp: '', lic: '', iss: '' }),
+      stOpts, setSt: (e) => this.setState({ st: e.target.value }),
+      expOpts: mk([['', 'Tất cả'], ['dat', 'Đạt yêu cầu'], ['thieu', 'Chưa đạt']], S.exp), licOpts: mk([['', 'Tất cả'], ['con-han', 'Còn hạn'], ['het-han', 'Hết hạn'], ['chua-co', 'Chưa có']], S.lic), issOpts: mk([['', 'Tất cả'], ['chua-dap-ung', 'Có điểm chưa đáp ứng'], ['can-xac-minh', 'Cần xác minh'], ['khong', 'Không có vấn đề']], S.iss),
+      setExp: (e) => this.setState({ exp: e.target.value }), setLic: (e) => this.setState({ lic: e.target.value }), setIss: (e) => this.setState({ iss: e.target.value }),
+      footer: rows.length + ' / ' + all.length + ' ứng viên của yêu cầu', emptyMsg: all.length === 0 ? 'Chưa có hồ sơ nào trong yêu cầu.' : 'Không có hồ sơ khớp tìm kiếm / bộ lọc',
+      rows: rowsView, empty: rows.length === 0, sub: all.length + ' hồ sơ', hasSel: S.sel.length > 0, selN: S.sel.length, noPortal: !P.canPortal, stop: (ev) => ev && ev.stopPropagation && ev.stopPropagation(),
+      drawer, closeDrawer: () => this.setState({ drawerId: '' }),
+      no, lbl, tip, modalN, custN: gCust.length, modal: S.modal, today, dueInit, proposedLabel, round1: gSec.length === 1 ? (roundsOf(gSec[0]).find((r) => r.n === 1) || {}).who : '', secondRelease: gRel.length > 0 && gRel.every((c) => c.status === 'SECOND_REVIEW_PENDING'), showSecond: gSec.length > 0,
+      allowSecond: gSim.every((c) => c.status === 'IN_REVIEW'), saveModal, closeModal: () => this.setState({ modal: '' }), openSend1: () => this.setState({ modal: 'send1' }), openSim: () => this.setState({ modal: 'sim' }), openSecond: () => this.setState({ modal: 'second' }),
+      doClaim: () => { const map = setMap(gClaim, 'IN_REVIEW'); P.onSet && P.onSet(map, null, (i, old) => ({ rounds: lastRound(old, { who: C.R1, claimedAt: today }) })); done('Đã giả lập ' + C.R1 + ' nhận ' + gClaim.length + ' hồ sơ', map, snapOf(gClaim)); },
+      remove: () => doRemove(gRm),
+      askSend: () => this.setState({ confirm: true, sendErr: '' }), confirm: S.confirm, cancel: () => this.setState({ confirm: false }), sendDate: S.sendDate, sendErr: S.sendErr, onSendDate: (e) => this.setState({ sendDate: C.maskDate(e.target.value), sendErr: '' }),
+      snack: S.snack ? { msg: S.snack.msg, canUndo: false } : null, closeSnack: () => { clearTimeout(this._sn); this.setState({ snack: null }); },
+      undo: () => { const sn = S.snack; if (!sn || !sn.snap) return; P.onRestore && P.onRestore(sn.snap, sn.readd); this.setState({ stage: sn.stage, ghost: [], sel: [] }); notify('Đã hoàn tác'); },
+      doSend: () => { const d = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(S.sendDate);
+        if (!d) { this.setState({ sendErr: 'Nhập ngày dd/mm/yyyy' }); return; } if (new Date(+d[3], +d[2] - 1, +d[1]) > TODAY) { this.setState({ sendErr: 'Ngày gửi không ở tương lai.' }); return; }
+        const out = P.onSend(ids(gCust), S.sendDate); if (!out.ok) { this.setState({ sendErr: out.message }); return; } this.setState({ confirm: false, sel: [], ...leave(Object.fromEntries(ids(gCust).map((i) => [i, 'SUBMITTED']))) }); say('Đã ghi nhận gửi ' + gCust.length + ' hồ sơ cho khách hàng, tạo ' + gCust.length + ' ca tuyển'); } };
+  }
+}
+</script>
+</body>
+</html>

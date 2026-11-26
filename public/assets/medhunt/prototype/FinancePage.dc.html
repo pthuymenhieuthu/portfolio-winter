@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Sổ phí theo ca</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./dash-data.js"></script>
+<script src="./filter-multi.js"></script><script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.fc{display:flex;padding:24px 24px 0 12px}
+.fc-y{display:flex;flex-direction:column-reverse;justify-content:space-between;height:240px;width:56px;padding-right:10px}
+.fc-y span{height:0;display:flex;align-items:center;justify-content:flex-end;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.fc-plot{position:relative;flex:1;height:240px;border-left:1px solid var(--line)}
+.fc-grid{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}.fc-grid i{display:block;height:1px;background:var(--line-soft)}
+.fc-cols{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:space-around;gap:6px;padding:0 6px}
+.fc-col{position:relative;flex:1;max-width:96px;height:100%;display:flex;align-items:flex-end;justify-content:center;gap:5px}
+.fc-col>i{display:block;width:22px;min-height:3px;border-radius:3px 3px 0 0;transition:opacity .15s}
+.fc-e{background:linear-gradient(to bottom,#b9cef5,#eef3fd)}.fc-p{background:linear-gradient(to bottom,var(--chart-1),#c9d9f6)}.fc-col.od .fc-e{background:linear-gradient(to bottom,#f2adb3,#fdeced)}
+.fc-cols:hover .fc-col:not(:hover)>i{opacity:.5}
+.fc-tip{display:none;position:absolute;left:50%;transform:translateX(-50%);background:#17223b;color:#fff;border-radius:8px;padding:8px 12px;font-size:13px;line-height:1.55;white-space:nowrap;z-index:5;pointer-events:none}.fc-tip b{font-weight:600}
+.fc-col:hover .fc-tip{display:block}
+.fc-xl{display:flex;justify-content:space-around;gap:6px;padding:10px 30px 4px 75px}.fc-xi{flex:1;max-width:96px;text-align:center;font-size:13px;color:var(--muted)}
+.fp-leg{display:flex;gap:18px;padding:12px 24px 22px;font-size:12px;color:var(--muted)}.fp-leg span{display:inline-flex;align-items:center;gap:6px}.fp-leg i{width:10px;height:10px;border-radius:3px}
+.fg-head{width:100%;display:flex;align-items:center;gap:12px;padding:16px 20px;border:0;background:transparent;font:inherit;text-align:left;cursor:pointer}.fg-head:hover{background:var(--brand-50)}
+.fg-head svg{width:16px;height:16px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}.fg-head[aria-expanded="false"] svg{transform:rotate(-90deg)}
+.fg-head b{font-size:15px;font-weight:600;color:var(--ink)}.fg-sum{display:flex;gap:28px;font-size:12px;color:var(--muted)}.fg-sum span{display:flex;flex-direction:column;align-items:flex-end}.fg-sum strong{font-size:13px;font-weight:650;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.fg-wrap{overflow-x:auto;scrollbar-width:none}.fg-wrap::-webkit-scrollbar{display:none}.fg-wrap table{min-width:860px}
+.fp-bar{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin:0 0 16px}.fp-cap{font-size:13px;color:var(--muted)}.fp-cap b{color:var(--ink);font-weight:600}
+.fg-ch{display:flex;flex-wrap:wrap;gap:4px}.fg-ch .chip{font-size:11px}
+@media(max-width:1000px){.fp-stats{grid-template-columns:1fr 1fr}.fg-sum{display:none}}
+</style></helmet>
+<div class="dh">
+  <header class="dh-page-head"><div><h1>Sổ phí theo ca</h1><p>Phí dịch vụ từng ca, chia đợt thu theo phiếu xác nhận tuyển dụng.</p></div></header>
+  <div class="fp-bar"><div class="seg" role="group" aria-label="Khoảng thời gian của biểu đồ"><sc-for list="{{periods}}" as="p"><button type="button" class="btn sm" aria-pressed="{{p.on}}" onClick="{{p.pick}}">{{p.label}}</button></sc-for></div><span class="fp-cap">Biểu đồ hiển thị: <b>{{rangeTxt}}</b></span></div>
+  <section class="fo" aria-label="Tổng quan phí">
+    <div class="fo-ring"><svg viewBox="0 0 42 42" role="img" aria-label="Cơ cấu phí phát sinh"><defs><linearGradient id="fgA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f6fe0"></stop><stop offset="1" stop-color="#c9d9f6"></stop></linearGradient><linearGradient id="fgB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1fb6c9"></stop><stop offset="1" stop-color="#d2f0f5"></stop></linearGradient><linearGradient id="fgC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d32f2f"></stop><stop offset="1" stop-color="#f7c9cc"></stop></linearGradient></defs><circle cx="21" cy="21" r="15.9155" fill="none" stroke="var(--line-soft)" stroke-width="4.5"></circle><sc-for list="{{ring.segs}}" as="g"><circle cx="21" cy="21" r="15.9155" fill="none" stroke="{{g.fill}}" stroke-width="4.5" stroke-dasharray="{{g.dash}}" stroke-dashoffset="{{g.off}}"></circle></sc-for></svg>
+      <div class="fo-mid"><b>{{ring.totalNum}}</b><em>{{ring.totalUnit}}</em><span>{{ringCap}}</span></div></div>
+    <ul class="fo-leg"><sc-for list="{{ring.rows}}" as="r"><li class="{{r.cls}}" style="{{r.style}}"><i></i><div class="fo-t"><span>{{r.label}}</span><small>{{r.hint}}</small></div><b>{{r.value}}</b></li></sc-for></ul>
+  </section>
+
+  <section class="dh-section" aria-labelledby="fp-ct">
+    <div class="dh-section-head"><div><h2 id="fp-ct">Thu theo tháng</h2><p>Số tiền dự kiến thu theo hạn từng đợt và số đã thu thực tế · {{rangeTxt}}.</p></div></div>
+    <article class="dh-card"><div class="fc" role="img" aria-label="Biểu đồ thu theo tháng">
+      <div class="fc-y"><sc-for list="{{ticks}}" as="t"><span>{{t}}</span></sc-for></div>
+      <div class="fc-plot"><div class="fc-grid"><sc-for list="{{ticks}}" as="t"><i></i></sc-for></div>
+        <div class="fc-cols"><sc-for list="{{cols}}" as="c"><div class="{{c.cls}}"><div class="fc-tip" style="{{c.tipStyle}}"><b>{{c.label}}</b><br>Dự kiến: {{c.expTxt}}<br>Đã thu: {{c.paidTxt}}</div><i class="fc-e" style="{{c.eStyle}}"></i><i class="fc-p" style="{{c.pStyle}}"></i></div></sc-for></div></div></div>
+      <div class="fc-xl" aria-hidden="true"><sc-for list="{{cols}}" as="c"><span class="fc-xi">{{c.label}}</span></sc-for></div>
+      <div class="fp-leg"><span><i style="background:linear-gradient(to bottom,#b9cef5,#eef3fd)"></i>Dự kiến thu</span><span><i style="background:linear-gradient(to bottom,var(--chart-1),#c9d9f6)"></i>Đã thu</span><span><i style="background:color-mix(in srgb,var(--danger) 28%,var(--surface))"></i>Tháng có đợt quá hạn</span></div>
+      <sc-if value="{{noChart}}"><div class="dh-empty">Chưa có đợt thu nào có hạn trong sổ phí.</div></sc-if></article>
+  </section>
+
+  <section class="dh-section" aria-labelledby="fp-lt">
+    <div class="dh-section-head"><div><h2 id="fp-lt">Phí theo khách hàng</h2><p>{{count}}. Khách có đợt quá hạn tự mở sẵn.</p></div></div>
+    <sc-for list="{{groups}}" as="g"><article class="dh-card" style="margin-bottom:16px">
+      <button class="fg-head" aria-expanded="{{g.open}}" onClick="{{g.toggle}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg><b>{{g.client}}</b><sc-if value="{{g.over}}"><span class="chip bad">Quá hạn {{g.overN}} đợt</span></sc-if><span class="spacer"></span>
+        <span class="fg-sum"><span>Phát sinh<strong>{{g.charged}}</strong></span><span>Đã thu<strong>{{g.paid}}</strong></span><span>Còn thu<strong>{{g.left}}</strong></span></span></button>
+      <sc-if value="{{g.open}}"><div class="fg-wrap"><table><thead><tr><th>Ca</th><th>Yêu cầu</th><th>Các đợt</th><th class="r">Phát sinh</th><th class="r">Đã thu</th><th class="r">Còn thu</th><th></th></tr></thead><tbody>
+        <sc-for list="{{g.rows}}" as="r"><tr class="nc"><td>{{r.name}} <span class="muted small tabular">{{r.id}}</span></td><td>{{r.req}}</td><td><div class="fg-ch"><sc-for list="{{r.chips}}" as="c"><span class="{{c.cls}}">{{c.text}}</span></sc-for><sc-if value="{{r.noInsts}}"><span class="muted small">Hai đợt · v1</span></sc-if></div></td>
+          <td class="r tabular">{{r.charged}}</td><td class="r tabular">{{r.paid}}</td><td class="r tabular">{{r.left}}</td><td style="text-align:right"><button class="btn sm" disabled="{{r.noLeft}}" onClick="{{r.pay}}">Ghi lần thu</button></td></tr></sc-for></tbody></table></div></sc-if>
+    </article></sc-for>
+    <sc-if value="{{empty}}"><div class="dh-card"><div class="dh-empty">Chưa phát sinh phí. Phí chốt khi ứng viên nhận offer và nhân viên lưu phiếu xác nhận tuyển dụng.</div></div></sc-if>
+    <div class="card"><div class="tfoot"><span>{{footer}}</span><span class="spacer"></span><sc-for list="{{pager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></div>
+  </section>
+  <sc-if value="{{form}}"><dc-import name="PayModal" row="{{formRow}}" on-save="{{save}}" on-close="{{close}}" hint-size="100%,100px"></dc-import></sc-if>
+  <sc-if value="{{toast}}"><div class="chip ok toast anim-in">{{toast}}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"ledger":{"editor":null,"default":[]},"today":{"editor":null},"onPay":{"editor":null},"$preview":{"width":1100,"height":900}}'>
+class Component extends DCLogic {
+  state = { period: 6, page: 0, form: null, toast: '', open: {} };
+  static PERIODS = MedDash.PERIODS;
+  static ST = { paid: ['Đã thu', 'chip ok'], overdue: ['Quá hạn', 'chip bad'], partial: ['Thu một phần', 'chip warn'], open: ['Chưa thu', 'chip gray'] };
+  renderVals() {
+    const S = this.state, P = this.props, L = P.ledger || [], f = (n) => n.toLocaleString('vi-VN') + ' đ', C = Component;
+    const pd = (t) => { const m = /^(\d{2})\/(\d{2})\/(\d{4})/.exec(t || ''); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; };
+    const all = L.flatMap((r) => r.insts || []), mk = (d) => d.getFullYear() * 12 + d.getMonth(), N = S.period, mm = (k) => String(k % 12 + 1).padStart(2, '0') + '/' + Math.floor(k / 12);
+    // Khoảng thời gian: N tháng quanh hôm nay, bắt đầu từ tháng (hôm nay − N/2) → 6 tháng = T-3..T+2; vì sổ phí có cả đợt sắp tới nên không chốt ở tháng hiện tại. 'Tất cả' = từ tháng hạn sớm nhất đến muộn nhất.
+    const pr = MedDash.periodLedger(L, N, P.today), lo = pr.lo, hi = pr.hi, hasDue = pr.hasDue, Lp = pr.ledger;
+    const ring = MedDash.feeRing(Lp);
+    const rangeTxt = hasDue ? 'Từ ' + mm(lo) + ' đến ' + mm(hi) + ' · ' + (N ? N + ' tháng' : 'tất cả (' + (hi - lo + 1) + ' tháng)') : 'Chưa có đợt có hạn';
+    const ringCap = N ? 'phí phát sinh · ' + mm(lo) + '–' + mm(hi) : 'tổng phí phát sinh · tất cả';
+    const periods = C.PERIODS.map(([v, label]) => ({ label, on: N === v, pick: () => this.setState({ period: v }) }));
+    // Cột theo tháng hạn đợt thu: dự kiến (nhạt) cạnh đã thu (đậm); tháng có đợt quá hạn tô đỏ nhạt
+    const dated = all.filter((i) => pd(i.due)), months = [];
+    for (let k = lo; k <= hi; k++) if (hasDue) months.push(k);
+    const raw = months.map((k) => { const inM = dated.filter((i) => mk(pd(i.due)) === k); return { k, exp: inM.reduce((a, i) => a + i.expectedN, 0), paid: inM.reduce((a, i) => a + i.paidN, 0), od: inM.some((i) => i.status === 'overdue') }; });
+    // Thang trục: 4 khoảng đều, bước chọn trong 1, 2, 2,5, 5 nhân lũy thừa 10 để số trên trục tròn
+    const mx = Math.max(...raw.map((c) => c.exp), 1), mag = Math.pow(10, Math.floor(Math.log10(mx / 4))), step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((v) => v * 4 >= mx), top = step * 4, H = 240;
+    const short = (v) => (v === 0 ? '0' : v >= 1e9 ? (v / 1e9) + ' tỷ' : v >= 1e6 ? String(v / 1e6).replace('.', ',') + 'tr' : v.toLocaleString('vi-VN'));
+    const ticks = [0, 1, 2, 3, 4].map((k) => short(k * step));
+    const cols = raw.map((c) => { const eh = Math.round(c.exp / top * H), ph = Math.round(c.paid / top * H);
+      return { label: 'T' + (c.k % 12 + 1) + '/' + String(Math.floor(c.k / 12)).slice(2), cls: 'fc-col' + (c.od ? ' od' : ''), expTxt: f(c.exp), paidTxt: f(c.paid), eStyle: 'height:' + eh + 'px', pStyle: 'height:' + ph + 'px', tipStyle: 'bottom:' + (Math.max(eh, ph) + 8) + 'px' }; });
+    const by = {}; L.forEach((r) => { (by[r.client] = by[r.client] || []).push(r); });
+    const groups = Object.entries(by).map(([client, rs]) => { const od = rs.flatMap((r) => r.insts || []).filter((i) => i.status === 'overdue'), open = S.open[client] !== undefined ? S.open[client] : od.length > 0, tot = (k) => rs.reduce((a, r) => a + r[k], 0);
+      return { client, open, toggle: () => this.setState({ open: { ...S.open, [client]: !open } }), over: od.length > 0, overN: od.length, charged: f(tot('chargedN')), paid: f(tot('paidN')), left: f(tot('leftN')), leftN: tot('leftN'),
+        rows: rs.map((r) => ({ ...r, charged: f(r.chargedN), paid: f(r.paidN), left: f(r.leftN), noLeft: r.leftN <= 0, noInsts: !r.insts, pay: () => this.setState({ form: r.id }),
+          chips: (r.insts || []).map((i) => ({ cls: C.ST[i.status][1], text: 'Đợt ' + i.n + ' · ' + f(i.expectedN) + (i.due ? ' · hạn ' + i.due.slice(0, 5) : '') + ' · ' + C.ST[i.status][0] })) })) }; }).sort((a, b) => b.leftN - a.leftN);
+    // Danh sách nhóm khách hàng vẫn tính trên toàn bộ sổ phí (không lọc theo khoảng thời gian), chỉ phân trang
+    const view = MedPage.view(groups, S.page, 'khách hàng');
+    const cur = L.find((r) => r.id === S.form);
+    return { ring, ringCap, rangeTxt, periods, ticks, cols, noChart: cols.length === 0, groups: view.rows, empty: groups.length === 0, footer: view.footer, pager: MedPage.pager(this, view), count: groups.length + ' khách hàng · ' + L.length + ' ca có phí',
+      form: !!cur, formRow: cur || { id: '', name: '', leftN: 0 }, close: () => this.setState({ form: null }), toast: S.toast,
+      save: (id, n, amount, on, method, ref) => { this.props.onPay && this.props.onPay(id, amount, ref, n, on, method, ref); this.setState({ form: null, toast: 'Đã ghi lần thu ' + f(amount) });
+        setTimeout(() => this.setState({ toast: '' }), 2500); } };
+  }
+}
+</script>
+</body>
+</html>

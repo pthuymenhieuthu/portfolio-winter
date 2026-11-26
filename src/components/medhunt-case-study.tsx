@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Braces, Check, Code2, FileText, UsersRound } from "lucide-react";
 import { CaseStudyBubbleCard } from "@/components/case-study-bubble-card";
 import styles from "./medhunt-case-study.module.css";
+import { MedhuntPrototype } from "./medhunt-prototype";
 
 /** Crops the original product capture in CSS, preserving the source for later motion. */
 function ProductCrop({ src, alt, crop, priority = false }: {
@@ -117,6 +118,8 @@ export function MedhuntCaseStudy() {
           </figure>
         </section>
       </div>
+
+      <MedhuntPrototype />
 
       <section className={styles.learning} id="medhunt-team" aria-labelledby="medhunt-team-title">
         <div className={styles.learningHeading}>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Tab Hoạt động</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}.node{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text-subtle,var(--muted));font-size:12px;font-weight:600}.node.vis{background:var(--brand-50);border-color:var(--brand-200);color:var(--brand-ink)}.node.cur{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}</style></helmet>
+<div class="col page-in">
+  <div class="subtabs"><button class="sub" aria-pressed="{{tl}}" onClick="{{showTl}}">Dòng thời gian</button><button class="sub" aria-pressed="{{ver}}" onClick="{{showVer}}">Phiên bản v{{n}}</button><button class="sub" aria-pressed="{{st}}" onClick="{{showSt}}">Trạng thái</button></div>
+  <sc-if value="{{tl}}"><div class="card"><div class="card-h"><h3>Số sự kiện theo loại</h3><span class="muted small">{{total}} sự kiện</span></div><div class="card-b col g6">
+      <sc-for list="{{kinds}}" as="k"><div class="brow" data-tip="{{k.tip}}"><span>{{k.kind}}</span><span><i class="t" style="{{k.w}};display:block"></i></span><span class="tabular fw5">{{k.n}}</span></div></sc-for></div></div>
+    <div class="card"><div class="card-h"><h3>Dòng thời gian &amp; audit</h3></div><div class="card-b col g0">
+    <sc-for list="{{events}}" as="e" hint-placeholder-count="3"><div class="row" style="padding:10px 0;border-bottom:1px solid var(--line-soft);align-items:flex-start"><span class="chip {{e.tone}}">{{e.kind}}</span><span class="fw5" style="flex:1;min-width:0">{{e.text}}</span><span class="muted small tabular">{{e.at}}</span></div></sc-for></div></div></sc-if>
+  <sc-if value="{{ver}}"><div class="card"><div class="card-h"><h3>Các phiên bản</h3></div>
+    <table><tbody><sc-for list="{{versions}}" as="v" hint-placeholder-count="1"><tr class="nc"><td class="tabular">v{{v.n}}</td><td>{{v.reason}}</td><td class="tabular">{{v.at}}</td><td><sc-if value="{{v.cur}}"><span class="chip ok">Đang dùng</span></sc-if></td></tr></sc-for></tbody></table></div></sc-if>
+  <sc-if value="{{st}}"><div class="card"><div class="card-h"><h3>Vòng đời yêu cầu</h3><span class="muted small tabular">{{stN}} mốc</span></div><div class="card-b col g16">
+    <div class="muted small">Đổi trạng thái bằng cách bấm nhãn trạng thái ở đầu trang. Tạm dừng, từ chối, huỷ, đóng cần lý do và được ghi lại ở đây.</div>
+    <div class="row wrap g6" role="list" aria-label="Đường chính"><sc-for list="{{main}}" as="n"><span role="listitem" class="{{n.cls}}">{{n.label}}</span></sc-for></div>
+    <div class="row wrap g6"><span class="muted small fw5">Nhánh phụ</span><sc-for list="{{side}}" as="n"><span class="{{n.cls}}">{{n.label}}</span></sc-for></div>
+    <div class="col g8" style="border-top:1px solid var(--line-soft);padding-top:12px"><sc-for list="{{trail}}" as="e"><div class="row"><span class="chip gray tabular">{{e.at}}</span><span class="fw5">{{e.text}}</span></div></sc-for>
+      <sc-if value="{{noTrail}}"><span class="muted">Chưa có đổi trạng thái nào.</span></sc-if></div></div></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"events":{"editor":null,"default":[]},"versions":{"editor":null,"default":[]},"status":{"editor":null,"default":"DRAFT"},"$preview":{"width":1100,"height":420}}'>
+class Component extends DCLogic {
+  state = { sub: 'tl' };
+  // Đường chính và nhánh phụ theo vòng đời §5.1 của code (transition-meta.ts); nhãn theo ST của Main
+  static MAIN = ['DRAFT', 'SUBMITTED', 'SOURCING', 'CLOSED'];
+  static SIDE = ['CANCELLED'];
+  static LB = { DRAFT: 'Nháp', SUBMITTED: 'Chờ xử lý', SOURCING: 'Đang xử lý', CLOSED: 'Đã hoàn thành', CANCELLED: 'Đã huỷ' };
+  renderVals() {
+    const vs = this.props.versions || [];
+    const ev = this.props.events || [], cnt = {}; ev.forEach((e) => { cnt[e.kind] = (cnt[e.kind] || 0) + 1; });
+    const mx = Math.max(1, ...Object.values(cnt)), kinds = Object.entries(cnt).sort((a, b) => b[1] - a[1]).map(([kind, n]) => ({ kind, n, w: 'width:' + Math.round(n / mx * 100) + '%', tip: kind + ': ' + n + ' sự kiện' }));
+    const cur = this.props.status || 'DRAFT', M = Component.MAIN, at = M.indexOf(cur), trail = ev.filter((e) => e.kind === 'Trạng thái' || e.kind === 'Tạo yêu cầu');
+    const node = (k) => ({ label: Component.LB[k], cls: 'node' + (k === cur ? ' cur' : M.indexOf(k) >= 0 && M.indexOf(k) < at ? ' vis' : '') });
+    return { st: this.state.sub === 'st', showSt: () => this.setState({ sub: 'st' }), main: M.map(node), side: Component.SIDE.map(node), trail, noTrail: trail.length === 0, stN: trail.length, kinds, total: ev.length, events: this.props.events || [], versions: vs.slice().reverse().map((v, i) => ({ ...v, cur: i === 0 })), n: vs.length || 1, tl: this.state.sub === 'tl', ver: this.state.sub === 'ver',
+      showTl: () => this.setState({ sub: 'tl' }), showVer: () => this.setState({ sub: 'ver' }) };
+  }
+}
+</script>
+</body>
+</html>

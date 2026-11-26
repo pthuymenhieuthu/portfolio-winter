@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Chi tiết ca tuyển</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}.grid2{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:16px;align-items:start}.next{background:var(--brand-50);border-radius:16px;box-shadow:0 0 0 1px var(--brand-200);padding:16px;display:flex;flex-direction:column;gap:10px}</style></helmet>
+<div class="col page-in g16">
+  <div class="muted small crumbs"><button class="crumb" onClick="{{onBack}}">Ca tuyển</button> / <span class="tabular">{{c.id}}</span></div>
+  <div class="page-head"><h1>{{c.name}}</h1><span class="chip" style="{{c.style}}">{{c.label}}</span><span class="spacer"></span>
+    <button class="btn" onClick="{{toReq}}">Mở yêu cầu {{c.req}}</button></div>
+  <div class="muted">{{c.reqTitle}} · {{c.client}}</div>
+  <div class="grid2">
+    <div class="col g16">
+      <div class="next"><div class="small muted">Việc cần làm tiếp</div><div style="font-size:16px;font-weight:500">{{next.text}}</div>
+        <div class="row"><sc-if value="{{next.can}}"><button class="btn primary" onClick="{{doNext}}">{{next.btn}}</button></sc-if>
+          <sc-if value="{{canStop}}"><button class="btn danger" onClick="{{stop}}">Dừng ca tuyển</button></sc-if><sc-if value="{{hasUndo}}"><button class="btn" onClick="{{openUndo}}">Huỷ lần ghi gần nhất</button></sc-if></div></div>
+      <div class="card"><div class="card-h"><h3>Nhật ký ca</h3></div><div class="card-b col"><sc-for list="{{log}}" as="l"><div class="row"><span class="chip gray tabular">{{l.at}}</span><span>{{l.text}}</span></div></sc-for></div></div>
+    </div>
+    <div class="col g16">
+      <div class="card"><div class="card-h"><h3>Phí</h3></div><div class="card-b col"><div class="row"><span class="muted">Tổng phí</span><span class="spacer"></span><span class="tabular">{{fee.total}}</span></div>
+        <div class="row"><span class="muted">Đã thu</span><span class="spacer"></span><span class="tabular">{{fee.paid}}</span></div><div class="row"><span class="muted">Còn phải thu</span><span class="spacer"></span><span class="tabular">{{fee.left}}</span></div></div></div>
+      <div class="card"><div class="card-h"><h3>Phỏng vấn</h3></div><div class="card-b muted">{{iv}}</div></div>
+    </div>
+  </div>
+  <sc-if value="{{rowOpen}}"><dc-import name="ReqRowAct" cfg="{{rowCfg}}" on-save="{{saveRow}}" on-close="{{closeRow}}" hint-size="100%,100px"></dc-import></sc-if>
+  <sc-if value="{{undoOpen}}"><dc-import name="CaseUndo" info="{{undo}}" on-save="{{saveUndo}}" on-close="{{closeUndo}}" hint-size="100%,100px"></dc-import></sc-if>
+  <sc-if value="{{askStop}}"><dc-import name="ReqRowAct" cfg="{{stopCfg}}" on-save="{{saveStop}}" on-close="{{cancelStop}}" hint-size="100%,100px"></dc-import></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"kase":{"editor":null},"log":{"editor":null,"default":[]},"feeRow":{"editor":null,"default":null},"onBack":{"editor":null},"ivId":{"editor":null,"default":""},"ivN":{"editor":null,"default":0},"onRowAct":{"editor":null},"onStop":{"editor":null},"undo":{"editor":null,"default":null},"onUndo":{"editor":null},"onOpenRequest":{"editor":null},"$preview":{"width":1100,"height":560}}'>
+class Component extends DCLogic {
+  state = { stopping: false, row: null };
+  static L = ['Đã gửi cho khách hàng','Phỏng vấn','Đạt phỏng vấn','Đã offer','Chờ thử việc','Thử việc','Bảo hành','Kết thúc bảo hành','Kết thúc giữa chừng'];
+  // Việc kế tiếp theo giai đoạn (case-detail/next-action.tsx): [mô tả, nhãn nút]
+  static NEXT = [['Chờ khách hàng phản hồi hồ sơ trên cổng.', 'Ghi phản hồi thay KH: mời phỏng vấn'], ['Phỏng vấn vòng 1 đang diễn ra.', 'Ghi kết quả vòng 1: đạt'], ['Vòng 1 đạt — chuyển sang offer: ghi offer cho ứng viên.', 'Ghi offer'],
+    ['Offer đã gửi — chờ ứng viên trả lời.', 'Ghi câu trả lời: nhận offer'], ['Chờ thử việc: hệ thống tự chuyển sang Thử việc khi tới ngày bắt đầu thử việc.', ''], ['Thử việc: hệ thống tự chuyển sang Bảo hành khi tới ngày làm chính thức.', ''],
+    ['Đang bảo hành: hệ thống tự chuyển sang Hết bảo hành khi tới hạn bảo hành.', ''], ['Ca đã kết thúc: kết thúc bảo hành và đã thu đủ phí.', ''], ['Ca đã dừng giữa chừng.', '']];
+  renderVals() {
+    const P = this.props, S = this.state, c = P.kase || { id: '—', name: '—', stage: 0, req: '', reqTitle: '', client: '' }, L = Component.L, pend = !!P.ivId, ivN = P.ivN || 0;
+    const N = { 0: c.decision === 'INTERVIEW_REQUESTED' ? ['Khách hàng đã mời phỏng vấn: lên lịch phỏng vấn.', 'Lên lịch phỏng vấn', 'schedule'] : ['Chờ khách hàng phản hồi hồ sơ trên cổng.', 'Ghi phản hồi', 'respond'],
+      1: pend ? ['Phỏng vấn đã xếp lịch: ghi kết quả khi xong.', 'Ghi kết quả', 'result'] : ['Chờ xếp lịch phỏng vấn.', ivN ? 'Lên lịch vòng ' + (ivN + 1) : 'Lên lịch phỏng vấn', 'schedule'], 2: ['Phỏng vấn đạt: tạo offer cho ứng viên.', 'Tạo offer', 'offer'], 3: ['Offer đã gửi: chờ ứng viên trả lời.', 'Xác nhận', 'answer'] };
+    const n = N[c.stage] || Component.NEXT[c.stage];
+    // Phí lấy từ phiếu xác nhận tuyển dụng; ca chưa có phiếu thì chưa có phí
+    const fr = P.feeRow || { totalN: 0, paidN: 0, leftN: 0 }, f = (x) => x.toLocaleString('vi-VN') + ' đ';
+    return { c: { ...c, label: L[c.stage], style: 'background:var(--stage-' + c.stage + '-soft);color:var(--stage-' + c.stage + ')' }, onBack: P.onBack, toReq: () => P.onOpenRequest && P.onOpenRequest(c.req),
+      next: { text: n[0], btn: n[1], can: !!n[1] && !(c.stopCtx && c.stopCtx.lateOnly) }, doNext: () => this.setState({ row: { id: c.id, name: c.name, kind: n[2], stage: c.stage, label: n[1], ivId: P.ivId } }),
+      rowOpen: !!S.row, rowCfg: S.row || {}, closeRow: () => this.setState({ row: null }), saveRow: (kind, ...args) => { P.onRowAct && P.onRowAct(kind, ...args); this.setState({ row: null }); }, canStop: c.stage < 8 && !(c.stopCtx && c.stopCtx.lateOnly && c.stage < 5), hasUndo: !!P.undo, openUndo: () => this.setState({ undoing: true }), undoOpen: !!S.undoing && !!P.undo, closeUndo: () => this.setState({ undoing: false }), saveUndo: (reason) => { P.onUndo && P.onUndo(c.id, reason); this.setState({ undoing: false }); }, log: P.log || [],
+      fee: { total: f(fr.totalN), paid: f(fr.paidN), left: f(Math.max(fr.leftN, 0)) }, iv: c.stage >= 1 && c.stage <= 2 ? 'Vòng 1 · ' + (c.due || 'chưa xếp lịch') : c.stage > 2 && c.stage < 8 ? 'Vòng 1: đạt' : 'Chưa có lịch phỏng vấn.',
+      askStop: S.stopping, stopCfg: { id: c.id, name: c.name, kind: 'stop', stage: c.stage, label: 'Dừng ca tuyển', ctx: c.stopCtx }, stop: () => this.setState({ stopping: true }), cancelStop: () => this.setState({ stopping: false }),
+      saveStop: (kind, id, why) => { P.onStop && P.onStop(id, why); this.setState({ stopping: false }); } };
+  }
+}
+</script>
+</body>
+</html>

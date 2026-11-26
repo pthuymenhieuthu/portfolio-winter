@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Chi tiết khách hàng</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./client-master.js"></script>
+<script src="./filter-multi.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.cd-sub{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;color:var(--muted)}
+</style></helmet>
+<div class="col page-in" style="gap:24px">
+  <div class="muted small crumbs"><button class="crumb" onClick="{{onBack}}">Khách hàng</button> / <span class="tabular">{{c.code}}</span></div>
+  <div class="page-head" style="margin-bottom:0">
+    <h1>{{c.name}}</h1><span class="chip ok">{{c.statusLabel}}</span><span class="chip gray">{{c.group}}</span>
+    <span class="spacer"></span><button class="btn primary" onClick="{{newReq}}">Tạo yêu cầu</button>
+  </div>
+  <div class="cd-sub"><span>{{fullAddress}}</span></div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="{{isOv}}" onClick="{{goOv}}">Tổng quan</button>
+    <button class="tab" role="tab" aria-selected="{{isAct}}" onClick="{{goAct}}">Hoạt động</button>
+  </div>
+  <sc-if value="{{isOv}}" hint-placeholder-val="{{ true }}">
+    <dc-import name="ClientInfoCard" client="{{c}}" on-edit="{{editSelf}}" hint-size="100%,260px"></dc-import>
+    <dc-import name="ClientBranches" branches="{{branches}}" head="{{head}}" on-edit-head="{{editSelf}}" on-save="{{onBranchSave}}" on-toggle="{{onBranchToggle}}" hint-size="100%,200px"></dc-import>
+    <div class="card"><div class="card-h"><h3>Người liên hệ</h3><span class="muted small">{{contactSub}}</span><span class="spacer"></span><button class="btn sm" onClick="{{addContact}}">Thêm người liên hệ</button></div>
+      <table class="dh-table"><thead><tr><th>Họ tên</th><th>Chức danh</th><th>Điện thoại</th><th>Email</th><th>Trụ sở / chi nhánh</th><th>Tài khoản cổng</th><th></th></tr></thead><tbody>
+        <sc-for list="{{contacts}}" as="p" hint-placeholder-count="2"><tr class="nc">
+          <td class="fw5">{{p.name}} <sc-if value="{{p.primary}}"><span class="chip gray">Mặc định</span></sc-if> <sc-if value="{{p.left}}"><span class="chip gray">Đã nghỉ</span></sc-if></td><td>{{p.titleTxt}}</td><td class="tabular">{{p.phoneTxt}}</td><td>{{p.emailTxt}}</td><td>{{p.siteName}}</td>
+          <td><span class="{{p.chip}}">{{p.portalLabel}}</span> <sc-if value="{{p.emailFailed}}"><span class="chip bad">Gửi email lỗi</span></sc-if></td>
+          <td style="position:relative;width:48px"><button class="icon-btn" aria-label="Thao tác" onClick="{{p.toggle}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button>
+            <sc-if value="{{p.menuOpen}}"><div class="menu anim-pop"><button onClick="{{p.edit}}">Sửa người liên hệ</button><sc-if value="{{p.canPrimary}}"><button onClick="{{p.setPrimary}}">Đặt làm mặc định</button></sc-if><button onClick="{{p.toggleLeft}}">{{p.leftLabel}}</button><sc-if value="{{p.canInvite}}"><button onClick="{{p.askInvite}}">{{p.inviteLabel}}</button></sc-if><sc-if value="{{p.canCancel}}"><button class="danger" onClick="{{p.askCancel}}">Huỷ lời mời</button></sc-if></div></sc-if></td>
+        </tr></sc-for></tbody></table>
+      <sc-if value="{{noContacts}}"><div class="card-b muted">Chưa có người liên hệ nào.</div></sc-if></div>
+    <div class="card"><div class="card-h"><h3>Yêu cầu tuyển dụng</h3><span class="muted small">{{reqSub}}</span></div>
+      <table class="dh-table"><thead><tr><sc-for list="{{reqCols}}" as="h"><th class="{{h.cls}}" onClick="{{h.sort}}" aria-sort="{{h.aria}}">{{h.label}} <span class="sa" aria-hidden="true"><i class="{{h.up}}"></i><i class="{{h.dn}}"></i></span></th></sc-for></tr></thead><tbody>
+        <sc-for list="{{reqRows}}" as="r" hint-placeholder-count="2"><tr onClick="{{r.open}}"><td><div class="fw5">{{r.title}}</div><div class="muted small tabular">{{r.code}}</div></td><td class="muted">{{r.siteName}}</td><td><span class="{{r.chip}}">{{r.statusLabel}}</span></td><td class="r tabular">{{r.hired}}/{{r.qty}}</td><td class="r tabular muted">{{r.due}}</td></tr></sc-for></tbody></table>
+      <sc-if value="{{noReq}}"><div class="card-b muted">Chưa có yêu cầu nào. Tạo yêu cầu mới hoặc chờ khách gửi qua cổng.</div></sc-if>
+      <sc-if value="{{hasReq}}"><div class="tfoot"><span>{{reqFooter}}</span><span class="spacer"></span><sc-for list="{{reqPager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></sc-if></div>
+    <dc-import name="ClientContracts" contracts="{{contractsRows}}" on-act="{{onContractAct}}" on-open-request="{{onOpenRequest}}" hint-size="100%,200px"></dc-import>
+    <dc-import name="ClientPayments" ledger="{{ledger}}" hint-size="100%,300px"></dc-import>
+    <div class="card"><div class="card-h"><h3>Tài khoản cổng khách hàng</h3></div>
+      <div class="subtabs"><button class="sub" aria-pressed="{{accOn}}" onClick="{{showAcc}}">Tài khoản</button><button class="sub" aria-pressed="{{invOn}}" onClick="{{showInv}}">Lời mời</button></div>
+      <sc-if value="{{accOn}}"><table class="dh-table"><thead><tr><th>Họ tên</th><th>Vai trò cổng</th><th>Trạng thái</th><th>Đăng nhập gần nhất</th></tr></thead><tbody>
+        <sc-for list="{{accounts}}" as="a" hint-placeholder-count="1"><tr class="nc"><td>{{a.name}}</td><td>{{a.role}}</td><td><span class="chip ok">Đang hoạt động</span></td><td class="tabular">{{a.last}}</td></tr></sc-for></tbody></table>
+        <sc-if value="{{noAcc}}"><div class="card-b muted">Khách hàng này chưa có tài khoản cổng.</div></sc-if></sc-if>
+      <sc-if value="{{invOn}}"><table class="dh-table"><thead><tr><th>Người nhận</th><th>Ngày gửi</th><th>Hết hạn lúc</th><th>Người gửi</th></tr></thead><tbody>
+        <sc-for list="{{invites}}" as="i" hint-placeholder-count="1"><tr class="nc"><td>{{i.email}}</td><td class="tabular">{{i.sent}}</td><td class="tabular">{{i.expires}}</td><td>{{i.by}}</td></tr></sc-for></tbody></table>
+        <sc-if value="{{noInv}}"><div class="card-b muted">Chưa có lời mời nào.</div></sc-if></sc-if></div>
+    <dc-import name="ClientNotes" notes="{{notes}}" actor="{{actor}}" on-add="{{onNoteAdd}}" on-delete="{{onNoteDelete}}" hint-size="100%,260px"></dc-import>
+  </sc-if>
+  <sc-if value="{{isAct}}" hint-placeholder-val="{{ false }}"><dc-import name="ClientActivity" events="{{events}}" hint-size="100%,300px"></dc-import></sc-if>
+  <sc-if value="{{contactForm}}"><dc-import name="ContactModal" contact="{{contactEdit}}" sites="{{siteOpts}}" on-save="{{saveContact}}" on-close="{{closeContact}}" hint-size="100%,500px"></dc-import></sc-if>
+  <sc-if value="{{confirm}}" hint-placeholder-val="{{ false }}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Mời vào cổng"><h2>Mời {{confirmName}} vào cổng khách hàng?</h2>
+    <div class="muted">Gửi email mời tới {{confirmEmail}}. Lời mời hết hạn sau 7 ngày.</div>
+    <div class="row"><span class="spacer"></span><button class="btn" onClick="{{cancel}}">Huỷ</button><button class="btn primary" onClick="{{doInvite}}">Gửi lời mời</button></div></div></div></sc-if>
+  <sc-if value="{{cancelOpen}}" hint-placeholder-val="{{ false }}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Huỷ lời mời"><h2>Huỷ lời mời</h2>
+    <div class="muted">Đường dẫn trong email gửi tới {{cancelEmail}} sẽ không dùng được nữa.</div>
+    <div class="row"><span class="spacer"></span><button class="btn" onClick="{{keep}}">Giữ lại</button><button class="btn danger" onClick="{{doCancel}}">Huỷ lời mời</button></div></div></div></sc-if>
+  <sc-if value="{{toast}}" hint-placeholder-val="{{ false }}"><div class="chip ok toast anim-in">{{toast}}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"client":{"editor":null},"contacts":{"editor":null,"default":[]},"invites":{"editor":null,"default":[]},"requests":{"editor":null,"default":[]},"notes":{"editor":null,"default":[]},"log":{"editor":null,"default":[]},"contracts":{"editor":null,"default":[]},"ledger":{"editor":null,"default":[]},"branches":{"editor":null,"default":[]},"actorName":{"editor":null},"onBack":{"editor":null},"onEdit":{"editor":null},"onBranchSave":{"editor":null},"onBranchToggle":{"editor":null},"onContractAct":{"editor":null},"onNoteAdd":{"editor":null},"onNoteDelete":{"editor":null},"onContactSave":{"editor":null},"onContactPrimary":{"editor":null},"onContactLeft":{"editor":null},"onInvite":{"editor":null},"onCancelInvite":{"editor":null},"onOpenRequest":{"editor":null},"onNewRequest":{"editor":null},"$preview":{"width":1100,"height":900}}'>
+class Component extends DCLogic {
+  state = { tab: 'ov', sub: 'acc', menu: null, confirmId: null, cancelId: null, contactId: null, toast: '', rk: null, rd: 1, page: 0 };
+  renderVals() {
+    const S = this.state, P = this.props, c = P.client || { code: 'CUS-000', name: '—' }, list = P.contacts || [], HQ = 'Trụ sở chính';
+    const branchName = Object.fromEntries((P.branches || []).map((b) => [b.id, b.name])), siteName = (id) => (id ? branchName[id] || HQ : HQ);
+    const say = (toast) => { this.setState({ toast }); setTimeout(() => this.setState({ toast: '' }), 2500); };
+    const PL = { none: ['chip gray', 'Chưa có'], invited: ['chip warn', 'Đã mời'], active: ['chip ok', 'Đã có tài khoản'] }, dash = (v) => (v && v !== '—' ? v : '—');
+    const contacts = list.map((p) => ({ ...p, chip: PL[p.portal][0], portalLabel: PL[p.portal][1], menuOpen: S.menu === p.id, titleTxt: dash(p.title), phoneTxt: dash(p.phone), emailTxt: dash(p.email), siteName: siteName(p.site),
+      inviteLabel: p.portal === 'active' ? 'Gửi đường dẫn đặt mật khẩu' : p.portal === 'invited' ? 'Gửi lại lời mời' : 'Cấp tài khoản cổng',
+      // Tài khoản đã đăng nhập ít nhất một lần thì không còn cần đường dẫn đặt mật khẩu
+      left: p.status === 'left', canInvite: p.status !== 'left' && !(p.portal === 'active' && p.lastLogin), canCancel: p.portal === 'invited', canPrimary: p.status !== 'left' && !p.primary,
+      leftLabel: p.status === 'left' ? 'Làm việc lại' : 'Chuyển Đã nghỉ',
+      edit: () => this.setState({ contactId: p.id, menu: null }), setPrimary: () => { this.setState({ menu: null }); P.onContactPrimary && P.onContactPrimary(p.id); },
+      toggleLeft: () => { this.setState({ menu: null }); P.onContactLeft && P.onContactLeft(p.id); },
+      askCancel: () => this.setState({ cancelId: p.id, menu: null }), toggle: () => this.setState({ menu: S.menu === p.id ? null : p.id }),
+      askInvite: () => { if (!p.email) { this.setState({ menu: null }); say('Cần email để cấp tài khoản cổng'); return; } this.setState({ confirmId: p.id, menu: null }); } }));
+    const target = list.find((p) => p.id === S.confirmId), cancelT = list.find((p) => p.id === S.cancelId), editing = S.contactId === 'new' ? {} : list.find((p) => p.id === S.contactId);
+    const accounts = list.filter((p) => p.portal === 'active').map((p) => ({ name: p.name, role: 'Quản trị cổng', last: p.lastLogin || 'Chưa đăng nhập' })), invites = P.invites || [];
+    const base = (P.requests || []).map((r) => ({ ...r, chip: 'chip ' + r.tone, siteName: r.site || HQ, open: () => P.onOpenRequest && P.onOpenRequest(r.code) }));
+    const dnum = (v) => { const m = String(v || '').split('/'); return m.length === 3 ? +m[2] * 10000 + +m[1] * 100 + +m[0] : 0; };
+    const RV = { code: (r) => r.code, site: (r) => r.siteName, status: (r) => r.statusLabel, hired: (r) => r.hired, due: (r) => dnum(r.due) };
+    const reqs = S.rk ? base.slice().sort((a, b) => { const x = RV[S.rk](a), y = RV[S.rk](b); return (x > y ? 1 : x < y ? -1 : 0) * S.rd; }) : base;
+    const pg = window.MedPage.view(reqs, S.page, 'yêu cầu');
+    const reqCols = [['code', 'Yêu cầu', ''], ['site', 'Nơi làm việc', ''], ['status', 'Trạng thái', ''], ['hired', 'Đã tuyển', 'r'], ['due', 'Hạn', 'r']].map(([k, label, cls]) => ({ label, cls: 'sortable ' + cls, aria: S.rk === k ? (S.rd > 0 ? 'ascending' : 'descending') : 'none', up: 'u' + (S.rk === k && S.rd > 0 ? ' on' : ''), dn: 'd' + (S.rk === k && S.rd < 0 ? ' on' : ''), sort: () => this.setState({ rk: k, rd: S.rk === k ? -S.rd : 1 }) }));
+    const openN = base.filter((r) => !['CLOSED', 'CANCELLED', 'REJECTED', 'FULFILLED'].includes(r.status)).length;
+    // Dòng hoạt động: nhật ký thao tác (mới nhất đầu) rồi tới sự kiện suy ra từ dữ liệu (tạo khách, lời mời, yêu cầu)
+    const derived = [{ at: c.created, group: 'customer', text: 'Tạo khách hàng ' + c.name }, ...invites.map((i) => ({ at: i.sent, group: 'customer', text: 'Gửi lời mời cổng tới ' + i.email })), ...base.map((r) => ({ at: r.created, group: 'request', text: 'Tạo yêu cầu ' + r.code + ' · ' + r.title }))].sort((a, b) => dnum(b.at) - dnum(a.at));
+    const events = [...(P.log || []).map((e) => ({ ...e, group: /^Ghi chú/.test(e.text) ? 'note' : 'customer' })), ...derived];
+    const fullAddress = [c.address, c.ward, c.province].filter((v, i, a) => v && v !== '—' && (i === 0 || !String(a[0]).includes(v))).join(', ') || '—';
+    return { c, fullAddress, head: { code: c.code, name: c.name, address: c.address, ward: c.ward, province: c.province }, branches: P.branches || [], onBranchSave: P.onBranchSave, onBranchToggle: P.onBranchToggle, editSelf: () => P.onEdit && P.onEdit(c.code),
+      contractsRows: P.contracts || [], onContractAct: P.onContractAct, ledger: P.ledger || [], notes: P.notes || [], actor: P.actorName, onNoteAdd: P.onNoteAdd, onNoteDelete: P.onNoteDelete, onOpenRequest: P.onOpenRequest, events,
+      contacts, contactSub: list.length + ' người', noContacts: list.length === 0, accounts, invites, reqRows: pg.rows, reqCols, reqSub: openN + ' đang mở · ' + base.length + ' tổng', noReq: base.length === 0, hasReq: base.length > 0, reqFooter: pg.footer, reqPager: window.MedPage.pager(this, pg),
+      noAcc: accounts.length === 0, noInv: invites.length === 0, isOv: S.tab === 'ov', isAct: S.tab === 'act', goOv: () => this.setState({ tab: 'ov' }), goAct: () => this.setState({ tab: 'act' }),
+      accOn: S.sub === 'acc', invOn: S.sub === 'inv', showAcc: () => this.setState({ sub: 'acc' }), showInv: () => this.setState({ sub: 'inv' }),
+      addContact: () => this.setState({ contactId: 'new' }), contactForm: !!S.contactId && (S.contactId === 'new' || !!editing), contactEdit: editing || null, closeContact: () => this.setState({ contactId: null }),
+      siteOpts: [{ v: '', l: HQ }, ...(P.branches || []).filter((b) => b.active).map((b) => ({ v: b.id, l: b.name }))],
+      saveContact: (f) => { P.onContactSave && P.onContactSave(f); this.setState({ contactId: null }); say(f.id ? 'Đã lưu người liên hệ' : 'Đã thêm người liên hệ'); },
+      newReq: () => P.onNewRequest && P.onNewRequest(c.name), onBack: P.onBack, cancelOpen: !!cancelT, cancelEmail: cancelT ? cancelT.email : '', keep: () => this.setState({ cancelId: null }),
+      doCancel: () => { P.onCancelInvite && P.onCancelInvite(cancelT.id); this.setState({ cancelId: null }); say('Đã huỷ lời mời gửi tới ' + cancelT.email); },
+      confirm: !!target, confirmName: target ? target.name : '', confirmEmail: target ? target.email : '', toast: S.toast, cancel: () => this.setState({ confirmId: null }),
+      doInvite: () => { P.onInvite && P.onInvite(target.id); this.setState({ confirmId: null, sub: 'inv' }); say('Đã gửi lời mời tới ' + target.email); } };
+  }
+}
+</script>
+</body>
+</html>

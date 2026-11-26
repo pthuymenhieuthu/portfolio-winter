@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>MedHunt</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./review-domain.js"></script>
+<script src="./review-store.js"></script>
+<script src="./review-request-policy.js"></script>
+<script src="./dash-data.js"></script><script src="./filter-multi.js"></script><script src="./line-icons.js"></script><script src="./interview-calendar.js"></script><script src="./position-rules.js"></script><script src="./client-master.js"></script><script src="./modal-ux.js"></script><script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}
+/* Internal style comparison controls are not part of the embedded demo. */
+[aria-label="Kiểu giao diện thử"]{display:none!important}
+/* Thanh đầu trang dùng chung tên lớp .tb với thanh công cụ dạng viên thuốc của ui.css; trả về thanh phẳng */
+header.tb{height:64px;padding:0 24px;border-radius:0;border:0;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--surface) 85%,transparent);box-shadow:none}
+.tb-acc{flex:none}.tb-t1{white-space:nowrap}.tb-search{min-width:160px}.mobile-nav{display:none}
+.av-photo{position:relative;overflow:hidden;border:1px solid var(--line);background:#e8eef7}
+.av-photo img{position:absolute;left:-13px;top:-12px;width:96px;height:auto;max-width:none}
+@media(max-width:760px){.app,.app.collapsed{padding-left:0}.app>.side,.app>.edge{display:none}.main{padding:20px 16px;overflow:hidden}header.tb{height:auto;min-height:100px;padding:12px 16px;flex-wrap:wrap}.tb-search,.tb-wrap,.tb-bell{display:none}.tb-right{width:100%;margin:0;min-width:0}.tb-right>.input{min-width:0;flex:1}.mobile-nav{display:block}.rqtop,.page-in{min-width:0}.review-layout{grid-template-columns:minmax(0,1fr)}.review-detail{min-width:0;padding:16px}.review-item{overflow-wrap:anywhere}.tiles{overflow:auto}.page-head{flex-wrap:wrap}}
+</style></helmet>
+<sc-if value="{{gLanding}}"><dc-import name="Landing" lang="{{lang}}" on-lang="{{toggleLang}}" on-pick="{{pickFlow}}" hint-size="100%,800px"></dc-import></sc-if>
+<sc-if value="{{gLogin}}"><dc-import name="AuthLogin" flow="{{flow}}" lang="{{lang}}" on-lang="{{toggleLang}}" on-back="{{toLanding}}" on-forgot="{{toForgot}}" on-success="{{enterApp}}" on-open-portal="{{openPortalAuth}}" hint-size="100%,820px"></dc-import></sc-if>
+<sc-if value="{{gForgot}}"><dc-import name="AuthPublic" screen="forgot" lang="{{lang}}" link-used="{{resetUsed}}" on-lang="{{toggleLang}}" on-back-login="{{toLogin}}" on-forgot="{{toForgot}}" on-open-mail="{{toReset}}" on-used="{{markUsed}}" hint-size="100%,600px"></dc-import></sc-if>
+<sc-if value="{{gReset}}"><dc-import name="AuthPublic" screen="reset" lang="{{lang}}" link-used="{{resetUsed}}" on-lang="{{toggleLang}}" on-back-login="{{toLogin}}" on-forgot="{{toForgot}}" on-open-mail="{{toReset}}" on-used="{{markUsed}}" hint-size="100%,600px"></dc-import></sc-if>
+<sc-if value="{{isAdminApp}}"><div class="{{appCls}}">
+  <aside class="{{sideCls}}">
+    <nav class="side-in" aria-label="Điều hướng trang quản trị">
+      <div class="side-head">
+        <span class="brand"><sc-if value="{{open}}"><span style="display:flex;flex-direction:column;align-items:flex-start;gap:3px"><img src="./assets/f594e7ba28d71e65ca5c376c3a9b20ee.png" alt="MedHunt" height="34" style="display:block;height:34px;width:auto;max-width:none"><span style="font-size:11px;font-weight:600;color:var(--brand-ink);white-space:nowrap">SMS · Headhunter Y tế</span></span></sc-if><sc-if value="{{shut}}"><img src="./assets/02e9e7e769148af0eee6aa6d1cadf76d.png" alt="MedHunt" height="34" style="display:block;height:34px;width:auto;max-width:none"></sc-if></span>
+        <sc-if value="{{open}}"><button class="icon-btn" style="color:var(--subtle)" aria-label="Thu gọn menu" title="Thu gọn menu" onClick="{{toggleNav}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icPclose}}"></path></svg></button></sc-if>
+        <sc-if value="{{shut}}"><button class="expand-btn" aria-label="Mở rộng menu" title="Mở rộng menu" onClick="{{toggleNav}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icPopen}}"></path></svg></button></sc-if>
+      </div>
+      <div class="side-scroll">
+        <sc-for list="{{navGroups}}" as="g" hint-placeholder-count="9"><div class="{{g.cls}}">
+          <sc-if value="{{open}}"><p class="nav-group">{{g.label}}</p></sc-if>
+          <ul class="nav-list"><sc-for list="{{g.items}}" as="it"><li><button class="nav" aria-current="{{it.cur}}" aria-disabled="{{it.off}}" title="{{it.title}}" onClick="{{it.go}}" style="{{it.style}}">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{it.d}}"></path></svg>
+            <sc-if value="{{open}}"><span class="nav-t">{{it.label}}</span></sc-if>
+            <sc-if value="{{it.badge}}"><span class="nav-badge tabular">{{it.badge}}</span></sc-if></button></li></sc-for></ul></div></sc-for>
+      </div>
+      <sc-if value="{{isStaffReview}}"><div class="side-foot"><button class="portal" title="Cổng khách hàng" onClick="{{toPortal}}">
+        <span class="portal-i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icExt}}"></path></svg></span>
+        <sc-if value="{{open}}"><span class="portal-t"><span class="pt1">Cổng khách hàng</span><span class="pt2">Mở tab mới để xem phía KH</span></span></sc-if></button></div></sc-if>
+    </nav>
+  </aside>
+  <button class="{{edgeCls}}" aria-label="{{edgeLabel}}" onClick="{{toggleNav}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icEdge}}"></path></svg></button>
+  <header class="tb">
+      <select class="input mobile-nav" aria-label="Đi tới" onChange="{{mobileGo}}"><sc-for list="{{mobilePages}}" as="p"><option value="{{p.id}}" selected="{{p.selected}}">{{p.label}}</option></sc-for></select>
+      <sc-if value="{{isStaffReview}}"><form class="tb-search" role="search" onSubmit="{{doSearch}}"><span class="tb-sicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icSearch}}"></path></svg></span><input class="tb-input" value="{{tbQ}}" onInput="{{onTbQ}}" placeholder="Tìm hồ sơ: tên, mã UV, chuyên khoa..." aria-label="Tìm hồ sơ ứng viên"><kbd class="tb-kbd">/</kbd></form></sc-if>
+      <div class="tb-right">
+        <select class="input" style="max-width:210px" aria-label="Vai xem bản mẫu" onChange="{{changeReviewRole}}"><sc-for list="{{reviewRoleOptions}}" as="r"><option value="{{r.id}}" selected="{{r.selected}}">{{r.label}}</option></sc-for></select>
+        <sc-if value="{{isInternal}}"><select class="input" style="max-width:130px" aria-label="Người đánh giá nội bộ" onChange="{{changeReviewer}}"><sc-for list="{{reviewerOptions}}" as="r"><option value="{{r.id}}" selected="{{r.selected}}">{{r.id}}</option></sc-for></select></sc-if>
+        <div class="tb-wrap"><button class="tb-chip" aria-haspopup="menu" aria-expanded="{{tenOpen}}" onClick="{{toggleTen}}"><span class="av">RO</span><span class="tb-t1">rontech-hq</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icDown}}"></path></svg></button>
+          <sc-if value="{{tenOpen}}"><div class="menu anim-pop tb-menu" role="menu"><button role="menuitem" onClick="{{closeTb}}">rontech-hq</button><button role="menuitem" onClick="{{closeTb}}">Tenant thử nghiệm</button></div></sc-if></div>
+        <button class="tb-bell" aria-label="Thông báo, {{notifUnread}} chưa đọc" onClick="{{goNotif}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icBell}}"></path></svg><sc-if value="{{hasUnread}}"><span class="tb-badge tabular">{{notifUnread}}</span></sc-if></button>
+        <div class="tb-wrap"><button class="tb-chip tb-acc" aria-haspopup="menu" aria-expanded="{{accOpen}}" onClick="{{toggleAcc}}"><span class="av av-photo" aria-hidden="true"><img src="./assets/f0d2719e7a1a3deb63dfd2ed3e588824.webp" alt=""></span><span class="tb-names"><span class="tb-t1">{{reviewActor.id}}</span><span class="tb-t2">{{reviewRoleLabel}}</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icDown}}"></path></svg></button>
+          <sc-if value="{{accOpen}}"><div class="menu anim-pop tb-menu" role="menu"><button role="menuitem" onClick="{{closeTb}}">Tài khoản của tôi</button><sc-if value="{{isAdmin}}"><button role="menuitem" onClick="{{toPlatform}}">Quản trị nền tảng</button></sc-if><button role="menuitem" onClick="{{logout}}">Đăng xuất</button></div></sc-if></div>
+      </div>
+    </header>
+    <main class="main">
+    <sc-if value="{{reviewNotice}}"><div class="chip bad alert" role="alert">{{reviewNotice}} <button class="btn sm" onClick="{{closeReviewNotice}}">Đóng</button></div></sc-if>
+    <sc-if value="{{storageError}}"><p class="chip warn alert" role="status">{{storageError}}</p></sc-if>
+    <sc-if value="{{notifOpen}}"><dc-import name="NotifDrawer" items="{{notices}}" on-close="{{closeNotif}}" on-read="{{readNotif}}" on-read-all="{{readAllNotif}}" hint-size="100%,600px"></dc-import></sc-if>
+    <sc-if value="{{isReview}}"><div class="dh"><dc-import name="ReviewWorkspace" records="{{reviewRows}}" actor="{{reviewActor}}" today="{{reviewToday}}" on-action="{{api.reviewAction}}"></dc-import></div></sc-if>
+    <sc-if value="{{isReviewSettings}}"><div class="dh"><dc-import name="ReviewSettings" settings="{{reviewSettings}}" is-admin="{{isAdmin}}" on-save="{{saveReviewSettings}}"></dc-import></div></sc-if>
+    <sc-if value="{{isList}}" hint-placeholder-val="{{ true }}">
+      <div class="dh"><header class="dh-page-head"><div><h1>Yêu cầu tuyển dụng</h1><p>Theo dõi yêu cầu của khách hàng, tiến độ tuyển và người phụ trách.</p></div><span class="spacer"></span><button class="btn primary" onClick="{{newRequest}}">Tạo yêu cầu</button></header>
+      <dc-import name="RequestsList" requests="{{requests}}" created0="{{reqToday}}" today="{{simDay}}" is-admin="{{isAdmin}}" on-open="{{openRequest}}" on-edit="{{editRequest}}" on-save-assign="{{api.assign}}" hint-size="100%,600px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{isForm}}" hint-placeholder-val="{{ false }}">
+      <dc-import name="RequestForm" next-code="{{nextReqCode}}" preset-client="{{presetClient}}" mode="{{formMode}}" request="{{formReq}}" clients="{{clientNames}}" contacts-by="{{reqContacts}}" site-info="{{reqSites}}" on-cancel="{{cancelForm}}" on-submit="{{submitForm}}" hint-size="100%,900px"></dc-import>
+    </sc-if>
+    <sc-if value="{{isDetail}}" hint-placeholder-val="{{ false }}">
+      <dc-import name="RequestDetail" request="{{request}}" cases="{{cases}}" tab="{{tab}}" feas="{{feas}}" contract="{{contract}}" cands="{{cands}}" pool="{{pool}}" can-portal="{{canPortal}}" events="{{events}}" versions="{{versions}}" prompt="{{prompt}}" ledger="{{reqLedger}}" fresh-ids="{{freshIds}}" is-admin="{{isAdmin}}" sim="{{simInfo}}" ivs="{{ivs}}" offers="{{offers}}" assign-flag="{{assignFlag}}" api="{{api}}" review-settings="{{reviewSettings}}" hint-size="100%,800px"></dc-import>
+    </sc-if>
+    <sc-if value="{{isClients}}" hint-placeholder-val="{{ false }}">
+      <div class="dh"><header class="dh-page-head"><div><h1>Khách hàng</h1><p>Hồ sơ khách hàng, hợp đồng đã ký và phí còn phải thu.</p></div><span class="spacer"></span><button class="btn" onClick="{{openClientImport}}">Nhập danh sách</button><button class="btn primary" onClick="{{newClient}}">Tạo khách hàng</button></header>
+      <dc-import name="ClientsList" today="{{reviewToday}}" clients="{{clients}}" on-open="{{openClient}}" on-new-request="{{newRequestFor}}" on-edit="{{openClientEdit}}" on-sample="{{sampleHandler}}" on-new="{{newClient}}" hint-size="100%,500px"></dc-import></div>
+      <sc-if value="{{showImport}}"><dc-import name="ClientImport" existing-keys="{{clientKeys}}" on-cancel="{{closeClientImport}}" on-import="{{importClients}}" hint-size="100%,700px"></dc-import></sc-if>
+    </sc-if>
+    <sc-if value="{{isClientForm}}" hint-placeholder-val="{{ false }}">
+      <div class="dh"><dc-import name="ClientForm" client="{{editingClient}}" on-cancel="{{cancelClientForm}}" on-submit="{{submitClient}}" hint-size="100%,900px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{isCandForm}}" hint-placeholder-val="{{ false }}">
+      <dc-import name="CandidateForm" existing="{{candRows}}" on-cancel="{{goCands}}" on-submit="{{submitCand}}" hint-size="100%,700px"></dc-import>
+    </sc-if>
+    <sc-if value="{{isClientDetail}}" hint-placeholder-val="{{ false }}">
+      <dc-import name="ClientDetail" client="{{client}}" contacts="{{contacts}}" invites="{{invites}}" requests="{{clientReqs}}" on-back="{{goClients}}" on-edit="{{openClientEdit}}" actor-name="{{actorName}}" notes="{{clientNotes}}" log="{{clientLog}}" contracts="{{clientContracts}}" ledger="{{clientLedger}}" on-contract-act="{{contractAct}}" on-note-add="{{noteAdd}}" on-note-delete="{{noteDelete}}" on-contact-save="{{contactSave}}" on-contact-primary="{{contactPrimary}}" on-contact-left="{{contactLeft}}" branches="{{clientBranches}}" on-branch-save="{{saveBranch}}" on-branch-toggle="{{toggleBranch}}" on-invite="{{invite}}" on-cancel-invite="{{cancelInvite}}" on-open-request="{{openRequest}}" on-new-request="{{newRequestFor}}" hint-size="100%,800px"></dc-import>
+    </sc-if>
+    <sc-if value="{{showEditModal}}"><dc-import name="ClientForm" modal="{{modalTrue}}" client="{{editingClient}}" on-cancel="{{cancelClientForm}}" on-submit="{{submitClient}}" hint-size="100%,900px"></dc-import></sc-if>
+    <sc-if value="{{isCands}}" hint-placeholder-val="{{ false }}">
+      <div class="dh"><header class="dh-page-head"><div><h1>Kho ứng viên</h1><p>Tìm, lọc hồ sơ ứng viên và xem họ đang ở yêu cầu nào.</p></div><span class="spacer"></span><button class="btn">Nhập Excel</button><button class="btn primary" onClick="{{newCand}}">Tạo hồ sơ</button></header>
+      <dc-import name="CandidatesList" q0="{{candQ}}" cands="{{candRows}}" on-open="{{openCand}}" hint-size="100%,500px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{isCandDetail}}" hint-placeholder-val="{{ false }}">
+      <dc-import name="CandidateDetail" cand="{{cand}}" history="{{candHistory}}" review-history="{{reviewHistory}}" on-back="{{goCands}}" hint-size="100%,500px"></dc-import>
+    </sc-if>
+    <sc-if value="{{isSubs}}" hint-placeholder-val="{{ false }}">
+      <div class="dh"><header class="dh-page-head"><div><h1>Hồ sơ đã gửi</h1><p>Các hồ sơ đã gửi cho khách hàng và phản hồi của khách.</p></div><span class="spacer"></span><button class="btn primary">Gửi hồ sơ</button></header>
+      <dc-import name="SubmissionsList" subs="{{subs}}" on-open-case="{{openCase}}" on-viewed="{{markViewed}}" on-feedback="{{giveFeedback}}" on-stop="{{stopCase}}" hint-size="100%,600px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{isCases}}" hint-placeholder-val="{{ false }}">
+      <div class="dh"><header class="dh-page-head"><div><h1>Ca tuyển</h1><p>Mỗi ca là một ứng viên đã gửi khách hàng, từ phản hồi tới kết thúc bảo hành.</p></div></header>
+      <dc-import name="CasesList" cases="{{caseRows}}" fresh-ids="{{freshIds}}" on-open="{{openCase}}" hint-size="100%,600px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{isIvs}}" hint-placeholder-val="{{ false }}">
+      <div class="dh"><header class="dh-page-head"><div><h1>Phỏng vấn</h1><p>Lịch phỏng vấn và kết quả từng vòng.</p></div></header>
+      <dc-import name="InterviewsPage" today="{{simDay}}" ivs="{{ivs}}" cases="{{caseRows}}" api="{{m2}}" hint-size="100%,600px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{isOffers}}" hint-placeholder-val="{{ false }}">
+      <div class="dh"><header class="dh-page-head"><div><h1>Offer &amp; nhận việc</h1><p>Offer đã gửi, ngày nhận việc và phiếu xác nhận tuyển dụng.</p></div></header>
+      <dc-import name="PlacementsPage" cases="{{caseRows}}" offers="{{offers}}" hires="{{hiresL}}" api="{{m2}}" hint-size="100%,600px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{isFin}}" hint-placeholder-val="{{ false }}">
+      <dc-import name="FinancePage" today="{{reviewToday}}" ledger="{{ledger}}" on-pay="{{m2Pay}}" hint-size="100%,600px"></dc-import>
+    </sc-if>
+    <sc-if value="{{isGua}}" hint-placeholder-val="{{ false }}">
+      <div class="dh"><header class="dh-page-head"><div><h1>Bảo hành &amp; khiếu nại</h1><p>Các mốc thử việc, bảo hành và khiếu nại được giao.</p></div></header>
+      <dc-import name="GuaranteePage" cases="{{caseRows}}" offers="{{offers}}" fus="{{fus}}" on-follow-up="{{m2FollowUp}}" on-open-case="{{openCase}}" hint-size="100%,600px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{isDash}}" hint-placeholder-val="{{ false }}">
+      <dc-import name="AdminDashboard" d="{{dash}}" api="{{dashApi}}" hint-size="100%,900px"></dc-import>
+    </sc-if>
+    <sc-if value="{{isMyWork}}" hint-placeholder-val="{{ false }}">
+      <dc-import name="MyWork" d="{{myWork}}" hint-size="100%,760px"></dc-import>
+    </sc-if>
+    <sc-if value="{{isFrame}}" hint-placeholder-val="{{ false }}">
+      <div class="dh"><header class="dh-page-head"><div><h1>{{frame.title}}</h1><p>{{frame.sub}}</p></div></header>
+      <dc-import name="FramePage" f="{{frame}}" hint-size="100%,500px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{isCaseDetail}}" hint-placeholder-val="{{ false }}">
+      <dc-import name="CaseDetail" kase="{{kase}}" log="{{caseLog}}" fee-row="{{caseFee}}" on-back="{{goCases}}" iv-id="{{caseIvId}}" iv-n="{{caseIvN}}" on-row-act="{{caseRowAct}}" undo="{{caseUndo}}" on-undo="{{undoCase}}" on-stop="{{stopCase}}" on-open-request="{{openRequestFromCase}}" hint-size="100%,600px"></dc-import>
+    </sc-if>
+  </main>
+</div></sc-if>
+<sc-if value="{{isPlatform}}">
+<div>
+  <header class="pf-head"><div class="pf-in"><div class="pf-top">
+    <span class="brand"><span style="display:flex;flex-direction:column;align-items:flex-start;gap:3px"><img src="./assets/f594e7ba28d71e65ca5c376c3a9b20ee.png" alt="MedHunt" height="34" style="display:block;height:34px;width:auto;max-width:none"><span style="font-size:11px;font-weight:600;color:var(--brand-ink);white-space:nowrap">Quản trị nền tảng</span></span></span>
+    <span class="spacer"></span><span class="muted small">Super admin</span><button class="btn sm" onClick="{{toAdmin}}">Về trang SMS</button></div></div>
+    <nav class="pf-nav" aria-label="Điều hướng nền tảng"><sc-for list="{{platNav}}" as="n"><button class="pf-pill" aria-current="{{n.cur}}" onClick="{{n.go}}">{{n.label}}</button></sc-for></nav></header>
+  <main class="pf-main"><div class="page-head"><h1>{{platFrame.title}}</h1></div><dc-import name="FramePage" f="{{platFrame}}" hint-size="100%,500px"></dc-import></main>
+</div>
+</sc-if>
+<sc-if value="{{isPortal}}"><div class="{{appCls}}">
+  <aside class="{{sideCls}}">
+    <nav class="side-in" aria-label="Điều hướng cổng khách hàng">
+      <div class="side-head">
+        <span class="brand"><sc-if value="{{open}}"><span style="display:flex;flex-direction:column;align-items:flex-start;gap:3px"><img src="./assets/f594e7ba28d71e65ca5c376c3a9b20ee.png" alt="MedHunt" height="34" style="display:block;height:34px;width:auto;max-width:none"><span style="font-size:11px;font-weight:600;color:#5b3fc4;white-space:nowrap">Cổng khách hàng</span></span></sc-if><sc-if value="{{shut}}"><img src="./assets/02e9e7e769148af0eee6aa6d1cadf76d.png" alt="MedHunt" height="34" style="display:block;height:34px;width:auto;max-width:none"></sc-if></span>
+        <sc-if value="{{open}}"><button class="icon-btn" style="color:var(--subtle)" aria-label="Thu gọn menu" title="Thu gọn menu" onClick="{{toggleNav}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icPclose}}"></path></svg></button></sc-if>
+        <sc-if value="{{shut}}"><button class="expand-btn" aria-label="Mở rộng menu" title="Mở rộng menu" onClick="{{toggleNav}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icPopen}}"></path></svg></button></sc-if>
+      </div>
+      <div class="side-scroll"><div class="nav-g">
+        <ul class="nav-list"><sc-for list="{{pnav}}" as="n"><li><button class="nav" aria-current="{{n.cur}}" title="{{n.label}}" onClick="{{n.go}}">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{n.d}}"></path></svg>
+          <sc-if value="{{open}}"><span class="nav-t">{{n.label}}</span></sc-if></button></li></sc-for></ul></div>
+      </div>
+      <div class="side-foot"><button class="portal" title="Về trang SMS" onClick="{{toAdmin}}">
+        <span class="portal-i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icExt}}"></path></svg></span>
+        <sc-if value="{{open}}"><span class="portal-t"><span class="pt1">Về trang SMS</span><span class="pt2">Quay lại trang quản trị</span></span></sc-if></button></div>
+    </nav>
+  </aside>
+  <button class="{{edgeCls}}" aria-label="{{edgeLabel}}" onClick="{{toggleNav}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{icEdge}}"></path></svg></button>
+  <header class="tb"><span class="muted">Cổng khách hàng</span><i style="display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--subtle);margin:0 4px"></i><b>{{pd.client}}</b><span class="spacer"></span><span class="muted small">{{pd.user}}</span></header>
+    <main class="main">
+    <sc-if value="{{pHome}}"><dc-import name="PortalHome" d="{{pd}}" api="{{pa}}" hint-size="100%,500px"></dc-import></sc-if>
+    <sc-if value="{{pReqs}}"><dc-import name="PortalRequests" d="{{pd}}" api="{{pa}}" hint-size="100%,500px"></dc-import></sc-if>
+    <sc-if value="{{pReq}}"><dc-import name="PortalRequestDetail" d="{{pd}}" code="{{pcode}}" api="{{pa}}" hint-size="100%,500px"></dc-import></sc-if>
+    <sc-if value="{{pNew}}"><dc-import name="PortalRequestNew" api="{{pa}}" hint-size="100%,500px"></dc-import></sc-if>
+    <sc-if value="{{pSubs}}"><dc-import name="PortalSubmissions" d="{{pd}}" api="{{pa}}" hint-size="100%,500px"></dc-import></sc-if>
+    <sc-if value="{{pIvs}}"><dc-import name="PortalInterviews" d="{{pd}}" api="{{pa}}" hint-size="100%,500px"></dc-import></sc-if>
+    <sc-if value="{{pPlace}}"><dc-import name="PortalPlacements" d="{{pd}}" hint-size="100%,500px"></dc-import></sc-if>
+    </main>
+</div></sc-if>
+<sc-if value="{{gShow}}"><dc-import name="GuidePanel" on-hire="{{guideHire}}" on-expert-pass="{{expertPass}}" on-reply="{{guideReply}}" facts="{{gFacts}}" mode="{{guide}}" skip="{{gSkip}}" on-mode="{{guideMode}}" on-skip="{{guideSkip}}" on-go="{{guideGo}}" on-sample="{{useSampleClient}}" hint-size="100%,100px"></dc-import></sc-if>
+<sc-if value="{{hireOpen}}"><dc-import name="HireConfirm" kase="{{hireKase}}" offer="{{hireOffer}}" on-save="{{confirmHire}}" on-cancel="{{closeHire}}" hint-size="100%,100px"></dc-import></sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  // Store duy nhất của prototype; các màn con đọc qua props, ghi qua hàm trong props.
+  componentDidUpdate() { window.MedReviewStore.save(this.state); }
+  state = { notes: {}, cOver: {}, clog: {}, importOpen: false, branchesBy: {}, editCode: '', reviewer: 'BS Tâm', reviewSettings: { showPrescreen: false, showFirst: false, slowHours: '' }, cundo: {}, simDay: '15/10/2026', role: 'admin', uiStyle: 'flat', notifOpen: false, nread: ['N4'], fresh: [], crv: {}, presetClient: '', reqToday: false, gate: 'app', flow: 'demo', lang: 'vi', resetUsed: false, sampleClient: false, hires: {}, hireCase: null, guide: 'full', gSkip: {}, cmem: {}, cliEdit: {}, tbMenu: null, tbQ: '', candQ: '', pplat: 'ptenants', app: 'admin', ppage: 'home', pcode: null, ivFb: {}, collapsed: false, page: 'dash', code: null, ccode: null, tab: 'tien-trinh', formMode: 'new', contacts: null, invites: [], extraReqs: [], over: {}, extraCases: [], feas: {}, contracts: null, cst: {}, crv: {}, evs: {}, vers: {}, prompt: null, cand: null, kcase: null, ivs: null, offers: null, pays: {}, fus: {}, extraClients: [], extraContacts: [], extraCands: [], assignFlag: null, cOver: {}, clog: {}, ...window.MedReviewStore.load() };
+  // Ứng viên của các ca có sẵn (tên khớp CASES để lịch sử gửi hồ sơ ở chi tiết ứng viên đúng)
+  static SEEDED = ['Nguyễn Thị Hạnh','Trần Văn Quân','Lê Thu Trang','Phạm Minh Đức','Võ Thanh Mai','Đặng Quốc Bảo','Bùi Ngọc Anh','Hoàng Kim Ngân'];
+  static IC = {"dash":"M4 3h5a1 1 0 0 1 1 1v7a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1zM15 3h5a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1zM15 12h5a1 1 0 0 1 1 1v7a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1zM4 16h5a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1z","todo":"M4 5h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1zm3 17 2 2 4-4M13 6h8M13 12h8M13 18h8","bell":"M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0","bld":"M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18ZM6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M10 6h4M10 10h4M10 14h4M10 18h4","file":"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7ZM14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8","users":"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75","clip":"M9 2h6a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1zM16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2m9 14 2 2 4-4","kanban":"M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2zM8 7v7M12 7v4M16 7v9","send":"m22 2-7 20-4-9-9-4ZM22 2 11 13","cal":"M8 2v4M16 2v4M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2zM3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01","badge":"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Zm9 12 2 2 4-4","receipt":"M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1ZM16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11","wallet":"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4","shield":"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1zm9 12 2 2 4-4","chart":"M3 3v18h18M18 17V9M13 17V5M8 17v-3","scroll":"M15 12h-5M15 8h-5M19 17V5a2 2 0 0 0-2-2H4M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3","usercog":"M15 15a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0M10 15H6a4 4 0 0 0-4 4v2m21.7 16.4-.9-.3m15.2 13.9-.9-.3m16.6 18.7.3-.9m19.1 12.2.3-.9m19.6 18.7-.4-1m16.8 12.3-.4-1m14.3 16.6 1-.4m20.7 13.8 1-.4","key":"M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4zM16 7.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0","flow":"M5 3h4a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-4a2 2 0 0 1 2 -2zM7 11v4a2 2 0 0 0 2 2h4M15 13h4a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-4a2 2 0 0 1 2 -2z","db":"M3 5a9 3 0 1 0 18 0a9 3 0 1 0 -18 0M3 5V19A9 3 0 0 0 21 19V5M3 12A9 3 0 0 0 21 12","bot":"M12 8V4H8M6 8h12a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-8a2 2 0 0 1 2 -2zM2 14h2M20 14h2M15 13v2M9 13v2","plug":"M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z","palette":"M13 6.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0M17 10.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0M8 7.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0M6 12.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z","gear":"M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2zM9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0","code":"m18 16 4-4-4-4m6 8-4 4 4 4m14.5 4-5 16","pclose":"M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2zM9 3v18m16 15-3-3 3-3","popen":"M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2zM9 3v18m14 9 3 3-3 3","chl":"m15 18-6-6 6-6","chr":"m9 18 6-6-6-6","ext":"M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6","plus":"M12 4v16M4 12h16"};
+  // Menu trái theo shell/nav.ts (develop): nhóm, rồi mục. page = nơi dẫn tới trong prototype; mục chưa dựng để mờ.
+  static NAV = [
+    ['Tổng quan', [['Trang tổng quan', 'dash', 'dash'], ['Việc của tôi', 'todo', 'mywork']]],
+    ['Tạo & theo dõi khách hàng', [['Khách hàng', 'bld', 'clients']]],
+    ['Theo dõi yêu cầu tuyển dụng', [['Yêu cầu tuyển dụng', 'file', 'list']]],
+    ['Tìm ứng viên', [['Kho ứng viên', 'users', 'cands'], ['Hồ sơ cần đánh giá', 'clip', 'expert']]],
+    ['Theo dõi ứng viên', [['Ca tuyển (pipeline)', 'kanban', 'cases'], ['Hồ sơ đã gửi', 'send', 'subs'], ['Phỏng vấn', 'cal', 'ivs'], ['Offer & nhận việc', 'badge', 'offers']]],
+    ['Phí & bảo hành', [['Hoàn phí & chính sách phí', 'receipt', 'billing'], ['Sổ phí theo ca', 'wallet', 'fin'], ['Bảo hành & khiếu nại', 'shield', 'gua']]],
+    ['Báo cáo', [['Báo cáo', 'chart', 'reports'], ['Nhật ký thao tác', 'scroll', 'audit']]],
+    ['Quản trị', [['Tài khoản', 'usercog', 'users'], ['Vai trò & quyền', 'key', 'roles'], ['Quy trình', 'flow', 'workflows'], ['Danh mục', 'db', 'master'], ['Cấu hình AI', 'bot', 'aiset'], ['Tích hợp', 'plug', 'integ'], ['Tenant & thương hiệu', 'palette', 'tenant'], ['Quy tắc nghiệp vụ', 'gear', 'rules'], ['Hợp đồng API', 'code', 'devapi']]],
+  ];
+  static PAGES = { clients: ['clients', 'client', 'cform'], list: ['list', 'detail', 'form'], cands: ['cands', 'cand', 'candform'], cases: ['cases', 'case'], subs: ['subs'], ivs: ['ivs'], offers: ['offers'], fin: ['fin'], gua: ['gua'], dash: ['dash'], mywork: ['mywork'], expert: ['expert'], billing: ['billing'], reports: ['reports'], audit: ['audit'], users: ['users'], roles: ['roles'], workflows: ['workflows'], master: ['master'], aiset: ['aiset'], integ: ['integ'], tenant: ['tenant'], rules: ['rules'], devapi: ['devapi'] };
+  static IVS = [
+    { id:'IV1', caseId:'C-101', round:1, at:'17/10/2026 09:00', mode:'Trực tiếp', who:'Trưởng khoa Nội', status:'SCHEDULED', result:null },
+    { id:'IV2', caseId:'C-102', round:1, at:'12/10/2026 14:00', mode:'Online', who:'Giám đốc nhân sự', status:'DONE', result:'PASS' },
+    { id:'IV3', caseId:'C-104', round:1, at:'08/10/2026 10:00', mode:'Online', who:'Trưởng khoa Hồi sức', status:'DONE', result:'PASS' },
+    { id:'IV4', caseId:'C-106', round:1, at:'18/09/2026 09:00', mode:'Trực tiếp', who:'Trưởng phòng Xét nghiệm', status:'DONE', result:'PASS' },
+    { id:'IV5', caseId:'C-107', round:1, at:'30/09/2026 15:00', mode:'Online', who:'Trưởng phòng Xét nghiệm', status:'DONE', result:'PASS' },
+    { id:'IV6', caseId:'C-108', round:1, at:'20/06/2026 10:00', mode:'Trực tiếp', who:'Trưởng khoa Nhi', status:'DONE', result:'PASS' },
+    // Năm buổi trong ngày mô phỏng (15/10), có hai buổi chồng giờ, để thử khung giờ ở Trang tổng quan
+    { id:'IV7', caseId:'C-102', round:2, at:'15/10/2026 08:30', mode:'Online', who:'Giám đốc nhân sự', status:'SCHEDULED', result:null },
+    { id:'IV8', caseId:'C-103', round:1, at:'15/10/2026 09:00', mode:'Trực tiếp', who:'Trưởng khoa Hồi sức', status:'SCHEDULED', result:null },
+    { id:'IV9', caseId:'C-104', round:2, at:'15/10/2026 10:30', mode:'Online', who:'Trưởng khoa Hồi sức', status:'SCHEDULED', result:null },
+    { id:'IV10', caseId:'C-107', round:2, at:'15/10/2026 14:00', mode:'Trực tiếp', who:'Trưởng phòng Xét nghiệm', status:'SCHEDULED', result:null },
+    { id:'IV11', caseId:'C-108', round:2, at:'15/10/2026 15:30', mode:'Online', who:'Trưởng khoa Nhi', status:'SCHEDULED', result:null },
+    // Thêm lịch đủ trạng thái để xem cách hiển thị: đã diễn ra (đạt, không đạt), vắng mặt, đã huỷ, quá ngày mà chưa có kết quả, đổi lịch, sắp tới
+    { id:'IV12', caseId:'C-105', round:1, at:'06/10/2026 09:00', mode:'Online', who:'Trưởng khoa Nội', status:'DONE', result:'FAIL' },
+    { id:'IV13', caseId:'C-109', round:1, at:'05/10/2026 14:00', mode:'Trực tiếp', who:'Giám đốc nhân sự', status:'DONE', result:'FAIL' },
+    { id:'IV14', caseId:'C-110', round:1, at:'07/10/2026 10:30', mode:'Online', who:'Trưởng khoa Hồi sức', status:'NOSHOW', result:null },
+    { id:'IV15', caseId:'C-111', round:1, at:'09/10/2026 15:00', mode:'Trực tiếp', who:'Trưởng phòng Xét nghiệm', status:'CANCELLED', result:null },
+    { id:'IV16', caseId:'C-106', round:2, at:'13/10/2026 09:00', mode:'Online', who:'Trưởng phòng Xét nghiệm', status:'DONE', result:'PASS' },
+    { id:'IV17', caseId:'C-108', round:3, at:'14/10/2026 16:00', mode:'Trực tiếp', who:'Trưởng khoa Nhi', status:'DONE', result:'PASS' },
+    { id:'IV18', caseId:'C-103', round:1, at:'13/10/2026 11:00', mode:'Trực tiếp', who:'Trưởng khoa Hồi sức', status:'SCHEDULED', result:null },
+    { id:'IV19', caseId:'C-106', round:3, at:'15/10/2026 11:30', mode:'Online', who:'Trưởng phòng Xét nghiệm', status:'SCHEDULED', result:null },
+    { id:'IV20', caseId:'C-109', round:2, at:'15/10/2026 16:30', mode:'Trực tiếp', who:'Giám đốc nhân sự', status:'RESCHEDULED', result:null },
+    { id:'IV21', caseId:'C-103', round:2, at:'16/10/2026 10:00', mode:'Online', who:'Trưởng khoa Hồi sức', status:'RESCHEDULED', result:null },
+    { id:'IV22', caseId:'C-110', round:2, at:'16/10/2026 15:00', mode:'Trực tiếp', who:'Trưởng khoa Hồi sức', status:'SCHEDULED', result:null },
+    { id:'IV23', caseId:'C-101', round:2, at:'18/10/2026 14:00', mode:'Online', who:'Trưởng khoa Nội', status:'SCHEDULED', result:null },
+    { id:'IV24', caseId:'C-102', round:3, at:'20/10/2026 09:30', mode:'Trực tiếp', who:'Giám đốc nhân sự', status:'SCHEDULED', result:null },
+    { id:'IV25', caseId:'C-104', round:3, at:'21/10/2026 14:00', mode:'Online', who:'Trưởng khoa Hồi sức', status:'SCHEDULED', result:null },
+    { id:'IV26', caseId:'C-107', round:3, at:'22/10/2026 10:00', mode:'Trực tiếp', who:'Trưởng phòng Xét nghiệm', status:'SCHEDULED', result:null },
+    { id:'IV27', caseId:'C-108', round:4, at:'23/10/2026 16:00', mode:'Online', who:'Trưởng khoa Nhi', status:'SCHEDULED', result:null },
+    { id:'IV28', caseId:'C-106', round:4, at:'27/10/2026 09:00', mode:'Trực tiếp', who:'Trưởng phòng Xét nghiệm', status:'SCHEDULED', result:null },
+  ];
+  static OFFERS = { 'C-104': { salary:18000000, start:'01/11/2026', pct:85 }, 'C-107': { salary:15000000, start:'01/11/2026', pct:85 }, 'C-106': { salary:16000000, start:'01/10/2026', pct:85 }, 'C-108': { salary:20000000, start:'15/07/2026', pct:85 }, 'C-118': { salary:17000000, start:'25/10/2026', pct:85 }, 'C-119': { salary:45000000, start:'25/10/2026', pct:85 }, 'C-120': { salary:14000000, start:'01/11/2026', pct:85 }, 'C-121': { salary:15000000, start:'03/11/2026', pct:85 }, 'C-122': { salary:16000000, start:'20/09/2026', pct:85 }, 'C-123': { salary:18000000, start:'10/10/2026', pct:85 }, 'C-124': { salary:20000000, start:'05/07/2026', pct:85 }, 'C-125': { salary:15000000, start:'20/06/2026', pct:85 }, 'C-126': { salary:22000000, start:'01/03/2026', pct:85 }, 'C-127': { salary:17000000, start:'10/02/2026', pct:85 }, 'C-128': { salary:16000000, start:'28/10/2026', pct:85 }, 'C-129': { salary:14500000, start:'28/10/2026', pct:85 }, 'C-130': { salary:48000000, start:'28/10/2026', pct:85 }, 'C-131': { salary:15500000, start:'28/10/2026', pct:85 }, 'C-132': { salary:17500000, start:'28/10/2026', pct:85 }, 'C-133': { salary:19000000, start:'15/10/2026', pct:85 }, 'C-134': { salary:21000000, start:'30/05/2026', pct:85 }, 'C-135': { salary:16500000, start:'10/07/2026', pct:85 }, 'C-136': { salary:19500000, start:'15/01/2026', pct:85 }, 'C-137': { salary:15000000, start:'20/07/2026', pct:85 }, 'C-138': { salary:16000000, start:'20/07/2026', pct:85 }, 'C-139': { salary:17000000, start:'20/07/2026', pct:85 }, 'C-140': { salary:18000000, start:'20/07/2026', pct:85 }, 'C-141': { salary:19000000, start:'20/07/2026', pct:85 }, 'C-142': { salary:20000000, start:'20/07/2026', pct:85 }, 'C-143': { salary:21000000, start:'20/07/2026', pct:85 }, 'C-144': { salary:22000000, start:'20/07/2026', pct:85 } };
+  // Phiếu xác nhận tuyển dụng của ca mẫu (module 09): mức tính phí = lương offer, 18% lương năm, ba đợt 60/20/20 theo ngày mốc. C-107 không thử việc nên hạn các đợt để trống.
+  static HIRES = {
+    'C-106': { prob: true, a: '01/10/2026', b: '01/12/2026', c: '02/12/2026', d: '02/03/2027', hireOn: '28/09/2026', base: 16000000, method: 'pct', rate: 18, months: 2, total: 34560000, salary: 16000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 20736000, due: '01/10/2026' }, { n: 2, pct: 20, amt: 6912000, due: '02/12/2026' }, { n: 3, pct: 20, amt: 6912000, due: '02/03/2027' }] },
+    'C-107': { prob: false, a: '01/11/2026', b: '', c: '01/11/2026', d: '01/02/2027', hireOn: '08/10/2026', base: 15000000, method: 'pct', rate: 18, months: 2, total: 32400000, salary: 15000000, note: 'Không thử việc, đi làm thẳng',
+      insts: [{ n: 1, pct: 60, amt: 19440000, due: '' }, { n: 2, pct: 20, amt: 6480000, due: '' }, { n: 3, pct: 20, amt: 6480000, due: '' }] },
+    'C-108': { prob: true, a: '15/07/2026', b: '14/09/2026', c: '15/09/2026', d: '15/12/2026', hireOn: '01/07/2026', base: 20000000, method: 'pct', rate: 18, months: 2, total: 43200000, salary: 20000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 25920000, due: '15/07/2026' }, { n: 2, pct: 20, amt: 8640000, due: '15/09/2026' }, { n: 3, pct: 20, amt: 8640000, due: '15/12/2026' }] },
+    'C-120': { prob: false, a: '01/11/2026', b: '', c: '01/11/2026', d: '01/02/2027', hireOn: '12/10/2026', base: 14000000, method: 'pct', rate: 18, months: 2, total: 30240000, salary: 14000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 18144000, due: '' }, { n: 2, pct: 20, amt: 6048000, due: '' }, { n: 3, pct: 20, amt: 6048000, due: '' }] },
+    'C-121': { prob: false, a: '03/11/2026', b: '', c: '03/11/2026', d: '03/02/2027', hireOn: '13/10/2026', base: 15000000, method: 'pct', rate: 18, months: 2, total: 32400000, salary: 15000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 19440000, due: '' }, { n: 2, pct: 20, amt: 6480000, due: '' }, { n: 3, pct: 20, amt: 6480000, due: '' }] },
+    'C-122': { prob: true, a: '20/09/2026', b: '19/11/2026', c: '20/11/2026', d: '20/02/2027', hireOn: '15/09/2026', base: 16000000, method: 'pct', rate: 18, months: 2, total: 34560000, salary: 16000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 20736000, due: '20/09/2026' }, { n: 2, pct: 20, amt: 6912000, due: '20/11/2026' }, { n: 3, pct: 20, amt: 6912000, due: '20/02/2027' }] },
+    'C-123': { prob: true, a: '10/10/2026', b: '09/12/2026', c: '10/12/2026', d: '10/03/2027', hireOn: '05/10/2026', base: 18000000, method: 'pct', rate: 18, months: 2, total: 38880000, salary: 18000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 23328000, due: '10/10/2026' }, { n: 2, pct: 20, amt: 7776000, due: '10/12/2026' }, { n: 3, pct: 20, amt: 7776000, due: '10/03/2027' }] },
+    'C-124': { prob: true, a: '05/07/2026', b: '03/09/2026', c: '04/09/2026', d: '05/01/2027', hireOn: '01/07/2026', base: 20000000, method: 'pct', rate: 18, months: 2, total: 43200000, salary: 20000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 25920000, due: '05/07/2026' }, { n: 2, pct: 20, amt: 8640000, due: '04/09/2026' }, { n: 3, pct: 20, amt: 8640000, due: '05/01/2027' }] },
+    'C-125': { prob: true, a: '20/06/2026', b: '18/08/2026', c: '19/08/2026', d: '20/12/2026', hireOn: '15/06/2026', base: 15000000, method: 'pct', rate: 18, months: 2, total: 32400000, salary: 15000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 19440000, due: '20/06/2026' }, { n: 2, pct: 20, amt: 6480000, due: '19/08/2026' }, { n: 3, pct: 20, amt: 6480000, due: '20/12/2026' }] },
+    'C-126': { prob: true, a: '01/03/2026', b: '30/04/2026', c: '01/05/2026', d: '01/08/2026', hireOn: '25/02/2026', base: 22000000, method: 'pct', rate: 18, months: 2, total: 47520000, salary: 22000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 28512000, due: '01/03/2026' }, { n: 2, pct: 20, amt: 9504000, due: '01/05/2026' }, { n: 3, pct: 20, amt: 9504000, due: '01/08/2026' }] },
+    'C-127': { prob: true, a: '10/02/2026', b: '10/04/2026', c: '11/04/2026', d: '10/07/2026', hireOn: '05/02/2026', base: 17000000, method: 'pct', rate: 18, months: 2, total: 36720000, salary: 17000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 22032000, due: '10/02/2026' }, { n: 2, pct: 20, amt: 7344000, due: '11/04/2026' }, { n: 3, pct: 20, amt: 7344000, due: '10/07/2026' }] },
+    'C-133': { prob: true, a: '15/10/2026', b: '14/12/2026', c: '15/12/2026', d: '15/03/2027', hireOn: '10/10/2026', base: 19000000, method: 'pct', rate: 18, months: 2, total: 41040000, salary: 19000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 24624000, due: '15/10/2026' }, { n: 2, pct: 20, amt: 8208000, due: '15/12/2026' }, { n: 3, pct: 20, amt: 8208000, due: '15/03/2027' }] },
+    'C-134': { prob: true, a: '30/05/2026', b: '29/07/2026', c: '30/07/2026', d: '30/11/2026', hireOn: '25/05/2026', base: 21000000, method: 'pct', rate: 18, months: 2, total: 45360000, salary: 21000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 27216000, due: '30/05/2026' }, { n: 2, pct: 20, amt: 9072000, due: '30/07/2026' }, { n: 3, pct: 20, amt: 9072000, due: '30/11/2026' }] },
+    'C-135': { prob: true, a: '10/07/2026', b: '08/09/2026', c: '09/09/2026', d: '10/01/2027', hireOn: '05/07/2026', base: 16500000, method: 'pct', rate: 18, months: 2, total: 35640000, salary: 16500000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 21384000, due: '10/07/2026' }, { n: 2, pct: 20, amt: 7128000, due: '09/09/2026' }, { n: 3, pct: 20, amt: 7128000, due: '10/01/2027' }] },
+    'C-136': { prob: true, a: '15/01/2026', b: '15/03/2026', c: '16/03/2026', d: '15/06/2026', hireOn: '10/01/2026', base: 19500000, method: 'pct', rate: 18, months: 2, total: 42120000, salary: 19500000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 25272000, due: '15/01/2026' }, { n: 2, pct: 20, amt: 8424000, due: '16/03/2026' }, { n: 3, pct: 20, amt: 8424000, due: '15/06/2026' }] },
+    'C-137': { prob: true, a: '20/07/2026', b: '18/09/2026', c: '19/09/2026', d: '20/01/2027', hireOn: '15/07/2026', base: 15000000, method: 'pct', rate: 18, months: 2, total: 32400000, salary: 15000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 19440000, due: '20/07/2026' }, { n: 2, pct: 20, amt: 6480000, due: '19/09/2026' }, { n: 3, pct: 20, amt: 6480000, due: '20/01/2027' }] },
+    'C-138': { prob: true, a: '20/07/2026', b: '18/09/2026', c: '19/09/2026', d: '20/01/2027', hireOn: '15/07/2026', base: 16000000, method: 'pct', rate: 18, months: 2, total: 34560000, salary: 16000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 20736000, due: '20/07/2026' }, { n: 2, pct: 20, amt: 6912000, due: '19/09/2026' }, { n: 3, pct: 20, amt: 6912000, due: '20/01/2027' }] },
+    'C-139': { prob: true, a: '20/07/2026', b: '18/09/2026', c: '19/09/2026', d: '20/01/2027', hireOn: '15/07/2026', base: 17000000, method: 'pct', rate: 18, months: 2, total: 36720000, salary: 17000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 22032000, due: '20/07/2026' }, { n: 2, pct: 20, amt: 7344000, due: '19/09/2026' }, { n: 3, pct: 20, amt: 7344000, due: '20/01/2027' }] },
+    'C-140': { prob: true, a: '20/07/2026', b: '18/09/2026', c: '19/09/2026', d: '20/01/2027', hireOn: '15/07/2026', base: 18000000, method: 'pct', rate: 18, months: 2, total: 38880000, salary: 18000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 23328000, due: '20/07/2026' }, { n: 2, pct: 20, amt: 7776000, due: '19/09/2026' }, { n: 3, pct: 20, amt: 7776000, due: '20/01/2027' }] },
+    'C-141': { prob: true, a: '20/07/2026', b: '18/09/2026', c: '19/09/2026', d: '20/01/2027', hireOn: '15/07/2026', base: 19000000, method: 'pct', rate: 18, months: 2, total: 41040000, salary: 19000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 24624000, due: '20/07/2026' }, { n: 2, pct: 20, amt: 8208000, due: '19/09/2026' }, { n: 3, pct: 20, amt: 8208000, due: '20/01/2027' }] },
+    'C-142': { prob: true, a: '20/07/2026', b: '18/09/2026', c: '19/09/2026', d: '20/01/2027', hireOn: '15/07/2026', base: 20000000, method: 'pct', rate: 18, months: 2, total: 43200000, salary: 20000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 25920000, due: '20/07/2026' }, { n: 2, pct: 20, amt: 8640000, due: '19/09/2026' }, { n: 3, pct: 20, amt: 8640000, due: '20/01/2027' }] },
+    'C-143': { prob: true, a: '20/07/2026', b: '18/09/2026', c: '19/09/2026', d: '20/01/2027', hireOn: '15/07/2026', base: 21000000, method: 'pct', rate: 18, months: 2, total: 45360000, salary: 21000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 27216000, due: '20/07/2026' }, { n: 2, pct: 20, amt: 9072000, due: '19/09/2026' }, { n: 3, pct: 20, amt: 9072000, due: '20/01/2027' }] },
+    'C-144': { prob: true, a: '20/07/2026', b: '18/09/2026', c: '19/09/2026', d: '20/01/2027', hireOn: '15/07/2026', base: 22000000, method: 'pct', rate: 18, months: 2, total: 47520000, salary: 22000000, note: '',
+      insts: [{ n: 1, pct: 60, amt: 28512000, due: '20/07/2026' }, { n: 2, pct: 20, amt: 9504000, due: '19/09/2026' }, { n: 3, pct: 20, amt: 9504000, due: '20/01/2027' }] } };
+  static PAYS = { 'C-106': [{ amount: 20736000, note: '', n: 1, on: '02/10/2026', method: 'Chuyển khoản', ref: '' }],
+    'C-108': [{ amount: 25920000, note: '', n: 1, on: '16/07/2026', method: 'Chuyển khoản', ref: '' }, { amount: 8640000, note: '', n: 2, on: '16/09/2026', method: 'Chuyển khoản', ref: '' }] };
+  // Hồ sơ mẫu ở các trạng thái đánh giá khác nhau của YC-012 (module 06 B3.1), để thử từng thao tác
+  // Năm trạng thái của yêu cầu (module 04 B3.1, 16/10/2026): không còn Tạm dừng, Đã nhận, Đang phỏng vấn, Đang offer…
+  static ST = { DRAFT: ['gray', 'Nháp'], SUBMITTED: ['warn', 'Chờ xử lý'], SOURCING: ['info', 'Đang xử lý'], CLOSED: ['ok', 'Đã hoàn thành'], CANCELLED: ['bad', 'Đã huỷ'] };
+  // Hồ sơ chờ nhận hoặc đang đánh giá ở nhiều yêu cầu (ngoài YC-012) để Hồ sơ cần đánh giá có nhiều dòng cha
+  static CST_SEED = { 'YC-012': { U2: 'IN_REVIEW', U3: 'SECOND_REVIEW_REQUESTED', U4: 'REVIEW_PASSED' }, 'YC-013': { U1: 'REVIEW_PENDING', U2: 'REVIEW_PENDING', U3: 'IN_REVIEW' }, 'YC-015': { U1: 'REVIEW_PENDING', U4: 'REVIEW_PENDING' }, 'YC-016': { U2: 'IN_REVIEW', U3: 'REVIEW_PENDING' }, 'YC-017': { U1: 'REVIEW_PENDING' }, 'YC-014': { U4: 'REVIEW_PENDING', U2: 'REVIEW_PENDING' } };
+  static CRV_SEED = {
+    'YC-013': {
+    U1: { due: '16/10/2026 09:00', since: '13/10/2026', rounds: [{ n: 1, who: null, sentAt: '13/10/2026', due: '16/10/2026 09:00', state: 'PENDING' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '13/10/2026' }] },
+    U2: { due: '17/10/2026 09:00', since: '13/10/2026', rounds: [{ n: 1, who: null, sentAt: '13/10/2026', due: '17/10/2026 09:00', state: 'PENDING' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '13/10/2026' }] },
+    U3: { due: '18/10/2026 09:00', since: '13/10/2026', rounds: [{ n: 1, who: 'BS Tâm', sentAt: '13/10/2026', claimedAt: '14/10/2026', due: '18/10/2026 09:00', state: 'PENDING' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '13/10/2026' }, { from: 'REVIEW_PENDING', to: 'IN_REVIEW', at: '14/10/2026' }] },
+    },
+    'YC-015': {
+    U1: { due: '15/10/2026 09:00', since: '13/10/2026', rounds: [{ n: 1, who: null, sentAt: '13/10/2026', due: '15/10/2026 09:00', state: 'PENDING' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '13/10/2026' }] },
+    U4: { due: '19/10/2026 09:00', since: '13/10/2026', rounds: [{ n: 1, who: null, sentAt: '13/10/2026', due: '19/10/2026 09:00', state: 'PENDING' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '13/10/2026' }] },
+    },
+    'YC-016': {
+    U2: { due: '16/10/2026 09:00', since: '13/10/2026', rounds: [{ n: 1, who: 'BS Tâm', sentAt: '13/10/2026', claimedAt: '14/10/2026', due: '16/10/2026 09:00', state: 'PENDING' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '13/10/2026' }, { from: 'REVIEW_PENDING', to: 'IN_REVIEW', at: '14/10/2026' }] },
+    U3: { due: '17/10/2026 09:00', since: '13/10/2026', rounds: [{ n: 1, who: null, sentAt: '13/10/2026', due: '17/10/2026 09:00', state: 'PENDING' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '13/10/2026' }] },
+    },
+    'YC-017': {
+    U1: { due: '18/10/2026 09:00', since: '13/10/2026', rounds: [{ n: 1, who: null, sentAt: '13/10/2026', due: '18/10/2026 09:00', state: 'PENDING' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '13/10/2026' }] },
+    },
+    'YC-014': {
+    U4: { due: '15/10/2026 09:00', since: '13/10/2026', rounds: [{ n: 1, who: null, sentAt: '13/10/2026', due: '15/10/2026 09:00', state: 'PENDING' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '13/10/2026' }] },
+    U2: { due: '19/10/2026 09:00', since: '13/10/2026', rounds: [{ n: 1, who: null, sentAt: '13/10/2026', due: '19/10/2026 09:00', state: 'PENDING' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '13/10/2026' }] },
+    },
+    'YC-012': {
+    U2: { due: '17/10/2026 09:00', since: '14/10/2026', rounds: [{ n: 1, who: 'BS Tâm', sentAt: '13/10/2026', claimedAt: '14/10/2026', due: '17/10/2026 09:00', state: 'PENDING' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '13/10/2026' }, { from: 'REVIEW_PENDING', to: 'IN_REVIEW', at: '14/10/2026' }] },
+    U3: { proposed: 'BS Hải', comment: 'Vững hồi sức, cần người làm lọc máu xem thêm', since: '14/10/2026', rounds: [{ n: 1, who: 'BS Tâm', sentAt: '12/10/2026', claimedAt: '12/10/2026', due: '15/10/2026 09:00', state: 'REVIEWED', result: 'SECOND', proposed: 'BS Hải', comment: 'Vững hồi sức, cần người làm lọc máu xem thêm', at: '14/10/2026' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '12/10/2026' }, { from: 'REVIEW_PENDING', to: 'IN_REVIEW', at: '12/10/2026' }, { from: 'IN_REVIEW', to: 'SECOND_REVIEW_REQUESTED', at: '14/10/2026' }] },
+    U4: { comment: 'Đủ kinh nghiệm, hồ sơ rõ ràng', since: '14/10/2026', rounds: [{ n: 1, who: 'BS Tâm', sentAt: '12/10/2026', claimedAt: '13/10/2026', due: '15/10/2026 09:00', state: 'REVIEWED', result: 'PASS', comment: 'Đủ kinh nghiệm, hồ sơ rõ ràng', at: '14/10/2026' }], log: [{ from: 'SCREENING', to: 'REVIEW_PENDING', at: '12/10/2026' }, { from: 'REVIEW_PENDING', to: 'IN_REVIEW', at: '13/10/2026' }, { from: 'IN_REVIEW', to: 'REVIEW_PASSED', at: '14/10/2026' }] } } };
+  static PRICE = { 'Nhân viên': 15000000, 'Leader, tổ trưởng': 25000000, 'Phó phòng, trưởng phòng, quản lý tương đương': 40000000, 'Phó giám đốc': 60000000, 'Giám đốc': 80000000 };
+  static REQ = [
+    // Yêu cầu của các khách hàng bổ sung (tạo trước hôm nay), để Sổ phí theo khách có đủ nhóm thử phân trang
+    { code:'YC-019', title:'Điều dưỡng Hồi sức', client:'Bệnh viện Đại học Y Dược', status:'SOURCING', qty:1, hired:1, owner:'Lan Phạm', due:'05/12/2026', created:'01/09/2026', specialty:'Tổng hợp', level:'Nhân viên', viaPortal:false },
+    { code:'YC-020', title:'Kỹ thuật viên Xét nghiệm', client:'Phòng khám Quốc tế Sài Gòn', status:'SOURCING', qty:1, hired:1, owner:'Minh Trần, Lan Phạm', due:'06/12/2026', created:'02/09/2026', specialty:'Tổng hợp', level:'Nhân viên', viaPortal:false },
+    { code:'YC-021', title:'Nữ hộ sinh', client:'Bệnh viện Phụ sản Hà Nội', status:'SOURCING', qty:1, hired:1, owner:'Lan Phạm, Minh Trần', due:'07/12/2026', created:'03/09/2026', specialty:'Tổng hợp', level:'Nhân viên', viaPortal:false },
+    { code:'YC-022', title:'Điều dưỡng Nội tổng hợp', client:'Trung tâm Y khoa Mekong', status:'SOURCING', qty:1, hired:1, owner:'Minh Trần, Lan Phạm', due:'08/12/2026', created:'04/09/2026', specialty:'Tổng hợp', level:'Nhân viên', viaPortal:false },
+    { code:'YC-023', title:'Bác sĩ Răng Hàm Mặt', client:'Bệnh viện Răng Hàm Mặt Trung ương', status:'SOURCING', qty:1, hired:1, owner:'Lan Phạm, Minh Trần', due:'09/12/2026', created:'05/09/2026', specialty:'Tổng hợp', level:'Nhân viên', viaPortal:false },
+    { code:'YC-024', title:'Dược sĩ lâm sàng', client:'Phòng khám Đa khoa Tâm Đức', status:'SOURCING', qty:1, hired:1, owner:'Minh Trần, Lan Phạm', due:'10/12/2026', created:'06/09/2026', specialty:'Tổng hợp', level:'Nhân viên', viaPortal:false },
+    { code:'YC-025', title:'Bác sĩ Mắt', client:'Bệnh viện Mắt Sài Gòn', status:'SOURCING', qty:1, hired:1, owner:'Lan Phạm', due:'11/12/2026', created:'07/09/2026', specialty:'Tổng hợp', level:'Nhân viên', viaPortal:false },
+    { code:'YC-026', title:'Điều dưỡng Ngoại khoa', client:'Bệnh viện Đa khoa Hồng Ngọc', status:'SOURCING', qty:1, hired:1, owner:'Minh Trần, Lan Phạm', due:'12/12/2026', created:'08/09/2026', specialty:'Tổng hợp', level:'Nhân viên', viaPortal:false },
+    // Năm yêu cầu mới trong ngày mô phỏng (15/10), cùng YC-013 là sáu, để thử thẻ Yêu cầu mới hôm nay ở Trang tổng quan
+    { code:'YC-018', title:'Dược sĩ lâm sàng', client:'Phòng khám Đa khoa Xanh', status:'SUBMITTED', qty:1, hired:0, owner:'Chưa phân công', due:'15/12/2026', created:'15/10/2026', specialty:'Dược', level:'Nhân viên', viaPortal:true },
+    { code:'YC-017', title:'Bác sĩ Chẩn đoán hình ảnh', client:'Bệnh viện Tim Sài Gòn', status:'SOURCING', qty:1, hired:0, owner:'Minh Trần, Lan Phạm', due:'30/11/2026', created:'15/10/2026', specialty:'Chẩn đoán hình ảnh', level:'Phó giám đốc', viaPortal:false },
+    { code:'YC-016', positions:[{id:'p1',no:1,title:'Điều dưỡng Phòng mổ',group:'Điều dưỡng',qty:2,spec:'Lâm sàng',level:'Nhân viên',due:'20/12/2026',dept:'Khoa Phẫu thuật',smin:'15000000',smax:'22000000',exp:'2',lic:true,desc:''},{id:'p2',no:2,title:'Điều dưỡng Hồi sức sau mổ',group:'Điều dưỡng',qty:1,spec:'Cấp cứu - Hồi sức tích cực',level:'Leader, tổ trưởng',due:'05/01/2027',dept:'Khoa Hồi sức sau mổ',smin:'20000000',smax:'28000000',exp:'4',lic:true,desc:''}], title:'Điều dưỡng Phòng mổ', client:'Bệnh viện Đa khoa Phương Nam', status:'SUBMITTED', qty:3, hired:0, owner:'Chưa phân công', due:'20/12/2026', created:'15/10/2026', specialty:'Gây mê hồi sức', level:'Nhân viên', viaPortal:true },
+    { code:'YC-015', positions:[{id:'p1',no:1,title:'Nữ hộ sinh',group:'Nữ hộ sinh',qty:1,spec:'Sản',level:'Nhân viên',due:'05/12/2026',dept:'Khoa Sản',smin:'14000000',smax:'20000000',exp:'2',lic:true,desc:''},{id:'p2',no:2,title:'Kỹ thuật viên Siêu âm sản',group:'Kỹ thuật viên',qty:1,spec:'Chẩn đoán hình ảnh',level:'Nhân viên',due:'20/12/2026',dept:'Khoa Chẩn đoán hình ảnh',smin:'16000000',smax:'22000000',exp:'1',lic:false,desc:''}], title:'Nữ hộ sinh', client:'Phòng khám Đa khoa Xanh', status:'SOURCING', qty:2, hired:0, owner:'Lan Phạm', due:'05/12/2026', created:'15/10/2026', specialty:'Sản', level:'Nhân viên', viaPortal:false },
+    { code:'YC-014', title:'Kỹ thuật viên Xét nghiệm', client:'Bệnh viện Tim Sài Gòn', status:'SOURCING', qty:1, hired:0, owner:'Minh Trần', due:'25/11/2026', created:'15/10/2026', specialty:'Xét nghiệm', level:'Nhân viên', viaPortal:false },
+    { code:'YC-013', title:'Điều dưỡng Hồi sức tích cực (mẫu chạy thử)', client:'Bệnh viện Đa khoa Phương Nam', status:'SOURCING', qty:2, hired:0, owner:'Lan Phạm', due:'30/11/2026', created:'15/10/2026', specialty:'Hồi sức tích cực', level:'Nhân viên', group:'Điều dưỡng, hộ sinh', contact:'Nguyễn Thị Thu', site:'Trụ sở chính', province:'Hồ Chí Minh', address:'125 Nguyễn Trãi, Phường Bến Thành', years:'3', salFrom:'12000000', salTo:'18000000', cert:true, viaPortal:false },
+    { code:'YC-012', positions:[{id:'p1',no:1,title:'Điều dưỡng ICU',group:'Điều dưỡng',qty:2,spec:'Cấp cứu - Hồi sức tích cực',level:'Leader, tổ trưởng',due:'30/10/2026',dept:'Khoa Hồi sức tích cực',smin:'18000000',smax:'25000000',exp:'3',lic:true,desc:'Chăm sóc bệnh nhân nặng, theo dõi thở máy.'},{id:'p2',no:2,title:'Bác sĩ hồi sức',group:'Bác sỹ',qty:1,spec:'Hồi sức cấp cứu',level:'Nhân viên',due:'15/11/2026',dept:'Khoa Hồi sức tích cực',smin:'45000000',smax:'60000000',exp:'5',lic:true,desc:'Phụ trách trực và hội chẩn ca nặng.'}], title:'Điều dưỡng ICU', client:'Bệnh viện Đa khoa Phương Nam', status:'SOURCING', qty:3, hired:0, owner:'Lan Phạm', due:'30/10/2026', created:'01/10/2026', specialty:'Hồi sức tích cực', level:'Leader, tổ trưởng', viaPortal:false },
+    { code:'YC-011', title:'Bác sĩ Tim mạch can thiệp', client:'Bệnh viện Tim Sài Gòn', status:'SOURCING', qty:1, hired:0, owner:'Minh Trần', due:'15/11/2026', created:'28/09/2026', specialty:'Tim mạch', level:'Phó giám đốc', viaPortal:true },
+    { code:'YC-010', title:'Kỹ thuật viên Xét nghiệm', client:'Phòng khám Đa khoa Xanh', status:'SOURCING', qty:2, hired:1, owner:'Lan Phạm', due:'20/10/2026', created:'15/09/2026', specialty:'Xét nghiệm', level:'Nhân viên', viaPortal:false },
+    { code:'YC-009', title:'Dược sĩ lâm sàng', client:'Bệnh viện Đa khoa Phương Nam', status:'SUBMITTED', qty:1, hired:0, owner:'Chưa phân công', due:'05/12/2026', created:'12/10/2026', specialty:'Dược', level:'Leader, tổ trưởng', viaPortal:true },
+    { code:'YC-008', title:'Điều dưỡng Hồi sức sơ sinh', client:'Bệnh viện Nhi Bình An', status:'SOURCING', qty:4, hired:2, owner:'Minh Trần', due:'25/10/2026', created:'01/06/2026', specialty:'Nhi sơ sinh', level:'Leader, tổ trưởng', viaPortal:false },
+    { code:'YC-007', title:'Bác sĩ Chẩn đoán hình ảnh', client:'Trung tâm Y khoa Hòa Bình', status:'SOURCING', qty:1, hired:0, owner:'Lan Phạm', due:'31/12/2026', created:'20/08/2026', specialty:'Chẩn đoán hình ảnh', level:'Phó giám đốc', viaPortal:false },
+    { code:'YC-006', title:'Điều dưỡng Phòng mổ', client:'Bệnh viện Tim Sài Gòn', status:'CLOSED', qty:2, hired:2, owner:'Minh Trần', due:'30/09/2026', created:'10/07/2026', specialty:'Gây mê hồi sức', level:'Leader, tổ trưởng', viaPortal:false },
+    { code:'YC-005', title:'Nữ hộ sinh', client:'Bệnh viện Nhi Bình An', status:'DRAFT', qty:2, hired:0, owner:'Lan Phạm', due:'—', created:'13/10/2026', specialty:'Sản', level:'Nhân viên', viaPortal:false },
+  ];
+  static CASES = [
+    { id:'C-101', req:'YC-012', positionId:'p1', name:'Nguyễn Thị Hạnh', sent:'06/10/2026', stage:1, due:'Phỏng vấn 17/10', late:false },
+    { id:'C-102', req:'YC-012', positionId:'p1', name:'Trần Văn Quân', sent:'04/10/2026', stage:2, due:'Chờ offer', late:false },
+    { id:'C-103', req:'YC-012', positionId:'p2', name:'Lê Thu Trang', sent:'08/10/2026', stage:0, due:'Khách phản hồi hồ sơ', late:true },
+    { id:'C-104', req:'YC-012', positionId:'p1', name:'Phạm Minh Đức', sent:'03/10/2026', stage:3, due:'Hạn offer 18/10', late:false },
+    { id:'C-105', req:'YC-012', positionId:'p1', name:'Võ Thanh Mai', sent:'05/10/2026', stage:8, due:'Ứng viên rút', late:false },
+    { id:'C-106', req:'YC-010', name:'Đặng Quốc Bảo', sent:'16/09/2026', stage:5, due:'Hết thử việc 01/12', late:false },
+    { id:'C-107', req:'YC-010', name:'Bùi Ngọc Anh', sent:'25/09/2026', stage:4, due:'Nhận việc 01/11', late:false },
+    { id:'C-108', req:'YC-008', name:'Hoàng Kim Ngân', sent:'05/06/2026', stage:6, due:'Hết bảo hành 15/12', late:false },
+    // Các ca đã dừng giữa chừng với đủ các điểm dừng D1 đến D7, để thử biểu đồ Lý do thất bại ở Trang tổng quan
+    { id:'C-109', req:'YC-012', positionId:'p2', name:'Ngô Bảo Châu', sent:'02/10/2026', stage:8, due:'Khách hàng từ chối (D1)', late:false },
+    { id:'C-110', req:'YC-012', positionId:'p1', name:'Đinh Thu Hằng', sent:'30/09/2026', stage:8, due:'Khách hàng từ chối (D1)', late:false },
+    { id:'C-111', req:'YC-010', name:'Lý Gia Bảo', sent:'28/09/2026', stage:8, due:'Khách hàng từ chối (D1)', late:false },
+    { id:'C-112', req:'YC-010', name:'Trương Mỹ Linh', sent:'24/09/2026', stage:8, due:'Không đạt phỏng vấn (D2)', late:false },
+    { id:'C-113', req:'YC-008', name:'Phan Quốc Huy', sent:'10/06/2026', stage:8, due:'Không đạt phỏng vấn (D2)', late:false },
+    { id:'C-114', req:'YC-012', positionId:'p1', name:'Dương Anh Thư', sent:'01/10/2026', stage:8, due:'Ứng viên rút', late:false },
+    { id:'C-115', req:'YC-010', name:'Cao Minh Tuấn', sent:'22/09/2026', stage:8, due:'Khách hàng dừng (D5)', late:false },
+    { id:'C-116', req:'YC-008', name:'Vương Hải Yến', sent:'12/06/2026', stage:8, due:'SMS rút (D6)', late:false },
+    { id:'C-117', req:'YC-010', name:'Hồ Nhật Nam', sent:'20/09/2026', stage:8, due:'Không đến thử việc (D7)', late:false },
+    // Ca ở các chặng Đã offer đến Kết thúc bảo hành, kèm offer và phiếu tuyển dụng, để thử phân trang ở Ca tuyển, Offer, Bảo hành, Sổ phí
+    { id:'C-118', req:'YC-015', name:'Mai Hồng Nhung', sent:'01/09/2026', stage:3, due:'Hạn offer 19/10', late:false },
+    { id:'C-119', req:'YC-017', name:'Tạ Quang Dũng', sent:'01/09/2026', stage:3, due:'Hạn offer 20/10', late:false },
+    { id:'C-120', req:'YC-016', name:'Âu Thị Kim', sent:'01/09/2026', stage:4, due:'Nhận việc 01/11', late:false },
+    { id:'C-121', req:'YC-014', name:'Đoàn Văn Lâm', sent:'01/09/2026', stage:4, due:'Nhận việc 03/11', late:false },
+    { id:'C-122', req:'YC-010', name:'Kiều Thanh Hà', sent:'01/09/2026', stage:5, due:'Hết thử việc 20/11', late:false },
+    { id:'C-123', req:'YC-012', positionId:'p1', name:'Mạc Văn Toàn', sent:'01/09/2026', stage:5, due:'Hết thử việc 10/12', late:false },
+    { id:'C-124', req:'YC-008', name:'Quách Bích Vân', sent:'01/09/2026', stage:6, due:'Hết bảo hành 05/01/2027', late:false },
+    { id:'C-125', req:'YC-010', name:'Châu Minh Khôi', sent:'01/09/2026', stage:6, due:'Hết bảo hành 20/12', late:false },
+    { id:'C-126', req:'YC-008', name:'Từ Thảo Nguyên', sent:'01/09/2026', stage:7, due:'Kết thúc bảo hành', late:false },
+    { id:'C-127', req:'YC-010', name:'Lục Gia Huy', sent:'01/09/2026', stage:7, due:'Kết thúc bảo hành', late:false },
+    { id:'C-128', req:'YC-015', name:'Hà Quang Vinh', sent:'01/09/2026', stage:3, due:'Hạn offer 21/10', late:false },
+    { id:'C-129', req:'YC-016', name:'Lương Thị Hoa', sent:'01/09/2026', stage:3, due:'Hạn offer 22/10', late:false },
+    { id:'C-130', req:'YC-017', name:'Thái Minh Nhật', sent:'01/09/2026', stage:3, due:'Hạn offer 23/10', late:false },
+    { id:'C-131', req:'YC-014', name:'Văn Thị Yến', sent:'01/09/2026', stage:3, due:'Hạn offer 24/10', late:false },
+    { id:'C-132', req:'YC-018', name:'Kha Văn Sơn', sent:'01/09/2026', stage:3, due:'Hạn offer 25/10', late:false },
+    { id:'C-133', req:'YC-012', positionId:'p1', name:'Ông Thị Bảo', sent:'01/09/2026', stage:5, due:'Hết thử việc 15/12', late:false },
+    { id:'C-134', req:'YC-008', name:'Lâm Quốc Hưng', sent:'01/09/2026', stage:6, due:'Hết bảo hành 30/11', late:false },
+    { id:'C-135', req:'YC-010', name:'Giang Thu Trà', sent:'01/09/2026', stage:6, due:'Hết bảo hành 10/01/2027', late:false },
+    { id:'C-136', req:'YC-008', name:'Thân Bảo Ngọc', sent:'01/09/2026', stage:7, due:'Kết thúc bảo hành', late:false },
+    // Ca bảo hành của các yêu cầu bổ sung, kèm offer và phiếu tuyển dụng
+    { id:'C-137', req:'YC-019', name:'Đàm Thị Hương', sent:'05/09/2026', stage:6, due:'Hết bảo hành 20/01/2027', late:false },
+    { id:'C-138', req:'YC-020', name:'Lại Văn Hải', sent:'05/09/2026', stage:6, due:'Hết bảo hành 20/01/2027', late:false },
+    { id:'C-139', req:'YC-021', name:'Nghiêm Thu Thủy', sent:'05/09/2026', stage:6, due:'Hết bảo hành 20/01/2027', late:false },
+    { id:'C-140', req:'YC-022', name:'Khổng Minh Đạt', sent:'05/09/2026', stage:6, due:'Hết bảo hành 20/01/2027', late:false },
+    { id:'C-141', req:'YC-023', name:'Hầu Thị Oanh', sent:'05/09/2026', stage:6, due:'Hết bảo hành 20/01/2027', late:false },
+    { id:'C-142', req:'YC-024', name:'Tăng Quốc Việt', sent:'05/09/2026', stage:6, due:'Hết bảo hành 20/01/2027', late:false },
+    { id:'C-143', req:'YC-025', name:'Doãn Mỹ Lệ', sent:'05/09/2026', stage:6, due:'Hết bảo hành 20/01/2027', late:false },
+    { id:'C-144', req:'YC-026', name:'Bạch Gia Khánh', sent:'05/09/2026', stage:6, due:'Hết bảo hành 20/01/2027', late:false },
+  ];
+  static CANDS = [
+    { id:'U1', src:'Giới thiệu', name:'Nguyễn Văn Thành', spec:'Hồi sức tích cực', target:'Điều dưỡng', exp:6, match:92, place:'BV Chợ Rẫy', salary:'18.000.000', cchn:'Còn hạn', phone:'0903 111 222', created:'02/10/2026', callback:true, dup:false },
+    { id:'U2', src:'Website', name:'Trần Thị Bích', spec:'Tim mạch', target:'Bác sĩ', exp:9, match:88, place:'BV Tim Tâm Đức', salary:'55.000.000', cchn:'Sắp hết hạn', phone:'0912 333 444', created:'28/09/2026', callback:false, dup:false },
+    { id:'U3', src:'Nhập Excel', name:'Lê Quang Huy', spec:'Xét nghiệm', target:'Kỹ thuật viên', exp:4, match:81, place:'PK Medlatec', salary:'14.000.000', cchn:'Còn hạn', phone:'0938 555 666', created:'05/10/2026', callback:false, dup:true },
+    { id:'U4', src:'Giới thiệu', name:'Phạm Thu Hà', spec:'Nhi sơ sinh', target:'Điều dưỡng', exp:7, match:79, place:'BV Nhi Đồng 1', salary:'20.000.000', cchn:'Còn hạn', phone:'0977 777 888', created:'30/09/2026', callback:true, dup:false },
+    { id:'U5', src:'Mạng xã hội', name:'Đỗ Minh Khang', spec:'Dược', target:'Dược sĩ', exp:5, match:74, place:'Nhà thuốc Long Châu', salary:'16.000.000', cchn:'Sắp hết hạn', phone:'0969 999 000', created:'08/10/2026', callback:false, dup:false },
+    { id:'U6', src:'Website', name:'Vũ Ngọc Lan', spec:'Sản', target:'Nữ hộ sinh', exp:3, match:70, place:'BV Từ Dũ', salary:'13.000.000', cchn:'Còn hạn', phone:'0905 123 456', created:'10/10/2026', callback:false, dup:false },
+    // Các hồ sơ bổ sung để thử phân trang ở Kho ứng viên
+    { id:'U7', src:'Giới thiệu', name:'Hoàng Thị Mai', spec:'Hồi sức tích cực', target:'Điều dưỡng', exp:3, match:68, place:'BV Chợ Rẫy', salary:'12.000.000', cchn:'Còn hạn', phone:'0910 111 222', created:'01/10/2026', callback:true, dup:false },
+    { id:'U8', src:'Website', name:'Phan Văn Khoa', spec:'Nội tim mạch', target:'Bác sĩ', exp:4, match:71, place:'BV Tim Tâm Đức', salary:'16.000.000', cchn:'Sắp hết hạn', phone:'0911 124 239', created:'02/10/2026', callback:false, dup:false },
+    { id:'U9', src:'Mạng xã hội', name:'Đỗ Thị Lan', spec:'Sản', target:'Nữ hộ sinh', exp:5, match:74, place:'BV Từ Dũ', salary:'20.000.000', cchn:'Còn hạn', phone:'0912 137 256', created:'03/10/2026', callback:false, dup:false },
+    { id:'U10', src:'Nhập Excel', name:'Vũ Minh Tuấn', spec:'Chẩn đoán hình ảnh', target:'Kỹ thuật viên', exp:6, match:77, place:'BV Vinmec', salary:'24.000.000', cchn:'Còn hạn', phone:'0913 150 273', created:'04/10/2026', callback:false, dup:false },
+    { id:'U11', src:'Giới thiệu', name:'Bùi Thanh Hà', spec:'Dược lâm sàng', target:'Dược sĩ', exp:7, match:80, place:'Nhà thuốc Pharmacity', salary:'28.000.000', cchn:'Còn hạn', phone:'0914 163 290', created:'05/10/2026', callback:false, dup:false },
+    { id:'U12', src:'Website', name:'Ngô Quốc Bảo', spec:'Nhi', target:'Bác sĩ', exp:8, match:83, place:'BV Nhi Đồng 2', salary:'32.000.000', cchn:'Sắp hết hạn', phone:'0915 176 307', created:'06/10/2026', callback:true, dup:false },
+    { id:'U13', src:'Giới thiệu', name:'Lý Thu Hiền', spec:'Gây mê hồi sức', target:'Điều dưỡng', exp:9, match:86, place:'BV Nhân dân 115', salary:'36.000.000', cchn:'Còn hạn', phone:'0916 189 324', created:'07/10/2026', callback:false, dup:false },
+    { id:'U14', src:'Website', name:'Trịnh Văn Long', spec:'Xét nghiệm', target:'Kỹ thuật viên', exp:10, match:89, place:'PK Diag', salary:'40.000.000', cchn:'Còn hạn', phone:'0917 202 341', created:'08/10/2026', callback:false, dup:false },
+    { id:'U15', src:'Mạng xã hội', name:'Mai Phương Thảo', spec:'Nhi sơ sinh', target:'Điều dưỡng', exp:3, match:92, place:'BV Hùng Vương', salary:'44.000.000', cchn:'Còn hạn', phone:'0918 215 358', created:'09/10/2026', callback:false, dup:false },
+    { id:'U16', src:'Nhập Excel', name:'Cao Đức Thịnh', spec:'Chẩn đoán hình ảnh', target:'Bác sĩ', exp:4, match:95, place:'BV Đại học Y Dược', salary:'12.000.000', cchn:'Sắp hết hạn', phone:'0919 228 375', created:'01/10/2026', callback:false, dup:false },
+    { id:'U17', src:'Giới thiệu', name:'Tô Ngọc Ánh', spec:'Sản', target:'Nữ hộ sinh', exp:5, match:70, place:'BV Phụ sản Hà Nội', salary:'16.000.000', cchn:'Còn hạn', phone:'0920 241 392', created:'02/10/2026', callback:true, dup:false },
+    { id:'U18', src:'Website', name:'Đinh Hữu Phước', spec:'Hồi sức tích cực', target:'Điều dưỡng', exp:6, match:73, place:'BV Bạch Mai', salary:'20.000.000', cchn:'Còn hạn', phone:'0921 254 409', created:'03/10/2026', callback:false, dup:false },
+  ];
+  static CLI = [
+    { code:'CUS-001', name:'Bệnh viện Đa khoa Phương Nam', group:'Bệnh viện', province:'Hồ Chí Minh', openReqs:2, signed:2, contracts:3, dueAmt:48000000, overdueN:1, created:'12/03/2026', address:'125 Nguyễn Trãi, Q.1, TP. Hồ Chí Minh', owner:'Lan Phạm', tax:'0312345678', phone:'028 3822 1100', email:'hr@phuongnam.example', legal:'Ông Lê Văn Hải', statusLabel:'Đang hợp tác' },
+    { code:'CUS-002', name:'Bệnh viện Tim Sài Gòn', group:'Bệnh viện', province:'Hồ Chí Minh', openReqs:1, signed:1, contracts:1, dueAmt:0, overdueN:0, created:'02/04/2026', address:'8 Lê Lai, Q.1, TP. Hồ Chí Minh', owner:'Minh Trần', tax:'0309876543', phone:'028 3925 4000', email:'tuyendung@timsaigon.example', legal:'Bà Nguyễn Thu Hà', statusLabel:'Đang hợp tác' },
+    { code:'CUS-003', name:'Phòng khám Đa khoa Xanh', group:'Phòng khám đa khoa, chuyên khoa', province:'Đà Nẵng', openReqs:1, signed:0, contracts:1, dueAmt:22000000, overdueN:0, created:'20/05/2026', address:'45 Hàm Nghi, Đà Nẵng', owner:'Lan Phạm', tax:'0401234567', phone:'0236 3888 999', email:'info@pkxanh.example', legal:'Ông Trần Quang Vinh', statusLabel:'Đang hợp tác' },
+    { code:'CUS-004', name:'Bệnh viện Nhi Bình An', group:'Bệnh viện', province:'Hà Nội', openReqs:2, signed:1, contracts:2, dueAmt:15000000, overdueN:0, created:'01/07/2026', address:'12 Giải Phóng, Hà Nội', owner:'Minh Trần', tax:'0101234567', phone:'024 3869 2222', email:'nhansu@nhibinhan.example', legal:'Bà Phạm Thị Lan', statusLabel:'Đang hợp tác' },
+    { code:'CUS-005', name:'Trung tâm Y khoa Hòa Bình', group:'Phòng khám đa khoa, chuyên khoa', province:'Cần Thơ', openReqs:1, signed:1, contracts:1, dueAmt:0, overdueN:0, created:'18/08/2026', address:'3 Hòa Bình, Cần Thơ', owner:'Lan Phạm', tax:'1801234567', phone:'0292 3811 555', email:'hr@hoabinh.example', legal:'Ông Võ Minh Tâm', statusLabel:'Tiềm năng' },
+    // Các khách hàng bổ sung để thử phân trang ở Khách hàng và Sổ phí
+    { code:'CUS-006', name:'Bệnh viện Đại học Y Dược', group:'Bệnh viện', province:'Hồ Chí Minh', openReqs:0, signed:0, contracts:1, dueAmt:0, overdueN:0, created:'03/08/2026', address:'215 Hồng Bàng, Q.5, TP. Hồ Chí Minh', owner:'Lan Phạm', tax:'0300000000', phone:'028 3100 2000', email:'lienhe6@mau.example', legal:'Ông Nguyễn Văn A', statusLabel:'Đang hợp tác' },
+    { code:'CUS-007', name:'Phòng khám Quốc tế Sài Gòn', group:'Phòng khám đa khoa, chuyên khoa', province:'Hồ Chí Minh', openReqs:1, signed:1, contracts:2, dueAmt:8000000, overdueN:0, created:'11/08/2026', address:'27 Nguyễn Đình Chiểu, Q.3, TP. Hồ Chí Minh', owner:'Minh Trần', tax:'0301111111', phone:'028 3101 2007', email:'lienhe7@mau.example', legal:'Ông Nguyễn Văn B', statusLabel:'Đang hợp tác' },
+    { code:'CUS-008', name:'Bệnh viện Phụ sản Hà Nội', group:'Bệnh viện', province:'Hà Nội', openReqs:2, signed:0, contracts:1, dueAmt:16000000, overdueN:0, created:'19/08/2026', address:'929 La Thành, Ba Đình, Hà Nội', owner:'Lan Phạm', tax:'0302222222', phone:'028 3102 2014', email:'lienhe8@mau.example', legal:'Ông Nguyễn Văn C', statusLabel:'Đang hợp tác' },
+    { code:'CUS-009', name:'Trung tâm Y khoa Mekong', group:'Phòng khám đa khoa, chuyên khoa', province:'Cần Thơ', openReqs:0, signed:1, contracts:2, dueAmt:24000000, overdueN:0, created:'27/08/2026', address:'12 Hòa Bình, Ninh Kiều, Cần Thơ', owner:'Minh Trần', tax:'0303333333', phone:'028 3103 2021', email:'lienhe9@mau.example', legal:'Ông Nguyễn Văn D', statusLabel:'Đang hợp tác' },
+    { code:'CUS-010', name:'Bệnh viện Răng Hàm Mặt Trung ương', group:'Bệnh viện', province:'Hà Nội', openReqs:1, signed:0, contracts:1, dueAmt:0, overdueN:0, created:'04/09/2026', address:'40 Tràng Thi, Hoàn Kiếm, Hà Nội', owner:'Lan Phạm', tax:'0304444444', phone:'028 3104 2028', email:'lienhe10@mau.example', legal:'Ông Nguyễn Văn E', statusLabel:'Đang hợp tác' },
+    { code:'CUS-011', name:'Phòng khám Đa khoa Tâm Đức', group:'Phòng khám đa khoa, chuyên khoa', province:'Đà Nẵng', openReqs:2, signed:1, contracts:2, dueAmt:8000000, overdueN:0, created:'10/09/2026', address:'88 Nguyễn Văn Linh, Đà Nẵng', owner:'Minh Trần', tax:'0305555555', phone:'028 3105 2035', email:'lienhe11@mau.example', legal:'Ông Nguyễn Văn F', statusLabel:'Đang hợp tác' },
+    { code:'CUS-012', name:'Bệnh viện Mắt Sài Gòn', group:'Bệnh viện', province:'Hồ Chí Minh', openReqs:0, signed:0, contracts:1, dueAmt:16000000, overdueN:0, created:'18/09/2026', address:'280 Điện Biên Phủ, Q.3, TP. Hồ Chí Minh', owner:'Lan Phạm', tax:'0306666666', phone:'028 3106 2042', email:'lienhe12@mau.example', legal:'Ông Nguyễn Văn G', statusLabel:'Đang hợp tác' },
+    { code:'CUS-013', name:'Bệnh viện Đa khoa Hồng Ngọc', group:'Bệnh viện', province:'Hà Nội', openReqs:1, signed:1, contracts:2, dueAmt:24000000, overdueN:0, created:'25/09/2026', address:'55 Yên Ninh, Ba Đình, Hà Nội', owner:'Minh Trần', tax:'0307777777', phone:'028 3107 2049', email:'lienhe13@mau.example', legal:'Ông Nguyễn Văn H', statusLabel:'Đang hợp tác' },
+    { code:'CUS-014', name:'Phòng khám Chuyên khoa Nhi Việt', group:'Phòng khám đa khoa, chuyên khoa', province:'Hải Phòng', openReqs:2, signed:0, contracts:1, dueAmt:0, overdueN:0, created:'02/10/2026', address:'14 Lạch Tray, Hải Phòng', owner:'Lan Phạm', tax:'0308888888', phone:'028 3108 2056', email:'lienhe14@mau.example', legal:'Ông Nguyễn Văn I', statusLabel:'Đang hợp tác' },
+  ];
+  // Khách hàng mẫu của luồng onboarding (docs sprint 01 bước 2): có sẵn một khách và một người liên hệ, còn lại để trống
+  static SAMPLE_CLI = { code:'CUS-001', name:'Bệnh viện An Khang', group:'Bệnh viện', province:'Hồ Chí Minh', openReqs:0, signed:0, contracts:0, dueAmt:0, overdueN:0, created:'15/10/2026', address:'50 Thành Thái, Phường Diên Hồng, TP. Hồ Chí Minh', owner:'Lan Phạm', tax:'0312000001', phone:'028 3800 1000', email:'tuyendung@ankhang.example', legal:'Ông Nguyễn Văn An', statusLabel:'Đang hợp tác' };
+  static SAMPLE_CONTACT = { id:'P1', phone:'0903123456', client:'CUS-001', name:'Phạm Thị Hà', title:'Trưởng phòng Nhân sự', phone:'0903123456', email:'ha.pham@ankhang.example', primary:true, portal:'none' };
+  static CONTACTS = [
+    { id:'P1', lastLogin:'14/10/2026', client:'CUS-001', name:'Nguyễn Thị Thu', title:'Trưởng phòng Nhân sự', email:'thu.nt@phuongnam.example', primary:true, portal:'active' },
+    { id:'P2', phone:'0903654321', client:'CUS-001', name:'Trần Văn Khôi', title:'Phó phòng Nhân sự', email:'khoi.tv@phuongnam.example', primary:false, portal:'none' },
+    { id:'P3', phone:'0912345678', emailFailed:true, client:'CUS-002', name:'Lê Hồng Nhung', title:'Chuyên viên Tuyển dụng', email:'nhung.lh@timsaigon.example', primary:true, portal:'invited' },
+    { id:'P4', phone:'0987654321', client:'CUS-003', name:'Phạm Quốc Hùng', title:'Giám đốc', email:'hung.pq@pkxanh.example', primary:true, portal:'none' },
+    { id:'P5', phone:'0976543210', client:'CUS-004', name:'Đỗ Thị Mai', title:'Trưởng phòng Tổ chức', email:'mai.dt@nhibinhan.example', primary:true, portal:'active' },
+    { id:'P6', phone:'0965432109', client:'CUS-005', name:'Võ Thanh Sơn', title:'Quản lý', email:'', primary:true, portal:'none' },
+    { id:'P7', phone:'0903555777', client:'CUS-001', name:'Hoàng Văn Nam', title:'Chuyên viên Nhân sự', email:'', primary:false, portal:'none', status:'left' },
+  ];
+  static CONTRACTS = { 'YC-013': { no:'HĐ-2026-020', signed:true, date:'14/10/2026' }, 'YC-012': { no:'HĐ-2026-014', signed:true, date:'05/10/2026' }, 'YC-010': { no:'HĐ-2026-009', signed:true, date:'20/09/2026' }, 'YC-011': { no:'HĐ-2026-016', signed:false, date:'' } };
+  renderVals() {
+    const S = this.state, C = Component, ST = C.ST, RD = window.MedReview, RS = window.MedReviewStore;
+    // Đổi trang (kể cả sau khi lưu khách hàng, yêu cầu) thì cuộn về đầu trang; đổi tab trong cùng một trang thì giữ nguyên
+    const navKey = [S.gate, S.app, S.page, S.code, S.ccode, S.kcase, S.cand, S.ppage, S.pcode].join('|');
+    if (this.navKey !== undefined && this.navKey !== navKey) setTimeout(() => { window.scrollTo(0, 0); [document.documentElement, document.body].forEach((el) => { el.scrollTop = 0; }); }, 0);
+    this.navKey = navKey;
+    // Luồng onboarding bắt đầu từ trống: không khách hàng, yêu cầu, ca, lịch, offer, hợp đồng; kho ứng viên giữ nguyên
+    const blank = S.flow === 'onboard', baseCli = blank ? (S.sampleClient ? [C.SAMPLE_CLI] : []) : C.CLI;
+    const allReqs = [...S.extraReqs, ...(blank ? [] : C.REQ)].map((r) => ({ ...r, ...(S.over[r.code] || {}) }));
+    const rawCases = [...(blank ? [] : C.CASES), ...S.extraCases];
+    // Ca sau khi áp thay đổi (tiến giai đoạn, dừng, phản hồi, KH đã xem)
+    const allCases = rawCases.map((c) => { const o = S.cOver[c.id] || {}; return { ...c, ...o }; });
+    // cOver: chỉnh sửa người liên hệ (mặc định, nghỉ, sửa thông tin) đè lên bản ghi mẫu hoặc bản ghi mới thêm
+    const contacts = [...(S.contacts || (blank ? (S.sampleClient ? [C.SAMPLE_CONTACT] : []) : C.CONTACTS)), ...S.extraContacts].map((p) => ({ ...p, ...(S.cOver[p.id] || {}) })), contracts = S.contracts || (blank ? {} : C.CONTRACTS);
+    const createdKey = (d) => d.split('/').reverse().join('-');
+    // Số ngày xử lý (module 04 B3.2 #19): tổng số ngày yêu cầu nằm ở Đang xử lý tính tới ngày giả lập; mở lại thì cộng dồn. Quá ngưỡng của công ty (mặc định 30 ngày) thì mang cờ Quá hạn xử lý, chỉ là cờ, không chặn gì
+    const OVERDUE_DAYS = 30, dOf = (v) => { const m = /^(\d{2})\/(\d{2})\/(\d{4})/.exec(v || ''); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; };
+    const daysBetween = (a, b) => { const x = dOf(a), y = dOf(b); return x && y ? Math.max(0, Math.round((y - x) / 864e5)) : 0; };
+    const procOf = (r) => { const from = r.procFrom !== undefined ? r.procFrom : (r.status === 'SOURCING' ? r.created : ''); return { from, days: (r.procAcc || 0) + (from ? daysBetween(from, S.simDay) : 0) }; };
+    // Khi yêu cầu vào hoặc ra khỏi Đang xử lý: ghi mốc vào, hoặc chốt số ngày đã chạy
+    const procMove = (r, to) => { const was = r.status === 'SOURCING', will = to === 'SOURCING'; return was && !will ? { procAcc: procOf(r).days, procFrom: '' } : !was && will ? { procFrom: S.simDay } : {}; };
+    const requests = allReqs.map((r) => ({ ...r, procFrom: procOf(r).from, procDays: r.status === 'SOURCING' || r.procAcc !== undefined ? procOf(r).days : null, procSort: r.status === 'SOURCING' || r.procAcc !== undefined ? procOf(r).days : -1, procOver: r.status === 'SOURCING' && procOf(r).days > OVERDUE_DAYS, procLimit: OVERDUE_DAYS, contact: r.contact || ((contacts.find((p) => p.client === (baseCli.find((k) => k.name === r.client) || {}).code && p.primary) || {}).name), hired: Math.max(r.hired, allCases.filter((c) => c.req === r.code && c.stage >= 5 && c.stage <= 7).length), price: C.PRICE[r.level] || 0, tone: ST[r.status][0], statusLabel: ST[r.status][1], createdKey: createdKey(r.created),
+      probN: allCases.filter((c) => c.req === r.code && c.stage === 5).length, warN: allCases.filter((c) => c.req === r.code && c.stage === 6).length, warEndN: allCases.filter((c) => c.req === r.code && c.stage === 7).length }));
+    const request = requests.find((r) => r.code === S.code) || null;
+    const cliAll = [...S.extraClients, ...baseCli].map((c) => { const m = { ...c, ...(S.cliEdit[c.code] || {}) }, by = m.owner && m.owner !== '—' ? m.owner : 'Lan Phạm'; return { ...m, createdBy: m.createdBy || by, updatedBy: m.updatedBy || m.createdBy || by, updatedAt: m.updatedAt || m.created }; });
+    const client = cliAll.find((x) => x.code === S.ccode) || null;
+    // Chi nhánh theo mã khách hàng: nếu người dùng chưa sửa thì dùng chi nhánh mẫu của khách hàng đó
+    const branchesOf = (c) => S.branchesBy[c.code] || (window.MedClient.BRANCHES[c.name] || []).map((b, i) => ({ ...b, id: 'B' + (i + 1), active: true }));
+    const siteOf = (c) => ({ address: c.address || '', province: String(c.province || '').replace(/^TP\. /, ''), branches: Object.fromEntries(branchesOf(c).filter((b) => b.active).map((b) => [b.name, { address: b.address, province: b.province, ward: b.ward }])) });
+    // Mã mới = số lớn nhất đang có + 1 (không đếm theo số khách đã thêm, vì danh sách mẫu đã có sẵn nhiều mã)
+    const nextCliNo = () => Math.max(0, ...cliAll.map((c) => parseInt(String(c.code).slice(4), 10) || 0)) + 1;
+    const cli = request ? cliAll.find((x) => x.name === request.client) : null;
+    const canPortal = !!cli && contacts.some((p) => p.client === cli.code && p.portal === 'active');
+    // Ứng viên đã thêm vào yêu cầu: mặc định 4 hồ sơ đầu của kho; Tìm hồ sơ thêm tiếp từ kho
+    const matchRows = RS.records(S, C), currentRows = matchRows.filter((m) => m.req === S.code && !m.removedAt);
+    const cands = currentRows.map((m) => ({ ...m, meta: m }));
+    const pool = [...S.extraCands, ...C.CANDS].map((u) => ({ ...u, inReq: false }));
+    const baseEv = request ? [{ at: request.created, kind: 'Tạo yêu cầu', tone: 'gray', text: 'Yêu cầu ' + request.code + ' được tạo' }] : [];
+    const events = [...(S.evs[S.code] || []).slice().reverse(), ...baseEv];
+    const versions = request ? (S.vers[S.code] || [{ n: 1, reason: 'Tạo yêu cầu', at: request.created }]) : [];
+    // Dòng hoạt động của khách hàng theo mã khách hàng (mới nhất ở đầu)
+    const clog = (code, text) => ({ clog: { ...S.clog, [code]: [{ at: S.simDay, text }, ...(S.clog[code] || [])] } });
+    const push = (code, ev) => ({ evs: { ...S.evs, [code]: [...(S.evs[code] || []), { at: '15/10/2026', ...ev }] } });
+    const inClients = ['clients', 'client', 'cform'].includes(S.page);
+    const reqOf = (code) => requests.find((r) => r.code === code) || {};
+    const fullCase = (c) => { const h = S.hires[c.id] || C.HIRES[c.id], rq = reqOf(c.req);
+      return { ...c, pos: (RD.positions(rq).find((p) => p.id === c.positionId) || RD.positions(rq)[0] || {}).title || c.pos, reqTitle: rq.title, client: rq.client, owner: rq.owner, stopCtx: { prob: h ? h.prob !== false : true, a: h && h.a, c: h && h.c, d: h && h.d, today: S.simDay, lateOnly: ['CLOSED', 'CANCELLED'].includes(rq.status) } }; };
+    const caseRows = allCases.map(fullCase);
+    const kase = caseRows.find((c) => c.id === S.kcase) || null;
+    // Ứng viên: kho mẫu + người của các ca có sẵn
+    const seeded = C.SEEDED.map((name, i) => ({ id: 'K' + (i + 1), name, spec: (C.REQ.find((q) => q.code === C.CASES[i].req) || {}).specialty || '—', target: 'Điều dưỡng', exp: 3 + i, match: 0, place: 'BV ' + ['Chợ Rẫy', 'Nhân dân 115', 'Gia Định', 'Thống Nhất'][i % 4], salary: ((14 + i) * 1e6).toLocaleString('vi-VN'), cchn: 'Còn hạn', phone: '0900 000 0' + (10 + i), created: '0' + (1 + i) + '/09/2026', callback: false, dup: false }));
+    const candList = [...S.extraCands, ...C.CANDS, ...seeded];
+    // Hồ sơ nằm trong yêu cầu nào và ở trạng thái gì: ca đã gửi khách lấy giai đoạn ca; hồ sơ mới được chọn lấy trạng thái đánh giá
+    const CASE_LBL = ['Đã gửi khách', 'Phỏng vấn', 'Đạt phỏng vấn', 'Đã offer', 'Chờ thử việc', 'Thử việc', 'Bảo hành', 'Kết thúc bảo hành', 'Kết thúc giữa chừng'];
+    const candRows = candList.map((u) => { const own = caseRows.filter((c) => c.name === u.name).map((c) => ({ req: c.req, stage: c.stage, label: CASE_LBL[c.stage], style: 'background:var(--stage-' + c.stage + '-soft);color:var(--stage-' + c.stage + ')' })), sent = new Set(own.map((e) => e.req));
+      const picks = matchRows.filter((m) => m.candidateId === u.id && !m.removedAt && !sent.has(m.req)).map((m) => ({ req: m.req, stage: null, label: RD.STATUS[m.status] || 'Đã chọn', style: 'background:var(--surface-2);color:var(--ink-2)' }));
+      return { ...u, entries: [...own, ...picks] }; });
+    const cand = candList.find((u) => u.id === S.cand) || null;
+    const LBL = ['Đã gửi cho khách hàng','Phỏng vấn','Đạt phỏng vấn','Đã offer','Chờ thử việc','Thử việc','Bảo hành','Kết thúc bảo hành','Kết thúc giữa chừng'];
+    const candHistory = cand ? caseRows.filter((c) => c.name === cand.name).map((c) => ({ req: c.req, client: c.client, sent: (S.cOver[c.id] || {}).sent || '01/10/2026', label: LBL[c.stage], style: 'background:var(--stage-' + c.stage + '-soft);color:var(--stage-' + c.stage + ')' })) : [];
+    const subs = caseRows.map((c) => ({ id: c.id, name: c.name, req: c.req, client: c.client, sent: c.sent || '01/10/2026', stage: c.stage, viewed: !!c.viewed || c.stage > 0, late: !!c.late, decision: c.decision || null, closed: c.stage === 8,
+      spec: (candList.find((u) => u.name === c.name) || {}).spec || '—', exp: (candList.find((u) => u.name === c.name) || {}).exp || '—', log: [...(S.clog[c.id] || []).slice().reverse(), { at: c.sent || '01/10/2026', text: 'Gửi hồ sơ cho ' + c.client }] }));
+    const ivs = S.ivs || (blank ? [] : C.IVS), offers = S.offers || (blank ? {} : C.OFFERS);
+    // Phí theo phiếu xác nhận tuyển dụng (module 09): tổng phí chia các đợt, mỗi đợt có hạn; đợt Chưa thu / Thu một phần / Đã thu đủ / Quá hạn tính khi đọc
+    // Hôm nay của prototype là ngày giả lập (mặc định 15/10/2026); nút Sang ngày kế tiếp ở tab Tiến trình đẩy ngày tới mốc kế
+    const DAYMS = 864e5, pdate = (t) => { const [d, m, y] = t.split('/').map(Number); return new Date(y, m - 1, d); }, TODAY = pdate(S.simDay || '15/10/2026');
+    const hires = { ...(blank ? {} : C.HIRES), ...S.hires }, paysOf = (id) => [...(blank ? [] : C.PAYS[id] || []), ...(S.pays[id] || [])];
+    const instsOf = (id) => { const h = hires[id]; if (!h) return null; const pays = paysOf(id);
+      // Đợt nhập theo số tiền giữ số tiền; đợt nhập theo tỷ lệ thì tổng × tỷ lệ, đợt cuối nhận phần lẻ đồng để tổng khớp
+      const ex = h.insts.map((i) => (i.amt != null ? i.amt : Math.round(h.total * i.pct / 100))), gap = h.total - ex.reduce((x, y) => x + y, 0); if (ex.length && Math.abs(gap) <= ex.length && h.insts.every((i) => i.amt == null)) ex[ex.length - 1] += gap;
+      return h.insts.map((i, k) => { const expectedN = ex[k], paidN = pays.filter((p) => p.n === i.n).reduce((a, p) => a + p.amount, 0), days = i.due ? Math.round((pdate(i.due) - TODAY) / DAYMS) : null;
+        return { ...i, expectedN, paidN, leftN: expectedN - paidN, days, status: paidN >= expectedN ? 'paid' : days !== null && days < 0 ? 'overdue' : paidN > 0 ? 'partial' : 'open' }; }); };
+    const ledgerOf = (c) => {
+      const insts = instsOf(c.id);
+      if (insts) { const total = hires[c.id].total, paidN = insts.reduce((a, i) => a + i.paidN, 0); return { id: c.id, name: c.name, req: c.req, client: reqOf(c.req).client, totalN: total, chargedN: total, paidN, leftN: total - paidN, insts }; }
+      const price = reqOf(c.req).price || 0, extra = paysOf(c.id).reduce((a, p) => a + p.amount, 0);
+      // Ca có sẵn của luồng mẫu chưa có phiếu: giữ hai đợt 50/50 theo giai đoạn (số mẫu, cần BA chốt)
+      const chargedN = c.stage >= 4 ? price / 2 + (c.stage >= 6 ? price / 2 : 0) : 0, base = c.stage >= 6 ? price : c.stage >= 5 ? price / 2 : 0, paidN = Math.min(chargedN, base + extra);
+      return { id: c.id, name: c.name, req: c.req, client: reqOf(c.req).client, totalN: price, chargedN, paidN, leftN: chargedN - paidN, insts: null };
+    };
+    const ledger = caseRows.filter((c) => c.stage >= 3 && c.stage <= 7).map(ledgerOf), reqLedger = ledger.filter((l) => l.req === S.code);
+    const clogPush = (id, text, noUndo) => ({ clog: { ...S.clog, [id]: [...(S.clog[id] || []), { at: S.simDay, text }] },
+      ...(noUndo ? {} : { cundo: { ...S.cundo, [id]: [...(S.cundo[id] || []), { text, at: S.simDay, over: S.cOver[id] || null, ivs: ivs.filter((v) => v.caseId === id), offer: offers[id] || null, hire: S.hires[id] || null, hadHire: id in S.hires }] } }) });
+    const patch = (id, o) => ({ cOver: { ...S.cOver, [id]: { ...(S.cOver[id] || {}), ...o } } });
+    // Mã mới = số lớn nhất đang có + 1 (YC-%03d như code gốc); không đếm theo số yêu cầu đã thêm vì danh sách mẫu đã có sẵn nhiều mã
+    const nextCode = () => 'YC-' + String(Math.max(0, ...allReqs.map((r) => parseInt(String(r.code).slice(3), 10) || 0)) + 1).padStart(3, '0');
+    // Yêu cầu nhiều vị trí: các trường cũ lấy theo vị trí đầu tiên (danh sách, tổng quan), số lượng là tổng; danh sách vị trí giữ trong `positions`. Dùng chung cho form nhân viên và form cổng
+    // Ngày cần người của yêu cầu = sớm nhất trong các vị trí chưa ngừng tuyển
+    const earliestDue = (ps) => { const ts = (ps || []).filter((p) => !p.stopped && /^\d{2}\/\d{2}\/\d{4}$/.test(p.due || '')).map((p) => p.due.split('/').reverse().join('')).sort(); return ts.length ? ts[0].slice(6) + '/' + ts[0].slice(4, 6) + '/' + ts[0].slice(0, 4) : '—'; };
+    // Không có tên yêu cầu và vị trí đầu cũng không có tên thì hiển thị mã yêu cầu (tên vị trí không bắt buộc theo BE)
+    const reqFields = (d, code) => { const p0 = (d.positions || [])[0] || {}; return { title: d.rname || p0.title || code, client: d.client, owner: d.owner || 'Chưa phân công', qty: d.qty, due: earliestDue(d.positions),  specialty: p0.spec, level: p0.level, contact: d.contactName, site: d.site, salFrom: p0.smin, salTo: p0.smax, province: d.province, ward: d.ward, address: d.address, years: p0.exp, group: p0.group, desc: p0.desc, cert: p0.lic, note: d.note, secret: !!d.conf, positions: (d.positions || []).map((p, i) => ({ ...p, id: p.id || 'p' + (i + 1) })) }; };
+    const recordPay = (id, amount, note, n, on, method, ref) => this.setState({ pays: { ...S.pays, [id]: [...(S.pays[id] || []), { amount, note, n, on, method, ref }] }, ...clogPush(id, 'Ghi lần thu' + (n ? ' đợt ' + n : '') + ' ' + amount.toLocaleString('vi-VN') + ' đ' + (note ? ' · ' + note : '')) });
+    const gCode = requests[0] ? requests[0].code : '', gSt = Object.values((S.cst[gCode] || {})), gCases = allCases.filter((c) => c.req === gCode);
+    // Dừng ca: lưu điểm dừng và mã lý do cố định (module 07 B2.4, module 08 B2.1)
+    const stopOf = (why) => ({ stopCode: why.code, stopPoint: why.point, stopLabel: why.label, ...(why.leftOn ? { leftOn: why.leftOn } : {}) });
+    const stopFn = (id, why) => this.setState({ ...patch(id, { stage: 8, due: why.pointLabel + ' (' + why.point + ') · ' + why.label, late: false, ...stopOf(why) }), ...clogPush(id, 'Dừng ca tuyển: ' + why.pointLabel + ' (' + why.point + '), ' + why.label + (why.leftOn ? ' · nghỉ ngày ' + why.leftOn : '') + (why.note ? ' · ' + why.note : '')) });
+    const m2Api = {
+      schedule: (id, d) => {
+        const c = allCases.find((x) => x.id === id), n = ivs.filter((v) => v.caseId === id).length + 1;
+        this.setState({ ivs: [...ivs, { id: 'IV' + (ivs.length + 1), caseId: id, round: n, ...d, status: 'SCHEDULED', result: null }], ...(c.stage === 0 ? patch(id, { stage: 1, due: 'Phỏng vấn ' + d.at.split(' ')[0] }) : {}), ...clogPush(id, 'Ghi lịch phỏng vấn vòng ' + n + ': ' + d.at, true) });
+      },
+      result: (ivId, res, why) => {
+        const iv = ivs.find((v) => v.id === ivId), c = allCases.find((x) => x.id === iv.caseId);
+        this.setState({ ivs: ivs.map((v) => (v.id === ivId ? { ...v, status: 'DONE', result: res } : v)), ...patch(iv.caseId, res === 'PASS' ? { stage: Math.max(c.stage, 2), due: 'Chờ ghi offer' } : { stage: 8, due: 'Không đạt phỏng vấn (D2)' + (why ? ' · ' + why.label : ''), ...(why ? stopOf(why) : {}) }), ...clogPush(iv.caseId, 'Kết quả vòng ' + iv.round + ': ' + (res === 'PASS' ? 'đạt' : 'không đạt (D2)' + (why ? ', ' + why.label : ''))) });
+      },
+      resched: (ivId, at) => { const iv = ivs.find((v) => v.id === ivId); this.setState({ ivs: ivs.map((v) => (v.id === ivId ? { ...v, at, status: 'RESCHEDULED' } : v)), ...clogPush(iv.caseId, 'Đổi lịch vòng ' + iv.round + ' sang ' + at) }); },
+      noShow: (ivId) => { const iv = ivs.find((v) => v.id === ivId); this.setState({ ivs: ivs.map((v) => (v.id === ivId ? { ...v, status: 'NOSHOW' } : v)), ...patch(iv.caseId, { stage: 1, due: 'Chờ xếp lịch lại' }), ...clogPush(iv.caseId, 'Ghi vắng mặt vòng ' + iv.round) }); },
+      offer: (id, d) => this.setState({ offers: { ...offers, [id]: d }, ...patch(id, { stage: 3, due: 'Chờ ứng viên trả lời' }), ...clogPush(id, 'Ghi offer: ' + d.salary.toLocaleString('vi-VN') + ' đ') }),
+      answer: (id, ok, why) => (ok ? this.setState({ hireCase: id }) : this.setState({ ...patch(id, { stage: 8, due: 'Từ chối offer (D4)' + (why ? ' · ' + why.label : ''), ...(why ? stopOf(why) : {}) }), ...clogPush(id, 'Ứng viên từ chối offer (D4)' + (why ? ': ' + why.label : '')) })),
+    };
+    // Chờ thử việc sang Thử việc khi tới a; sang Bảo hành khi tới c (ca không thử việc có c = a nên đi thẳng); sang Hết bảo hành khi tới d. Không có thao tác huỷ, ngày sai thì sửa ở phiếu xác nhận tuyển dụng
+    const nextMs = () => { let best = null; allCases.forEach((c) => { const h = hires[c.id]; if (!h || c.stage < 4 || c.stage > 6) return;
+      [['a', c.stage === 4], ['c', c.stage <= 5], ['d', true]].forEach(([k, ok]) => { const day = ok && h[k] ? pdate(h[k]) : null; if (day && day > TODAY && (!best || day < best.day)) best = { day, str: h[k] }; }); }); return best; };
+    const simNext = () => { const ms = nextMs(); if (!ms) return; let over = { ...S.cOver }, clog = { ...S.clog }, n = 0;
+      allCases.forEach((c) => { const h = hires[c.id]; if (!h || c.stage < 4 || c.stage > 6) return; const a = pdate(h.a), cc = pdate(h.c), d = pdate(h.d), to = ms.day >= d ? 7 : ms.day >= cc ? 6 : ms.day >= a ? 5 : 4;
+        if (to <= c.stage) return; n++; over[c.id] = { ...(over[c.id] || {}), stage: to, late: false, due: to === 5 ? 'Hết thử việc ' + h.b : to === 6 ? 'Hết bảo hành ' + h.d : 'Đã hết bảo hành' };
+        clog[c.id] = [...(clog[c.id] || []), { at: ms.str, text: 'Hệ thống tự chuyển sang ' + LBL[to] + ' (tới ngày ' + (to === 5 ? h.a : to === 6 ? h.c : h.d) + ')' }]; });
+      this.setState({ simDay: ms.str, cOver: over, clog }); };
+    const undoBlock = (id, last) => { const c = allCases.find((x) => x.id === id); if (!c || !last) return '';
+      if (['CLOSED', 'CANCELLED'].includes(reqOf(c.req).status)) return 'Yêu cầu đã hoàn thành hoặc đã huỷ. Mở lại yêu cầu trước (ERR-PIP-28).';
+      if (allCases.some((x) => x.id !== id && x.req === c.req && x.name === c.name)) return 'Ứng viên đã có ca tuyển mới trong yêu cầu này (ERR-PIP-27).';
+      if (/^Xác nhận tuyển dụng/.test(last.text) && paysOf(id).length) return 'Phí của ca đã có lần thu, không huỷ được câu trả lời Nhận offer (ERR-PIP-14).'; return ''; };
+    const offerConflict = (id) => {
+      const live = this.state, cs = [...(live.flow === 'onboard' ? [] : C.CASES), ...live.extraCases].map((c) => ({ ...c, ...live.cOver[c.id] })), target = cs.find((c) => c.id === id);
+      return target && cs.some((c) => c.id !== id && c.req === target.req && c.name === target.name && (c.positionId || 'p1') !== (target.positionId || 'p1') && c.stage >= 4 && c.stage <= 7) ? 'Ứng viên đã nhận offer ở vị trí khác trong cùng yêu cầu (ERR-PIP-33).' : '';
+    };
+    for (const kind of ['offer', 'answer']) {
+      const original = m2Api[kind];
+      m2Api[kind] = (...args) => { const error = offerConflict(args[0]); if (error && (kind === 'offer' || args[1])) { this.setState({ reviewNotice: error }); return; } return original(...args); };
+    }
+    const api = {
+      simNext,
+      // Quản trị huỷ lần ghi gần nhất của ca (module 07 UC-PIP-08, B3.2 #11): ca về trạng thái ngay trước lần ghi
+      undoCase: (id, reason) => { const st = S.cundo[id] || [], last = st[st.length - 1], err = undoBlock(id, last); if (!last || err || !reason.trim()) return;
+        const over = { ...S.cOver }; if (last.over) over[id] = last.over; else delete over[id];
+        const hires2 = { ...S.hires }; if (last.hadHire) hires2[id] = last.hire; else delete hires2[id];
+        const offers2 = { ...offers }; if (last.offer) offers2[id] = last.offer; else delete offers2[id];
+        this.setState({ cOver: over, hires: hires2, offers: offers2, ivs: [...ivs.filter((v) => v.caseId !== id), ...last.ivs], cundo: { ...S.cundo, [id]: st.slice(0, -1) }, clog: { ...S.clog, [id]: [...(S.clog[id] || []), { at: S.simDay, text: 'Quản trị huỷ lần ghi gần nhất (' + last.text + '): ' + reason.trim() }] } }); },
+      // Thao tác một chạm ở tab Tiến trình của yêu cầu: làm ngay trên hàng ca, không phải mở từng ca
+      rowAct: { respond: (id, d, why) => pa.respond(id, d, why), schedule: m2Api.schedule, result: m2Api.result, offer: m2Api.offer, answer: m2Api.answer, stop: (id, why) => stopFn(id, why) },
+      pay: recordPay,
+      back: () => this.setState({ page: 'list', code: null }),
+      setTab: (tab) => this.setState({ tab }),
+      edit: (code) => this.setState({ page: 'form', formMode: 'edit', code }),
+      endPrompt: () => this.setState({ prompt: null }),
+      endAssign: () => this.setState({ assignFlag: null }),
+      openCase: (id) => this.setState({ page: "case", kcase: id }),
+      assign: (code, owners) => { const r = requests.find((x) => x.code === code) || {}, owner = owners.join(', ');
+        this.setState({ over: { ...S.over, [code]: { ...(S.over[code] || {}), owner, ...(r.status === 'SUBMITTED' ? { status: 'SOURCING', ...procMove(r, 'SOURCING') } : {}) } }, ...push(code, { kind: 'Phân công', tone: 'info', text: 'Phân công ' + owner + (r.status === 'SUBMITTED' ? ' · yêu cầu chuyển sang Đang xử lý' : '') }) }); },
+      // Huỷ yêu cầu (UC-REQ-16): ca chưa có kết quả tự dừng, Khách hàng dừng tuyển thì D5, còn lại D6
+      setPosStop: (code, idx, stop, reason, note) => { const r = requests.find((x) => x.code === code) || {}, label = { CUSTOMER_STOP: 'Khách hàng dừng tuyển', SMS_DECLINE: 'SMS không nhận', MISTAKE: 'Nhân viên tạo nhầm', OTHER: 'Khác' }[reason];
+        const ps = RD.positions(r).map((p, i) => (i !== idx ? p : stop ? { ...p, stopped: true, stopReason: reason, stopNote: note || '' } : { ...p, stopped: false, stopReason: '', stopNote: '' })), p = ps[idx] || {};
+        let over = { ...S.cOver }, clog = { ...S.clog }, n = 0;
+        if (stop) { const cust = reason === 'CUSTOMER_STOP', end = cust ? 'Khách hàng dừng (D5)' : 'SMS rút (D6)';
+          allCases.filter((c) => c.req === code && c.stage <= 3 && (ps.find((x) => x.id === c.positionId) || ps.find((x) => x.title && x.title === c.pos) || ps[0]) === p).forEach((c) => { n++;
+            over[c.id] = { ...(over[c.id] || {}), stage: 8, due: end, late: false, stopCode: cust ? 'D5-01' : 'D6-04', stopPoint: cust ? 'D5' : 'D6', stopLabel: cust ? 'Dừng tuyển vị trí' : 'Ngừng tuyển vị trí hoặc huỷ yêu cầu' };
+            clog[c.id] = [...(clog[c.id] || []), { at: S.simDay, text: 'Ngừng tuyển vị trí ' + p.title + ': ca dừng, ' + end }]; }); }
+        this.setState({ cOver: over, clog, over: { ...S.over, [code]: { ...(S.over[code] || {}), positions: ps } }, ...push(code, { kind: 'Vị trí', tone: stop ? 'bad' : 'info', text: stop ? 'Ngừng tuyển vị trí ' + p.title + ' · ' + label + (note ? ' · ' + note : '') + (n ? ' · ' + n + ' ca tự dừng' : '') : 'Tuyển lại vị trí ' + p.title }) }); },
+      cancelReq: (code, reason, note) => { const label = { CUSTOMER_STOP: 'Khách hàng dừng tuyển', SMS_DECLINE: 'SMS không nhận', OTHER: 'Khác' }[reason], r = requests.find((x) => x.code === code) || {};
+        const stop = allCases.filter((c) => c.req === code && c.stage <= 3), end = reason === 'CUSTOMER_STOP' ? 'Khách hàng dừng (D5)' : 'SMS rút (D6)';
+        let over = { ...S.cOver }, clog = { ...S.clog }; stop.forEach((c) => { over[c.id] = { ...(over[c.id] || {}), stage: 8, due: end, late: false }; clog[c.id] = [...(clog[c.id] || []), { at: '15/10/2026', text: 'Huỷ yêu cầu ' + code + ': ca dừng, ' + end }]; });
+        this.setState({ cOver: over, clog, over: { ...S.over, [code]: { ...(S.over[code] || {}), status: 'CANCELLED', prev: r.status, ...procMove(r, 'CANCELLED') } }, ...push(code, { kind: 'Trạng thái', tone: 'bad', text: 'Huỷ yêu cầu · ' + label + (note ? ' · ' + note : '') + (stop.length ? ' · ' + stop.length + ' ca tự dừng' : '') }) }); },
+      // Mở lại (UC-REQ-14): về đúng trạng thái trước lúc kết thúc; ca đã tự dừng khi huỷ không tự mở lại
+      reopenReq: (code, reason) => { const r = requests.find((x) => x.code === code) || {}, to = r.prev && r.prev !== 'CLOSED' && r.prev !== 'CANCELLED' ? r.prev : 'SOURCING';
+        this.setState({ over: { ...S.over, [code]: { ...(S.over[code] || {}), status: to, prev: null, ...procMove(r, to) } }, ...push(code, { kind: 'Trạng thái', tone: 'info', text: 'Mở lại yêu cầu → ' + ST[to][1] + ' · ' + reason }) }); },
+      setQty: (code, qty, reason, positionIndex) => { const r = requests.find((q) => q.code === code), ps = RD.positions(r), idx = positionIndex ?? 0;
+        if (!['DRAFT','SUBMITTED','SOURCING'].includes(r.status) || !Number.isInteger(qty) || qty < 1 || !reason.trim()) return { ok: false, message: 'Số lượng hoặc lý do không hợp lệ (ERR-REQ-28).' };
+        const positions = ps.map((p, i) => i === idx ? { ...p, qty } : p);
+        this.setState({ over: { ...S.over, [code]: { ...S.over[code], positions, qty: positions.reduce((n, p) => n + +p.qty, 0) } }, ...push(code, { kind: 'Sửa số lượng', tone: 'info', text: ps[idx].title + ': ' + ps[idx].qty + ' → ' + qty + ' · ' + reason }) }); return { ok: true };
+      },
+      saveFeas: (code, e) => this.setState({ feas: { ...S.feas, [code]: [...(S.feas[code] || []), e] }, ...push(code, { kind: 'Khả thi', tone: 'ai', text: 'Đánh giá khả thi: ' + (e.verdict === 'ACCEPTED' ? 'Nhận làm' : 'Từ chối') }) }),
+      status: (code, to, reason) => this.setState({ over: { ...S.over, [code]: { ...(S.over[code] || {}), status: to, ...procMove(requests.find((x) => x.code === code) || {}, to), ...(to === 'CLOSED' ? { prev: 'SOURCING' } : {}) } }, ...push(code, { kind: 'Trạng thái', tone: 'info', text: 'Đổi trạng thái → ' + ST[to][1] + (reason ? ' · ' + reason : '') }) }),
+      contract: (code, a) => {
+        const cur = contracts[code], no = 'HĐ-2026-0' + (20 + Object.keys(contracts).length);
+        const next = a === 'upload' ? { no, signed: false, date: '' } : a === 'sign' ? { ...cur, signed: true, date: '15/10/2026' } : a === 'unsign' ? { ...cur, signed: false, date: '' } : null;
+        this.setState({ contracts: { ...contracts, [code]: next }, ...push(code, { kind: 'Hợp đồng', tone: 'ok', text: { upload: 'Gắn hợp đồng ' + no, sign: 'Ghi nhận ' + (cur ? cur.no : '') + ' đã ký', unsign: 'Gỡ đánh dấu đã ký', unlink: 'Gỡ hợp đồng khỏi yêu cầu' }[a] }) });
+      },
+      send: (code, ids, date) => {
+        const live = this.state, bridge = RS.bridge(this, C), selected = ids.map((id) => RS.record(live, C, code, id));
+        if (!canPortal) return { ok: false, message: 'Khách hàng chưa có tài khoản cổng.' };
+        const duplicate = selected.some((m) => allCases.some((c) => c.req === code && c.name === m.name && c.stage < 7 && (c.positionId || 'p1') === m.positionId));
+        if (duplicate) return { ok: false, message: 'Ứng viên đã có ca tuyển đang chạy ở vị trí này.' };
+        const out = bridge.reviewAction(code, ids, 'SEND', { date });
+        if (!out.ok) return out;
+        const nc = out.results.map((m, i) => ({ id: 'C-' + (101 + allCases.length + i), req: code, candidateId: m.candidateId, positionId: m.positionId, pos: m.pos,
+          name: m.name, stage: 0, due: 'Khách phản hồi hồ sơ', late: false, sent: date, reviewSnapshot: m.snapshot }));
+        this.setState({ page: 'detail', code, tab: 'tien-trinh', fresh: nc.map((c) => c.id), extraCases: [...live.extraCases, ...nc] });
+        return out;
+      },
+    };
+    Object.assign(api, RS.bridge(this, C));
+    window.MedRequestPolicy.wrap(this, C, api, { ledger, contracts });
+    const open = !S.collapsed, IC = C.IC;
+    const unassigned = requests.filter((r) => r.owner === 'Chưa phân công').length;
+    const navGroups = C.NAV.map(([label, items], gi) => ({ label, cls: 'nav-g' + (gi === 1 && open ? ' sep' : '') + (gi > 0 && !open ? ' sep-c' : ''),
+      items: items.filter(([, , pg]) => !['internal', 'external'].includes(S.role) || pg === 'expert').map(([name, ic, pg]) => ({ id: pg, label: name, d: IC[ic], off: pg ? 'false' : 'true', title: pg ? name : name + ' · chưa dựng ở prototype', style: pg ? '' : 'opacity:.45;cursor:not-allowed',
+        cur: pg && C.PAGES[pg].includes(S.page) ? 'page' : 'false', badge: pg === 'list' && unassigned > 0 ? String(unassigned) : '',
+        go: () => { if (!pg) return; this.setState({ page: pg, code: null, ccode: null, cand: null, kcase: null, reqToday: false }); } })) })).filter((g) => g.items.length);
+    // Cổng khách hàng: cơ sở đăng nhập mặc định là khách đầu tiên (có tài khoản cổng đang hoạt động)
+    const cust = cliAll[0] || C.CLI[0], custName = cust.name, ppage = S.ppage;
+    const mine = caseRows.filter((c) => c.client === custName).map((c) => { const u = candList.find((x) => x.name === c.name) || {}; return { ...c, code: 'HS-' + c.id.slice(2), spec: u.spec || '—', exp: u.exp || 0, viewed: !!c.viewed || c.stage > 0 }; });
+    const mineIds = mine.map((c) => c.id), codeOf = (id) => (mine.find((c) => c.id === id) || {}).code;
+    const pd = { user: 'Nguyễn Thị Thu', client: custName, requests: requests.filter((r) => r.client === custName && r.status !== 'DRAFT'), cases: mine, ivs: ivs.filter((v) => mineIds.includes(v.caseId)).map((v) => ({ ...v, code: codeOf(v.caseId) })), ivFb: S.ivFb, offers };
+    const pgo = (p) => () => this.setState({ ppage: p, pcode: null });
+    const pa = {
+      goHome: pgo('home'), goNew: pgo('new'), goSubs: pgo('subs'), goIvs: pgo('ivs'), goReqs: pgo('requests'), openReq: (code) => this.setState({ ppage: 'request', pcode: code }),
+      view: (id) => { if (!(S.cOver[id] || {}).viewed) this.setState({ ...patch(id, { viewed: true }), ...clogPush(id, 'Khách hàng đã xem hồ sơ') }); },
+      respond: (id, d, why) => this.setState({ ...patch(id, { decision: d, viewed: true, ...(d === 'REJECTED' ? { stage: 8, due: 'Khách hàng từ chối (D1)' + (why ? ' · ' + why.label : ''), ...(why ? stopOf(why) : {}) } : { due: d === 'INTERVIEW_REQUESTED' ? 'SMS xếp lịch phỏng vấn' : 'Chờ SMS xử lý' }) }),
+        ...clogPush(id, 'Khách hàng phản hồi: ' + { INTERVIEW_REQUESTED: 'mời phỏng vấn', ON_HOLD: 'hỏi thêm thông tin', SHORTLISTED: 'danh sách ngắn', REJECTED: 'từ chối (D1)' + (why ? ', ' + why.label + (why.note ? ' · ' + why.note : '') : '') }[d]) }),
+      feedback: (ivId, text) => { const iv = ivs.find((v) => v.id === ivId); this.setState({ ivFb: { ...S.ivFb, [ivId]: text }, ...clogPush(iv.caseId, 'Khách hàng ghi nhận xét vòng ' + iv.round + ': ' + text) }); },
+      resched: (ivId, at) => { const iv = ivs.find((v) => v.id === ivId); this.setState({ ivs: ivs.map((v) => (v.id === ivId ? { ...v, at, status: 'RESCHEDULED' } : v)), ...clogPush(iv.caseId, 'Khách hàng đổi lịch vòng ' + iv.round + ' sang ' + at) }); },
+      custName, nextCode: nextCode(), contactsBy: { [custName]: contacts.filter((p) => p.client === cust.code).map((p) => ({ v: p.name, phone: p.phone || '', primary: !!p.primary, left: p.status === 'left' })) },
+      siteInfo: { [custName]: siteOf(cust) },
+      send: (d) => { const code = nextCode();
+        this.setState({ extraReqs: [{ code, ...reqFields({ ...d, client: custName, owner: '' }, code), status: 'SUBMITTED', hired: 0, created: '15/10/2026', viaPortal: true }, ...S.extraReqs], ...(d.newContact ? { extraContacts: [...S.extraContacts, { id: 'PN' + (S.extraContacts.length + 1), client: cust.code, name: d.newContact.name, phone: d.newContact.phone, title: '—', email: '', primary: false, portal: 'none' }] } : {}), ppage: 'request', pcode: code }); },
+    };
+    const PN = [['home', 'Tổng quan', ['home'], 'dash'], ['requests', 'Yêu cầu tuyển dụng', ['requests', 'request', 'new'], 'file'], ['subs', 'Hồ sơ nhận được', ['subs'], 'users'], ['ivs', 'Lịch phỏng vấn', ['ivs'], 'cal'], ['place', 'Nhân sự đã tuyển', ['place'], 'badge']];
+    const pnav = PN.map(([k, label, set, ic]) => ({ label, d: IC[ic], cur: set.includes(ppage) ? 'page' : 'false', go: pgo(k) }));
+    // ===== M3: khung có dữ liệu mẫu (chưa có thao tác) =====
+    const ck = (t) => ({ t, cls: 'chip ok' }), cw = (t) => ({ t, cls: 'chip warn' }), cg = (t) => ({ t, cls: 'chip gray' }), cb = (t) => ({ t, cls: 'chip bad' }), ci = (t) => ({ t, cls: 'chip info' });
+    const money = (n) => n.toLocaleString('vi-VN') + ' đ';
+    const logRows = Object.entries(S.clog).flatMap(([id, arr]) => arr.map((e) => [e.at, 'Thuy', e.text, id]));
+    const openReqs = requests.filter((r) => !['CLOSED', 'CANCELLED', 'REJECTED', 'DRAFT', 'FULFILLED'].includes(r.status));
+    const callbacks = candList.filter((u) => u.callback);
+    const currentActor = RS.actor(S), actorName = String(currentActor.id || '').replace(/^(BS|Dr\.)\s+/i, '').trim(), greetingName = actorName.split(/\s+/)[0] || 'bạn';
+    const nav = (patch) => () => this.setState(patch);
+    const notices = window.MedDash.notices(nav);
+    const dashboard = window.MedDash.build({ simDay: S.simDay, user: greetingName, actorId: currentActor.id, isAdmin: S.role === 'admin', caseRows, requests, openReqs, ledger, ivs, callbacks, contracts, cands: candList, clients: cliAll, picked: matchRows.filter((m) => !m.removedAt).length, nav });
+    dashboard.uiStyle = S.uiStyle;
+    // Style 3 áp cho mọi tab: class đặt ở body để CSS phủ cả phần ngoài vùng Trang tổng quan
+    if (typeof document !== 'undefined' && document.body) { document.body.classList.toggle('ui-flat', S.uiStyle === 'flat'); }
+    const dashApi = {
+      goMyWork: () => this.setState({ page: 'mywork' }), goFinance: () => this.setState({ page: 'fin' }), goReports: () => this.setState({ page: 'reports' }), setUiStyle: { classic: () => this.setState({ uiStyle: 'classic' }), soft: () => this.setState({ uiStyle: 'soft' }), hair: () => this.setState({ uiStyle: 'hair' }), flat: () => this.setState({ uiStyle: 'flat' }) }, goCases: () => this.setState({ page: 'cases' }), goClients: () => this.setState({ page: 'clients' }), goInterviews: () => this.setState({ page: 'ivs' }), goRequests: () => this.setState({ page: 'list', reqToday: false }), goNewRequests: () => this.setState({ page: 'list', code: null, reqToday: true }), goGuarantee: () => this.setState({ page: 'gua' }),
+      newRequest: () => this.setState({ page: 'form', formMode: 'new', code: null, presetClient: '' }), newCandidate: () => this.setState({ page: 'candform' }), newClient: () => this.setState({ page: 'cform' }),
+    };
+    const FR = {
+      dash: { title: 'Trang tổng quan', sub: 'Số liệu tuyển dụng của cơ sở, lấy từ dữ liệu đang có trong prototype.', tiles: [
+        { label: 'Yêu cầu đang mở', n: openReqs.length, hint: unassigned + ' chưa phân công' }, { label: 'Hồ sơ chờ KH phản hồi', n: caseRows.filter((c) => c.stage === 0 && !c.decision).length, hint: '' },
+        { label: 'Phỏng vấn đã hẹn', n: ivs.filter((v) => v.status === 'SCHEDULED' || v.status === 'RESCHEDULED').length, hint: '' }, { label: 'Phí còn phải thu', n: money(ledger.reduce((a, l) => a + l.leftN, 0)), hint: ledger.length + ' ca có phí' }],
+        cols: ['Mã', 'Yêu cầu', 'Khách hàng', 'Phụ trách', 'Trạng thái'], rows: openReqs.map((r) => [r.code, r.title, r.client, r.owner === 'Chưa phân công' ? cw(r.owner) : r.owner, { t: r.statusLabel, cls: 'chip ' + r.tone }]) },
+      mywork: { title: 'Việc của tôi', sub: 'Nhắc việc theo người dùng: hẹn liên hệ lại ứng viên và ca quá hạn.', tiles: [{ label: 'Cần xử lý hôm nay', n: caseRows.filter((c) => c.late).length + candList.filter((u) => u.callback).length, hint: '' }],
+        cols: ['Loại', 'Nội dung', 'Hạn'], rows: [...candList.filter((u) => u.callback).map((u) => [ci('Liên hệ lại'), 'Gọi lại ứng viên ' + u.name, 'Hôm nay']), ...caseRows.filter((c) => c.late).map((c) => [cb('Ca quá hạn'), c.name + ' · ' + c.due, c.id])] },
+      expert: { title: 'Hồ sơ cần đánh giá', sub: 'Màn của vai trò Người đánh giá: hồ sơ nhân viên gửi để kết luận Đạt hoặc Không đạt.', cols: [], emptyTitle: 'Chưa có hồ sơ cần đánh giá', emptySub: 'Khi nhân viên gửi hồ sơ đánh giá, hồ sơ hiện ở đây.' },
+      billing: { title: 'Hoàn phí & chính sách phí', sub: 'Hoá đơn chưa làm ở Phase 01 (khoá): trang chỉ còn hoàn phí và chính sách phí.', action: 'Tạo chính sách', cols: ['Chính sách', 'Phạm vi', 'Bảo hành', 'Hoàn phí', 'Trạng thái'], rows: [['Chuẩn tenant v1', 'Toàn tenant', '90 ngày', 'Theo hợp đồng', ck('Đang hiệu lực')], ['HĐ-2026-014', 'Theo hợp đồng', '120 ngày', '70% nếu nghỉ trước ngày 60', ck('Đang hiệu lực')], ['Chuẩn tenant v0', 'Toàn tenant', '60 ngày', 'Không hoàn', cg('Hết hiệu lực')]] },
+      reports: { title: 'Báo cáo', sub: 'Báo cáo tuyển dụng và doanh thu theo tháng (số mẫu).', tiles: [{ label: 'Tỷ lệ gửi → phỏng vấn', n: '62%', hint: 'Tháng 10' }, { label: 'Thời gian tới tuyển', n: '34 ngày', hint: 'Trung bình' }, { label: 'Ca đang chạy', n: caseRows.filter((c) => c.stage < 7).length, hint: '' }],
+        cols: ['Tháng', 'Hồ sơ gửi', 'Phỏng vấn', 'Offer', 'Đã tuyển', 'Phí đã thu'], rows: [['08/2026', '21', '12', '6', '4', money(100000000)], ['09/2026', '28', '17', '9', '6', money(150000000)], ['10/2026', String(caseRows.length), String(ivs.length), '3', '2', money(ledger.reduce((a, l) => a + l.paidN, 0))]] },
+      audit: { title: 'Nhật ký thao tác', sub: 'Mọi thao tác ghi, không sửa, không xoá. Thao tác của bạn trong prototype hiện ở đầu bảng.', cols: ['Thời điểm', 'Người làm', 'Thao tác', 'Đối tượng'], rows: [...logRows.reverse(), ['14/10/2026 09:12', 'Lan Phạm', 'Ghi nhận hợp đồng đã ký', 'YC-012'], ['13/10/2026 15:40', 'Minh Trần', 'Phân công yêu cầu', 'YC-011']] },
+      users: { title: 'Tài khoản', sub: 'Tài khoản nhân viên của tenant.', action: 'Mời người dùng', cols: ['Họ tên', 'Email', 'Vai trò', 'Trạng thái', 'Đăng nhập gần nhất'], rows: [['Lan Phạm', 'lan.pham@sms.example', 'Headhunter', ck('Đang hoạt động'), '15/10/2026'], ['Minh Trần', 'minh.tran@sms.example', 'Headhunter', ck('Đang hoạt động'), '15/10/2026'], ['Dr. Phạm Hồng Sơn', 'son.ph@sms.example', 'Người đánh giá nội bộ', ck('Đang hoạt động'), '12/10/2026'], ['Thuy', 'thuy@sms.example', 'Quản trị tenant', ck('Đang hoạt động'), '15/10/2026']] },
+      roles: { title: 'Vai trò & quyền', sub: 'Quyền gắn theo vai trò; menu tự ẩn mục người dùng không có quyền.', action: 'Tạo vai trò', cols: ['Vai trò', 'Số người', 'Quyền chính'], rows: [['Quản trị tenant', '1', 'Toàn bộ quyền quản trị'], ['Headhunter', '2', 'customer.read, request.read, candidate.read, submission.create'], ['Người đánh giá nội bộ', '1', 'ai.review'], ['Người đánh giá ngoài', '0', 'ai.review (chỉ vòng 2)'], ['Nhân viên', '0', 'request.read, candidate.read']] },
+      workflows: { title: 'Quy trình', sub: 'Các bước chuyển trạng thái yêu cầu và ca tuyển (mặc định theo hệ thống).', cols: ['Quy trình', 'Số trạng thái', 'Bước cần lý do'], rows: [['Yêu cầu tuyển dụng', '14', 'Từ chối, Tạm dừng, Huỷ, Đóng'], ['Ca tuyển', '11', 'Thất bại'], ['Hợp đồng', '2', '—']] },
+      master: { title: 'Danh mục', sub: 'Danh mục dùng chung: chuyên khoa, đối tượng, cấp vị trí, tỉnh/thành.', action: 'Thêm mục', cols: ['Danh mục', 'Số mục', 'Cập nhật'], rows: [['Chuyên khoa', '42', '01/10/2026'], ['Đối tượng ứng viên', '5', '01/09/2026'], ['Cấp vị trí', '4', '01/09/2026'], ['Tỉnh/thành', '63', '01/09/2026'], ['Nguồn ứng viên', '11', '20/09/2026']] },
+      aiset: { title: 'Cấu hình AI', sub: 'Cấu hình AI đọc CV. AI sàng lọc chưa mở ở Phase 01.', cols: ['Tính năng', 'Mô hình', 'Trạng thái'], rows: [['AI đọc CV', 'Mô hình mặc định tenant', ck('Bật')], ['AI sàng lọc', '—', cg('Khoá ở Phase 01')], ['Danh sách ngắn AI', 'Mô hình mặc định tenant', ck('Bật')]] },
+      integ: { title: 'Tích hợp', sub: 'Kết nối hệ thống ngoài và webhook.', action: 'Thêm tích hợp', cols: ['Tên', 'Loại', 'Trạng thái'], rows: [['Email gửi lời mời', 'SMTP', ck('Hoạt động')], ['Kho tệp CV', 'Lưu trữ đối tượng', ck('Hoạt động')], ['Webhook ATS ngoài', 'Webhook', cg('Chưa cấu hình')]] },
+      tenant: { title: 'Tenant & thương hiệu', sub: 'Thông tin tenant và thương hiệu hiển thị trên cổng khách hàng.', cols: ['Mục', 'Giá trị'], rows: [['Tên tenant', 'SMS · Headhunter Y tế'], ['Tên miền cổng', 'portal.sms.example'], ['Màu thương hiệu', 'Xanh MedHunt (#2f6fe0)'], ['Ngôn ngữ', 'Tiếng Việt']] },
+      rules: { title: 'Quy tắc nghiệp vụ', sub: 'Ngưỡng và thời hạn do tenant cấu hình.', cols: ['Quy tắc', 'Giá trị', 'Ghi chú'], rows: [['Thời hạn bảo hành mặc định', '90 ngày', 'Số mẫu, cần BA chốt'], ['Cảnh báo hồ sơ chờ KH xem', '2 ngày', 'Hiện cờ "quá 2 ngày"'], ['Cảnh báo CCHN sắp hết hạn', '60 ngày', 'Thẻ "CCHN sắp hết hạn"'], ['Số dòng mỗi trang bảng', '10', 'Theo BA']] },
+      devapi: { title: 'Hợp đồng API', sub: 'Tra cứu hợp đồng API GraphQL cho nhà phát triển.', cols: ['Nhóm', 'Thao tác', 'Quyền'], rows: [['Yêu cầu', 'recruitmentRequest, createRecruitmentRequest', 'request.read, request.create'], ['Ứng viên', 'candidates, createCandidate', 'candidate.read, candidate.create'], ['Hồ sơ đã gửi', 'submissions, createSubmission', 'submission.read, submission.create']] },
+      ptenants: { title: 'Tenant', sub: 'Danh sách tenant trên nền tảng (chỉ Super admin).', action: 'Tạo tenant', cols: ['Tenant', 'Gói', 'Người dùng', 'Trạng thái', 'Tạo lúc'], rows: [['SMS · Headhunter Y tế', 'Chuẩn', '4', ck('Hoạt động'), '01/09/2026'], ['Tenant thử nghiệm', 'Dùng thử', '2', cw('Dùng thử'), '10/10/2026']] },
+      pai: { title: 'AI provider & model', sub: 'Nhà cung cấp và mô hình AI dùng chung cho các tenant.', cols: ['Nhà cung cấp', 'Mô hình', 'Dùng cho', 'Trạng thái'], rows: [['Provider A', 'Mô hình đọc CV', 'AI đọc CV', ck('Bật')], ['Provider A', 'Mô hình xếp hạng', 'Danh sách ngắn', ck('Bật')]] },
+      pusage: { title: 'Sử dụng & chi phí', sub: 'Lượt gọi AI và chi phí theo tenant (số mẫu).', tiles: [{ label: 'Lượt gọi AI tháng này', n: '1.240', hint: '' }, { label: 'Chi phí ước tính', n: money(3200000), hint: 'Tháng 10' }], cols: ['Tenant', 'Lượt gọi', 'Chi phí'], rows: [['SMS · Headhunter Y tế', '1.180', money(3050000)], ['Tenant thử nghiệm', '60', money(150000)]] },
+    };
+    const PLN = [['ptenants', 'Tenant'], ['pai', 'AI provider & model'], ['pusage', 'Sử dụng & chi phí']];
+    return {
+      mobilePages: navGroups.flatMap((g) => g.items).map((it) => ({ id: it.id, label: it.label, selected: it.cur === 'page' })), mobileGo: (e) => this.setState({ page: e.target.value, code: null, cand: null, kcase: null }),
+      reviewNotice: S.reviewNotice || '', closeReviewNotice: () => this.setState({ reviewNotice: '' }),
+      storageError: RS.error(), reviewSettings: RS.settings(S), reviewActor: currentActor, reviewToday: S.simDay,
+      reviewRows: RS.workspace(S, C), isReview: S.page === 'expert', isReviewSettings: S.page === 'rules',
+      isStaffReview: RD.staff(RS.actor(S)), reviewRoleLabel: RD.ROLES[S.role], isInternal: S.role === 'internal',
+      reviewRoleOptions: Object.entries(RD.ROLES).map(([id, label]) => ({ id, label, selected: id === S.role })),
+      reviewerOptions: RD.PEOPLE.filter((p) => p.role === 'internal').map((p) => ({ ...p, selected: p.id === S.reviewer })),
+      changeReviewRole: (e) => this.setState({ role: e.target.value, page: ['internal', 'external'].includes(e.target.value) ? 'expert' : 'list', code: null, tbMenu: null }),
+      changeReviewer: (e) => this.setState({ reviewer: e.target.value }),
+      saveReviewSettings: (cfg) => { if (this.state.role === 'admin') this.setState({ reviewSettings: cfg }); },
+      reviewHistory: cand ? matchRows.filter((m) => m.candidateId === cand.id && ((m.rounds || []).length > 0 || !m.removedAt)).map((m) => ({ req: m.req, pos: m.pos, label: m.removedAt ? 'Đã bỏ khỏi yêu cầu' : RD.STATUS[m.status], reason: [m.removedReason || '', ...(m.archives || []).map((a) => a.at + ': ' + a.reason)].filter(Boolean).join(' · '), removedAt: m.removedAt || '', rounds: (m.rounds || []).map((r) => ({ label: 'Vòng ' + r.n + ' · ' + (r.who || 'Chưa có người nhận'), comment: r.comment || '', state: ({ PENDING: 'Chờ đánh giá', REVIEWED: 'Đã kết luận', WITHDRAWN: 'Đã rút' }[r.state] || '') + (r.active === false ? ' · Lượt cũ' : '') })) })) : [],
+      tbQ: S.tbQ, onTbQ: (e) => this.setState({ tbQ: e.target.value }), tenOpen: S.tbMenu === 'ten', accOpen: S.tbMenu === 'acc',
+      toggleTen: () => this.setState({ tbMenu: S.tbMenu === 'ten' ? null : 'ten' }), toggleAcc: () => this.setState({ tbMenu: S.tbMenu === 'acc' ? null : 'acc' }), closeTb: () => this.setState({ tbMenu: null }), logout: () => this.setState({ gate: 'login', app: 'admin', tbMenu: null }),
+      goNotif: () => this.setState({ notifOpen: true, tbMenu: null }), notifOpen: S.notifOpen, notices: notices.map((n) => ({ ...n, unread: !S.nread.includes(n.id) })), notifUnread: notices.filter((n) => !S.nread.includes(n.id)).length, hasUnread: notices.some((n) => !S.nread.includes(n.id)), readNotif: (id) => this.setState({ nread: [...new Set([...S.nread, id])] }), readAllNotif: () => this.setState({ nread: notices.map((n) => n.id) }), closeNotif: () => this.setState({ notifOpen: false }), icSearch: 'M3 11a8 8 0 1 0 16 0 8 8 0 1 0-16 0M21 21l-4.34-4.34', icDown: 'm6 9 6 6 6-6', icBell: IC.bell,
+      reqToday: S.reqToday, simDay: S.simDay, doSearch: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ page: 'cands', cand: null, candQ: S.tbQ.trim(), tbMenu: null }); }, candQ: S.candQ,
+      isDash: S.app === 'admin' && S.page === 'dash', dash: dashboard, dashApi, isMyWork: S.app === 'admin' && S.page === 'mywork', myWork: { items: dashboard.work, today: S.simDay, actorId: currentActor.id, isAdmin: S.role === 'admin' },
+      isFrame: S.app === 'admin' && !!FR[S.page] && !['dash', 'mywork', 'expert', 'rules'].includes(S.page), frame: FR[S.page] || { title: '' }, isPlatform: S.app === 'platform' && S.gate === 'app', platFrame: FR[S.pplat],
+      platNav: PLN.map(([k, label]) => ({ label, cur: S.pplat === k ? 'page' : 'false', go: () => this.setState({ pplat: k }) })), toPlatform: () => this.setState({ app: 'platform', pplat: 'ptenants', tbMenu: null }), icPlat: IC.bld,
+      gLanding: S.gate === 'landing', gLogin: S.gate === 'login', gForgot: S.gate === 'forgot', gReset: S.gate === 'reset', flow: S.flow, lang: S.lang, resetUsed: S.resetUsed, presetClient: S.presetClient,
+      toggleLang: () => this.setState({ lang: S.lang === 'vi' ? 'en' : 'vi' }), pickFlow: (fl) => this.setState({ cundo: {}, flow: fl, gate: 'login', sampleClient: false, hires: {}, hireCase: null, guide: 'full', gSkip: {}, cmem: {}, cliEdit: {}, contacts: null, invites: [], extraReqs: [], over: {}, extraCases: [], feas: {}, contracts: null, cst: {}, crv: {}, evs: {}, vers: {}, prompt: null, cand: null, kcase: null, ivs: null, offers: null, pays: {}, fus: {}, extraClients: [], extraContacts: [], extraCands: [], assignFlag: null, cOver: {}, clog: {}, code: null, ccode: null }),
+      guideReply: () => { const c = gCases.find((x) => x.stage === 0 && !x.decision); if (!c) return;
+        this.setState({ ...patch(c.id, { stage: 1, late: false, due: 'Phỏng vấn: chưa xếp lịch' }), ...clogPush(c.id, 'Khách hàng mời phỏng vấn (nhân viên ghi thay theo phản hồi của khách)'), }); },
+      hireOpen: !!S.hireCase && !!caseRows.find((c) => c.id === S.hireCase), hireKase: caseRows.find((c) => c.id === S.hireCase) || { id: '', name: '' }, hireOffer: offers[S.hireCase] || {},
+      toggleRole: () => this.setState({ role: S.role === 'admin' ? 'staff' : 'admin', tbMenu: null }), roleLabel: S.role === 'admin' ? 'Vai trò: Quản trị (bấm để đổi sang Nhân viên)' : 'Vai trò: Nhân viên (bấm để đổi sang Quản trị)', isAdmin: S.role === 'admin', simInfo: (() => { const ms = nextMs(); return { day: S.simDay, next: ms ? ms.str : '' }; })(), hiresL: hires, freshIds: S.fresh, closeHire: () => this.setState({ hireCase: null }),
+      confirmHire: (id, h) => { const error = offerConflict(id); if (error) { this.setState({ reviewNotice: error, hireCase: null }); return; } this.setState({ hires: { ...S.hires, [id]: h }, hireCase: null, ...patch(id, { stage: 4, due: 'Nhận việc ' + h.a }),
+        ...clogPush(id, 'Xác nhận tuyển dụng: tổng phí ' + h.total.toLocaleString('vi-VN') + ' đ, ' + h.insts.length + ' đợt (' + h.insts.map((i) => i.pct + '%').join(' · ') + ')') }); },
+      guideHire: () => { const c = gCases.find((x) => x.stage === 3 && offers[x.id]); if (c) this.setState({ hireCase: c.id }); },
+      expertPass: () => { if (!gCode) return; const ids = Object.keys(S.cst[gCode] || {}).filter((i) => ['REVIEW_PENDING', 'IN_REVIEW'].includes(S.cst[gCode][i]));
+        this.setState({ cst: { ...S.cst, [gCode]: { ...S.cst[gCode], ...Object.fromEntries(ids.map((i) => [i, 'REVIEW_PASSED'])) } }, ...push(gCode, { kind: 'Đánh giá', tone: 'ok', text: 'Người đánh giá kết luận Đạt cho ' + ids.length + ' hồ sơ' }) }); },
+      gShow: S.gate === 'app' && S.flow === 'onboard', guide: S.guide, gSkip: S.gSkip,
+      // Việc đã làm tới đâu, đọc từ dữ liệu thật của prototype để bảng hướng dẫn tự đánh dấu bước xong
+      gFacts: { memberN: (S.cmem[gCode] || []).length, approvedN: gSt.filter((x) => ['REVIEW_PASSED', 'SECOND_REVIEW_PASSED', 'SUBMITTED'].includes(x)).length, expertPending: gSt.filter((x) => ['REVIEW_PENDING', 'IN_REVIEW'].includes(x)).length, sentN: gSt.filter((x) => x === 'SUBMITTED').length,
+        reqDraft: !!requests[0] && requests[0].status === 'DRAFT', waitReplyN: gCases.filter((c) => c.stage === 0 && !c.decision).length,
+        ivN: ivs.filter((v) => gCases.some((c) => c.id === v.caseId)).length, passN: ivs.filter((v) => v.result === 'PASS' && gCases.some((c) => c.id === v.caseId)).length,
+        offeredN: gCases.filter((c) => offers[c.id] && c.stage === 3).length, accepted: allCases.some((c) => c.stage >= 4 && c.stage <= 7), fee1: ledger.some((l) => l.insts && l.insts[0] && l.insts[0].status === 'paid'), pendingOfferN: gCases.filter((c) => c.stage === 3 && offers[c.id]).length,
+        inst1Txt: (() => { const l = ledger.find((x) => x.insts && gCases.some((c) => c.id === x.id)); return l ? 'Đợt 1: đã thu ' + l.insts[0].paidN.toLocaleString('vi-VN') + ' / ' + l.insts[0].expectedN.toLocaleString('vi-VN') + ' đ.' : ''; })(), client: cliAll.length > 0, request: requests.length > 0, members: Object.values(S.cmem).some((a) => a && a.length > 0),
+        approved: Object.values(S.cst).some((m) => Object.values(m || {}).some((x) => ['REVIEW_PENDING', 'IN_REVIEW', 'REVIEW_PASSED', 'SECOND_REVIEW_PASSED', 'SUBMITTED'].includes(x))), cases: allCases.length > 0,
+        replied: allCases.some((c) => c.stage >= 1 || !!c.decision), interviewed: ivs.some((v) => v.result === 'PASS'), offered: Object.keys(offers).length > 0,
+        guarantee: allCases.some((c) => c.stage >= 6), paidAll: ledger.some((l) => l.paidN > 0 && l.leftN === 0), closed: requests.some((r) => r.status === 'CLOSED') },
+      guideMode: (m) => this.setState({ guide: m }), guideSkip: (n) => this.setState({ gSkip: { ...S.gSkip, [n]: !S.gSkip[n] } }),
+      guideGo: (key) => { const code = requests[0] ? requests[0].code : null;
+        if (key === 'clients') this.setState({ page: 'clients', ccode: null });
+        else if (key === 'newClient') this.setState({ page: 'cform' });
+        else if (key === 'newReq') this.setState({ page: 'form', formMode: 'new', code: null, presetClient: (client || (cliAll.length === 1 ? cliAll[0] : null) || {}).name || '' });
+        else if (key.startsWith('req:') && code) this.setState({ page: 'detail', code, tab: key.slice(4) });
+        else if (['cases', 'ivs', 'offers', 'fin'].includes(key)) this.setState({ page: key }); },
+      useSampleClient: () => this.setState({ sampleClient: true, page: 'client', ccode: C.SAMPLE_CLI.code }), sampleHandler: blank && !S.sampleClient ? () => this.setState({ sampleClient: true, page: 'client', ccode: C.SAMPLE_CLI.code }) : null, toLanding: () => this.setState({ gate: 'landing' }), toLogin: () => this.setState({ gate: 'login' }),
+      toForgot: () => this.setState({ gate: 'forgot' }), toReset: () => this.setState({ gate: 'reset' }), markUsed: () => this.setState({ resetUsed: true }),
+      enterApp: (fl) => this.setState({ gate: 'app', flow: fl || S.flow, page: 'clients' }), openPortalAuth: () => this.setState({ gate: 'app', app: 'portal', ppage: 'home' }),
+      isAdminApp: S.app === 'admin' && S.gate === 'app', isPortal: S.app === 'portal' && S.gate === 'app', toPortal: () => this.setState({ app: 'portal', ppage: 'home' }), toAdmin: () => this.setState({ app: 'admin' }),
+      pd, pa, pnav, pcode: S.pcode, pHome: ppage === 'home', pReqs: ppage === 'requests', pReq: ppage === 'request', pNew: ppage === 'new', pSubs: ppage === 'subs', pIvs: ppage === 'ivs', pPlace: ppage === 'place',
+      appCls: 'app' + (open ? '' : ' collapsed'), sideCls: 'side' + (open ? '' : ' collapsed'), edgeCls: 'edge' + (open ? '' : ' collapsed'), open, shut: !open, navGroups,
+      icPclose: IC.pclose, icPopen: IC.popen, icExt: IC.ext, icEdge: open ? IC.chl : IC.chr, edgeLabel: open ? 'Thu gọn menu' : 'Mở rộng menu', toggleNav: () => this.setState({ collapsed: !S.collapsed }),
+      isList: S.page === 'list', isForm: S.page === 'form', isDetail: S.page === 'detail' && !!request, isClients: S.page === 'clients', isClientDetail: S.page === 'client' && !!client,
+      navReq: ['list', 'detail', 'form'].includes(S.page) ? 'page' : 'false', navCli: inClients ? 'page' : 'false',
+      requests, request, tab: S.tab, cases: allCases.filter((c) => c.req === S.code).map(fullCase), feas: S.feas[S.code] || [], contract: contracts[S.code] || null, cands, pool, canPortal, events, versions, prompt: S.prompt === S.code, api,
+      nextReqCode: nextCode(), formMode: S.formMode, formReq: S.formMode === 'edit' ? request : null, clientNames: cliAll.map((c) => c.name), reqSites: Object.fromEntries(cliAll.map((c) => [c.name, siteOf(c)])), reqContacts: Object.fromEntries(cliAll.map((c) => [c.name, contacts.filter((p) => p.client === c.code).map((p) => ({ v: p.name, phone: p.phone || '', primary: !!p.primary, left: p.status === 'left' }))])),
+      newRequest: () => this.setState({ page: 'form', formMode: 'new', code: null, presetClient: '' }),
+      newRequestFor: (name) => this.setState({ page: 'form', formMode: 'new', code: null, presetClient: name }),
+      editRequest: (code) => this.setState({ page: 'form', formMode: 'edit', code }),
+      cancelForm: () => this.setState({ page: S.formMode === 'edit' ? 'detail' : 'list' }),
+      submitForm: (d, draft) => {
+        const fields = reqFields(d, S.formMode === 'edit' ? S.code : nextCode());
+        if (S.formMode === 'edit') {
+          const vs = S.vers[S.code] || [{ n: 1, reason: 'Tạo yêu cầu', at: request.created }];
+          this.setState({ over: { ...S.over, [S.code]: { ...(S.over[S.code] || {}), ...fields, ...(draft ? {} : request.status === 'DRAFT' ? { status: 'SOURCING', ...procMove(request, 'SOURCING') } : {}) } },
+            vers: { ...S.vers, [S.code]: [...vs, { n: vs.length + 1, reason: d.reason || 'Sửa thông tin', at: '15/10/2026' }] }, page: 'detail', tab: 'tong-quan', ...push(S.code, { kind: 'Phiên bản mới', tone: 'warn', text: 'Tạo phiên bản v' + (vs.length + 1) }) });
+          return;
+        }
+        const code = nextCode();
+        this.setState({ extraReqs: [{ code, ...fields, status: draft ? 'DRAFT' : 'SOURCING', procFrom: draft ? '' : S.simDay, hired: 0, created: '15/10/2026', viaPortal: false }, ...S.extraReqs], ...(d.newContact ? { extraContacts: [...S.extraContacts, { id: 'PN' + (S.extraContacts.length + 1), client: (cliAll.find((c) => c.name === d.client) || {}).code, name: d.newContact.name, phone: d.newContact.phone, title: '—', email: '', primary: false, portal: 'none' }] } : {}), page: 'detail', code, tab: 'tong-quan', prompt: null });
+      },
+      isClientForm: S.page === 'cform' && !S.editCode, showEditModal: S.page === 'client' && !!S.editCode, modalTrue: true, showImport: S.page === 'clients' && S.importOpen, clientKeys: cliAll.map((c) => (c.name + '|' + c.province).toLowerCase()), isCandForm: S.page === 'candform', assignFlag: S.assignFlag === S.code,
+      allEmails: contacts.map((p) => (p.email || '').toLowerCase()).filter(Boolean),
+      clientBranches: client ? branchesOf(client) : [],
+      saveBranch: (b) => { const cur = branchesOf(client), id = b.id || 'B' + (Math.max(0, ...cur.map((x) => parseInt(x.id.slice(1), 10) || 0)) + 1); this.setState({ branchesBy: { ...S.branchesBy, [client.code]: b.id ? cur.map((x) => (x.id === b.id ? { ...x, ...b } : x)) : [...cur, { ...b, id, active: true }] }, ...clog(client.code, (b.id ? 'Sửa chi nhánh ' : 'Thêm chi nhánh ') + b.name) }); },
+      toggleBranch: (id) => { const b = branchesOf(client).find((x) => x.id === id); this.setState({ branchesBy: { ...S.branchesBy, [client.code]: branchesOf(client).map((x) => (x.id === id ? { ...x, active: !x.active } : x)) }, ...clog(client.code, (b.active ? 'Ngừng hoạt động chi nhánh ' : 'Cho chi nhánh hoạt động lại ') + b.name) }); },
+      newClient: () => this.setState({ page: 'cform', editCode: '' }), openClientImport: () => this.setState({ importOpen: true }), closeClientImport: () => this.setState({ importOpen: false }),
+      importClients: (rows) => {
+        const base = nextCliNo();
+        const added = rows.map((f, i) => ({ code: 'CUS-' + String(base + i).padStart(3, '0'), name: f.name, group: f.group, source: f.source, province: f.province, ward: f.ward, address: f.address || '—', openReqs: 0, signed: 0, contracts: 0, dueAmt: 0, overdueN: 0, created: '15/10/2026', owner: '—', tax: '—', phone: f.phone || '—', email: f.email || '—', legal: '—', statusLabel: 'Đang hợp tác' }));
+        this.setState({ extraClients: [...added.reverse(), ...S.extraClients], page: 'clients', ccode: null, importOpen: false });
+      },
+      editingClient: S.editCode ? cliAll.find((x) => x.code === S.editCode) || null : null,
+      openClientEdit: (code) => this.setState({ page: 'client', ccode: code, editCode: code }),
+      cancelClientForm: () => this.setState(S.editCode ? { editCode: '' } : { page: 'clients', ccode: null }), newCand: () => this.setState({ page: 'candform' }),
+      submitClient: (f, cts) => {
+        if (S.editCode) { this.setState({ cliEdit: { ...S.cliEdit, [S.editCode]: { ...(S.cliEdit[S.editCode] || {}), ...f, phone: f.phone || '—', email: f.email || '—', address: f.address || '—', updatedBy: actorName || 'Lan Phạm', updatedAt: S.simDay } }, editCode: '', ...clog(S.editCode, 'Cập nhật thông tin khách hàng') }); return; }
+        const code = 'CUS-' + String(nextCliNo()).padStart(3, '0'), n = S.extraContacts.length;
+        this.setState({ extraClients: [{ code, name: f.name, group: f.group, province: f.province || '—', openReqs: 0, signed: 0, contracts: 0, dueAmt: 0, overdueN: 0, created: '15/10/2026', address: f.address || '—', owner: '—', createdBy: actorName || 'Lan Phạm', source: f.source, ward: f.ward, tax: '—', phone: f.phone || '—', email: f.email || '—', legal: '—', statusLabel: 'Đang hợp tác' }, ...S.extraClients],
+          extraContacts: [...S.extraContacts, ...cts.map((p, i) => ({ id: 'PN' + (n + i), client: code, name: p.name, title: p.title || '—', phone: p.phone || '', email: p.email, primary: p.primary, portal: 'none' }))], page: 'client', ccode: code });
+      },
+      submitCand: (f, viaAi) => {
+        const id = 'N' + (S.extraCands.length + 1);
+        this.setState({ extraCands: [{ id, name: f.name, spec: f.spec || '—', target: f.target, exp: +f.exp || 0, match: 0, place: f.place || '—', salary: f.salary ? (+f.salary * 1e6).toLocaleString('vi-VN') : '—', cchn: 'Còn hạn', phone: f.phone || '—', created: '15/10/2026', callback: false, dup: false }, ...S.extraCands], page: 'cand', cand: id });
+      },
+      ivs, offers: Object.fromEntries(Object.entries(offers).map(([id, of]) => [id, hires[id] ? { ...of, hire: { ...hires[id], insts: (ledger.find((l) => l.id === id) || {}).insts || [] } } : of])), fus: S.fus, ledger, reqLedger,
+      isIvs: S.page === 'ivs', isOffers: S.page === 'offers', isFin: S.page === 'fin', isGua: S.page === 'gua',
+      m2Pay: recordPay,
+      m2FollowUp: (id, who, result) => this.setState({ fus: { ...S.fus, [id]: [...(S.fus[id] || []), { at: '15/10/2026', who, result }] }, ...clogPush(id, 'Hỏi thăm ' + who + ': ' + result) }),
+      m2: m2Api,
+      isCands: S.page === 'cands', isCandDetail: S.page === 'cand' && !!cand, isSubs: S.page === 'subs', isCases: S.page === 'cases', isCaseDetail: S.page === 'case' && !!kase,
+      navCand: ['cands', 'cand', 'candform'].includes(S.page) ? 'page' : 'false', navSub: S.page === 'subs' ? 'page' : 'false', navCase: S.page === 'cases' || S.page === 'case' ? 'page' : 'false',
+      candRows, cand, candHistory, subs, caseRows, kase, caseLog: kase ? [...(S.clog[kase.id] || []).slice().reverse(), { at: kase.sent || '01/10/2026', text: 'Gửi hồ sơ cho ' + kase.client }] : [], caseIvId: kase ? (ivs.find((v) => v.caseId === kase.id && (v.status === 'SCHEDULED' || v.status === 'RESCHEDULED')) || {}).id || '' : '', caseIvN: kase ? ivs.filter((v) => v.caseId === kase.id).length : 0, caseRowAct: (kind, ...a) => api.rowAct[kind] && api.rowAct[kind](...a),
+      caseUndo: (() => { const st = kase ? S.cundo[kase.id] || [] : [], last = st[st.length - 1]; if (!kase || !last || S.role !== 'admin') return null;
+        const prev = { ...(rawCases.find((x) => x.id === kase.id) || {}), ...(last.over || {}) }; return { text: last.text, at: last.at, back: LBL[prev.stage] || '', err: undoBlock(kase.id, last) }; })(), undoCase: (id, reason) => api.undoCase(id, reason),
+      caseFee: kase ? ledger.find((l) => l.id === kase.id) || null : null,
+      goCands: () => this.setState({ page: 'cands', cand: null }), openCand: (id) => this.setState({ page: 'cand', cand: id }),
+      goSubs: () => this.setState({ page: 'subs' }), goCases: () => this.setState({ page: 'cases', kcase: null }), openCase: (id) => this.setState({ page: 'case', kcase: id }),
+      openRequestFromCase: (code) => this.setState({ page: 'detail', code, tab: 'tien-trinh' }),
+      markViewed: (id) => this.setState({ ...patch(id, { viewed: true }), ...clogPush(id, 'Khách hàng đã xem hồ sơ') }),
+      giveFeedback: (id, d, why) => pa.respond(id, d, why),
+      stopCase: (id, why) => stopFn(id, why),
+      goRequests: () => this.setState({ page: 'list', code: null, reqToday: false }),
+      openRequest: (code, tab) => this.setState({ page: 'detail', code, tab: typeof tab === 'string' ? tab : 'tien-trinh' }),
+      clientNotes: S.notes[S.ccode] || [], clientLog: S.clog[S.ccode] || [], contractAct: api.contract, actorName: actorName || 'Lan Phạm',
+      clientContracts: requests.filter((r) => client && r.client === client.name && contracts[r.code]).map((r) => ({ req: r.code, reqTitle: r.title, ...contracts[r.code] })),
+      clientLedger: ledger.filter((l) => client && l.client === client.name).map((l) => ({ ...l, posTitle: (requests.find((r) => r.code === l.req) || {}).title || '—' })),
+      noteAdd: (text) => this.setState({ notes: { ...S.notes, [S.ccode]: [{ id: 'N' + Date.now(), text, by: actorName || 'Lan Phạm', at: S.simDay }, ...(S.notes[S.ccode] || [])] }, ...clog(S.ccode, 'Ghi chú: ' + text) }),
+      noteDelete: (id) => this.setState({ notes: { ...S.notes, [S.ccode]: (S.notes[S.ccode] || []).filter((n) => n.id !== id) } }),
+      // Người mặc định: mỗi trụ sở hoặc chi nhánh tối đa một người (M3 B2.2); đặt người mới thì bỏ cờ của người cũ cùng nơi
+      contactSave: (c) => {
+        const mine = contacts.filter((p) => p.client === S.ccode), site = c.site || '', over = { ...S.cOver };
+        const sameSite = mine.filter((p) => (p.site || '') === site && p.id !== c.id && p.status !== 'left');
+        const primary = c.primary || (!c.id && sameSite.length === 0);
+        if (primary) sameSite.forEach((p) => { over[p.id] = { ...(over[p.id] || {}), primary: false }; });
+        if (c.id) { over[c.id] = { ...(over[c.id] || {}), name: c.name, title: c.title, phone: c.phone, email: c.email, site, primary: primary || c.primary }; this.setState({ cOver: over, ...clog(S.ccode, 'Sửa người liên hệ ' + c.name) }); return; }
+        const id = 'PN' + (S.extraContacts.length + 1 + Date.now() % 1000);
+        this.setState({ cOver: over, extraContacts: [...S.extraContacts, { id, client: S.ccode, name: c.name, title: c.title || '—', phone: c.phone, email: c.email, site, primary, portal: 'none' }], ...clog(S.ccode, 'Thêm người liên hệ ' + c.name) });
+      },
+      contactPrimary: (id) => { const p = contacts.find((x) => x.id === id), over = { ...S.cOver }; contacts.filter((x) => x.client === p.client && (x.site || '') === (p.site || '')).forEach((x) => { over[x.id] = { ...(over[x.id] || {}), primary: x.id === id }; }); this.setState({ cOver: over, ...clog(S.ccode, 'Đặt ' + p.name + ' làm người liên hệ mặc định') }); },
+      contactLeft: (id) => { const p = contacts.find((x) => x.id === id), left = p.status !== 'left'; this.setState({ cOver: { ...S.cOver, [id]: { ...(S.cOver[id] || {}), status: left ? 'left' : 'active', ...(left ? { primary: false } : {}) } }, ...clog(S.ccode, (left ? 'Chuyển Đã nghỉ: ' : 'Làm việc lại: ') + p.name) }); },
+      clients: cliAll, client, contacts: contacts.filter((p) => p.client === S.ccode), invites: S.invites.filter((i) => i.client === S.ccode), clientReqs: requests.filter((r) => client && r.client === client.name),
+      goClients: () => this.setState({ page: 'clients', ccode: null, importOpen: false }), openClient: (ccode) => this.setState({ page: 'client', ccode }),
+      editClient: (code, patch) => this.setState({ cliEdit: { ...S.cliEdit, [code]: { ...(S.cliEdit[code] || {}), ...patch } } }),
+      cancelInvite: (id) => {
+        const p = contacts.find((x) => x.id === id);
+        this.setState({ contacts: contacts.map((x) => (x.id === id && x.portal === 'invited' ? { ...x, portal: 'none' } : x)), invites: S.invites.filter((i) => !(i.client === p.client && i.email === p.email)) });
+      },
+      invite: (id) => {
+        const p = contacts.find((x) => x.id === id);
+        this.setState({ contacts: contacts.map((x) => (x.id === id && x.portal === 'none' ? { ...x, portal: 'invited' } : x)), invites: [...S.invites, { client: p.client, email: p.email, sent: '15/10/2026', expires: '22/10/2026 09:00', by: 'Thuy' }] });
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

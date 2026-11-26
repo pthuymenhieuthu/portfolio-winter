@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Tổng quan yêu cầu</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.grid2{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:16px;align-items:start}
+.step{display:flex;gap:10px;align-items:flex-start}.num{width:22px;height:22px;border-radius:50%;background:var(--line-soft);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
+.step.done .num{background:var(--brand);color:var(--on-brand)}
+</style></helmet>
+<div class="col g16 page-in">
+  <div class="ovc stagger" style="grid-template-columns:repeat(4,minmax(0,1fr))"><sc-for list="{{tiles}}" as="t" hint-placeholder-count="4"><div class="{{t.cls}}" style="{{t.accStyle}}" aria-pressed="{{t.on}}" onClick="{{t.pick}}"><span class="ovico"><sc-if value="{{t.fCheck}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3"></path></svg></sc-if><sc-if value="{{t.fWallet}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7H5a2 2 0 0 1 0-4h13v4m2 0v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5M16 13h2"></path></svg></sc-if><sc-if value="{{t.fClock}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"></path></svg></sc-if><sc-if value="{{t.fAct}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></sc-if></span><span class="ovn tabular {{t.nCls}}">{{t.n}}</span><span class="ovt">{{t.label}}</span></div></sc-for></div>
+  <div class="grid2">
+  <div class="col g16">
+    <div class="card"><div class="card-h"><h3>Thông tin yêu cầu</h3><span class="spacer"></span><sc-if value="{{canEdit}}"><button class="btn sm" onClick="{{onEdit}}">Sửa</button></sc-if></div>
+      <div class="card-b"><dl class="kv">
+        <dt>Khách hàng</dt><dd>{{r.client}}</dd><dt>Trụ sở hoặc chi nhánh</dt><dd>{{r.site}}</dd><dt>Người liên hệ</dt><dd>{{r.contact}}</dd><dt>Người phụ trách</dt><dd>{{r.owner}}</dd>
+        <dt>Số lượng</dt><dd class="tabular">{{r.qty}}</dd><dt>Ngày cần người</dt><dd><span class="tabular">{{r.due}}</span></dd><dt>Số ngày xử lý</dt><dd><span class="tabular">{{r.procTxt}}</span> <sc-if value="{{r.procOver}}"><span class="chip bad">Quá hạn xử lý</span></sc-if></dd>
+        <dt>Tiếp nhận</dt><dd>{{r.created}} · {{r.portal}}</dd><dt>Người tiếp nhận</dt><dd>{{r.receiver}}</dd></dl></div></div>
+    <sc-if value="{{hasPos}}"><div class="card"><div class="card-h"><h3>Vị trí cần tuyển</h3><span class="spacer"></span><span class="muted small">{{posSum}}</span></div>
+      <table><thead><tr><th>Vị trí</th><th>Đối tượng · Chuyên khoa</th><th>Cấp</th><th>Đã nhận việc / SL</th><th>Ngày cần</th><th>Kinh nghiệm · Chứng chỉ</th><th>Lương (VND)</th><th></th></tr></thead><tbody><sc-for list="{{poss}}" as="p"><tr><td><div class="fw5"><span class="chip gray tabular" style="margin-right:6px">{{p.code}}</span>{{p.title}}<sc-if value="{{p.stopped}}"><span class="chip gray" style="margin-left:6px" title="{{p.stopWhy}}">Ngừng tuyển</span></sc-if></div><div class="muted small">{{p.dept}}</div></td><td>{{p.spec}}</td><td>{{p.level}}</td><td class="tabular">{{p.hiredTxt}}</td><td class="tabular">{{p.due}}</td><td>{{p.expLic}}</td><td class="tabular">{{p.sal}}</td><td style="text-align:right"><sc-if value="{{p.canAct}}"><button class="btn sm" onClick="{{p.editQty}}">Sửa số lượng</button><button class="btn sm {{p.actCls}}" onClick="{{p.act}}">{{p.actLabel}}</button></sc-if></td></tr></sc-for></tbody></table></div></sc-if>
+    <sc-if value="{{single}}"><div class="card"><div class="card-h"><h3>Điều kiện tuyển</h3></div>
+      <div class="card-b"><dl class="kv">
+        <dt>Nhóm ứng viên</dt><dd>{{r.group}}</dd><dt>Chuyên khoa</dt><dd>{{r.specialty}}</dd><dt>Cấp vị trí</dt><dd>{{r.level}}</dd><dt>Nơi làm việc</dt><dd>{{r.place}}</dd><dt>Tỉnh/thành</dt><dd>{{r.province}}</dd>
+        <dt>Chứng chỉ hành nghề</dt><dd>{{r.license}}</dd><dt>Lương</dt><dd class="tabular">{{r.salary}}</dd><dt>Kinh nghiệm tối thiểu</dt><dd>{{r.minExp}}</dd>
+        <dt>Khó/hiếm</dt><dd>{{r.rare}}</dd><dt>Bảo mật tuyển dụng</dt><dd>{{r.secret}}</dd></dl></div></div>
+    <div class="card"><div class="card-h"><h3>Mô tả công việc</h3></div>
+      <div class="card-b" style="white-space:pre-line">{{r.desc}}</div></div></sc-if>
+  </div>
+  <div class="card"><div class="card-h"><h3>Tình trạng hợp đồng</h3><span class="spacer"></span><span class="{{cChip}}">{{cLabel}}</span></div>
+    <div class="card-b col">
+      <div class="step {{s1}}"><span class="num">1</span><div><div class="fw5">Tải hợp đồng và gắn yêu cầu</div><div class="muted small">{{s1Hint}}</div></div></div>
+      <div class="step {{s2}}"><span class="num">2</span><div><div class="fw5">Ghi nhận đã ký</div><div class="muted small">{{s2Hint}}</div></div></div>
+      <div class="step"><span class="num">3</span><div><div class="fw5">Bắt đầu tìm ứng viên</div><div class="muted small">Chưa có hợp đồng đã ký vẫn tìm ứng viên được, nhưng cần ghi nhận hợp đồng trước khi đóng Đã tuyển đủ.</div></div></div>
+      <div class="row wrap">
+        <sc-if value="{{noContract}}"><button class="btn primary" onClick="{{upload}}">Tải hợp đồng</button></sc-if>
+        <sc-if value="{{canSign}}"><button class="btn primary" onClick="{{sign}}">Ghi nhận đã ký</button></sc-if>
+        <sc-if value="{{canUnsign}}"><button class="btn" onClick="{{unsign}}">Gỡ đã ký</button></sc-if>
+        <sc-if value="{{canUnlink}}"><button class="btn danger" onClick="{{unlink}}">Gỡ khỏi yêu cầu</button></sc-if></div>
+      <sc-if value="{{lockedContract}}"><div class="muted small">Chỉ gắn hợp đồng khi yêu cầu Chờ xử lý hoặc Đang xử lý (ERR-REQ-25).</div></sc-if>
+      <sc-if value="{{msg}}"><div class="small {{msgCls}}">{{msg}}</div></sc-if>
+    </div></div>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"request":{"editor":null},"contract":{"editor":null},"feas":{"editor":null,"default":[]},"cases":{"editor":null,"default":[]},"ledger":{"editor":null,"default":[]},"onContract":{"editor":null},"onEdit":{"editor":null},"onPosAct":{"editor":null},"onFeas":{"editor":null},"$preview":{"width":1100,"height":520}}'>
+class Component extends DCLogic {
+  state = { msg: '', bad: false };
+  renderVals() {
+    const P = this.props, S = this.state, r = P.request || { hired: 0, qty: 1, client: '—', owner: '—', due: '—', status: 'DRAFT' };
+    const c = P.contract, h = (P.feas || []).slice(-1)[0], grp = /bác sĩ/i.test(r.title || '') ? 'Bác sĩ' : /điều dưỡng|hộ sinh/i.test(r.title || '') ? 'Điều dưỡng, hộ sinh' : 'Kỹ thuật viên, dược sĩ';
+    const say = (msg, bad) => { this.setState({ msg, bad: !!bad }); setTimeout(() => this.setState({ msg: '' }), 3000); };
+    const act = (a, ok) => () => { P.onContract && P.onContract(a); say(ok); };
+    const cs = P.cases || [], tr = (n) => (n / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' tr', qty = r.qty || 0, hired = r.hired || 0;
+    const [dd, mm, yy] = String(r.due || '').split('/').map(Number), left = dd ? Math.round((new Date(yy, mm - 1, dd) - new Date(2026, 9, 15)) / 864e5) : null;
+    const kp = { hired: hired + ' / ' + qty, hiredPct: qty ? Math.round(hired / qty * 100) : 0, hiredBar: 'width:' + (qty ? Math.min(100, Math.round(hired / qty * 100)) : 0) + '%', fee: tr((P.ledger || []).reduce((a, l) => a + l.totalN, 0)), feeHint: (P.ledger || []).length + ' ca có phí',
+      days: r.procDays === null || r.procDays === undefined ? '—' : r.procDays + ' ngày', daysHint: r.procOver ? 'Quá hạn xử lý (ngưỡng ' + (r.procLimit || 30) + ' ngày)' : r.status === 'SOURCING' ? 'Ngưỡng ' + (r.procLimit || 30) + ' ngày' : 'Chỉ tính lúc Đang xử lý',
+      run: cs.filter((c) => c.stage < 7).length, runHint: cs.length + ' ca' };
+    const tiles = [['Đã tuyển', kp.hired], ['Phí dự kiến', kp.fee], ['Số ngày xử lý', kp.days], ['Ca đang chạy', kp.run]].map(([label, n]) => ({ label, n }));
+    const DECO = [['Check'], ['Wallet'], ['Clock'], ['Act']];
+    tiles.forEach((t, i) => Object.assign(t, { cls: 'ovi' + (t.pick ? '' : ' st'), accStyle: '--acc:var(' + window.MedDash.statTone(i, tiles.length) + ')', ['f' + DECO[i][0]]: true }));
+    const ps = r.positions || [], fm = (v) => (+v || 0).toLocaleString('vi-VN');
+    return { tiles, kp, hasPos: ps.length > 1, single: ps.length <= 1, posSum: ps.length + ' vị trí · tổng ' + ps.reduce((a, p) => a + (parseInt(p.qty, 10) || 0), 0) + ' người', poss: ps.map((p, i) => ({ stopped: !!p.stopped, stopWhy: p.stopped ? ({ CUSTOMER_STOP: 'Khách hàng dừng tuyển', SMS_DECLINE: 'SMS không nhận', MISTAKE: 'Nhân viên tạo nhầm', OTHER: 'Khác' }[p.stopReason] || '') + (p.stopNote ? ' · ' + p.stopNote : '') : '', editQty: () => P.onPosAct && P.onPosAct(i, 'qty'), canAct: ['DRAFT', 'SUBMITTED', 'SOURCING'].includes(r.status), actLabel: p.stopped ? 'Tuyển lại' : 'Ngừng tuyển', actCls: p.stopped ? '' : 'danger', act: () => P.onPosAct && P.onPosAct(i, p.stopped ? 'resume' : 'stop'), code: r.code + '-' + (p.no || i + 1), title: p.title || 'Vị trí cần tuyển', spec: [p.group, p.spec].filter(Boolean).join(' · ') || '—', level: p.level || '—', dept: p.dept || '', hiredTxt: cs.filter((c) => c.positionId === p.id && c.stage >= 4 && c.stage <= 7).length + ' / ' + (p.qty || 0), expLic: (p.exp !== undefined && p.exp !== '' ? p.exp + ' năm' : '—') + ' · ' + (p.lic === false ? 'Không bắt buộc' : p.lic ? 'Bắt buộc' : '—'), qty: p.qty, due: p.due || '—', sal: p.smin || p.smax ? fm(p.smin) + ' – ' + fm(p.smax) : '—' })), r: { ...r, portal: r.viaPortal ? 'khách gửi qua cổng' : 'nhân viên nhập', receiver: r.viaPortal ? '—' : (r.owner && r.owner !== 'Chưa phân công' ? r.owner : '—'), specialty: r.specialty || '—', level: r.level || '—', owner: r.owner === 'Chưa phân công' ? 'Chưa phân công' : r.owner,
+      site: r.site || 'Trụ sở chính', place: r.address || 'Trụ sở chính của khách hàng', salary: r.salFrom || r.salTo ? (+r.salFrom || 0).toLocaleString('vi-VN') + ' – ' + (+r.salTo || 0).toLocaleString('vi-VN') + ' VND' : '—', minExp: r.years ? r.years + ' năm' : '—',
+      contact: r.contact || '—', procTxt: r.procDays === null || r.procDays === undefined ? '—' : r.procDays + ' ngày',
+      // Nhóm, CCHN, hiếm, mô tả chưa có trong dữ liệu mẫu của yêu cầu: suy ra từ tiêu đề để màn đủ các dòng như code
+      group: r.group || grp, province: r.province || '—', license: r.license || (grp === 'Kỹ thuật viên, dược sĩ' ? 'Không bắt buộc' : 'Bắt buộc'), rare: r.rare ? 'Có' : 'Không', secret: r.secret ? 'Có' : 'Không',
+      desc: r.desc || 'Chưa có mô tả công việc.' },
+      canEdit: !['CLOSED', 'CANCELLED', 'REJECTED'].includes(r.status), onEdit: P.onEdit, toFeas: P.onFeas,
+      hasFeas: !!h, noFeas: !h, feasChip: h && h.verdict === 'ACCEPTED' ? 'chip ok' : 'chip bad', feasLabel: h ? (h.verdict === 'ACCEPTED' ? 'Nhận làm' : 'Từ chối') : '', feasWhen: h ? h.at + ' · ' + h.by : '',
+      cChip: !c ? 'chip gray' : c.signed ? 'chip ok' : 'chip warn', cLabel: !c ? 'Chưa gắn hợp đồng' : c.signed ? 'Đã ký · ' + c.date : 'Chưa ký',
+      s1: c ? 'done' : '', s2: c && c.signed ? 'done' : '', s1Hint: c ? 'Đã gắn ' + c.no : 'Chọn hợp đồng có sẵn của khách hoặc tải hợp đồng mới', s2Hint: !c ? 'Cần gắn hợp đồng trước' : c.signed ? 'Ngày ký ' + c.date : 'Khi khách ký xong bản hợp đồng',
+      noContract: !c && ['SUBMITTED', 'SOURCING'].includes(r.status), lockedContract: !c && !['SUBMITTED', 'SOURCING'].includes(r.status), canSign: !!c && !c.signed, canUnsign: !!c && c.signed, canUnlink: !!c && !c.signed,
+      upload: act('upload', 'Đã gắn hợp đồng vào yêu cầu'), sign: act('sign', 'Đã ghi nhận hợp đồng đã ký'), unsign: act('unsign', 'Đã gỡ đánh dấu đã ký'), unlink: act('unlink', 'Đã gỡ hợp đồng khỏi ' + r.code),
+      msg: S.msg, msgCls: S.bad ? 'chip bad' : 'chip ok' };
+  }
+}
+</script>
+</body>
+</html>

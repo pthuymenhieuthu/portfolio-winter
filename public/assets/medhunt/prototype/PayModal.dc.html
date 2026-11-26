@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Ghi lần thu</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}</style></helmet>
+<div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Ghi lần thu">
+  <h2 style="margin:0">Ghi lần thu · {{row.name}}</h2>
+  <div class="muted small">Ghi tiền đã nhận cho một đợt. Số tiền không vượt phần còn phải thu của đợt.</div>
+  <sc-if value="{{hasInst}}"><div class="field"><label>Đợt</label><select class="input" onChange="{{onN}}"><sc-for list="{{opts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.label}}</option></sc-for></select></div></sc-if>
+  <div class="muted small">Còn phải thu {{leftTxt}}</div>
+  <div class="field"><label>Số tiền (đồng) <span style="color:var(--danger-ink)">*</span></label><input class="input" inputmode="numeric" value="{{amountTxt}}" placeholder="VD: 2.250.000" onInput="{{onAmount}}"><span class="err">{{e.amount}}</span></div>
+  <div class="g2"><div class="field"><label>Ngày thu</label><input class="input" value="{{on}}" placeholder="dd/mm/yyyy" onInput="{{onOn}}"><span class="err">{{e.on}}</span></div>
+    <div class="field"><label>Hình thức</label><select class="input" onChange="{{onMethod}}"><option selected="{{isBank}}">Chuyển khoản</option><option selected="{{isCash}}">Tiền mặt</option></select></div></div>
+  <div class="field"><label>Số tham chiếu</label><input class="input" value="{{ref}}" placeholder="Tuỳ chọn, VD mã giao dịch" onInput="{{onRef}}"></div>
+  <div class="row"><span class="spacer"></span><button class="btn" onClick="{{close}}">Huỷ</button><button class="btn primary" onClick="{{save}}">Ghi lần thu</button></div>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"row":{"editor":null,"default":{"id":"","name":"","leftN":0}},"preset":{"editor":null},"onSave":{"editor":null},"onClose":{"editor":null},"$preview":{"width":560,"height":620}}'>
+class Component extends DCLogic {
+  // Theo fee-payment-modal.tsx: chọn đợt (mặc định đợt đầu còn nợ), số tiền, ngày thu, hình thức, số tham chiếu.
+  // Luật: số tiền > 0 (ERR-PAY-05), ngày thu không ở tương lai (ERR-PAY-04), không vượt còn phải thu của đợt (ERR-PAY-03).
+  state = { n: null, amount: '', on: '15/10/2026', method: 'Chuyển khoản', ref: '', e: {} };
+  static TODAY = new Date(2026, 9, 15);
+  static maskDate = (v) => { const d = String(v).replace(/\D/g, '').slice(0, 8); return d.slice(0, 2) + (d.length > 2 ? '/' + d.slice(2, 4) : '') + (d.length > 4 ? '/' + d.slice(4) : ''); };
+  static RE = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+  renderVals() {
+    const P = this.props, S = this.state, C = Component, row = P.row || { insts: null, leftN: 0 }, insts = row.insts || null, money = (n) => (n || 0).toLocaleString('vi-VN') + ' đ';
+    const firstOpen = insts ? (insts.find((i) => i.leftN > 0) || insts[0]) : null;
+    const n = S.n !== null ? S.n : P.preset || (firstOpen ? firstOpen.n : null), cur = insts ? insts.find((i) => i.n === n) : null, limit = cur ? cur.leftN : row.leftN;
+    const amount = +String(S.amount).replace(/\D/g, '');
+    const save = () => {
+      const e = {}, m = C.RE.exec(S.on);
+      if (!(amount > 0)) e.amount = 'Nhập số tiền lớn hơn 0 (ERR-PAY-05).';
+      else if (amount > limit) e.amount = cur ? 'Số tiền vượt số còn phải thu của Đợt ' + cur.n + ' (' + money(limit) + ') (ERR-PAY-03).' : 'Số tiền vượt số còn phải thu (' + money(limit) + ') (ERR-PAY-03).';
+      if (!m) e.on = 'Nhập ngày dd/mm/yyyy'; else if (new Date(+m[3], +m[2] - 1, +m[1]) > C.TODAY) e.on = 'Ngày thu không ở tương lai (ERR-PAY-04).';
+      if (Object.keys(e).length) { this.setState({ e }); return; }
+      P.onSave && P.onSave(row.id, n, amount, S.on, S.method, S.ref.trim());
+    };
+    return { row, hasInst: !!insts, opts: (insts || []).map((i) => ({ v: i.n, sel: i.n === n, label: 'Đợt ' + i.n + ' · ' + i.pct + '% · còn ' + money(i.leftN) })), leftTxt: money(limit),
+      amountTxt: amount ? amount.toLocaleString('vi-VN') : S.amount, e: S.e, on: S.on, ref: S.ref, isBank: S.method === 'Chuyển khoản', isCash: S.method === 'Tiền mặt',
+      onN: (ev) => this.setState({ n: +ev.target.value, e: {} }), onAmount: (ev) => this.setState({ amount: ev.target.value.replace(/\D/g, ''), e: {} }), onOn: (ev) => this.setState({ on: C.maskDate(ev.target.value), e: {} }),
+      onMethod: (ev) => this.setState({ method: ev.target.value }), onRef: (ev) => this.setState({ ref: ev.target.value }), close: P.onClose, save };
+  }
+}
+</script>
+</body>
+</html>

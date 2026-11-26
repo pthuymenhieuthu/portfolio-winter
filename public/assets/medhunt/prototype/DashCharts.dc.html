@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Biểu đồ tổng quan</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.dc-fun{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:0;padding:14px 16px}
+.dc-step{position:relative;display:flex;align-items:center;gap:6px;height:58px;padding:0 12px 0 18px;margin-left:-6px;background:#eef1f6;border:0;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%);min-width:0}
+.dc-step:first-child{margin-left:0;padding-left:12px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);border-radius:12px 0 0 12px}
+.dc-step:last-child{clip-path:polygon(0 0,100% 0,100% 100%,0 100%,10px 50%);border-radius:0 12px 12px 0}
+/* Viền mảnh cho hình mũi tên: nền của chặng là màu viền, lớp ::before trắng thụt 1px cùng hình cắt nên chỉ còn rìa viền (border thật bị clip-path xén ở mũi tên) */
+.dc-step::before{content:"";position:absolute;inset:1px;background:var(--surface);clip-path:inherit;border-radius:inherit}
+.dc-n,.dc-l{position:relative}
+.dc-n{flex:none;display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 5px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+/* Kết thúc giữa chừng: tô đỏ nhạt (nền và viền), số tròn đỏ */
+.dc-step.bad{background:color-mix(in srgb,var(--danger) 30%,#fff)}.dc-step.bad::before{background:color-mix(in srgb,var(--danger) 7%,#fff)}
+.dc-step.bad .dc-n{background:var(--danger);color:var(--on-brand);box-shadow:none}
+.dc-step.has .dc-n{background:var(--brand);color:var(--on-brand);box-shadow:none}.dc-step.last .dc-n{background:var(--success);color:var(--on-brand);box-shadow:none}
+.dc-l{min-width:0;font-size:11.5px;font-weight:600;line-height:1.3;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dc-step.zero .dc-l{opacity:.7}
+.dc-fv{list-style:none;margin:0;padding:4px 24px 24px;display:flex;flex-direction:column;gap:6px}
+.dc-fv li{display:grid;grid-template-columns:110px minmax(0,1fr) 92px;align-items:center;gap:14px}
+.dc-fv-l{font-size:13px;font-weight:600;color:var(--muted)}
+.dc-fv-track{display:flex;justify-content:center}.dc-fv-bar{height:30px;min-width:8px;border-radius:8px;background:linear-gradient(to bottom,var(--fv),color-mix(in srgb,var(--fv) 38%,#fff))}
+.dc-fv-v{text-align:right;font-size:13px;font-weight:650;color:var(--muted);font-variant-numeric:tabular-nums}.dc-fv-v small{display:block;font-size:11px;font-weight:500;color:var(--subtle)}
+@media(max-width:600px){.dc-fv li{grid-template-columns:84px minmax(0,1fr) 72px;gap:8px}}
+/* Chú giải hiện ngay khi rê chuột hoặc focus (không dùng title của trình duyệt vì trễ cả giây) */
+.dc-info{position:relative;display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;margin-left:6px;border:1px solid var(--muted);border-radius:50%;color:var(--muted);font-size:10px;font-weight:600;line-height:1;cursor:help;vertical-align:1px}.dc-info:hover,.dc-info:focus-visible{color:var(--brand-ink);border-color:var(--brand)}
+.dc-tip{display:none;position:absolute;left:-8px;top:calc(100% + 8px);z-index:20;width:360px;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--elev-3);color:var(--ink-2);font-size:12px;font-weight:400;line-height:1.5;text-align:left;cursor:default}
+.dc-info:hover .dc-tip,.dc-info:focus .dc-tip{display:block}
+.dc-tip b{display:block;margin-bottom:4px;font-size:13px;font-weight:600;color:var(--ink)}.dc-tip-note{display:block}.dc-tip-head{display:block;margin:10px 0 4px;font-weight:600;color:var(--ink)}
+.dc-tip ul{margin:0;padding-left:16px;columns:2;column-gap:16px}.dc-tip li{break-inside:avoid;margin-bottom:2px}
+.dc-bars{list-style:none;margin:0;padding:0 24px 22px;display:flex;flex-direction:column;gap:16px}
+.dc-bar-top{display:flex;align-items:center;gap:10px;height:22px;margin-bottom:6px}
+.dc-bar-l{flex:1;font-size:13.5px;font-weight:650;color:var(--muted)}.dc-bar-n{font-size:13px;font-weight:650;color:var(--muted);font-variant-numeric:tabular-nums}.dc-bar-note{font-size:12px;color:var(--muted)}
+.dc-track{height:10px;border-radius:999px;background:var(--surface-2);overflow:hidden;box-shadow:inset 0 0 0 1px var(--line-soft)}.dc-fill{display:block;height:100%;border-radius:999px;background-image:linear-gradient(172deg,color-mix(in srgb,var(--bar,var(--chart-1)) 85%,#fff),color-mix(in srgb,var(--bar,var(--chart-1)) 28%,#fff));background-repeat:no-repeat}
+@media(max-width:900px){.dc-fun{grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.dc-step,.dc-step:first-child,.dc-step:last-child{clip-path:none;border-radius:12px;margin-left:0;padding:0 14px}}
+</style></helmet>
+<div>
+  <sc-if value="{{isFunnel}}"><div class="dc-fun" role="list" aria-label="Tiến trình ca tuyển"><sc-for list="{{items}}" as="s"><div class="{{s.cls}}" role="listitem" aria-label="{{s.aria}}"><span class="dc-n">{{s.n}}</span><span class="dc-l">{{s.label}}</span></div></sc-for></div></sc-if>
+  <sc-if value="{{isFunnelV}}"><ul class="dc-fv" aria-label="Phễu tuyển dụng"><sc-for list="{{items}}" as="f"><li><span class="dc-fv-l">{{f.label}}</span><span class="dc-fv-track"><span class="dc-fv-bar" style="{{f.style}}"></span></span><span class="dc-fv-v">{{f.n}}<small>{{f.note}}</small></span></li></sc-for></ul></sc-if>
+  <sc-if value="{{isBars}}"><ul class="dc-bars" style="--bar:{{barColor}}"><sc-for list="{{items}}" as="b"><li><div class="dc-bar-top"><span class="dc-bar-l">{{b.label}}<sc-if value="{{b.info}}"><span class="dc-info" tabindex="0" aria-label="{{b.info.title}}">i<span class="dc-tip" role="tooltip"><b>{{b.info.title}}</b><span class="dc-tip-note">{{b.info.note}}</span><span class="dc-tip-head">{{b.info.head}}</span><ul><sc-for list="{{b.info.list}}" as="s"><li>{{s}}</li></sc-for></ul></span></span></sc-if></span><span class="dc-bar-note">{{b.note}}</span><span class="dc-bar-n">{{b.n}}</span></div><div class="dc-track"><span class="dc-fill" style="{{b.style}}"></span></div></li></sc-for></ul>
+    <sc-if value="{{empty}}"><div class="dh-empty">{{emptyText}}</div></sc-if></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":null,"default":"funnel"},"items":{"editor":null,"default":[]},"emptyText":{"editor":null,"default":"Chưa có dữ liệu."},"tone":{"editor":null,"default":"blue"},"$preview":{"width":1100,"height":100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const mode = this.props.mode || 'funnel', raw = this.props.items || [];
+    // Một dải hai sắc xanh dương (đậm ở thanh trên, nhạt dần xuống thanh dưới) chạy qua cả chồng thanh: mỗi thanh là một ô cửa nhìn vào cùng một dải (kích thước dải bằng cả khung thanh, không theo bề rộng từng thanh), nên màu đổi ngay trong thanh và nối liền sang thanh kế.
+    // Các hằng này khớp với CSS (dòng nhãn 22px, thanh 10px, khoảng cách 16px) để tính đúng vị trí ô cửa của từng thanh
+    const ROW = 22 + 6 + 10 + 16, TRACK_TOP = 22 + 6;
+    const FV = (b, i, a) => ({ ...b, style: 'width:' + Math.max(b.pct, b.n ? 4 : 0) + '%;--fv:color-mix(in srgb,var(--chart-1) ' + Math.round(100 - i * (70 / Math.max(a.length - 1, 1))) + '%,var(--surface))' });
+    const items = mode === 'funnelv' ? raw.map(FV) : mode === 'funnel' ? raw.map((s) => ({ ...s, cls: 'dc-step' + (s.n > 0 ? (s.bad ? ' bad' : s.last ? ' last' : ' has') : '') + (s.n === 0 ? ' zero' : ''), aria: s.label + ': ' + s.n + ' ca' })) : raw.map((b, i, all) => ({ ...b, style: 'width:' + Math.max(b.pct, b.n ? 3 : 0) + '%;background-size:' + (10000 / Math.max(b.pct, b.n ? 3 : 1)) + '% ' + (all.length * ROW - 16) + 'px;background-position:0 -' + (i * ROW + TRACK_TOP) + 'px' }));
+    return { isFunnel: mode === 'funnel', isFunnelV: mode === 'funnelv', isBars: mode === 'bars', items, empty: raw.length === 0, emptyText: this.props.emptyText, barColor: this.props.tone === 'green' ? 'var(--tone-green)' : 'var(--chart-1)' };
+  }
+}
+</script>
+</body>
+</html>

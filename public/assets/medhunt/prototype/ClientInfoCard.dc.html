@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Thông tin khách hàng</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./client-master.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.ic-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 40px;padding:16px 24px}@media (max-width:900px){.ic-g{grid-template-columns:minmax(0,1fr)}}
+.ic-g dl{margin:0;display:grid;grid-template-columns:minmax(0,9rem) minmax(0,1fr);gap:12px 16px;font-size:14px}.ic-g dt{color:var(--muted)}.ic-g dd{margin:0;font-weight:600;color:var(--ink-2);word-break:break-word}
+.ic-meta{display:flex;flex-wrap:wrap;gap:6px 24px;padding:12px 24px;border-top:1px solid var(--line-soft);font-size:13px;color:var(--muted)}.ic-meta b{color:var(--ink-2);font-weight:600}
+</style></helmet>
+<div class="card"><div class="card-h"><h3>Thông tin</h3><span class="chip gray">Trụ sở chính</span><span class="spacer"></span><button class="btn sm" onClick="{{onEdit}}">Sửa</button></div>
+  <div class="ic-g"><dl><dt>Mã khách hàng</dt><dd class="tabular">{{c.code}}</dd><dt>Nhóm khách hàng</dt><dd>{{c.group}}</dd><dt>Nguồn khách hàng</dt><dd>{{c.sourceTxt}}</dd><dt>Điện thoại</dt><dd class="tabular">{{c.phone}}</dd><dt>Email</dt><dd>{{c.email}}</dd></dl>
+    <dl><dt>Tỉnh/thành</dt><dd>{{c.provinceTxt}}</dd><dt>Phường/xã</dt><dd>{{c.wardTxt}}</dd><dt>Địa chỉ</dt><dd>{{c.addressTxt}}</dd></dl></div>
+  <div class="ic-meta"><span>Người tạo <b>{{c.createdBy}}</b> · {{c.created}}</span><span>Người sửa <b>{{c.updatedBy}}</b> · {{c.updatedAt}}</span></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"client":{"editor":null},"onEdit":{"editor":null},"$preview":{"width":900,"height":300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const c = this.props.client || {}, dash = (v) => (v && v !== '—' ? v : '—');
+    return { c: { ...c, sourceTxt: dash(c.source), provinceTxt: dash(c.province), wardTxt: dash(c.ward), addressTxt: dash(c.address), phone: dash(c.phone), email: dash(c.email) }, onEdit: this.props.onEdit };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Hộp thoại đánh giá hồ sơ</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./modal-ux.js"></script><script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}.rv{width:min(520px,94vw)}.rv .hint{font-size:12px;color:var(--muted)}</style></helmet>
+<div class="scrim"><div class="modal anim-scale rv" role="dialog" aria-label="{{title}}">
+  <h2 style="margin:0">{{title}}</h2>
+  <div class="muted small">{{intro}}</div>
+  <sc-if value="{{isSim}}">
+    <div class="field"><label>Kết luận</label><div class="rdg" role="radiogroup" aria-label="Kết luận"><label class="rd"><input type="radio" name="rd-ReqReview-6" checked="{{r.pass}}" onChange="{{pickPass}}"><span>Đạt</span></label><label class="rd"><input type="radio" name="rd-ReqReview-6" checked="{{r.fail}}" onChange="{{pickFail}}"><span>Không đạt</span></label><sc-if value="{{allowSecond}}"><label class="rd"><input type="radio" name="rd-ReqReview-6" checked="{{r.second}}" onChange="{{pickSecond}}"><span>Đề xuất đánh giá vòng 2</span></label></sc-if></div></div>
+    <sc-if value="{{r.second}}"><div class="field"><label>Người đánh giá vòng 2 <span class="req">*</span></label><select class="input" onChange="{{onProposed}}"><option value="">Chọn người đánh giá…</option><sc-for list="{{people}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.v}}</option></sc-for></select><span class="err">{{e.proposed}}</span></div></sc-if>
+    <div class="field"><label>Nhận xét {{needNote}}</label><input class="input" value="{{f.comment}}" placeholder="VD: 8 năm hồi sức tích cực, vững chuyên môn" onInput="{{onComment}}"><span class="err">{{e.comment}}</span></div>
+  </sc-if>
+  <sc-if value="{{isSecond}}"><div class="field"><label>Người đánh giá vòng 2 <span class="req">*</span></label><select class="input" onChange="{{onWho}}"><sc-for list="{{whoOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select><span class="err">{{e.who}}</span><span class="hint">Mặc định là người vòng đầu đề xuất, đổi được. Vòng 2 là kết luận cuối.</span></div></sc-if>
+  <sc-if value="{{hasDue}}"><div class="g2"><div class="field"><label>Ngày hết hạn đánh giá <span class="req">*</span></label><input class="input" value="{{dueDate}}" placeholder="dd/mm/yyyy" onInput="{{onDueDate}}"><span class="err">{{e.due}}</span></div>
+      <div class="field"><label>Giờ <span class="req">*</span></label><input class="input" value="{{dueTime}}" placeholder="hh:mm" onInput="{{onDueTime}}"><span class="err">{{e.dueTime}}</span></div></div>
+    <div class="hint">Mặc định là lúc gửi cộng 3 ngày, giữ giờ phút.</div></sc-if>
+  <div class="row"><span class="spacer"></span><button class="btn" onClick="{{close}}">Huỷ</button><button class="btn {{ctaCls}}" onClick="{{save}}">{{cta}}</button></div>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":null,"default":"send1"},"count":{"editor":null,"default":1},"allowSecond":{"editor":null,"default":true},"today":{"editor":null,"default":"15/10/2026"},"dueInit":{"editor":null,"default":""},"proposedLabel":{"editor":null,"default":"Người được đề xuất của từng hồ sơ"},"round1":{"editor":null,"default":"BS Tâm"},"secondRelease":{"editor":null,"default":false},"onSave":{"editor":null},"onClose":{"editor":null},"$preview":{"width":600,"height":520}}'>
+class Component extends DCLogic {
+  componentDidMount() { this.releaseFocus = window.MedModalFocus(() => this.props.onClose?.()); }
+  componentWillUnmount() { this.releaseFocus?.(); }
+  // Theo module 06 B3.2 #2, #3, #12, #13 và UC-MAT-10. Người đánh giá ở vòng 2 chọn từ danh sách; người vòng đầu bị chặn (ERR-MAT-23).
+  static maskTime = (v) => { const d = String(v).replace(/\D/g, '').slice(0, 4); return d.slice(0, 2) + (d.length > 2 ? ':' + d.slice(2) : ''); };
+  static maskDate = (v) => { const d = String(v).replace(/\D/g, '').slice(0, 8); return d.slice(0, 2) + (d.length > 2 ? '/' + d.slice(2, 4) : '') + (d.length > 4 ? '/' + d.slice(4) : ''); };
+  static PEOPLE = ['BS Hải', 'BS Vinh', 'BS Mai']; // người đề xuất mẫu, không gồm BS Tâm là người vòng đầu mô phỏng
+  static STAFF_PEOPLE = ['BS Hải', 'BS Vinh', 'BS Mai', 'BS Tâm'];
+  static PROPOSED = '__proposed__';
+  state = { f: { result: 'PASS', proposed: null, comment: '', dueDate: null, dueTime: null, who: '__proposed__' }, e: {} };
+  renderVals() {
+    const P = this.props, S = this.state, C = Component, f = S.f, m = P.mode, n = P.count || 1, set = (patch) => this.setState({ f: { ...f, ...patch }, e: {} });
+    const pad = (x) => String(x).padStart(2, '0'), td = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(P.today || '15/10/2026') || [0, '15', '10', '2026'];
+    // Ngày giờ hiện tại của prototype là ngày giả lập lúc 09:00 để hạn mặc định ổn định
+    const now = new Date(+td[3], +td[2] - 1, +td[1], 9, 0), d3 = new Date(+td[3], +td[2] - 1, +td[1] + 3, 9, 0);
+    const init = /^(\d{2}\/\d{2}\/\d{4}) (\d{2}:\d{2})$/.exec(P.dueInit || ''), defDate = init ? init[1] : pad(d3.getDate()) + '/' + pad(d3.getMonth() + 1) + '/' + d3.getFullYear(), defTime = init ? init[2] : '09:00';
+    const dueDate = f.dueDate !== null ? f.dueDate : defDate, dueTime = f.dueTime !== null ? f.dueTime : defTime;
+    const proposed = f.proposed !== null ? f.proposed : '';
+    const hasDue = m === 'send1' || m === 'due' || m === 'second';
+    const save = () => {
+      const e = {}, d = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(dueDate), okT = (t) => /^([01]\d|2[0-3]):[0-5]\d$/.test(t);
+      if (hasDue) { if (!d) e.due = 'Nhập ngày dd/mm/yyyy'; if (!okT(dueTime)) e.dueTime = 'Nhập giờ hh:mm'; if (d && okT(dueTime) && new Date(+d[3], +d[2] - 1, +d[1], +dueTime.slice(0, 2), +dueTime.slice(3)) <= now) e.due = 'Hạn đánh giá phải sau thời điểm hiện tại. Chọn lại ngày giờ. (ERR-MAT-17)'; }
+      if (m === 'sim') {
+        if (f.result === 'SECOND' && !proposed) e.proposed = 'Chọn người đánh giá vòng 2. (ERR-MAT-22)';
+        if (!f.comment.trim()) e.comment = 'Nhập nhận xét đánh giá. (ERR-MAT-02)';
+      }
+      if (m === 'second' && f.who === P.round1) e.who = 'Người đánh giá vòng 2 phải khác người đã đánh giá vòng đầu. (ERR-MAT-23)';
+      if (Object.keys(e).length) { this.setState({ e }); return; }
+      P.onSave && P.onSave({ due: dueDate + ' ' + dueTime, result: f.result, proposed, comment: f.comment.trim(), who: f.who === C.PROPOSED ? '' : f.who });
+    };
+    const titles = { send1: 'Gửi ' + n + ' hồ sơ đánh giá', sim: 'Giả lập kết quả đánh giá', second: 'Gửi ' + n + ' hồ sơ đánh giá vòng 2', due: 'Sửa hạn đánh giá', release: 'Trả lại ' + n + ' hồ sơ' };
+    const intros = { send1: 'Hồ sơ vào danh sách chờ nhận của người đánh giá nội bộ. Ai nhận trước sẽ đánh giá.', sim: 'Chỉ có ở bản mẫu: thay người đánh giá chọn kết quả cho ' + n + ' hồ sơ.',
+      second: 'Gửi hồ sơ cho người được đề xuất hoặc người khác, kèm hạn đánh giá.', due: 'Đổi hạn của lượt đánh giá đang chờ kết luận. Hạn quá chỉ gắn cờ, không đổi trạng thái hồ sơ.',
+      release: P.secondRelease ? 'Lượt đánh giá vòng 2 bị rút; hồ sơ về Đề xuất đánh giá vòng 2 để gửi lại cho người khác.' : 'Hồ sơ về danh sách chờ nhận để người đánh giá nội bộ khác nhận.' };
+    const ctas = { send1: 'Gửi', sim: f.result === 'SECOND' ? 'Ghi đề xuất vòng 2' : 'Áp kết quả', second: 'Gửi vòng 2', due: 'Lưu hạn', release: 'Trả lại' };
+    const whoOpts = [{ v: C.PROPOSED, l: P.proposedLabel, sel: f.who === C.PROPOSED }, ...C.STAFF_PEOPLE.map((v) => ({ v, l: v, sel: f.who === v }))];
+    return { title: titles[m], intro: intros[m], isSim: m === 'sim', isSecond: m === 'second', hasDue, allowSecond: P.allowSecond !== false, f, e: S.e, people: C.PEOPLE.map((v) => ({ v, sel: v === proposed })), whoOpts, dueDate, dueTime,
+      r: { pass: f.result === 'PASS', fail: f.result === 'FAIL', second: f.result === 'SECOND' }, needNote: '*', cta: ctas[m], ctaCls: m === 'release' ? 'danger' : 'primary',
+      pickPass: () => set({ result: 'PASS' }), pickFail: () => set({ result: 'FAIL' }), pickSecond: () => set({ result: 'SECOND' }),
+      onProposed: (ev) => set({ proposed: ev.target.value }), onWho: (ev) => set({ who: ev.target.value }), onComment: (ev) => set({ comment: ev.target.value }), onDueDate: (ev) => set({ dueDate: C.maskDate(ev.target.value) }), onDueTime: (ev) => set({ dueTime: C.maskTime(ev.target.value) }), save, close: P.onClose };
+  }
+}
+</script>
+</body>
+</html>

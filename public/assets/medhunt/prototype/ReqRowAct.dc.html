@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Thao tác một chạm trên ca tuyển</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}.ra{width:min(540px,94vw)}.ra .hint{font-size:12px;color:var(--muted)}</style></helmet>
+<div class="scrim"><div class="modal anim-scale ra" role="dialog" aria-label="{{title}}">
+  <h2 style="margin:0">{{title}}</h2><div class="fw5">{{cfg.name}}</div>
+  <div class="muted small">{{intro}}</div>
+  <sc-if value="{{isRespond}}"><div class="field"><label>Phản hồi của khách hàng</label><div class="rdg" role="radiogroup" aria-label="Phản hồi"><label class="rd"><input type="radio" name="rd-ReqRowAct-2" checked="{{f.invite}}" onChange="{{setInvite}}"><span>Mời phỏng vấn</span></label><label class="rd"><input type="radio" name="rd-ReqRowAct-2" checked="{{f.reject}}" onChange="{{setReject}}"><span>Từ chối</span></label></div></div></sc-if>
+  <sc-if value="{{isSchedule}}"><div class="g2"><div class="field"><label>Ngày phỏng vấn <span class="req">*</span></label><input class="input" value="{{f.date}}" placeholder="dd/mm/yyyy" onInput="{{onDate}}"><span class="err">{{e.date}}</span></div>
+    <div class="field"><label>Giờ bắt đầu <span class="req">*</span></label><input class="input" value="{{f.time}}" placeholder="hh:mm" onInput="{{onTime}}"><span class="err">{{e.time}}</span></div></div>
+    <div class="field"><label>Hình thức</label><div class="rdg" role="radiogroup" aria-label="Hình thức"><label class="rd"><input type="radio" name="rd-ReqRowAct-3" checked="{{f.online}}" onChange="{{setOnline}}"><span>Online</span></label><label class="rd"><input type="radio" name="rd-ReqRowAct-3" checked="{{f.direct}}" onChange="{{setDirect}}"><span>Trực tiếp</span></label></div></div></sc-if>
+  <sc-if value="{{isResult}}"><div class="field"><label>Kết quả phỏng vấn</label><div class="rdg" role="radiogroup" aria-label="Kết quả"><label class="rd"><input type="radio" name="rd-ReqRowAct-4" checked="{{f.pass}}" onChange="{{setPass}}"><span>Đạt</span></label><label class="rd"><input type="radio" name="rd-ReqRowAct-4" checked="{{f.fail}}" onChange="{{setFail}}"><span>Không đạt</span></label></div></div></sc-if>
+  <sc-if value="{{isOffer}}"><div class="field"><label>Mức lương chính thức (đồng/tháng) <span class="req">*</span></label><input class="input" inputmode="numeric" value="{{f.salaryTxt}}" onInput="{{onSalary}}"><span class="err">{{e.salary}}</span></div>
+    <div class="field"><label>Ngày nhận việc <span class="req">*</span></label><input class="input" value="{{f.start}}" placeholder="dd/mm/yyyy" onInput="{{onStart}}"><span class="err">{{e.start}}</span></div></sc-if>
+  <sc-if value="{{isAnswer}}"><div class="field"><label>Câu trả lời của ứng viên</label><div class="rdg" role="radiogroup" aria-label="Trả lời"><label class="rd"><input type="radio" name="rd-ReqRowAct-5" checked="{{f.accept}}" onChange="{{setAccept}}"><span>Đồng ý nhận offer</span></label><label class="rd"><input type="radio" name="rd-ReqRowAct-5" checked="{{f.decline}}" onChange="{{setDecline}}"><span>Từ chối</span></label></div><span class="hint">{{answerHint}}</span></div></sc-if>
+  <sc-if value="{{isStop}}"><div class="field"><label>Điểm dừng <span class="req">*</span></label><select class="input" onChange="{{onPoint}}"><sc-for list="{{pointOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></div></sc-if>
+  <sc-if value="{{hasReason}}"><div class="field"><label>Lý do {{reasonFor}} <span class="req">*</span></label><select class="input" onChange="{{onReason}}"><option value="">Chọn lý do…</option><sc-for list="{{reasonOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select><span class="err">{{e.reason}}</span></div></sc-if>
+  <sc-if value="{{hasLeft}}"><div class="field"><label>Ngày nghỉ <span class="req">*</span></label><input class="input" value="{{f.left}}" placeholder="dd/mm/yyyy" onInput="{{onLeft}}"><span class="hint">{{leftHint}}</span><span class="err">{{e.left}}</span></div></sc-if>
+  <sc-if value="{{hasNote}}"><div class="field"><label>Nhận xét {{noteReq}}</label><input class="input" value="{{f.note}}" placeholder="Ghi ngắn gọn" onInput="{{onNote}}"><span class="err">{{e.note}}</span></div></sc-if>
+  <div class="row"><span class="spacer"></span><button class="btn" onClick="{{close}}">Huỷ</button><button class="btn {{ctaCls}}" onClick="{{save}}">{{cta}}</button></div>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"cfg":{"editor":null,"default":{"kind":"respond","name":"","stage":0}},"onSave":{"editor":null},"onClose":{"editor":null},"$preview":{"width":600,"height":480}}'>
+class Component extends DCLogic {
+  // Thao tác một chạm làm ngay trên hàng ca của tab Tiến trình (row-actions.tsx của code) và lý do cố định của điểm dừng D1 tới D11 (module 07 B2.4, module 08 B2.1)
+  static D = {
+    D1: ['Khách hàng từ chối', ['D1-01', 'Chuyên môn, kinh nghiệm chưa phù hợp'], ['D1-02', 'Chưa phù hợp cấp vị trí'], ['D1-03', 'Lương mong muốn vượt khung'], ['D1-04', 'Nơi ở xa, khó gắn bó'], ['D1-05', 'Đã tuyển được người từ nguồn khác'], ['D1-99', 'Khác']],
+    D2: ['Không đạt phỏng vấn', ['D2-01', 'Chuyên môn chưa đạt'], ['D2-02', 'Giao tiếp, thái độ chưa phù hợp'], ['D2-03', 'Kinh nghiệm thực tế không đúng như hồ sơ'], ['D2-04', 'Không thống nhất được lương, điều kiện'], ['D2-99', 'Khác']],
+    D3: ['Ứng viên rút', ['D3-01', 'Nhận việc nơi khác'], ['D3-02', 'Đổi ý, không chuyển việc nữa'], ['D3-03', 'Vắng phỏng vấn, không liên lạc được'], ['D3-04', 'Điều kiện công việc không phù hợp'], ['D3-05', 'Sức khoẻ, gia đình'], ['D3-99', 'Khác']],
+    D4: ['Từ chối offer', ['D4-01', 'Lương, phúc lợi thấp hơn mong đợi'], ['D4-02', 'Nhận offer nơi khác'], ['D4-03', 'Nơi đang làm giữ lại'], ['D4-04', 'Nơi làm, ca trực không phù hợp'], ['D4-05', 'Sức khoẻ, gia đình'], ['D4-99', 'Khác']],
+    D5: ['Khách hàng dừng', ['D5-01', 'Dừng tuyển vị trí'], ['D5-02', 'Đã tuyển đủ từ nguồn khác'], ['D5-03', 'Rút offer vì hồ sơ không đúng sự thật'], ['D5-04', 'Không đạt điều kiện trước nhận việc'], ['D5-99', 'Khác']],
+    D6: ['SMS rút', ['D6-01', 'Gửi nhầm hồ sơ hoặc nhầm yêu cầu'], ['D6-02', 'Phát hiện thông tin hồ sơ không đúng'], ['D6-03', 'Ứng viên chưa đồng ý được giới thiệu'], ['D6-99', 'Khác']],
+    D7: ['Không đến thử việc', ['D7-01', 'Nhận việc nơi khác'], ['D7-02', 'Đổi ý, không báo trước'], ['D7-03', 'Sức khoẻ, gia đình'], ['D7-99', 'Khác']],
+    D8: ['Tự nghỉ khi thử việc', ['D8-01', 'Có lý do hợp lý'], ['D8-02', 'Không có lý do hợp lý'], ['D8-99', 'Khác']],
+    D9: ['Bị cho nghỉ khi thử việc', ['D9-01', 'Không đạt thử việc (năng lực, chuyên môn)'], ['D9-02', 'Bị kỷ luật'], ['D9-03', 'Khách hàng cắt giảm, đổi kế hoạch'], ['D9-99', 'Khác']],
+    D10: ['Tự nghỉ khi bảo hành', ['D10-01', 'Có lý do hợp lý'], ['D10-02', 'Không có lý do hợp lý (hoàn 30%)'], ['D10-99', 'Khác']],
+    D11: ['Bị cho nghỉ khi bảo hành', ['D11-01', 'Bị kỷ luật buộc thôi việc (hoàn 50%)'], ['D11-02', 'Không đạt yêu cầu công việc'], ['D11-03', 'Khách hàng cắt giảm, đổi kế hoạch'], ['D11-99', 'Khác']] };
+  // Điểm dừng chọn được theo giai đoạn của ca (stopPointsOf trong code): D4 chỉ qua câu trả lời offer, D1 và D2 chỉ qua phản hồi và kết quả phỏng vấn
+  static STOPS = { 0: ['D3', 'D5', 'D6'], 1: ['D3', 'D5', 'D6'], 2: ['D3', 'D5', 'D6'], 3: ['D5', 'D6'], 4: ['D5', 'D7'], 5: ['D7', 'D8', 'D9'], 6: ['D8', 'D9', 'D10', 'D11'], 7: ['D8', 'D9', 'D10', 'D11'] };
+  // D8 đến D11 là ứng viên nghỉ: cần ngày nghỉ, kiểm theo mốc thử việc hoặc bảo hành của phiếu (ERR-PIP-16, 17, 18)
+  static LEFT = ['D8', 'D9', 'D10', 'D11'];
+  static pd = (v) => { const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(v || ''); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; };
+  static NOW = new Date(2026, 9, 15, 9, 0);
+  static maskDate = (v) => { const d = String(v).replace(/\D/g, '').slice(0, 8); return d.slice(0, 2) + (d.length > 2 ? '/' + d.slice(2, 4) : '') + (d.length > 4 ? '/' + d.slice(4) : ''); };
+  static maskTime = (v) => { const d = String(v).replace(/\D/g, '').slice(0, 4); return d.slice(0, 2) + (d.length > 2 ? ':' + d.slice(2) : ''); };
+  state = { f: { left: '', decision: 'INTERVIEW_REQUESTED', date: '', time: '09:00', mode: 'Online', result: 'PASS', salary: '', start: '', reply: 'accept', point: null, reason: '', note: '' }, e: {} };
+  renderVals() {
+    const P = this.props, S = this.state, C = Component, f = S.f, cfg = P.cfg || {}, k = cfg.kind, set = (patch) => this.setState({ f: { ...f, ...patch }, e: {} });
+    const salary = +String(f.salary).replace(/\D/g, ''), ctx = cfg.ctx || {}, pts = (C.STOPS[cfg.stage] || []).filter((d) => !(ctx.lateOnly && !C.LEFT.includes(d)) && !(ctx.prob === false && (d === 'D8' || d === 'D9'))), point = f.point || pts[0], needLeft = k === 'stop' && C.LEFT.includes(point);
+    // Điểm lý do đang áp: từ chối phản hồi → D1, kết quả không đạt → D2, từ chối offer → D4, dừng ca → điểm đã chọn
+    const dpt = k === 'respond' && f.decision === 'REJECTED' ? 'D1' : k === 'result' && f.result === 'FAIL' ? 'D2' : k === 'answer' && f.reply === 'decline' ? 'D4' : k === 'stop' ? point : null;
+    const items = dpt ? C.D[dpt].slice(1) : [], noteReq = k === 'respond' && dpt ? '*' : '(tuỳ chọn)';
+    const save = () => {
+      const e = {};
+      if (k === 'schedule') { const d = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(f.date), okT = (t) => /^([01]\d|2[0-3]):[0-5]\d$/.test(t);
+        if (!d) e.date = 'Nhập ngày dd/mm/yyyy'; if (!okT(f.time)) e.time = 'Nhập giờ hh:mm (00:00 đến 23:59)';
+        if (d && okT(f.time) && new Date(+d[3], +d[2] - 1, +d[1], +f.time.slice(0, 2), +f.time.slice(3)) <= C.NOW) e.date = 'Lịch phỏng vấn phải sau lúc lưu.'; }
+      if (k === 'offer') { if (!(salary > 0)) e.salary = 'Nhập mức lương lớn hơn 0.'; if (!/^\d{2}\/\d{2}\/\d{4}$/.test(f.start)) e.start = 'Nhập ngày dd/mm/yyyy'; }
+      if (needLeft) { const L = C.pd(f.left), pr = point === 'D8' || point === 'D9', lo = C.pd(pr ? ctx.a : ctx.c), hi = C.pd(pr ? ctx.c : ctx.d), td = C.pd(ctx.today);
+        if (!L) e.left = 'Nhập ngày nghỉ dd/mm/yyyy (ERR-PIP-16).';
+        else if ((lo && L < lo) || (hi && L >= hi) || (td && L > td)) e.left = pr ? 'Ngày nghỉ phải từ ngày bắt đầu thử việc ' + ctx.a + ', trước ngày bắt đầu làm chính thức ' + ctx.c + ' và không ở tương lai (ERR-PIP-17).' : 'Ngày nghỉ phải từ ngày bắt đầu làm chính thức ' + ctx.c + ', trước hạn bảo hành ' + ctx.d + ' và không ở tương lai (ERR-PIP-18).'; }
+      if (dpt && !f.reason) e.reason = 'Chọn một lý do trong danh sách.';
+      if (k === 'respond' && dpt && !f.note.trim()) e.note = 'Từ chối cần nhận xét.';
+      if (Object.keys(e).length) { this.setState({ e }); return; }
+      const id = cfg.id, call = P.onSave, why = dpt ? { code: f.reason, label: (items.find((x) => x[0] === f.reason) || [])[1], point: dpt, pointLabel: C.D[dpt][0], note: f.note.trim(), ...(needLeft ? { leftOn: f.left } : {}) } : null;
+      if (!call) return;
+      if (k === 'respond') call('respond', id, f.decision, why);
+      else if (k === 'schedule') call('schedule', id, { at: f.date + ' ' + f.time, mode: f.mode, who: 'Trưởng khoa' });
+      else if (k === 'result') call('result', cfg.ivId, f.result, why);
+      else if (k === 'offer') call('offer', id, { salary, start: f.start, pct: 85 });
+      else if (k === 'answer') call('answer', id, f.reply === 'accept', why);
+      else call('stop', id, why);
+    };
+    const titles = { respond: 'Ghi phản hồi của khách hàng', schedule: cfg.label || 'Lên lịch phỏng vấn', result: 'Ghi kết quả phỏng vấn', offer: 'Tạo offer', answer: 'Xác nhận câu trả lời của ứng viên', stop: 'Dừng ca tuyển' };
+    return { cfg, f: { ...f, invite: f.decision === 'INTERVIEW_REQUESTED', reject: f.decision === 'REJECTED', online: f.mode === 'Online', direct: f.mode === 'Trực tiếp', pass: f.result === 'PASS', fail: f.result === 'FAIL', accept: f.reply === 'accept', decline: f.reply === 'decline', salaryTxt: salary ? salary.toLocaleString('vi-VN') : f.salary }, e: S.e,
+      title: titles[k] || cfg.label, intro: { respond: 'Ghi khách hàng mời phỏng vấn hay từ chối hồ sơ này.', schedule: 'Chọn ngày giờ phỏng vấn. Ca chuyển sang Đã xếp lịch.', result: 'Ghi kết quả buổi phỏng vấn gần nhất.', offer: 'Ghi offer khách hàng đưa cho ứng viên. Ca chuyển sang Đã offer.', answer: 'Ghi ứng viên nhận hay từ chối offer.', stop: ctx.lateOnly ? 'Yêu cầu đã kết thúc, chỉ ghi được ca ứng viên nghỉ báo muộn. Chọn điểm dừng, lý do và ngày nghỉ.' : 'Ca kết thúc ngay. Chọn điểm dừng và lý do; ứng viên nghỉ thì nhập thêm ngày nghỉ.' }[k] || '',
+      isRespond: k === 'respond', isSchedule: k === 'schedule', isResult: k === 'result', isOffer: k === 'offer', isAnswer: k === 'answer', isStop: k === 'stop', cta: k === 'stop' ? 'Dừng ca' : 'Lưu', ctaCls: k === 'stop' ? 'danger' : 'primary',
+      answerHint: 'Đồng ý: mở phiếu Xác nhận tuyển dụng để chốt ngày và phí. Từ chối: chọn lý do.',
+      pointOpts: pts.map((d) => ({ v: d, l: C.D[d][0] + ' (' + d + ')', sel: d === point })), onPoint: (ev) => set({ point: ev.target.value, reason: '' }),
+      hasReason: !!dpt, reasonFor: dpt ? C.D[dpt][0].toLowerCase() : '', reasonOpts: items.map(([v, l]) => ({ v, l, sel: v === f.reason })), onReason: (ev) => set({ reason: ev.target.value }),
+      hasLeft: needLeft, leftHint: needLeft ? (point === 'D8' || point === 'D9' ? 'Từ ' + ctx.a + ' đến trước ' + ctx.c : 'Từ ' + ctx.c + ' đến trước ' + ctx.d) : '', onLeft: (ev) => set({ left: C.maskDate(ev.target.value) }),
+      hasNote: !!dpt, noteReq, onNote: (ev) => set({ note: ev.target.value }),
+      setInvite: () => set({ decision: 'INTERVIEW_REQUESTED', reason: '' }), setReject: () => set({ decision: 'REJECTED', reason: '' }),
+      onDate: (ev) => set({ date: C.maskDate(ev.target.value) }), onTime: (ev) => set({ time: C.maskTime(ev.target.value) }), setOnline: () => set({ mode: 'Online' }), setDirect: () => set({ mode: 'Trực tiếp' }),
+      setPass: () => set({ result: 'PASS', reason: '' }), setFail: () => set({ result: 'FAIL', reason: '' }),
+      onSalary: (ev) => set({ salary: ev.target.value.replace(/\D/g, '') }), onStart: (ev) => set({ start: C.maskDate(ev.target.value) }), setAccept: () => set({ reply: 'accept', reason: '' }), setDecline: () => set({ reply: 'decline', reason: '' }), save, close: P.onClose };
+  }
+}
+</script>
+</body>
+</html>

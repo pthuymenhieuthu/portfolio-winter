@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Chi nhánh khách hàng</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./client-master.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.dh-table tr.off td{color:var(--muted)}
+.br-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.br-g .full{grid-column:1/-1}
+.req{color:var(--danger-ink)}
+</style></helmet>
+<div class="card"><div class="card-h"><h3>Chi nhánh</h3><span class="muted small">{{sub}}</span><span class="spacer"></span><button class="btn sm" onClick="{{openNew}}">Thêm chi nhánh</button></div>
+  <table class="dh-table"><thead><tr><th>Mã</th><th>Tên</th><th>Địa chỉ</th><th>Trạng thái</th><th></th></tr></thead><tbody>
+    <sc-for list="{{rows}}" as="b"><tr class="{{b.cls}}"><td class="tabular muted">{{b.code}}</td><td class="fw5">{{b.name}}</td><td class="muted">{{b.place}}</td><td><span class="{{b.chip}}">{{b.statusLabel}}</span></td>
+      <td style="text-align:right;white-space:nowrap"><button class="btn sm" onClick="{{b.edit}}">{{b.editLabel}}</button><sc-if value="{{b.canToggle}}"><button class="btn sm" onClick="{{b.toggle}}">{{b.toggleLabel}}</button></sc-if></td></tr></sc-for></tbody></table>
+  <sc-if value="{{empty}}"><div class="card-b muted">Chưa có chi nhánh. Yêu cầu của khách hàng mặc định gắn với trụ sở chính.</div></sc-if>
+</div>
+<sc-if value="{{form}}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="{{formTitle}}"><h2>{{formTitle}}</h2>
+  <div class="br-g">
+    <div class="field full"><label>Tên chi nhánh <span class="req">*</span></label><input class="input" maxlength="255" value="{{f.name}}" onInput="{{set.name}}"><span class="err">{{e.name}}</span></div>
+    <div class="field"><label>Tỉnh / thành <span class="req">*</span></label><select class="input" onChange="{{onProvince}}"><option value="">Chưa chọn</option><sc-for list="{{provinces}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.v}}</option></sc-for></select><span class="err">{{e.province}}</span></div>
+    <div class="field"><label>Phường / xã <span class="req">*</span></label><select class="input" disabled="{{noWard}}" onChange="{{set.ward}}"><option value="">{{wardPh}}</option><sc-for list="{{wards}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.v}}</option></sc-for></select><span class="err">{{e.ward}}</span></div>
+    <div class="field full"><label>Địa chỉ <span class="req">*</span></label><input class="input" maxlength="512" value="{{f.address}}" placeholder="Số nhà, tên đường" onInput="{{set.address}}"><span class="err">{{e.address}}</span></div>
+  </div>
+  <div class="row"><span class="spacer"></span><button class="btn" onClick="{{close}}">Huỷ</button><button class="btn primary" onClick="{{save}}">Lưu</button></div></div></div></sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"branches":{"editor":null,"default":[]},"head":{"editor":null},"onEditHead":{"editor":null},"onSave":{"editor":null},"onToggle":{"editor":null},"$preview":{"width":900,"height":300}}'>
+class Component extends DCLogic {
+  // Chi nhánh không xoá, chỉ Ngừng hoạt động / Hoạt động lại; chi nhánh ngừng không chọn được ở form yêu cầu (M3 B2.3)
+  state = { f: null, e: {} };
+  blank = () => ({ id: '', name: '', province: '', ward: '', address: '' });
+  renderVals() {
+    const S = this.state, P = this.props, f = S.f, M = window.MedClient, list = P.branches || [];
+    const up = (patch) => this.setState({ f: { ...f, ...patch }, e: { ...S.e, ...Object.fromEntries(Object.keys(patch).map((k) => [k, ''])) } });
+    // Dòng đầu là Trụ sở chính dựng từ khách hàng, không phải một chi nhánh (M3 B2.3): sửa nó mở hộp thoại sửa khách hàng, không ngừng được
+    const h = P.head || {}, site = (x) => [x.address, x.ward, x.province].filter((v, i, a) => v && v !== '—' && (i === 0 || !String(a[0]).includes(v))).join(', ');
+    const branchRows = list.map((b) => ({ ...b, code: 'CN' + String(b.id).slice(1).padStart(2, '0'), cls: b.active ? '' : 'off', place: site(b) || '—', chip: b.active ? 'chip ok' : 'chip gray', statusLabel: b.active ? 'Đang hoạt động' : 'Ngừng hoạt động', canToggle: true, editLabel: 'Sửa',
+      edit: () => this.setState({ f: { ...b }, e: {} }), toggle: () => P.onToggle && P.onToggle(b.id), toggleLabel: b.active ? 'Ngừng hoạt động' : 'Hoạt động lại' }));
+    const rows = [{ code: h.code || '—', name: h.name || '—', cls: '', place: site(h) || '—', chip: 'chip gray', statusLabel: 'Trụ sở chính', canToggle: false, editLabel: 'Sửa trụ sở', edit: () => P.onEditHead && P.onEditHead(), toggle: () => {}, toggleLabel: '' }, ...branchRows];
+    const wards = f ? M.PROV[f.province] || [] : [];
+    const save = () => {
+      const e = {}, name = f.name.trim().toLowerCase();
+      if (!f.name.trim()) e.name = 'Ô này bắt buộc nhập.';
+      else if (list.some((b) => b.id !== f.id && b.name.trim().toLowerCase() === name)) e.name = 'Khách hàng đã có chi nhánh tên này.';
+      if (!f.province) e.province = 'Ô này bắt buộc nhập.';
+      else if (wards.length && !f.ward) e.ward = 'Ô này bắt buộc nhập.';
+      if (!f.address.trim()) e.address = 'Ô này bắt buộc nhập.';
+      if (Object.keys(e).length) { this.setState({ e }); return; }
+      P.onSave && P.onSave({ ...f, name: f.name.trim(), address: f.address.trim() }); this.setState({ f: null, e: {} });
+    };
+    return { rows, sub: list.length + ' chi nhánh', empty: list.length === 0, form: !!f, formTitle: f && f.id ? 'Sửa chi nhánh' : 'Thêm chi nhánh', f: f || this.blank(), e: S.e, close: () => this.setState({ f: null, e: {} }), save,
+      openNew: () => this.setState({ f: this.blank(), e: {} }),
+      set: { name: (ev) => up({ name: ev.target.value }), ward: (ev) => up({ ward: ev.target.value }), address: (ev) => up({ address: ev.target.value }) }, onProvince: (ev) => up({ province: ev.target.value, ward: '' }),
+      provinces: Object.keys(M.PROV).map((v) => ({ v, sel: f && v === f.province })), wards: wards.map((v) => ({ v, sel: f && v === f.ward })), noWard: !f || !f.province || wards.length === 0, wardPh: !f || !f.province ? 'Chọn tỉnh/thành trước' : wards.length ? 'Chọn phường/xã' : 'Chưa có danh sách phường/xã' };
+  }
+}
+</script>
+</body>
+</html>

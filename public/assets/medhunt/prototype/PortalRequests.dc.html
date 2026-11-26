@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Cổng KH: Yêu cầu tuyển dụng</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}</style></helmet>
+<div class="col page-in">
+  <div class="page-head tight"><h1>Yêu cầu tuyển dụng</h1><span class="spacer"></span><button class="btn primary" onClick="{{api.goNew}}">Gửi yêu cầu mới</button></div>
+  <div class="tabs" role="tablist"><sc-for list="{{tabs}}" as="t"><button class="tab" role="tab" aria-selected="{{t.on}}" onClick="{{t.go}}">{{t.label}}<span class="cnt tabular">{{t.n}}</span></button></sc-for></div>
+  <div class="col stagger"><sc-for list="{{rows}}" as="r"><div class="pcard link" onClick="{{r.open}}"><div class="row"><h2 style="font-size:16px;font-weight:700">{{r.title}}</h2><span class="spacer"></span><span class="{{r.chip}}">{{r.statusLabel}}</span></div>
+    <div class="row muted small" style="flex-wrap:wrap;gap:14px"><span class="tabular">{{r.code}}</span><span>{{r.hired}}/{{r.qty}} đã tuyển</span><span>Cần người trước {{r.due}}</span><sc-if value="{{r.waiting}}"><span class="chip warn">{{r.waitingLabel}}</span></sc-if></div></div></sc-for></div>
+  <sc-if value="{{empty}}"><div class="pcard"><div class="fw5">Chưa có yêu cầu tuyển dụng nào.</div><div class="muted">Gửi yêu cầu để SMS bắt đầu tìm ứng viên.</div><div><button class="btn primary" onClick="{{api.goNew}}">Gửi yêu cầu</button></div></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"d":{"editor":null,"default":{"requests":[],"cases":[]}},"api":{"editor":null,"default":{}},"$preview":{"width":1100,"height":480}}'>
+class Component extends DCLogic {
+  state = { f: 'mo' };
+  static CLOSED = ['CLOSED', 'CANCELLED', 'REJECTED', 'FULFILLED'];
+  renderVals() {
+    const d = this.props.d || { requests: [], cases: [] }, api = this.props.api || {}, S = this.state, all = d.requests;
+    const isOpen = (r) => !Component.CLOSED.includes(r.status), open = all.filter(isOpen);
+    const list = S.f === 'mo' ? open : S.f === 'dong' ? all.filter((r) => !isOpen(r)) : all;
+    const rows = list.map((r) => { const w = d.cases.filter((c) => c.req === r.code && c.stage === 0 && !c.decision).length;
+      return { ...r, chip: 'chip ' + r.tone, waiting: w > 0, waitingLabel: w + ' chờ phản hồi', open: () => api.openReq && api.openReq(r.code) }; });
+    const T = [['mo', 'Đang tuyển', open.length], ['dong', 'Đã đóng', all.length - open.length], ['all', 'Tất cả', all.length]];
+    return { api, rows, empty: rows.length === 0, tabs: T.map(([k, label, n]) => ({ label, n, on: S.f === k, go: () => this.setState({ f: k }) })) };
+  }
+}
+</script>
+</body>
+</html>

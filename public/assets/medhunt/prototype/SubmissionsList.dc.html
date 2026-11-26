@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Hồ sơ đã gửi</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./filter-multi.js"></script><script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+</style></helmet>
+<div class="col page-in">
+  <div class="ovc stagger" style="grid-template-columns:repeat(4,minmax(0,1fr))"><sc-for list="{{tiles}}" as="t" hint-placeholder-count="4"><button class="{{t.cls}}" style="{{t.accStyle}}" aria-pressed="{{t.on}}" onClick="{{t.pick}}"><span class="ovico"><sc-if value="{{t.fClock}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"></path></svg></sc-if><sc-if value="{{t.fDoc}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Zm0 0v6h6M8 13h8m-8 4h6"></path></svg></sc-if><sc-if value="{{t.fAct}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></sc-if><sc-if value="{{t.fCross}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm3 6-6 6m0-6 6 6"></path></svg></sc-if></span><span class="ovn tabular {{t.nCls}}">{{t.n}}</span><span class="ovt">{{t.label}}</span></button></sc-for></div>
+  <div class="row"><input class="input" style="max-width:320px" placeholder="Tìm ứng viên, mã ca, yêu cầu…" value="{{q}}" onInput="{{onQ}}" aria-label="Tìm hồ sơ đã gửi"></div>
+  <div class="card"><table><thead><tr><th>Ứng viên</th><th>Yêu cầu</th><th>Khách hàng</th><th>Ngày gửi</th><th>KH xem</th><th>Phản hồi</th><th>Mã ca</th></tr></thead><tbody class="stagger">
+    <sc-for list="{{rows}}" as="s" hint-placeholder-count="5"><tr onClick="{{s.open}}"><td class="fw5">{{s.name}}</td><td class="tabular">{{s.req}}</td><td>{{s.client}}</td><td class="tabular">{{s.sent}}</td><td>{{s.viewedLabel}}</td><td><span class="{{s.fbChip}}">{{s.fbLabel}}</span></td><td class="tabular">{{s.id}}</td></tr></sc-for></tbody></table>
+    <sc-if value="{{empty}}"><div class="card-b muted">Không có hồ sơ nào.</div></sc-if><div class="tfoot"><span>{{footer}}</span><span class="spacer"></span><sc-for list="{{pager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></div>
+
+  <sc-if value="{{sel}}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Chi tiết hồ sơ đã gửi" style="width:min(640px,94vw)">
+    <div class="row"><h2>{{sel.name}} · <span class="tabular">{{sel.id}}</span></h2><span class="spacer"></span><button class="icon-btn" aria-label="Đóng" onClick="{{close}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <div class="subtabs"><sc-for list="{{subs}}" as="t"><button class="sub" aria-pressed="{{t.on}}" onClick="{{t.go}}">{{t.label}}</button></sc-for></div>
+    <sc-if value="{{subCv}}"><div class="muted">Bản chụp CV đã gửi cho {{sel.client}} ngày {{sel.sent}}. {{sel.spec}}, {{sel.exp}} năm kinh nghiệm.</div></sc-if>
+    <sc-if value="{{subFb}}"><div class="col g8"><div>Phản hồi hiện tại: <span class="{{sel.fbChip}}">{{sel.fbLabel}}</span></div>
+      <div class="muted small">Chỉ ghi được khi ca đang Đã gửi và khách chưa phản hồi.</div><div><button class="btn" disabled="{{noFb}}" onClick="{{openFb}}">Ghi phản hồi của khách hàng</button></div></div></sc-if>
+    <sc-if value="{{subLog}}"><div class="col g6"><sc-for list="{{sel.log}}" as="l"><div class="row"><span class="chip gray tabular">{{l.at}}</span><span>{{l.text}}</span></div></sc-for></div></sc-if>
+    <div class="row wrap"><button class="btn primary" onClick="{{openCase}}">Mở ca {{sel.id}}</button><button class="btn" disabled="{{sel.viewed}}" onClick="{{markViewed}}">KH đã xem</button>
+      <span class="spacer"></span><button class="btn danger" disabled="{{sel.closed}}" onClick="{{stop}}">{{stopLabel}}</button></div>
+  </div></div></sc-if>
+  <sc-if value="{{rowOpen}}"><dc-import name="ReqRowAct" cfg="{{rowCfg}}" on-save="{{saveRow}}" on-close="{{closeRow}}" hint-size="100%,100px"></dc-import></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"subs":{"editor":null,"default":[]},"onOpenCase":{"editor":null},"onViewed":{"editor":null},"onFeedback":{"editor":null},"onStop":{"editor":null},"$preview":{"width":1100,"height":560}}'>
+class Component extends DCLogic {
+  state = { q: '', page: 0, tile: null, sel: null, sub: 'cv', row: null };
+  renderVals() {
+    const S = this.state, P = this.props, all = P.subs || [], C = Component;
+    const FB = { null: ['chip gray', 'Chưa phản hồi'], INTERVIEW_REQUESTED: ['chip ok', 'Mời phỏng vấn'], REJECTED: ['chip bad', 'Từ chối'] };
+    const T = [['Chờ KH xem', null, (s) => !s.closed && s.stage === 0 && !s.viewed, (n) => n.late + ' hồ sơ quá 2 ngày'], ['KH đang xem', 'v', (s) => !s.closed && s.stage === 0 && s.viewed, () => ''],
+      ['Đang tiến triển', 'p', (s) => !s.closed && s.stage >= 1 && s.stage <= 4, () => ''], ['Đã đóng', 'c', (s) => s.closed, () => '']];
+    const tiles = T.map(([label, k, fn, sub], i) => ({ label, n: all.filter(fn).length, sub: i === 0 ? all.filter((s) => fn(s) && s.late).length + ' quá 2 ngày' : '', on: S.tile === i, pick: () => this.setState({ tile: S.tile === i ? null : i, page: 0 }) }));
+    const DECO = [['Clock'], ['Doc'], ['Act'], ['Cross']];
+    tiles.forEach((t, i) => Object.assign(t, { cls: 'ovi' + (t.pick ? '' : ' st'), accStyle: '--acc:var(' + window.MedDash.statTone(i, tiles.length) + ')', ['f' + DECO[i][0]]: true }));
+    const q = S.q.toLowerCase(), f = S.tile === null ? () => true : T[S.tile][2];
+    const dec = (s) => FB[s.decision || null];
+    const list = all.filter((s) => f(s) && (s.name + ' ' + s.id + ' ' + s.req).toLowerCase().includes(q)).map((s) => ({ ...s, viewedLabel: s.viewed ? 'Đã xem' : '—', fbChip: dec(s)[0], fbLabel: dec(s)[1], open: () => this.setState({ sel: s.id, sub: 'cv' }) }));
+    // Cắt trang sau khi đã lọc để chân bảng đếm đúng tổng số dòng đang hiện
+    const pg = window.MedPage.view(list, S.page, 'hồ sơ'), rows = pg.rows;
+    const cur = all.find((s) => s.id === S.sel);
+    const sel = cur ? { ...cur, fbChip: dec(cur)[0], fbLabel: dec(cur)[1] } : null;
+    const subs = [['cv', 'CV đã gửi'], ['fb', 'Phản hồi'], ['log', 'Lịch sử với KH']].map(([k, label]) => ({ label, on: S.sub === k, go: () => this.setState({ sub: k }) }));
+    return { tiles, rows, q: S.q, onQ: (e) => this.setState({ q: e.target.value, page: 0 }), empty: list.length === 0, footer: pg.footer, pager: window.MedPage.pager(this, pg), sel, subs,
+      subCv: S.sub === 'cv', subFb: S.sub === 'fb', subLog: S.sub === 'log', close: () => this.setState({ sel: null }),
+      noFb: !cur || cur.stage !== 0 || !!cur.decision, openFb: () => this.setState({ row: { id: cur.id, name: cur.name, kind: 'respond', stage: cur.stage } }),
+      rowOpen: !!S.row, rowCfg: S.row || {}, closeRow: () => this.setState({ row: null }), saveRow: (kind, id, ...a) => { if (kind === 'respond') P.onFeedback && P.onFeedback(id, ...a); else P.onStop && P.onStop(id, a[0]); this.setState({ row: null, sel: null }); },
+      openCase: () => P.onOpenCase && P.onOpenCase(cur.id), markViewed: () => P.onViewed && P.onViewed(cur.id),
+      stop: () => this.setState({ row: { id: cur.id, name: cur.name, kind: 'stop', stage: cur.stage, label: 'Dừng ca tuyển' } }), stopLabel: 'Dừng ca tuyển' };
+  }
+}
+</script>
+</body>
+</html>

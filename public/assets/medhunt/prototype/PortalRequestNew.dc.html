@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Cổng KH: Gửi yêu cầu mới</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}</style></helmet>
+<dc-import name="RequestForm" portal="{{isPortal}}" next-code="{{nextCode}}" preset-client="{{cust}}" clients="{{clients}}" contacts-by="{{contactsBy}}" site-info="{{siteInfo}}" on-cancel="{{goReqs}}" on-submit="{{send}}" hint-size="100%,900px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"api":{"editor":null,"default":{}},"$preview":{"width":1000,"height":900}}'>
+class Component extends DCLogic {
+  // Cổng dùng chung form của nhân viên (UC-REQ-06): khách hàng cố định, nhiều vị trí, người liên hệ điền sẵn theo mặc định hoặc chọn Khác, địa chỉ làm việc điền sẵn theo trụ sở hoặc chi nhánh. Không có ghi chú nội bộ, người phụ trách, lưu nháp
+  renderVals() {
+    const api = this.props.api || {};
+    return { isPortal: true, nextCode: api.nextCode || 'YC-014', cust: api.custName || '', clients: api.custName ? [api.custName] : [], contactsBy: api.contactsBy || {}, siteInfo: api.siteInfo || {}, goReqs: api.goReqs, send: (d) => api.send && api.send(d) };
+  }
+}
+</script>
+</body>
+</html>

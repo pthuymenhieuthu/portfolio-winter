@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Ca tuyển</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./filter-multi.js"></script><script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+@keyframes fresh-in{0%{background:#c9d9f6;box-shadow:0 0 0 3px rgba(23,200,122,.45)}60%{background:#e4ecfb;box-shadow:0 0 0 3px rgba(23,200,122,.2)}100%{background:transparent;box-shadow:0 0 0 0 rgba(23,200,122,0)}}
+.fresh td{animation:fresh-in 2.8s ease-out}
+.cs-fun{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}
+.cs-step{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:84px;padding:0 16px 0 22px;margin-left:-6px;border:0;background:#e8eaee;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%,12px 50%);min-width:0;font:inherit;text-align:center;cursor:pointer}
+.cs-step:first-child{margin-left:0;padding-left:14px;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%);border-radius:12px 0 0 12px}
+.cs-step:last-child{padding-right:14px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,12px 50%);border-radius:0 12px 12px 0}
+/* Hình mũi tên giống Tiến trình ca ở Tổng quan, nét viền mảnh: nền chặng là màu viền, ::before thụt 1px cùng hình cắt, phủ màu đầu thẻ nhạt tan xuống trắng như card Style 3 */
+.cs-step::before{content:"";position:absolute;inset:1px;background:linear-gradient(180deg,#f6f7f9 0,#fff 60px);clip-path:inherit;border-radius:inherit}
+.cs-step:hover::before{background:var(--surface-2)}
+.cs-step[aria-pressed="true"]{background:color-mix(in srgb,var(--brand) 55%,#fff)}.cs-step[aria-pressed="true"]::before{background:color-mix(in srgb,var(--brand) 7%,#fff)}
+.cs-step:focus-visible{outline:1px solid var(--brand);outline-offset:0}
+.cs-n,.cs-l,.cs-s{position:relative;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cs-n{font-size:20px;font-weight:600;line-height:1.1;color:var(--muted);font-variant-numeric:tabular-nums}.cs-step.has .cs-n{color:var(--ink)}
+.cs-l{font-size:12px;font-weight:600;color:var(--ink-2)}
+.cs-s{font-size:11px;color:var(--muted)}
+/* Cửa sổ hẹp không đủ chỗ cho chín mũi tên một hàng thì xếp ba hàng ba ô, mỗi ô vẫn là hình mũi tên */
+@media(max-width:1100px){.cs-fun{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 0}.cs-step,.cs-step:first-child,.cs-step:last-child{margin-left:0;padding:0 16px 0 22px;border-radius:0;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%,12px 50%)}.cs-step:nth-child(3n+1){padding-left:14px;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%);border-radius:12px 0 0 12px}.cs-step:nth-child(3n){padding-right:14px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,12px 50%);border-radius:0 12px 12px 0}}
+.cl-chk{display:inline-flex;align-items:center;gap:8px;height:32px;white-space:nowrap;font-size:13px;font-weight:500;color:var(--ink-2);cursor:pointer}.cl-chk input{width:16px;height:16px;margin:0;accent-color:var(--brand)}
+.row.wrap{align-items:center}
+</style></helmet>
+<div class="col page-in">
+  <div class="cs-fun" role="group" aria-label="Lọc theo giai đoạn"><sc-for list="{{steps}}" as="s"><button class="{{s.cls}}" aria-pressed="{{s.on}}" onClick="{{s.pick}}"><span class="cs-n">{{s.n}}</span><span class="cs-l" title="{{s.label}}">{{s.label}}</span><span class="cs-s" title="{{s.sub}}">{{s.sub}}</span></button></sc-for></div>
+  <div class="row wrap">
+    <dc-import name="FilterBar" fields="{{filterFields}}" q="{{q}}" placeholder="Tìm ứng viên, mã ca…" on-q="{{onQ}}" on-apply="{{applyFilters}}" hint-size="100%,56px"></dc-import>
+    <label class="cl-chk"><input type="checkbox" checked="{{showFailed}}" onChange="{{toggleFailed}}"> Hiện ca đã dừng</label>
+    <span class="spacer"></span><span class="muted small" style="white-space:nowrap">{{running}} đang chạy · {{total}} tổng · {{attention}} cần chú ý</span></div>
+  <div class="card"><table><thead><tr><th>Ứng viên</th><th>Vị trí</th><th>Giai đoạn</th><th>Mốc kế tiếp</th><th>Phụ trách</th><th>Mã ca</th></tr></thead><tbody class="stagger">
+    <sc-for list="{{rows}}" as="c" hint-placeholder-count="5"><tr class="{{c.freshCls}}" onClick="{{c.open}}"><td class="fw5">{{c.name}}</td><td>{{c.reqTitle}} <span class="muted small tabular">{{c.req}}</span></td><td><span class="chip" style="{{c.style}}">{{c.label}}</span></td><td><span class="{{c.dueCls}}" title="{{c.due}}">{{c.due}}</span></td><td><span class="dh-tag" style="{{c.tagStyle}}" title="{{c.owner}}" aria-label="Phụ trách: {{c.owner}}">{{c.initials}}</span></td><td class="tabular muted">{{c.id}}</td></tr></sc-for></tbody></table>
+    <sc-if value="{{empty}}"><div class="card-b muted">Không có ca nào.</div></sc-if><div class="tfoot"><span>{{footer}}</span><span class="spacer"></span><sc-for list="{{pager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"cases":{"editor":null,"default":[]},"freshIds":{"editor":null,"default":[]},"onOpen":{"editor":null},"$preview":{"width":1100,"height":520}}'>
+class Component extends DCLogic {
+  static TAGS = ['--brand', '--tone-violet', '--tone-green', '--tone-yellow', '--tone-pink', '--info']; // tone glass có sẵn, giống tag ở Việc của tôi
+  state = { q: '', page: 0, st: [], cli: [], own: [], rq: [], failed: true };
+  static L = ['Đã gửi cho khách hàng','Phỏng vấn','Đạt phỏng vấn','Đã offer','Chờ thử việc','Thử việc','Bảo hành','Kết thúc bảo hành','Kết thúc giữa chừng'];
+  renderVals() {
+    const S = this.state, fresh = this.props.freshIds || [], L = Component.L, all = this.props.cases || [], q = S.q.toLowerCase();
+    const sty = (i) => 'background:var(--stage-' + i + '-soft);color:var(--stage-' + i + ')';
+    // Bộ lọc giống code gốc (khách hàng, người phụ trách, yêu cầu) cộng giai đoạn
+    const MF = window.MedFilter, st = S.st;
+    const ex = { extra: { page: 0 } }, host = { state: { ...S, st }, setState: (p) => this.setState(p) }, uniq = (f) => [...new Set(all.map(f).filter(Boolean))].sort((a, b) => String(a).localeCompare(String(b), 'vi'));
+    const filterFields = [MF.field('cli', 'Khách hàng', uniq((c) => c.client).map((v) => [v, v]), S.cli, ex), MF.field('own', 'Người phụ trách', uniq((c) => c.owner).map((v) => [v, v]), S.own, ex),
+      MF.field('rq', 'Yêu cầu', uniq((c) => c.req).map((v) => [v, v]), S.rq, ex), MF.field('st', 'Giai đoạn', L.map((l, k) => [String(k), l]), st.map(String), ex)];
+    // Ca qua các bộ lọc trừ giai đoạn: số trên mỗi chặng đếm trên tập này để bấm chặng nào cũng ra đúng số dòng đó
+    const byOthers = all.filter((c) => (S.failed || c.stage !== 8) && MF.has(S.cli, c.client) && MF.has(S.own, c.owner) && MF.has(S.rq, c.req) && (c.name + ' ' + c.id).toLowerCase().includes(q));
+    const hash = (t) => [...t].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7), ini = (n) => String(n || '?').split(/\s+/).slice(-2).map((w) => w[0]).join('').toUpperCase();
+    const list = byOthers.filter((c) => !st.length || st.map(Number).includes(c.stage))
+      .map((c) => ({ ...c, label: L[c.stage], style: sty(c.stage), dueCls: c.late ? 'chip bad' : 'muted', freshCls: fresh.includes(c.id) ? 'fresh' : '', initials: ini(c.owner), tagStyle: '--tag-tone:var(' + Component.TAGS[hash(String(c.owner || '')) % Component.TAGS.length] + ')', open: () => this.props.onOpen && this.props.onOpen(c.id) }));
+    // Ca mới tạo lên đầu danh sách để thấy ngay hiệu ứng xanh
+    list.sort((a, b) => fresh.includes(b.id) - fresh.includes(a.id));
+    // Chặng Kết thúc giữa chừng không nằm trên thanh (chỉ là nhóm điểm dừng); xem các ca đó bằng ô "Hiện ca đã dừng" hoặc lọc Giai đoạn
+    const steps = L.filter((l, k) => k !== 8).map((label) => { const k = L.indexOf(label), at = byOthers.filter((c) => c.stage === k), n = at.length, sub = n ? at[0].name + (n > 1 ? ' +' + (n - 1) : '') : '—', on = st.map(Number).includes(k);
+      return { label, n, sub, on, cls: 'cs-step' + (n ? ' has' : ''), pick: () => this.setState({ st: on ? [] : [String(k)], page: 0 }) }; });
+    const pg = window.MedPage.view(list, S.page, 'ca');
+    return { filterFields, applyFilters: (patch) => this.setState(patch), steps, showFailed: S.failed, toggleFailed: () => this.setState({ failed: !S.failed, st: st.filter((k) => Number(k) !== 8), page: 0 }), rows: pg.rows, empty: list.length === 0, q: S.q, onQ: (e) => this.setState({ q: e.target.value, page: 0 }), footer: pg.footer, pager: window.MedPage.pager(this, pg),
+      running: all.filter((c) => c.stage < 7).length, total: all.length, attention: all.filter((c) => c.late).length };
+  }
+}
+</script>
+</body>
+</html>

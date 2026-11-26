@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Tab Thanh toán</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+/* Ô đợt như fee-ledger.tsx: thanh màu trên cùng theo hạn (đã thu · quá hạn · trong 7 ngày · chưa đến hạn), nhãn đã thu / chưa thu ngay trên ô */
+.ch{display:flex;flex-wrap:wrap;gap:8px}
+.chp{position:relative;flex:1;min-width:150px;text-align:left;border:1px solid var(--line-soft);border-radius:12px;background:var(--surface-2);padding:12px 12px 8px;font:inherit;display:flex;flex-direction:column;gap:2px}
+.chp::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;border-radius:12px 12px 0 0;background:var(--line)}
+.chp.paid::before{background:var(--success)}.chp.overdue::before{background:var(--danger)}.chp.soon::before{background:#f1c40f}
+.chp.paid{background:color-mix(in srgb,var(--success-soft) 45%,#fff)}
+button.chp{cursor:pointer;transition:background-color .15s,border-color .15s}button.chp:hover{background:var(--brand-50);border-color:var(--brand)}
+.chp .h{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:700}
+.chp .tg{border-radius:999px;padding:1px 8px;font-size:11px;font-weight:700;background:var(--surface);color:var(--muted)}.chp .tg.p{background:var(--success-soft);color:var(--success-ink)}.chp .tg.m{background:var(--warn-soft);color:var(--warn-ink)}
+.chp .amt{font-size:15px;font-weight:800}.chp .ln{font-size:11.5px;color:var(--muted)}.chp.overdue .ln{color:var(--danger-ink);font-weight:600}.chp.paid .ln{color:var(--success-ink);font-weight:600}
+.lgk{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted)}.lgk i{display:inline-block;width:16px;height:4px;border-radius:2px;margin-right:6px;vertical-align:middle}
+</style></helmet>
+<div class="col page-in">
+  <div class="ovc stagger" style="grid-template-columns:repeat(4,minmax(0,1fr))"><sc-for list="{{tiles}}" as="t" hint-placeholder-count="4"><div class="{{t.cls}}" style="{{t.accStyle}}" aria-pressed="{{t.on}}" onClick="{{t.pick}}"><span class="ovico"><sc-if value="{{t.fWallet}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7H5a2 2 0 0 1 0-4h13v4m2 0v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5M16 13h2"></path></svg></sc-if><sc-if value="{{t.fAlert}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4m0 4h.01M10.3 3.6 2.7 17a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0Z"></path></svg></sc-if><sc-if value="{{t.fCheck}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3"></path></svg></sc-if><sc-if value="{{t.fClock}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"></path></svg></sc-if></span><span class="ovn tabular {{t.nCls}}">{{t.n}}</span><span class="ovt">{{t.label}}</span></div></sc-for></div>
+  <div class="card"><div class="card-h"><h3>Thanh toán theo ca tuyển</h3><span class="muted small">{{count}}</span><span class="spacer"></span><sc-if value="{{multiPos}}"><select class="input" style="height:32px;width:auto" aria-label="Lọc theo vị trí" onChange="{{onPos}}"><option value="">Tất cả vị trí</option><sc-for list="{{posOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.v}}</option></sc-for></select></sc-if>
+      <span class="lgk"><span><i style="background:var(--success)"></i>Đã thu</span><span><i style="background:var(--danger)"></i>Quá hạn</span><span><i style="background:#f1c40f"></i>Trong 7 ngày</span><span><i style="background:var(--line)"></i>Chưa đến hạn</span></span></div>
+    <table><thead><tr><th>Mã ca</th><th>Họ tên</th><sc-if value="{{multiPos}}"><th>Vị trí</th></sc-if><th class="r">Tổng phí</th><th class="r">Đã thu</th><th class="r">Còn thu</th><th style="width:45%">Các đợt thanh toán</th></tr></thead><tbody>
+      <sc-for list="{{rows}}" as="c" hint-placeholder-count="2"><tr class="nc"><td class="tabular fw5">{{c.id}}</td><td class="fw5">{{c.name}}</td><sc-if value="{{multiPos}}"><td>{{c.pos}}</td></sc-if><td class="r tabular">{{c.total}}</td><td class="r tabular t-ok">{{c.paid}}</td><td class="r tabular fw5">{{c.left}}</td>
+        <td><div class="ch"><sc-for list="{{c.chips}}" as="p"><button class="chp {{p.tone}}" disabled="{{p.off}}" title="{{p.hint}}" onClick="{{p.pay}}"><span class="h"><span>Đợt {{p.n}} · {{p.pct}}%</span><span class="tg {{p.tagCls}}">{{p.tag}}</span></span><span class="amt tabular">{{p.amount}}</span><span class="ln">{{p.line}}</span><sc-if value="{{p.collected}}"><span class="ln" style="color:var(--success-ink)">{{p.collected}}</span></sc-if></button></sc-for>
+          <sc-if value="{{c.noInst}}"><span class="muted">Chưa chia đợt</span></sc-if></div></td></tr></sc-for></tbody></table>
+    <sc-if value="{{empty}}"><div class="card-b muted">Chưa phát sinh phí. Phí chốt khi ứng viên nhận offer và nhân viên lưu phiếu xác nhận tuyển dụng.</div></sc-if></div>
+  <sc-if value="{{payOpen}}"><dc-import name="PayModal" row="{{payRow}}" preset="{{payN}}" on-save="{{savePay}}" on-close="{{closePay}}" hint-size="100%,100px"></dc-import></sc-if>
+  <sc-if value="{{toast}}"><div class="chip ok toast anim-in">{{toast}}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"request":{"editor":null},"cases":{"editor":null,"default":[]},"ledger":{"editor":null,"default":[]},"onPay":{"editor":null},"$preview":{"width":1100,"height":620}}'>
+class Component extends DCLogic {
+  state = { pay: null, toast: '', posSel: '' };
+  renderVals() {
+    const P = this.props, S = this.state, r = P.request || { price: 0, qty: 1 }, ledAll = P.ledger || [];
+    // Mỗi ca thuộc một vị trí của yêu cầu; nhiều vị trí thì thêm cột Vị trí và bộ lọc vị trí (tổng, ô tổng quan đều tính theo bộ lọc)
+    const posOf = (id) => ((P.cases || []).find((c) => c.id === id) || {}).pos || '—', poss = (r.positions || []).map((p) => p.title).filter(Boolean), led = S.posSel ? ledAll.filter((l) => posOf(l.id) === S.posSel) : ledAll;
+    const fmt = (n) => n.toLocaleString('vi-VN') + ' đ', pct = (a, b) => (b > 0 ? Math.round(a / b * 100) : 0), w = (a, b) => 'width:' + (b > 0 ? (a / b * 100).toFixed(2) : 0) + '%';
+    // Bốn ô tổng quan hiện triệu đồng (tr đ) để số không xuống dòng; bảng bên dưới vẫn hiện đủ số
+    const tr = (n) => (Math.round(n / 1e4) / 100).toLocaleString('vi-VN') + ' tr đ';
+    const SOON = 7; // cùng ngưỡng 7 ngày với dòng thời gian ca tuyển
+    const chip = (l, i) => { const tone = i.status === 'paid' ? 'paid' : i.status === 'overdue' ? 'overdue' : i.days !== null && i.days <= SOON ? 'soon' : 'later', canPay = i.leftN > 0;
+      const line = i.status === 'paid' ? 'Đã thu đủ' : !i.due ? 'Chưa chia đợt' : i.status === 'overdue' ? 'Hạn ' + i.due + ' · quá hạn ' + (-i.days) + ' ngày' : i.days === 0 ? 'Hạn ' + i.due + ' · hôm nay' : 'Hạn ' + i.due + ' · còn ' + i.days + ' ngày';
+      return { n: i.n, pct: i.pct, tone, amount: fmt(i.expectedN), line, tag: i.status === 'paid' ? 'Đã thu' : i.paidN > 0 ? 'Thu một phần' : 'Chưa thu', tagCls: i.status === 'paid' ? 'p' : i.paidN > 0 ? 'm' : '',
+        collected: i.paidN > 0 && i.status !== 'paid' ? 'Đã thu ' + fmt(i.paidN) : '', off: !canPay, hint: canPay ? 'Bấm để ghi lần thu cho đợt này' : 'Đợt đã thu đủ', pay: () => this.setState({ pay: { id: l.id, n: i.n } }) }; };
+    const rows = led.map((l) => ({ id: l.id, name: l.name, pos: posOf(l.id), total: fmt(l.totalN), paid: fmt(l.paidN), left: fmt(l.leftN), noInst: !l.insts, chips: (l.insts || []).map((i) => chip(l, i)) }));
+    const expected = led.reduce((a, l) => a + l.totalN, 0), charged = led.reduce((a, l) => a + l.chargedN, 0), late = led.flatMap((l) => l.insts || []).filter((i) => i.status === 'overdue'), paid = led.reduce((a, l) => a + l.paidN, 0), left = charged - paid;
+    const cur = S.pay ? led.find((l) => l.id === S.pay.id) : null;
+    const tiles = [['Tổng phí dịch vụ', tr(expected)], ['Quá hạn', tr(late.reduce((a, i) => a + i.leftN, 0))], ['Đã thu', tr(paid)], ['Còn phải thu', tr(left)]].map(([label, n]) => ({ label, n }));
+    const DECO = [['Wallet'], ['Alert'], ['Check'], ['Clock']];
+    tiles.forEach((t, i) => Object.assign(t, { cls: 'ovi' + (t.pick ? '' : ' st'), accStyle: '--acc:var(' + window.MedDash.statTone(i, tiles.length) + ')', ['f' + DECO[i][0]]: true }));
+    return { tiles, expected: tr(expected), overdue: tr(late.reduce((a, i) => a + i.leftN, 0)), overdueHint: late.length + ' đợt quá hạn', collected: tr(paid), collectedPct: pct(paid, charged), collectedBar: w(paid, charged), due: tr(left),
+      multiPos: poss.length > 1, posOpts: poss.map((v) => ({ v, sel: v === S.posSel })), onPos: (e) => this.setState({ posSel: e.target.value }), rows, empty: rows.length === 0, count: rows.length + ' ca có phí', payOpen: !!cur, payRow: cur || { id: '', name: '', leftN: 0 }, payN: S.pay ? S.pay.n : null, closePay: () => this.setState({ pay: null }), toast: S.toast,
+      savePay: (id, n, amount, on, method, ref) => { P.onPay && P.onPay(id, amount, ref, n, on, method, ref); this.setState({ pay: null, toast: 'Đã ghi lần thu ' + fmt(amount) }); setTimeout(() => this.setState({ toast: '' }), 2500); } };
+  }
+}
+</script>
+</body>
+</html>

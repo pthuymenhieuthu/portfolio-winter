@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Quên và đặt lại mật khẩu</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}.ap-top{display:flex;align-items:flex-start;justify-content:space-between;padding:20px 32px 0 56px;box-sizing:border-box}.ap-top .lg-logo{margin-top:12px}.lg-logo{display:flex;flex-direction:column;align-items:flex-start;gap:4px}.lg-logo img{display:block;height:44px;width:auto;max-width:none;object-fit:contain}.lg-sub{font-size:12px;font-weight:600;color:var(--brand-ink)}.ap-lang{gap:8px}.ap-flag{border-radius:3px;box-shadow:0 0 0 1px rgba(0,0,0,.12);flex:none}</style></helmet>
+<div class="au-page" style="flex-direction:column">
+  <header class="ap-top"><span class="lg-logo"><img src="./assets/f594e7ba28d71e65ca5c376c3a9b20ee.png" alt="MedHunt" height="44"><span class="lg-sub">{{t.brandSub}}</span></span>
+    <button class="au-pill ap-lang" title="{{t.langSwitch}}" onClick="{{onLang}}"><sc-if value="{{isVi}}"><svg class="ap-flag" width="20" height="14" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#da251d"/><polygon points="15.00,4.60 16.41,8.66 20.71,8.75 17.28,11.34 18.53,15.45 15.00,13.00 11.47,15.45 12.72,11.34 9.29,8.75 13.59,8.66" fill="#ffff00"/></svg></sc-if><sc-if value="{{isEn}}"><svg class="ap-flag" width="20" height="14" viewBox="0 0 60 40" aria-hidden="true"><rect width="60" height="40" fill="#012169"/><path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0l60 40M60 0L0 40" stroke="#c8102e" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="13"/><path d="M30 0v40M0 20h60" stroke="#c8102e" stroke-width="8"/></svg></sc-if>{{t.langCur}}</button></header>
+  <main style="display:flex;justify-content:center;padding:16px 24px 48px">
+    <section class="au-card" style="max-width:460px" aria-labelledby="pub-title">
+      <h1 id="pub-title">{{title}}</h1>
+      <sc-if value="{{sub}}"><p class="au-sub">{{sub}}</p></sc-if>
+      <div style="margin-top:44px">
+        <sc-if value="{{showResult}}"><div class="au-res"><i class="{{resCls}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{resIcon}}"></path></svg></i>
+          <p role="status">{{resMsg}}</p><button class="au-link" onClick="{{resGo}}">{{resLink}}</button>
+          <sc-if value="{{showMail}}"><button class="btn" onClick="{{openMail}}">{{t.openMail}}</button></sc-if></div></sc-if>
+        <sc-if value="{{showForm}}"><form class="au-form" style="margin-top:0;gap:22px" noValidate>
+          <div class="field"><label>{{fieldLabel}} <span style="color:var(--danger-ink)">*</span></label>
+            <input class="input" style="height:44px;border-radius:12px" type="{{fieldType}}" value="{{val}}" autocomplete="{{fieldAuto}}" onInput="{{onVal}}" onKeyDown="{{onKey}}" autofocus>
+            <sc-if value="{{err}}"><span class="au-fe" role="alert">{{err}}</span></sc-if></div>
+          <button type="button" class="btn primary au-btn" style="margin-top:10px" disabled="{{busy}}" onClick="{{submit}}">{{btnLabel}}</button>
+          <button type="button" class="au-link" style="text-align:center" onClick="{{formLink}}">{{formLinkLabel}}</button></form></sc-if>
+      </div>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"screen":{"editor":null,"default":"forgot"},"lang":{"editor":null,"default":"vi"},"linkUsed":{"editor":null,"default":false},"onLang":{"editor":null},"onBackLogin":{"editor":null},"onForgot":{"editor":null},"onOpenMail":{"editor":null},"onUsed":{"editor":null},"$preview":{"width":900,"height":600}}'>
+class Component extends DCLogic {
+  // Theo public-auth/forgot-password-page.tsx và reset-password-page.tsx (UC-IAM-08): MSG-IAM-05 cùng một câu dù email có tài khoản hay không;
+  // ERR-IAM-12 khi đường dẫn đã dùng; ERR-IAM-15 (mật khẩu 8 đến 64 ký tự sau khi bỏ khoảng trắng hai đầu, module 01 B2.1)
+  state = { val: '', err: '', sentFor: null, done: false, busy: false };
+  static MIN = 8; static MAX = 64;
+  static T = {
+    vi: { brandSub: 'Quản trị · Headhunter Y tế', forgot: 'Quên mật khẩu', forgotSub: 'Nhập email đăng nhập. Email này sẽ nhận đường dẫn để đặt lại mật khẩu.', email: 'Email', send: 'Gửi', needEmail: 'Nhập email', backLogin: 'Quay lại đăng nhập',
+      resetRequested: 'Nếu email {email} có tài khoản, email này sẽ nhận được đường dẫn để đặt lại mật khẩu.', openMail: 'Mở email giả (chỉ prototype)',
+      resetTitle: 'Đặt mật khẩu mới', newPassword: 'Mật khẩu mới', save: 'Lưu', passwordRule: 'Mật khẩu phải dài {min} đến {max} ký tự.',
+      resetLinkInvalid: 'Đường dẫn này đã hết hạn hoặc đã được dùng. Hãy yêu cầu đường dẫn mới.', resetDone: 'Đã đặt mật khẩu mới. Đăng nhập bằng mật khẩu mới.', goLogin: 'Đi tới đăng nhập', langCur: 'Tiếng Việt', langSwitch: 'Chuyển sang tiếng Anh' },
+    en: { brandSub: 'Admin · Healthcare headhunting', forgot: 'Forgot password', forgotSub: 'Enter your sign-in email. It will receive a link to reset the password.', email: 'Email', send: 'Send', needEmail: 'Enter your email', backLogin: 'Back to sign in',
+      resetRequested: 'If {email} has an account, it will receive a link to reset the password.', openMail: 'Open the mock email (prototype only)',
+      resetTitle: 'Set a new password', newPassword: 'New password', save: 'Save', passwordRule: 'A password must be {min} to {max} characters.',
+      resetLinkInvalid: 'This link has expired or was already used. Request a new link.', resetDone: 'Your new password is set. Sign in with the new password.', goLogin: 'Go to sign in', langCur: 'English', langSwitch: 'Switch to Vietnamese' },
+  };
+  static OKP = 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM9 12l2 2 4-4';
+  static BADP = 'M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1zM12 9v4M12 17h.01';
+  renderVals() {
+    const S = this.state, P = this.props, C = Component, t = C.T[P.lang] || C.T.vi, reset = P.screen === 'reset', patch = (o) => this.setState(o);
+    const invalidLink = reset && P.linkUsed && !S.done;
+    const showResult = (!reset && !!S.sentFor) || (reset && (S.done || invalidLink)), showForm = !showResult;
+    const submit = (e) => {
+      e && e.preventDefault && e.preventDefault();
+      const v = S.val.trim();
+      if (!reset) { if (!v) { patch({ err: t.needEmail }); return; } patch({ sentFor: v, err: '' }); return; }
+      if (v.length < C.MIN || v.length > C.MAX) { patch({ err: t.passwordRule.replace('{min}', C.MIN).replace('{max}', C.MAX) }); return; }
+      patch({ done: true, err: '' }); P.onUsed && P.onUsed();
+    };
+    const ok = reset ? S.done : true;
+    return { t, isVi: P.lang !== 'en', isEn: P.lang === 'en', title: reset ? t.resetTitle : t.forgot, sub: reset || S.sentFor ? '' : t.forgotSub, showResult, showForm, showMail: !reset && !!S.sentFor,
+      resCls: ok ? 'ok' : 'bad', resIcon: ok ? C.OKP : C.BADP, resMsg: reset ? (S.done ? t.resetDone : t.resetLinkInvalid) : t.resetRequested.replace('{email}', S.sentFor || ''),
+      resLink: reset && !S.done ? t.forgot : reset ? t.goLogin : t.backLogin, resGo: reset && !S.done ? P.onForgot : P.onBackLogin, openMail: P.onOpenMail,
+      fieldLabel: reset ? t.newPassword : t.email, fieldType: reset ? 'password' : 'email', fieldAuto: reset ? 'new-password' : 'email', val: S.val, err: S.err, busy: S.busy, btnLabel: reset ? t.save : t.send,
+      onKey: (e) => { if (e && e.key === 'Enter') submit(e); }, formLink: reset ? P.onForgot : P.onBackLogin, formLinkLabel: reset ? t.forgot : t.backLogin, onVal: (e) => patch({ val: e.target.value, err: '' }), submit, onLang: P.onLang };
+  }
+}
+</script>
+</body>
+</html>

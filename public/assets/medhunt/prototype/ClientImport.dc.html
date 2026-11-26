@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Nhập danh sách khách hàng</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./client-master.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.imp-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}.imp-top b{font-size:13px;color:var(--ink-2)}
+.imp-top input[type=file]{display:none}
+.imp-ta{width:100%;min-height:120px;padding:10px 12px;font:12px/1.5 ui-monospace,Consolas,monospace;resize:vertical;height:auto}
+.imp-mid{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted)}
+.imp-tb{overflow:auto;max-height:260px;border:1px solid var(--line);border-radius:12px}
+.imp-tb table{width:100%;border-collapse:separate;border-spacing:0;min-width:520px}
+.imp-tb th,.imp-tb td{padding:8px 12px;text-align:left;font-size:13px;border-bottom:1px solid var(--line-soft);color:var(--ink-2);vertical-align:top}
+.imp-tb th{position:sticky;top:0;background:#f6f7f8;font-weight:600}
+.imp-tb tr.bad td{background:color-mix(in srgb,var(--danger-soft) 45%,#fff)}.imp-tb tr.dup td{background:color-mix(in srgb,var(--warn-soft) 45%,#fff)}
+.imp-dlg{width:min(760px,calc(100vw - 24px));max-height:calc(100vh - 48px);overflow:auto;display:flex;flex-direction:column;gap:16px}
+</style></helmet>
+<div class="scrim"><div class="modal anim-scale imp-dlg" role="dialog" aria-modal="true" aria-label="Nhập danh sách khách hàng">
+  <div><h2>Nhập danh sách khách hàng</h2><div class="muted small">CSV theo thứ tự ô của form tạo khách hàng: {{headText}}. Dòng trùng tên và tỉnh/thành được đánh dấu. Người liên hệ thêm sau ở trang chi tiết.</div></div>
+  <div class="imp-top"><b>Nội dung CSV</b><span class="row" style="gap:8px"><label class="btn sm" role="button">Chọn file .csv<input type="file" accept=".csv,text/csv" onChange="{{onFile}}"></label><button class="btn sm" onClick="{{useSample}}">Dùng mẫu</button></span></div>
+  <textarea class="input imp-ta" aria-label="Nội dung CSV" spellcheck="false" value="{{text}}" onInput="{{onText}}"></textarea>
+  <div class="imp-mid"><span class="tabular">{{summary}}</span><label class="row" style="gap:6px"><input type="checkbox" checked="{{allowDup}}" onChange="{{toggleDup}}"> Vẫn nhập dòng trùng</label></div>
+  <sc-if value="{{hasRows}}"><div class="imp-tb"><table><thead><tr><th>#</th><th>Tên</th><th>Kiểm tra</th><th>Chi tiết</th></tr></thead><tbody>
+    <sc-for list="{{rows}}" as="r"><tr class="{{r.cls}}"><td class="tabular">{{r.no}}</td><td class="fw5">{{r.name}}</td><td><span class="{{r.chip}}">{{r.label}}</span></td><td>{{r.detail}}</td></tr></sc-for></tbody></table></div></sc-if>
+  <div class="row"><span class="spacer"></span><button class="btn" onClick="{{onCancel}}">Huỷ</button><button class="btn" disabled="{{noText}}" onClick="{{validate}}">Kiểm tra</button><button class="btn primary" disabled="{{noRun}}" onClick="{{doImport}}">Nhập {{n}} khách hàng</button></div>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"existingKeys":{"editor":null,"default":[]},"onCancel":{"editor":null},"onImport":{"editor":null},"$preview":{"width":900,"height":700}}'>
+class Component extends DCLogic {
+  // Cột theo ô bắt buộc và tuỳ chọn của form tạo khách hàng (M3 B2.1); docs đã bỏ người phụ trách và mã số thuế nên không có ở đây
+  static HEAD = ['Tên khách hàng', 'Nhóm khách hàng',  'Nguồn khách hàng', 'Tỉnh/thành', 'Phường/xã', 'Địa chỉ', 'Điện thoại', 'Email'];
+  static KEYS = ['name', 'group', 'source', 'province', 'ward', 'address', 'phone', 'email'];
+  static SAMPLE = 'Tên khách hàng,Nhóm khách hàng,Nguồn khách hàng,Tỉnh/thành,Phường/xã,Địa chỉ,Điện thoại,Email\nBệnh viện Đa khoa Tân Phú,Bệnh viện,Đối tác giới thiệu,Hồ Chí Minh,Phường Tân Định,25 Nguyễn Hữu Cảnh,0903123456,lienhe@tanphu.example\nPhòng khám Nhi Xanh,"Phòng khám đa khoa, chuyên khoa",,Hà Nội,Phường Cầu Giấy,8 Xuân Thủy,0243 889 1122,\nViện dưỡng lão An Lạc,Nhà dưỡng lão,,Đà Nẵng,Phường Hải Châu,10 Lê Duẩn,0905111222,\n,Công ty dược,,Cần Thơ,Phường Ninh Kiều,5 Hòa Bình,12345,sai-email\nBệnh viện Đa khoa Tân Phú,Bệnh viện,,Hồ Chí Minh,Phường Tân Định,25 Nguyễn Hữu Cảnh,,';
+  state = { text: Component.SAMPLE, allowDup: false, checked: null };
+  // CSV đơn giản: ngăn bằng dấu phẩy, ô có dấu phẩy bọc trong ngoặc kép; dòng đầu là tiêu đề
+  parse(text) {
+    return text.replace(/^﻿/, '').split(/\r?\n/).slice(1).filter((l) => l.trim()).map((line) => { const out = []; let cur = '', q = false;
+      for (const ch of line) { if (ch === '"') q = !q; else if (ch === ',' && !q) { out.push(cur); cur = ''; } else cur += ch; }
+      out.push(cur); return out.map((c) => c.trim()); });
+  }
+  // Mỗi dòng: ERROR (thiếu hoặc sai danh mục), DUPLICATE (tên + tỉnh đã có hoặc trùng dòng trên), hoặc VALID
+  validate() {
+    const C = Component, M = window.MedClient, seen = new Set(), ex = this.props.existingKeys || [];
+    const rows = this.parse(this.state.text).map((cells, i) => {
+      const r = {}; C.KEYS.forEach((k, n) => { r[k] = cells[n] || ''; });
+      const e = [], key = (r.name + '|' + r.province).toLowerCase(), wards = M.PROV[r.province];
+      if (!r.name) e.push('Thiếu tên'); if (!M.GROUPS.includes(r.group)) e.push('Nhóm khách hàng không có trong danh mục');
+      if (r.source && !M.SOURCES.includes(r.source)) e.push('Nguồn không có trong danh mục');
+      if (!wards) e.push('Tỉnh/thành không có trong danh mục'); else if (!wards.includes(r.ward)) e.push('Phường/xã không thuộc tỉnh/thành');
+      if (!r.address) e.push('Thiếu địa chỉ'); if (M.digits(r.phone) && !M.PHONE.test(M.digits(r.phone))) e.push('Điện thoại dưới 10 chữ số');
+      if (r.email && !M.MAIL.test(r.email)) e.push('Email sai định dạng');
+      const dup = r.name && (ex.includes(key) ? 'Trùng khách hàng có sẵn' : seen.has(key) ? 'Trùng trong file' : '');
+      if (r.name) seen.add(key);
+      return { ...r, no: i + 1, status: e.length ? 'ERROR' : dup ? 'DUPLICATE' : 'VALID', detail: e.length ? e.join('; ') : dup };
+    });
+    this.setState({ checked: { text: this.state.text, rows } });
+  }
+  renderVals() {
+    const C = Component, S = this.state, P = this.props;
+    // Kết quả kiểm chỉ có hiệu lực khi nội dung CSV chưa đổi kể từ lần Kiểm tra
+    const fresh = S.checked && S.checked.text === S.text ? S.checked.rows : null, rows = fresh || [], cnt = (s) => rows.filter((r) => r.status === s).length;
+    const n = cnt('VALID') + (S.allowDup ? cnt('DUPLICATE') : 0), UI = { VALID: ['chip ok', 'Hợp lệ', ''], DUPLICATE: ['chip warn', 'Trùng', 'dup'], ERROR: ['chip bad', 'Lỗi', 'bad'] };
+    return { headText: C.HEAD.join(', '), text: S.text, allowDup: S.allowDup, n, noText: !S.text.trim(), noRun: !fresh || n === 0, hasRows: rows.length > 0,
+      summary: fresh ? rows.length + ' dòng · ' + cnt('VALID') + ' hợp lệ · ' + cnt('DUPLICATE') + ' trùng · ' + cnt('ERROR') + ' lỗi' : 'Bấm Kiểm tra để xem kết quả theo dòng',
+      rows: rows.map((r) => ({ ...r, name: r.name || '—', chip: UI[r.status][0], label: UI[r.status][1], cls: UI[r.status][2] })),
+      onText: (e) => this.setState({ text: e.target.value }), toggleDup: () => this.setState({ allowDup: !S.allowDup }), useSample: () => this.setState({ text: C.SAMPLE }),
+      onFile: (ev) => { const f = ev.target.files && ev.target.files[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => this.setState({ text: String(rd.result).replace(/^﻿/, '') }); rd.readAsText(f); },
+      validate: () => this.validate(), onCancel: P.onCancel,
+      doImport: () => { const ok = rows.filter((r) => r.status === 'VALID' || (S.allowDup && r.status === 'DUPLICATE')); P.onImport && P.onImport(ok.map(({ no, status, detail, ...r }) => r)); } };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Chi tiết yêu cầu</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);list-style:none;margin:0;padding:0}
+.steps li{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:4px}
+.dot{position:relative;z-index:1;width:16px;height:16px;border-radius:50%;border:2px solid var(--line);background:var(--surface)}
+.st-ok .dot{background:var(--brand);border-color:var(--brand)} .st-now .dot{border-color:var(--brand);box-shadow:0 0 0 4px var(--brand-100)} .st-reach .dot{border-color:var(--brand)}
+.st-now .lbl{font-weight:600;color:var(--brand-ink)} .st-todo .lbl{color:var(--muted)}
+.bar{position:absolute;top:7px;left:24px;right:8px;height:2px;background:var(--line)} .st-ok .bar{background:var(--brand)}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:1px 8px;border-radius:999px;border:1px dashed var(--line);font-size:11px;color:var(--muted)}
+.pill.on{border-style:solid;font-weight:600} .pill.hold.on{background:var(--disabled);color:var(--ink-2)} .pill.cancel.on{background:var(--danger-soft);color:var(--danger-ink)}
+.stbtn{display:inline-flex;align-items:center;gap:4px;border:0;background:none;padding:0;color:var(--subtle,var(--muted));cursor:pointer;border-radius:999px}.stbtn:hover{transform:translateY(-1px)}
+.hmeta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;font-size:13px;color:var(--muted);margin-top:-16px}.hm{display:inline-flex;align-items:center;gap:6px}.hm.hl{font-weight:600;color:var(--brand-ink)}.hm.late{font-weight:600;color:var(--danger-ink)}.hm.soon{font-weight:600;color:var(--warn-ink)}
+</style></helmet>
+<div class="col page-in g16">
+  <div class="muted small crumbs"><button class="crumb" onClick="{{onBack}}">Yêu cầu tuyển dụng</button> / <span class="tabular">{{r.code}}</span></div>
+  <div class="page-head tight">
+    <h1>{{r.title}}</h1><span class="{{r.chip}}">{{r.statusLabel}}</span><sc-if value="{{r.secret}}"><span class="chip gray" title="Không đăng tin công khai">Bảo mật</span></sc-if><span class="spacer"></span><sc-if value="{{canEditReq}}"><button class="btn sm" onClick="{{onEdit}}">Sửa yêu cầu</button></sc-if><sc-if value="{{canQty}}"><button class="btn sm" onClick="{{openQty}}">Sửa số lượng</button></sc-if><sc-if value="{{canCancel}}"><button class="btn sm danger" onClick="{{openCancel}}">Huỷ yêu cầu</button></sc-if>
+  </div>
+  <div class="hmeta">
+    <span class="hm hl"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg>{{r.client}}</span>
+    <span class="hm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 21c0-3.5 3-6 7-6s7 2.5 7 6M19 8v6M16 11h6"/></svg><b class="fw5" style="color:var(--ink)">{{r.owner}}</b><sc-if value="{{canAssign}}"><button class="linkbtn" style="margin-left:2px" onClick="{{openAssign}}">{{assignLabel}}</button></sc-if></span>
+  </div>
+  <sc-if value="{{lockedBanner}}"><div class="lkw">Yêu cầu đã hoàn thành hoặc đã huỷ. Các thao tác cập nhật được khoá cho đến khi mở lại yêu cầu.</div></sc-if>
+  <sc-if value="{{noContractBanner}}"><div class="lkw">Yêu cầu {{r.code}} chưa có hợp đồng đã ký.</div></sc-if>
+  <div class="rqtop"><div class="rqw">
+
+    <div class="rqs"><div class="rqkhd"><div class="rqkh">Tiến độ yêu cầu</div></div>
+    <ol class="steps" aria-label="Tiến độ của yêu cầu tuyển dụng">
+      <sc-for list="{{steps}}" as="s" hint-placeholder-count="3">
+        <li class="{{s.cls}}"><span class="bar" style="{{s.barStyle}}"></span><i class="dot"></i><span class="lbl small">{{s.label}}</span>
+          <sc-if value="{{s.cancel}}"><span class="{{s.cancelCls}}">hoặc Đã huỷ</span></sc-if></li>
+      </sc-for>
+    </ol>
+    <sc-if value="{{hasProc}}"><div class="small muted" style="margin-top:10px">Số ngày xử lý <b class="tabular" style="color:var(--ink)">{{procTxt}}</b> <sc-if value="{{r.procOver}}"><span class="chip bad">Quá hạn xử lý</span></sc-if></div></sc-if></div>
+    <div class="rqk"><div class="rqkhd"><div class="rqkh">Điều kiện hoàn thành</div><span class="rqact">
+      <sc-if value="{{isOpen}}"><button class="btn sm primary" onClick="{{onComplete}}">Hoàn thành yêu cầu</button></sc-if>
+      <sc-if value="{{isClosed}}"><button class="btn sm" title="{{reopenHint}}" onClick="{{onReopen}}">Mở lại yêu cầu</button></sc-if></span></div>
+      <sc-for list="{{checks}}" as="k"><div class="rqkr {{k.cls}}"><span class="rqkm" aria-hidden="true">{{k.mark}}</span><span class="rqkl">{{k.label}}</span><b class="rqkv tabular">{{k.val}}</b><span class="rqkb"><span style="{{k.bar}}"></span></span></div></sc-for></div>
+  </div></div>
+  <div class="tabs" role="tablist">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="6"><button class="{{t.cls}}" role="tab" aria-selected="{{t.sel}}" onClick="{{t.go}}"><sc-if value="{{t.pri}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></sc-if>{{t.label}}</button></sc-for>
+  </div>
+  <sc-if value="{{isProgress}}"><dc-import name="ReqProgress" cases="{{cases}}" request="{{r}}" ivs="{{ivs}}" offers="{{offers}}" on-open-case="{{onOpenCase}}" on-go-find="{{goFind}}" on-row-act="{{onRowAct}}" fresh-ids="{{freshIds}}" sim="{{sim}}" on-sim-next="{{onSimNext}}" hint-size="100%,600px"></dc-import></sc-if>
+  <sc-if value="{{isOverview}}"><dc-import name="ReqOverview" request="{{r}}" cases="{{cases}}" ledger="{{ledger}}" contract="{{contract}}" feas="{{feas}}" on-contract="{{onContract}}" on-edit="{{onEdit}}" on-pos-act="{{onPosAct}}" hint-size="100%,420px"></dc-import></sc-if>
+  <sc-if value="{{isFind}}"><dc-import name="ReqFind" today="{{sim.day}}" on-open-progress="{{goProgress}}" request="{{r}}" cands="{{cands}}" pool="{{pool}}" on-add="{{onAdd}}" review-settings="{{reviewSettings}}" is-admin="{{isAdmin}}" on-review-action="{{onReviewAction}}" can-portal="{{canPortal}}" on-set="{{onSetCands}}" on-send="{{onSend}}" on-remove="{{onRemoveCands}}" on-restore="{{onRestoreCands}}" locked="{{findLocked}}" hint-size="100%,420px"></dc-import></sc-if>
+  <sc-if value="{{isPay}}"><dc-import name="ReqPay" request="{{r}}" cases="{{cases}}" ledger="{{ledger}}" on-pay="{{onPay}}" hint-size="100%,420px"></dc-import></sc-if>
+  <sc-if value="{{isHist}}"><dc-import name="ReqHistory" status="{{r.status}}" events="{{events}}" versions="{{versions}}" hint-size="100%,300px"></dc-import></sc-if>
+
+  <sc-if value="{{showAssign}}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Phân công"><h2>Phân công {{r.code}}</h2>
+    <div class="muted small">{{assignHint}}</div>
+    <div class="field"><label>Người phụ trách <span class="req">*</span></label><div class="col g6"><sc-for list="{{assignees}}" as="o"><label class="row"><input type="checkbox" checked="{{o.on}}" onChange="{{o.toggle}}"> {{o.v}}</label></sc-for></div><span class="small t-danger">{{asgErr}}</span></div>
+    <div class="row"><span class="spacer"></span><button class="btn" onClick="{{closeAssign}}">Huỷ</button><button class="btn primary" onClick="{{saveAssign}}">Lưu phân công</button></div></div></div></sc-if>
+  <sc-if value="{{modalOn}}"><dc-import name="ReqStatusModals" mode="{{modal}}" req="{{r}}" cases="{{cases}}" checks="{{checks}}" errors="{{merrors}}" prev-label="{{prevLabel}}" is-admin="{{isAdmin}}" pos="{{posSel}}" pos-cases="{{posCases}}" profiles-n="{{profilesN}}" dup-pos="{{dupPos}}" on-save="{{saveModal}}" on-close="{{closeModal}}" hint-size="100%,100px"></dc-import></sc-if>
+  <sc-if value="{{toast}}"><div class="chip ok toast anim-in">{{toast}}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"reviewSettings":{"editor":null,"default":{}},"request":{"editor":null},"cases":{"editor":null,"default":[]},"tab":{"editor":null},"feas":{"editor":null,"default":[]},"contract":{"editor":null},"cands":{"editor":null,"default":[]},"pool":{"editor":null,"default":[]},"canPortal":{"editor":null},"events":{"editor":null,"default":[]},"versions":{"editor":null,"default":[]},"prompt":{"editor":null},"ledger":{"editor":null,"default":[]},"isAdmin":{"editor":null,"default":true},"sim":{"editor":null,"default":{}},"freshIds":{"editor":null,"default":[]},"ivs":{"editor":null,"default":[]},"offers":{"editor":null,"default":{}},"assignFlag":{"editor":null},"api":{"editor":null},"$preview":{"width":1100,"height":700}}'>
+class Component extends DCLogic {
+  // 14 mã BE gom về 3 bước + pill phụ (request-steps.tsx)
+  static TRACK = { DRAFT: 'W', SUBMITTED: 'W', SOURCING: 'R', CLOSED: 'D', CANCELLED: 'C' };
+  static P = { W:[['now','todo','todo'],null], R:[['ok','now','todo'],null], D:[['ok','ok','ok'],null], C:[['ok','todo','todo'],'cancel'] };
+  // Tab Khả thi ẩn theo docs (đánh giá khả thi "Chưa xếp" từ P01S02, module 04 B2.2)
+  static TABS = [['tien-trinh', 'Tiến trình ca tuyển'], ['tong-quan', 'Tổng quan'], ['ung-vien', 'Tìm ứng viên'], ['thanh-toan', 'Thanh toán'], ['lich-su', 'Hoạt động']];
+  state = { posIdx: null, assignOpen: false, assignClosed: false, asgSel: null, asgErr: '', modal: '', toast: '' };
+  renderVals() {
+    const P = this.props, S = this.state, api = P.api || {};
+    const r = P.request || { code: 'YC-012', title: 'Điều dưỡng ICU', client: '—', qty: 1, hired: 0, due: '—', owner: '—', statusLabel: 'Đang xử lý', tone: 'info', status: 'SOURCING' };
+    const [st, side] = Component.P[Component.TRACK[r.status] || 'W'];
+    const names = ['Chờ xử lý', 'Đang xử lý', 'Đã hoàn thành'];
+    const steps = st.map((s, i) => ({ cls: 'st-' + s, label: names[i], barStyle: i === 2 ? 'display:none' : '',
+      cancel: i === 2, cancelCls: 'pill cancel' + (side === 'cancel' ? ' on' : '') }));
+    const tab = P.tab || 'tien-trinh';
+    const tabs = Component.TABS.map(([k, label]) => ({ label, pri: k === 'tien-trinh', cls: k === 'tien-trinh' ? 'tab pri' : 'tab', sel: k === tab, go: () => api.setTab && api.setTab(k) }));
+    const say = (toast) => { this.setState({ toast }); setTimeout(() => this.setState({ toast: '' }), 2500); };
+    const isAdmin = P.isAdmin !== false, STAFF = ['Lan Phạm', 'Minh Trần'], curOwners = r.owner && r.owner !== 'Chưa phân công' ? String(r.owner).split(', ') : [];
+    const asgSel = S.asgSel || curOwners;
+    // Yêu cầu đã có người phụ trách thì chỉ Quản trị đổi, gỡ (UC-REQ-12, ERR-REQ-36)
+    const assignBlocked = r.status === 'SOURCING' && !isAdmin && curOwners.length > 0;
+    const showAssign = !assignBlocked && (S.assignOpen || (!!P.assignFlag && !S.assignClosed));
+    // Điều kiện hoàn thành theo module 04 B3.2 #7: (1) không còn ca đang chạy (2) mỗi vị trí chưa Ngừng tuyển đủ số ca đã xong và cả yêu cầu có ít nhất một ca Hết bảo hành, ca kết thúc giữa chừng không tính (3) không còn phí phải thu (4) có hợp đồng đã ký.
+    // Không cần mọi ca đi hết bảo hành: ca kết thúc giữa chừng được bỏ ra ngoài; ca Hết bảo hành chỉ "đã xong" khi các đợt phí của ca đã thu đủ.
+    const cs = P.cases || [], led = P.ledger || [], K = P.contract, qty = r.qty || 0, ledOf = (id) => led.find((l) => l.id === id) || { paidN: 0, leftN: 0, insts: [] };
+    const run1 = cs.filter((c) => c.stage <= 3), run2 = cs.filter((c) => c.stage >= 4 && c.stage <= 6);
+    const owing = cs.filter((c) => c.stage === 7 && ledOf(c.id).leftN > 0), done = cs.filter((c) => c.stage === 7 && ledOf(c.id).leftN <= 0);
+    const midOwe = cs.filter((c) => c.stage === 8 && (ledOf(c.id).insts || []).some((i) => i.status === 'overdue'));
+    const pct = (a, b) => 'width:' + (b > 0 ? Math.min(100, Math.round(a / b * 100)) : 0) + '%', ids = (l) => l.map((c) => c.name || c.id).join(', ');
+    const running = run1.length + run2.length, feeLeft = owing.length + midOwe.length;
+    // Yêu cầu cũ chỉ có một vị trí; ca chưa ghi vị trí thì tính vào vị trí đầu (như dữ liệu thử của docs). Vị trí Ngừng tuyển không xét số lượng
+    const poss = (r.positions && r.positions.length ? r.positions : [{ title: r.title, qty }]).map((p, i) => ({ ...p, id: p.id || 'p' + (i + 1), qty: parseInt(p.qty, 10) || 0, stopped: !!p.stopped }));
+    const doneBy = (p) => done.filter((c) => (poss.find((x) => x.id === c.positionId) || poss.find((x) => x.title && x.title === c.pos) || poss[0]) === p).length;
+    const live = poss.filter((p) => !p.stopped), short = live.filter((p) => doneBy(p) < p.qty), many = poss.length > 1, anyHet = cs.some((c) => c.stage === 7), okDone = short.length === 0 && anyHet;
+    // Ngừng tuyển, tuyển lại một vị trí (UC-REQ-18): ca và hồ sơ ảnh hưởng, vị trí trùng khi tuyển lại (ERR-REQ-46)
+    const posSel = S.posIdx !== null && S.posIdx !== undefined ? poss[S.posIdx] || null : null, waitSt = ['REVIEW_PENDING', 'IN_REVIEW', 'SECOND_REVIEW_PENDING'];
+    const posCases = posSel ? cs.filter((c) => (poss.find((x) => x.id === c.positionId) || poss.find((x) => x.title && x.title === c.pos) || poss[0]) === posSel) : [];
+    const profilesN = (P.cands || []).filter((c) => waitSt.includes(c.status) && (!posSel || c.pos === posSel.title)).length;
+    const dupPos = !!posSel && !!posSel.stopped && poss.some((x) => x !== posSel && !x.stopped && String(x.title || '').trim().toLowerCase() === String(posSel.title || '').trim().toLowerCase());
+    const checks = [{ ok: running === 0, label: 'Không còn ca đang chạy', val: running === 0 ? 'Đã hết' : 'Còn ' + running + ' ca', bar: pct(cs.length - running, cs.length || 1) },
+      { ok: okDone, label: many ? 'Mỗi vị trí đủ ca đã xong' : 'Số ca đã xong', val: many ? (live.length - short.length) + ' / ' + live.length + ' vị trí đủ ca' : done.length + ' / ' + qty + ' ca', bar: many ? pct(live.length - short.length, live.length || 1) : pct(done.length, qty) },
+      { ok: feeLeft === 0, label: 'Không còn phí phải thu', val: feeLeft === 0 ? 'Đã thu đủ' : 'Còn ' + feeLeft + ' ca', bar: pct(feeLeft === 0 ? 1 : 0, 1) },
+      { ok: !!(K && K.signed), label: 'Hợp đồng đã ký', val: K ? (K.signed ? 'Đã ký ' + K.no : 'Chưa ký ' + K.no) : 'Chưa gắn hợp đồng', bar: pct(K && K.signed ? 1 : 0, 1) }]
+      .map((c) => ({ ...c, cls: c.ok ? 'ok' : '', mark: c.ok ? '✓' : '✕' }));
+    const allOk = checks.every((c) => c.ok), closed = ['CLOSED', 'CANCELLED'].includes(r.status);
+    const merrors = [];
+    if (run1.length) merrors.push('Còn ' + run1.length + ' ca đang chạy từ Đã gửi tới Đã offer: ' + ids(run1) + ' (ERR-REQ-11).');
+    if (run2.length) merrors.push('Còn ' + run2.length + ' ca ở Chờ thử việc, Thử việc hoặc Bảo hành: ' + ids(run2) + ' (ERR-REQ-26).');
+    short.forEach((p) => merrors.push('Vị trí ' + p.title + ' mới có ' + doneBy(p) + '/' + p.qty + ' ca đã xong, tức đã qua mốc 3 tháng và đã thu đủ phí. Tìm thêm người, sửa số lượng hoặc ngừng tuyển vị trí trước khi hoàn thành yêu cầu (ERR-REQ-27).'));
+    if (!anyHet) merrors.push('Yêu cầu ' + r.code + ' chưa có ứng viên nào qua mốc 3 tháng nên không hoàn thành được. Nếu không tuyển nữa, báo quản trị hệ thống huỷ yêu cầu (ERR-REQ-41).');
+    if (feeLeft) merrors.push('Còn phí phải thu ở ' + feeLeft + ' ca: ' + ids([...owing, ...midOwe]) + ' (ERR-REQ-31).');
+    if (!(K && K.signed)) merrors.push('Chưa có hợp đồng đã ký (ERR-REQ-18).');
+    const OPEN = ['DRAFT', 'SUBMITTED', 'SOURCING'], prevLabel = r.prev && ({ DRAFT: 'Nháp', SUBMITTED: 'Chờ xử lý', SOURCING: 'Đang xử lý' })[r.prev] || (r.status === 'CLOSED' ? 'Đang xử lý' : '');
+    return { reviewSettings: P.reviewSettings || {}, onReviewAction: (ids, action, payload) => api.reviewAction(r.code, ids, action, payload), onPay: (...a) => api.pay && api.pay(...a), hasProc: r.procDays !== null && r.procDays !== undefined, procTxt: r.procDays + ' ngày', r: { ...r, chip: 'chip ' + r.tone }, steps, tabs, cases: P.cases || [], feas: P.feas || [], contract: P.contract || null, cands: P.cands || [], canPortal: !!P.canPortal, events: P.events || [], ledger: P.ledger || [], sim: P.sim || {}, onSimNext: () => api.simNext && api.simNext(), freshIds: P.freshIds || [], onRowAct: (kind, ...args) => api.rowAct && api.rowAct[kind] && api.rowAct[kind](...args), ivs: P.ivs || [], offers: P.offers || {}, versions: P.versions || [],
+      goFind: () => api.setTab && api.setTab('ung-vien'), goProgress: () => api.setTab && api.setTab('tien-trinh'), onBack: api.back, onContract: (a) => api.contract && api.contract(r.code, a), onEdit: () => api.edit && api.edit(r.code),
+      pool: P.pool || [], onAdd: (ids, positionId) => api.addCands && api.addCands(r.code, ids, positionId), onSetCands: (ids, status, meta) => api.setCands && api.setCands(r.code, ids, status, meta), onRemoveCands: (ids, reason) => api.removeCands && api.removeCands(r.code, ids, reason), onRestoreCands: (snap, readd) => api.restoreCands && api.restoreCands(r.code, snap, readd), onSend: (ids, date) => api.send && api.send(r.code, ids, date),
+      isProgress: tab === 'tien-trinh', isOverview: tab === 'tong-quan', isFind: tab === 'ung-vien', isPay: tab === 'thanh-toan', isHist: tab === 'lich-su',
+      canAssign: OPEN.includes(r.status) && !assignBlocked, showAssign, assignLabel: r.owner === "Chưa phân công" ? "Phân công" : "Đổi", openAssign: () => { if (assignBlocked) { say('Yêu cầu đã có người phụ trách: chỉ Quản trị hệ thống đổi được (ERR-REQ-36).'); return; } this.setState({ assignOpen: true, asgSel: null, asgErr: '' }); },
+      closeAssign: () => { this.setState({ assignOpen: false, assignClosed: true, asgSel: null, asgErr: '' }); api.endAssign && api.endAssign(); },
+      assignHint: r.status === 'SUBMITTED' ? 'Thêm người phụ trách đầu tiên thì yêu cầu chuyển sang Đang xử lý.' : 'Chọn một hoặc nhiều người phụ trách.',
+      assignees: STAFF.map((v) => ({ v, on: asgSel.includes(v), toggle: () => this.setState({ asgSel: asgSel.includes(v) ? asgSel.filter((x) => x !== v) : [...asgSel, v], asgErr: '' }) })), asgErr: S.asgErr,
+      saveAssign: () => { if (!asgSel.length) { this.setState({ asgErr: 'Cần ít nhất một người phụ trách (ERR-REQ-17).' }); return; } const out = api.assign(r.code, asgSel); if (out && !out.ok) { this.setState({ asgErr: out.message }); return; } this.setState({ assignOpen: false, assignClosed: true, asgSel: null, asgErr: '' }); api.endAssign && api.endAssign(); say('Đã phân công ' + r.code); },
+      onOpenCase: (id) => api.openCase && api.openCase(id),
+      checks, isOpen: r.status === 'SOURCING', isClosed: closed, lockedBanner: closed, canEditReq: OPEN.includes(r.status), canQty: ['SUBMITTED', 'SOURCING'].includes(r.status) && !many, canCancel: OPEN.includes(r.status) && (r.status === 'DRAFT' || isAdmin), findLocked: r.status !== 'SOURCING', reopenHint: isAdmin ? '' : 'Chỉ Quản trị hệ thống mở lại được (ERR-REQ-37)',
+      isAdmin, posSel, posCases, profilesN, dupPos, onPosAct: (i, mode) => this.setState({ modal: mode === 'qty' ? 'qty' : mode === 'resume' ? 'posResume' : 'posStop', posIdx: i }),
+      modalOn: !!S.modal, modal: S.modal, merrors, prevLabel, closeModal: () => this.setState({ modal: '' }),
+      openQty: () => this.setState({ modal: 'qty', posIdx: null }), openCancel: () => this.setState({ modal: 'cancel' }),
+      saveModal: (d) => {
+        let out;
+        if (S.modal === 'cancel') out = api.cancelReq(r.code, d.reason, d.note, d.typed);
+        else if (S.modal === 'reopen') out = api.reopenReq(r.code, d.note);
+        else if (S.modal === 'posStop') out = api.setPosStop(r.code, S.posIdx, true, d.reason, d.note);
+        else if (S.modal === 'posResume') out = api.setPosStop(r.code, S.posIdx, false);
+        else if (S.modal === 'qty') out = api.setQty(r.code, d.qty, d.note, S.posIdx);
+        else out = api.status(r.code, 'CLOSED', 'Hoàn thành yêu cầu' + (d.note ? ' · ' + d.note : ''));
+        if (out && !out.ok) { say(out.message); return; }
+        say('Đã lưu thay đổi yêu cầu.'); this.setState({ modal: '', posIdx: null });
+      }, noContractBanner: !closed && !(K && K.signed),
+      onComplete: () => this.setState({ modal: 'complete' }),
+      onReopen: () => { if (!isAdmin) { say('Chỉ Quản trị hệ thống mở lại được yêu cầu (ERR-REQ-37).'); return; } this.setState({ modal: 'reopen' }); }, toast: S.toast };
+  }
+}
+</script>
+</body>
+</html>

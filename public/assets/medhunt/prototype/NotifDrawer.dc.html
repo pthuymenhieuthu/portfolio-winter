@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Thông báo</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.nd-scrim{position:fixed;inset:0;z-index:90;background:rgba(15,27,48,.22);display:flex;justify-content:flex-end}
+.nd{width:min(440px,calc(100vw - 24px));height:100%;box-sizing:border-box;padding:24px;background:var(--surface);border-left:1px solid var(--line);box-shadow:-18px 0 48px rgba(24,42,78,.14);display:flex;flex-direction:column;overflow:hidden}
+.nd-head{display:flex;align-items:center;gap:12px;padding-bottom:16px}
+.nd-head h2{font-size:20px;font-weight:600}
+.nd-close{width:34px;height:34px;padding:0;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--muted);font-size:20px;line-height:1}
+.nd-bar{display:flex;align-items:center;gap:10px;padding-bottom:14px}
+.nd-list{list-style:none;margin:0 -12px;padding:0 12px;overflow:auto;flex:1}
+.nd-item{display:flex;gap:12px;align-items:flex-start;padding:14px 4px;border-top:1px solid var(--line-soft)}
+.nd-item:first-child{border-top:0}
+.nd-dot{width:8px;height:8px;margin-top:6px;border-radius:50%;flex:none;background:transparent}.nd-item.unread .nd-dot{background:var(--brand)}
+.nd-main{flex:1;min-width:0;border:0;background:transparent;padding:0;text-align:left;font:inherit;cursor:pointer}
+.nd-main:hover .dh-title{color:var(--brand-ink)}
+.nd-main .dh-title{white-space:normal}.nd-item.unread .dh-title{font-weight:700;color:var(--ink)}
+.nd-main .dh-meta{white-space:normal;line-height:1.5}
+.nd-foot{display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--muted);font-size:12px}
+.nd-ok{width:30px;height:30px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--muted);flex:none}.nd-ok:hover{background:var(--brand-50);color:var(--brand-ink)}
+@media(max-width:700px){.nd{padding:20px}}
+</style></helmet>
+<div class="nd-scrim" onClick="{{close}}"><aside class="nd anim-slide" role="dialog" aria-modal="true" aria-labelledby="nd-t" onClick="{{stop}}">
+  <div class="nd-head"><h2 id="nd-t">Thông báo</h2><span class="spacer"></span>
+    <sc-if value="{{hasUnread}}"><button class="btn sm" onClick="{{readAll}}">Đọc tất cả</button></sc-if><button class="nd-close" onClick="{{close}}" aria-label="Đóng">×</button></div>
+  <div class="nd-bar"><div class="dh-tabs" role="group" aria-label="Lọc thông báo"><button aria-pressed="{{isUnread}}" onClick="{{showUnread}}">Chưa đọc ({{unreadN}})</button><button aria-pressed="{{isAll}}" onClick="{{showAll}}">Tất cả</button></div>
+    <span class="spacer"></span><select class="input" style="max-width:150px" aria-label="Lọc theo loại" onChange="{{setType}}"><option value="">Mọi loại</option><sc-for list="{{types}}" as="t"><option value="{{t.v}}" selected="{{t.sel}}">{{t.v}}</option></sc-for></select></div>
+  <ul class="nd-list"><sc-for list="{{rows}}" as="n"><li class="{{n.cls}}"><span class="nd-dot" aria-hidden="true"></span>
+    <button class="nd-main" onClick="{{n.open}}"><span class="dh-title">{{n.title}}</span><span class="dh-meta">{{n.body}}</span><span class="nd-foot"><span class="dh-scope">{{n.type}}</span>{{n.at}}</span></button>
+    <sc-if value="{{n.unread}}"><button class="nd-ok" aria-label="Đánh dấu đã đọc" title="Đánh dấu đã đọc" onClick="{{n.mark}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button></sc-if></li></sc-for>
+    <sc-if value="{{empty}}"><li class="dh-empty">{{emptyText}}</li></sc-if></ul>
+</aside></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"items":{"editor":null,"default":[]},"onClose":{"editor":null},"onRead":{"editor":null},"onReadAll":{"editor":null},"$preview":{"width":480,"height":640}}'>
+class Component extends DCLogic {
+  state = { f: 'unread', type: '' };
+  renderVals() {
+    const P = this.props, S = this.state, all = P.items || [], unread = all.filter((n) => n.unread);
+    const types = [...new Set(all.map((n) => n.type))].map((v) => ({ v, sel: v === S.type }));
+    const rows = (S.f === 'unread' ? unread : all).filter((n) => !S.type || n.type === S.type).map((n) => ({ ...n, cls: 'nd-item' + (n.unread ? ' unread' : ''),
+      mark: () => P.onRead && P.onRead(n.id), open: () => { P.onRead && P.onRead(n.id); P.onClose && P.onClose(); n.go && n.go(); } }));
+    return { rows, types, empty: rows.length === 0, emptyText: S.f === 'unread' ? 'Đã đọc hết thông báo' : 'Không có thông báo phù hợp', unreadN: unread.length, hasUnread: unread.length > 0,
+      isUnread: S.f === 'unread', isAll: S.f === 'all', showUnread: () => this.setState({ f: 'unread' }), showAll: () => this.setState({ f: 'all' }), setType: (e) => this.setState({ type: e.target.value }),
+      close: () => P.onClose && P.onClose(), readAll: () => P.onReadAll && P.onReadAll(), stop: (e) => e && e.stopPropagation && e.stopPropagation() };
+  }
+}
+</script>
+</body>
+</html>

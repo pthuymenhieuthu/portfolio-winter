@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Offer &amp; nhận việc</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./filter-multi.js"></script><script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}</style></helmet>
+<div class="col page-in">
+  <div class="ovc stagger" style="grid-template-columns:repeat(5,minmax(0,1fr))"><sc-for list="{{tiles}}" as="t" hint-placeholder-count="4"><div class="{{t.cls}}" style="{{t.accStyle}}" aria-pressed="{{t.on}}" onClick="{{t.pick}}"><span class="ovico"><sc-if value="{{t.fDoc}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Zm0 0v6h6M8 13h8m-8 4h6"></path></svg></sc-if><sc-if value="{{t.fClock}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"></path></svg></sc-if><sc-if value="{{t.fAct}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></sc-if><sc-if value="{{t.fCheck}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3"></path></svg></sc-if></span><span class="ovn tabular {{t.nCls}}">{{t.n}}</span><span class="ovt">{{t.label}}</span></div></sc-for></div>
+  <div class="seg" role="group" aria-label="Chế độ xem"><button aria-pressed="{{isOffer}}" onClick="{{showOffer}}">Offer</button><button aria-pressed="{{isPlace}}" onClick="{{showPlace}}">Nhận việc</button></div>
+  <sc-if value="{{isOffer}}"><div class="card"><table><thead><tr><th>Ứng viên</th><th>Lương</th><th>Ngày nhận việc</th><th>Trạng thái</th><th></th></tr></thead><tbody class="stagger">
+    <sc-for list="{{offers}}" as="o"><tr class="nc"><td class="fw5">{{o.name}} <span class="muted small tabular">{{o.id}}</span></td><td class="tabular">{{o.salary}}</td><td class="tabular">{{o.start}}</td><td><span class="{{o.chip}}">{{o.label}}</span></td>
+      <td style="text-align:right"><sc-if value="{{o.canRecord}}"><button class="btn sm primary" onClick="{{o.record}}">Ghi offer</button></sc-if><sc-if value="{{o.canAnswer}}"><button class="btn sm" onClick="{{o.answer}}">Xác nhận</button></sc-if></td></tr></sc-for></tbody></table>
+    <sc-if value="{{noOffers}}"><div class="card-b muted">Chưa có offer. Ứng viên đạt phỏng vấn sẽ hiện ở đây để ghi offer.</div></sc-if>
+    <div class="tfoot"><span>{{offerFooter}}</span><span class="spacer"></span><sc-for list="{{offerPager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></div></sc-if>
+  <sc-if value="{{isPlace}}"><div class="card"><table><thead><tr><th>Ứng viên</th><th>Lương thoả thuận</th><th>Bắt đầu thử việc</th><th>Hết thử việc</th><th>Hạn bảo hành</th><th>Trạng thái</th></tr></thead><tbody class="stagger">
+    <sc-for list="{{places}}" as="p"><tr class="nc"><td class="fw5">{{p.name}}</td><td class="tabular">{{p.salary}}</td><td class="tabular">{{p.start}}</td><td class="tabular">{{p.probEnd}}</td><td class="tabular">{{p.warEnd}}</td><td><span class="chip" style="{{p.style}}">{{p.label}}</span></td></tr></sc-for></tbody></table>
+    <sc-if value="{{noPlaces}}"><div class="card-b muted">Chưa có nhận việc. Nhận việc chỉ có khi ứng viên nhận offer và nhân viên lưu phiếu xác nhận tuyển dụng.</div></sc-if>
+    <div class="tfoot"><span>{{hireFooter}}</span><span class="spacer"></span><sc-for list="{{hirePager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></div></sc-if>
+
+  <sc-if value="{{rowOpen}}"><dc-import name="ReqRowAct" cfg="{{rowCfg}}" on-save="{{saveRow}}" on-close="{{closeRow}}" hint-size="100%,100px"></dc-import></sc-if>
+  <sc-if value="{{form}}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Ghi offer"><h2>Ghi offer · {{formName}}</h2>
+    <div class="muted small">Lưu là offer đã gửi cho ứng viên. Các ngày thử việc và bảo hành chốt sau, ở phiếu Xác nhận tuyển dụng.</div>
+    <div class="field"><label>Mức lương chính thức (đồng/tháng)</label><input class="input" type="number" value="{{f.salary}}" onInput="{{set.salary}}"><span class="err">{{fe.salary}}</span></div>
+    <div class="row"><div class="field f1"><label>Ngày nhận việc</label><input class="input" value="{{f.start}}" placeholder="dd/mm/yyyy" onInput="{{set.start}}"><span class="err">{{fe.start}}</span></div>
+      <div class="field f1"><label>Lương thử việc (% lương chính thức)</label><input class="input" type="number" value="{{f.pct}}" onInput="{{set.pct}}"></div></div>
+    <div class="row"><span class="spacer"></span><button class="btn" onClick="{{closeForm}}">Huỷ</button><button class="btn primary" onClick="{{save}}">Ghi offer</button></div></div></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"cases":{"editor":null,"default":[]},"offers":{"editor":null,"default":{}},"hires":{"editor":null,"default":{}},"api":{"editor":null},"$preview":{"width":1100,"height":520}}'>
+class Component extends DCLogic {
+  state = { row: null, tab: 'offer', pageOffer: 0, pageHire: 0, form: null, f: { salary: '', start: '', pct: '85' }, fe: {} };
+  static L = ['Đã gửi','Phỏng vấn','Đạt phỏng vấn','Đã offer','Chờ thử việc','Thử việc','Bảo hành','Kết thúc bảo hành','Kết thúc giữa chừng'];
+  renderVals() {
+    const S = this.state, P = this.props, api = P.api || {}, cases = P.cases || [], offers = P.offers || {}, L = Component.L, fmt = (n) => Number(n).toLocaleString('vi-VN') + ' đ';
+    const sty = (i) => 'background:var(--stage-' + i + '-soft);color:var(--stage-' + i + ')';
+    const tiles = [['Chờ ghi offer', cases.filter((c) => c.stage === 2).length], ['Chờ ứng viên trả lời', cases.filter((c) => c.stage === 3).length], ['Chờ thử việc', cases.filter((c) => c.stage === 4).length],
+      ['Thử việc', cases.filter((c) => c.stage === 5).length], ['Bảo hành / kết thúc', cases.filter((c) => c.stage === 6 || c.stage === 7).length]].map(([label, n]) => ({ label, n }));
+    const DECO = [['Doc'], ['Clock'], ['Act'], ['Act'], ['Check']];
+    tiles.forEach((t, i) => Object.assign(t, { cls: 'ovi' + (t.pick ? '' : ' st'), accStyle: '--acc:var(' + window.MedDash.statTone(i, tiles.length) + ')', ['f' + DECO[i][0]]: true }));
+    const rowsO = cases.filter((c) => c.stage >= 2 && c.stage <= 4).map((c) => { const o = offers[c.id];
+      return { id: c.id, name: c.name, salary: o ? fmt(o.salary) : '—', start: o ? o.start : '—', chip: c.stage === 2 ? 'chip warn' : c.stage === 3 ? 'chip info' : 'chip ok', label: c.stage === 2 ? 'Chờ ghi offer' : c.stage === 3 ? 'Chờ ứng viên trả lời' : 'Đã nhận offer',
+        canRecord: c.stage === 2, canAnswer: c.stage === 3, record: () => this.setState({ form: c.id, f: { salary: '', start: '', pct: '85' }, fe: {} }),
+        answer: () => this.setState({ row: { id: c.id, name: c.name, kind: 'answer', stage: 3 } }) }; });
+    const places = cases.filter((c) => c.stage >= 4 && c.stage <= 7).map((c) => { const o = offers[c.id] || {}, h = (P.hires || {})[c.id], st = h ? h.a : o.start || '01/11/2026';
+      const add = (s, m) => { const [d, mo, y] = s.split('/').map(Number), t = new Date(y, mo - 1 + m, d); return String(t.getDate()).padStart(2, '0') + '/' + String(t.getMonth() + 1).padStart(2, '0') + '/' + t.getFullYear(); };
+      return { name: c.name, salary: o.salary ? fmt(o.salary) : '—', start: st, probEnd: h ? h.b || '—' : add(st, 2), warEnd: h ? h.d : add(st, 5), label: L[c.stage], style: sty(c.stage) }; });
+    const vo = MedPage.view(rowsO, S.pageOffer, 'offer'), vh = MedPage.view(places, S.pageHire, 'ca nhận việc');
+    const form = cases.find((c) => c.id === S.form), f = S.f, setF = (k) => (e) => this.setState({ f: { ...f, [k]: e.target.value } });
+    return { tiles, offers: vo.rows, noOffers: rowsO.length === 0, places: vh.rows, noPlaces: places.length === 0,
+      offerFooter: vo.footer, offerPager: MedPage.pager(this, vo, 'pageOffer'), hireFooter: vh.footer, hirePager: MedPage.pager(this, vh, 'pageHire'), isOffer: S.tab === 'offer', isPlace: S.tab === 'place', showOffer: () => this.setState({ tab: 'offer', pageOffer: 0, pageHire: 0 }), showPlace: () => this.setState({ tab: 'place', pageOffer: 0, pageHire: 0 }),
+      rowOpen: !!S.row, rowCfg: S.row || {}, closeRow: () => this.setState({ row: null }), saveRow: (kind, id, ok, why) => { api.answer && api.answer(id, ok, why); this.setState({ row: null }); },
+      form: !!form, formName: form ? form.name : '', closeForm: () => this.setState({ form: null }), f, fe: S.fe, set: { salary: setF('salary'), start: setF('start'), pct: setF('pct') },
+      save: () => { const fe = {}; if (!(+f.salary > 0)) fe.salary = 'Nhập mức lương chính thức lớn hơn 0.'; if (!/^\d{2}\/\d{2}\/\d{4}$/.test(f.start)) fe.start = 'Nhập ngày dd/mm/yyyy';
+        if (Object.keys(fe).length) return this.setState({ fe }); api.offer && api.offer(S.form, { salary: +f.salary, start: f.start, pct: +f.pct || 0 }); this.setState({ form: null }); } };
+  }
+}
+</script>
+</body>
+</html>

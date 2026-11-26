@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Phỏng vấn</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./filter-multi.js"></script><script src="./interview-calendar.js"></script><script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.cal{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.cnav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.cnav .cm{font-size:18px;font-weight:500;margin-left:6px;color:var(--ink)}.cnav .spacer{flex:1}
+.chead{display:grid;grid-template-columns:56px repeat(var(--n,7),minmax(0,1fr));padding-top:8px;border-bottom:1px solid var(--line)}
+.chead .ch{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0 10px}.chead .dw{font-size:12px;letter-spacing:.04em;color:var(--muted)}
+.chead .dn{width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:18px;color:var(--ink)}.chead .ch.today .dn{background:var(--brand);color:#fff;font-weight:600}
+.cbody{display:grid;grid-template-columns:56px repeat(var(--n,7),minmax(0,1fr));position:relative}
+.cgut{position:relative}.cgut .hl{position:absolute;right:8px;transform:translateY(-50%);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ccol{position:relative;border-left:1px solid var(--line);background-image:linear-gradient(var(--line) 1px,transparent 1px);background-size:100% var(--hh)}
+.ccol.we{background-color:var(--surface-2)}
+.t0{--c:var(--tone-pink)}.t1{--c:var(--tone-green)}.t2{--c:var(--tone-violet)}.t3{--c:var(--tone-yellow)}.t4{--c:var(--brand)}
+/* Khối buổi phỏng vấn cùng kiểu thẻ Lịch phỏng vấn hôm nay ở Tổng quan: không viền, nền rất nhạt, thanh màu dọc bên trái */
+.cev{position:absolute;box-sizing:border-box;border:0;border-radius:10px;background:color-mix(in srgb,var(--c) 8%,#fff);text-align:left;padding:5px 8px 5px 18px;font:inherit;font-size:12px;line-height:1.3;color:var(--ink);cursor:pointer;overflow:hidden;display:flex;flex-direction:column}
+.cev::before{content:"";position:absolute;left:5px;top:5px;bottom:5px;width:4px;border-radius:2px;background:var(--c)}
+.cev:hover{background:color-mix(in srgb,var(--c) 14%,#fff)}.cev .t{font-variant-numeric:tabular-nums;color:var(--muted)}.cev b{font-weight:600;overflow-wrap:anywhere}.cev .t,.cev b,.cev .chip{flex-shrink:0}.cev .l{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cev .chip{align-self:flex-start;font-size:11px;margin-top:2px}
+/* Khối ở kiểu xem Ngày xếp dòng y như khối thu nhỏ ở Tuần (mỗi thông tin một dòng), chỉ cao hơn nhờ lưới giờ giãn rộng hơn */
+.cev.wide{line-height:1.25;padding:3px 8px 3px 18px}
+.cev.done{opacity:.85}.cev.done.fail::before{background:var(--danger)}.cev.off{opacity:.55;text-decoration:line-through}.cev.late{box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--tone-pink) 60%,#fff);background:color-mix(in srgb,var(--tone-pink) 6%,#fff)}
+.clg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted)}.clg i{font-style:normal;font-weight:700}
+.cnow{position:absolute;left:0;right:0;height:0;border-top:1px solid var(--tone-pink);pointer-events:none;z-index:2}
+.mhead,.mgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}.mhead span{padding:8px 0;text-align:center;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line)}
+.mcell{min-height:104px;padding:4px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:2px;min-width:0}.mcell.out{background:var(--surface-2)}.mcell.out .mdn{color:var(--muted)}
+.mdn{align-self:flex-start;min-width:24px;height:24px;border:0;border-radius:12px;background:none;font:inherit;font-size:12px;color:var(--ink);cursor:pointer}.mcell.today .mdn{background:var(--brand);color:#fff;font-weight:600}
+.mchip{border:0;border-radius:6px;box-shadow:inset 3px 0 0 var(--c);background:color-mix(in srgb,var(--c) 8%,#fff);padding:1px 5px;font:inherit;font-size:11px;color:var(--ink);text-align:left;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mchip.off{opacity:.55;text-decoration:line-through}
+.mmore{border:0;background:none;font:inherit;font-size:11px;color:var(--muted);text-align:left;cursor:pointer;padding:0 4px}
+.qwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;padding:16px}.qm{border:1px solid var(--line);border-radius:12px;padding:12px}
+.qm h3{margin:0;font-size:14px;font-weight:600}.qm .qs{font-size:12px;color:var(--muted);margin:2px 0 8px}.qm .mgrid{gap:2px}.qm .mhead span{border:0;padding:2px 0;font-size:11px}
+.qc{height:30px;border:0;border-radius:6px;background:none;font:inherit;font-size:12px;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}.qc.out{visibility:hidden}
+.qc.has{background:color-mix(in srgb,var(--brand) 12%,#fff);font-weight:600}.qc.today{outline:1px solid var(--brand)}.qc .n{font-size:10px;color:var(--brand)}
+</style></helmet>
+<div class="col page-in">
+  <div class="row"><div class="seg" role="group" aria-label="Kiểu xem"><button aria-pressed="{{isCal}}" onClick="{{showCal}}">Lịch</button><button aria-pressed="{{isList}}" onClick="{{showList}}">Danh sách</button></div>
+    <span class="spacer"></span><button class="btn primary" onClick="{{openForm}}">Ghi lịch phỏng vấn</button></div>
+  <sc-if value="{{isCal}}"><div class="cnav">
+    <button class="btn sm" aria-label="Kỳ trước" onClick="{{prevP}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><button class="btn sm" aria-label="Kỳ sau" onClick="{{nextP}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button><button class="btn sm" onClick="{{goToday}}">Hôm nay</button><span class="cm">{{cal.title}}</span><span class="spacer"></span><div class="seg" role="group" aria-label="Phạm vi lịch"><sc-for list="{{modeBtns}}" as="m"><button aria-pressed="{{m.on}}" onClick="{{m.go}}">{{m.label}}</button></sc-for></div></div></sc-if>
+  <sc-if value="{{isCal}}"><div class="clg" aria-label="Chú giải"><span><i>✓</i> Đã diễn ra, đạt</span><span><i>✕</i> Đã diễn ra, không đạt</span><span>Viền hồng: quá ngày, chưa có kết quả</span><span>Gạch ngang, mờ: đã huỷ hoặc vắng mặt</span></div></sc-if>
+  <sc-if value="{{isGrid}}"><div class="cal" aria-label="Lịch phỏng vấn">
+    <div class="chead" style="{{cal.bodyVars}}"><div></div><sc-for list="{{cal.cols}}" as="d"><div class="{{d.hcls}}"><span class="dw">{{d.dw}}</span><span class="dn tabular">{{d.dn}}</span></div></sc-for></div>
+    <div class="cbody" style="{{cal.bodyVars}}"><div class="cgut" style="{{cal.gutStyle}}"><sc-for list="{{cal.hours}}" as="h"><span class="hl" style="{{h.style}}">{{h.label}}</span></sc-for></div>
+      <sc-for list="{{cal.cols}}" as="d"><div class="{{d.ccls}}" style="{{d.cstyle}}"><sc-if value="{{d.now}}"><div class="cnow" style="{{d.nowStyle}}"></div></sc-if><sc-for list="{{d.evs}}" as="e"><button class="{{e.cls}}" style="{{e.style}}" title="{{e.tip}}" onClick="{{e.open}}"><span class="t">{{e.mark}} {{e.range}}</span><b>{{e.name}}</b><span class="l">{{e.req}} · {{e.reqTitle}}</span><span class="l">Vòng {{e.round}} · {{e.mode}}</span><span class="l">{{e.who}}</span><span class="{{e.sChip}}">{{e.stat}}</span></button></sc-for></div></sc-for></div></div></sc-if>
+  <sc-if value="{{isMonth}}"><div class="cal" aria-label="Lịch phỏng vấn theo tháng"><div class="mhead"><sc-for list="{{dows}}" as="w"><span>{{w}}</span></sc-for></div>
+    <div class="mgrid"><sc-for list="{{cal.cells}}" as="c"><div class="{{c.cls}}"><button class="mdn" title="{{c.tip}}" onClick="{{c.go}}">{{c.dn}}</button><sc-for list="{{c.chips}}" as="k"><button class="{{k.cls}}" title="{{k.tip}}" onClick="{{k.open}}">{{k.text}}</button></sc-for><sc-if value="{{c.hasMore}}"><button class="mmore" onClick="{{c.go}}">{{c.more}}</button></sc-if></div></sc-for></div></div></sc-if>
+  <sc-if value="{{isQuarter}}"><div class="cal" aria-label="Lịch phỏng vấn theo quý"><div class="qwrap"><sc-for list="{{cal.months}}" as="m"><div class="qm"><div class="row"><h3>{{m.label}}</h3><span class="spacer"></span><button class="btn sm" onClick="{{m.go}}">Xem tháng</button></div><div class="qs">{{m.total}} · {{m.sub}}</div>
+    <div class="mhead"><sc-for list="{{dows}}" as="w"><span>{{w}}</span></sc-for></div><div class="mgrid"><sc-for list="{{m.cells}}" as="c"><button class="{{c.cls}}" title="{{c.tip}}" onClick="{{c.go}}"><span>{{c.dn}}</span><sc-if value="{{c.hasCount}}"><span class="n">{{c.count}}</span></sc-if></button></sc-for></div></div></sc-for></div></div></sc-if>
+  <sc-if value="{{isList}}"><div class="card"><table><thead><tr><th>Thời gian</th><th>Ứng viên</th><th>Vòng</th><th>Hình thức</th><th>Tham dự</th><th>Kết quả</th><th>Trạng thái</th></tr></thead><tbody class="stagger">
+    <sc-for list="{{rows}}" as="e"><tr onClick="{{e.open}}"><td class="tabular">{{e.at}}</td><td class="fw5">{{e.name}}</td><td class="tabular">{{e.round}}</td><td>{{e.mode}}</td><td>{{e.who}}</td><td><span class="{{e.rChip}}">{{e.rLabel}}</span></td><td><span class="{{e.sChip}}">{{e.sLabel}}</span></td></tr></sc-for></tbody></table>
+    <sc-if value="{{empty}}"><div class="card-b muted">Không có buổi phỏng vấn. Thử bỏ bớt bộ lọc.</div></sc-if><div class="tfoot"><span>{{footer}}</span><span class="spacer"></span><sc-for list="{{pager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></div></sc-if>
+
+  <sc-if value="{{form}}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Ghi lịch phỏng vấn"><h2>Ghi lịch phỏng vấn</h2>
+    <div class="field"><label>Ca tuyển</label><select class="input" onChange="{{onCase}}"><option value="">Chọn ca</option><sc-for list="{{caseOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.label}}</option></sc-for></select><span class="small t-danger">{{fe.caseId}}</span></div>
+    <div class="row"><div class="field f1"><label>Ngày</label><input class="input" value="{{f.date}}" placeholder="dd/mm/yyyy" onInput="{{set.date}}"><span class="small t-danger">{{fe.date}}</span></div>
+      <div class="field f1"><label>Giờ bắt đầu</label><input class="input" value="{{f.time}}" placeholder="hh:mm" onInput="{{set.time}}"></div></div>
+    <div class="row"><div class="field f1"><label>Hình thức</label><select class="input" onChange="{{set.mode}}"><option selected="{{f.isOnline}}">Online</option><option selected="{{f.isDirect}}">Trực tiếp</option></select></div>
+      <div class="field f1"><label>Thời lượng (phút)</label><input class="input" type="number" min="5" value="{{f.dur}}" onInput="{{set.dur}}"></div></div>
+    <sc-if value="{{f.isDirect}}"><div class="field"><label>Địa điểm</label><input class="input" value="{{f.loc}}" placeholder="Tự điền theo nơi làm việc của yêu cầu, sửa được" onInput="{{set.loc}}"></div></sc-if>
+    <sc-if value="{{f.isOnline}}"><div class="field"><label>Link họp</label><input class="input" value="{{f.url}}" placeholder="https://" onInput="{{set.url}}"><span class="small t-danger">{{fe.url}}</span></div></sc-if>
+    <div class="row"><span class="spacer"></span><button class="btn" onClick="{{closeForm}}">Huỷ</button><button class="btn primary" onClick="{{save}}">Ghi lịch</button></div></div></div></sc-if>
+
+  <sc-if value="{{sel}}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Buổi phỏng vấn"><div class="row"><h2>{{sel.name}} · vòng {{sel.round}}</h2><span class="spacer"></span><button class="icon-btn" aria-label="Đóng" onClick="{{closeSel}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <div class="muted">{{sel.at}} · {{sel.mode}} · {{sel.who}}</div><div class="row"><span class="{{sel.sChip}}">{{sel.sLabel}}</span><span class="{{sel.rChip}}">{{sel.rLabel}}</span></div>
+    <sc-if value="{{sel.open}}"><div class="row wrap"><button class="btn primary" onClick="{{pass}}">Ghi kết quả: đạt</button><button class="btn" onClick="{{fail}}">Ghi kết quả: không đạt</button><button class="btn" onClick="{{resched}}">Đổi lịch +1 ngày</button><button class="btn danger" onClick="{{noShow}}">Ghi vắng mặt</button></div></sc-if>
+    <sc-if value="{{sel.closed}}"><div class="muted small">Buổi đã đóng. Xem các thay đổi trước đó trong nhật ký ca.</div></sc-if></div></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"ivs":{"editor":null,"default":[]},"cases":{"editor":null,"default":[]},"today":{"editor":null},"api":{"editor":null},"$preview":{"width":1100,"height":560}}'>
+class Component extends DCLogic {
+  state = { view: 'cal', page: 0, mode: 'week', anchor: null, form: false, f: { caseId: '', date: '', time: '09:00', mode: 'Online', who: 'Trưởng khoa', dur: '45', loc: '', url: '' }, fe: {}, sel: null };
+  static TODAY = new Date(2026, 9, 15); // dự phòng khi Main chưa truyền prop today (dd/mm/yyyy)
+  static pd = (s) => { const [d, m, y] = s.split(' ')[0].split('/').map(Number); return new Date(y, m - 1, d); };
+  static ST = { SCHEDULED: ['chip info', 'Đã hẹn'], RESCHEDULED: ['chip warn', 'Đã đổi lịch'], DONE: ['chip ok', 'Đã diễn ra'], CANCELLED: ['chip gray', 'Đã huỷ'], NOSHOW: ['chip bad', 'Vắng mặt'] };
+  static RS = { PASS: ['chip ok', 'Đạt'], FAIL: ['chip bad', 'Không đạt'], null: ['chip gray', 'Chờ KQ'] };
+  renderVals() {
+    const S = this.state, P = this.props, C = Component, api = P.api || {}, ivs = P.ivs || [], today = P.today ? C.pd(P.today) : C.TODAY, DAY = 864e5;
+    const name = (id) => (P.cases || []).find((c) => c.id === id) || { name: id };
+    const dd = (iv) => C.pd(iv.at), isOpen = (iv) => iv.status === 'SCHEDULED' || iv.status === 'RESCHEDULED';
+    const view = (iv) => ({ ...iv, name: name(iv.caseId).name, time: iv.at.split(' ')[1], sChip: C.ST[iv.status][0], sLabel: C.ST[iv.status][1], rChip: C.RS[iv.result][0], rLabel: C.RS[iv.result][1], open: () => this.setState({ sel: iv.id }) });
+    const rows = ivs.slice().sort((a, b) => dd(b) - dd(a)).map(view);
+    const pg = window.MedPage.view(rows, S.page, 'buổi phỏng vấn');
+    const anchor = S.anchor ? new Date(S.anchor) : today, MC = window.MedCal;
+    const go = (d, mode) => this.setState({ anchor: d.getTime(), mode: mode || 'day' });
+    const cal = MC.build({ mode: S.mode, anchor, today, go, ivs: ivs.map((iv) => ({ ...view(iv), day: dd(iv), req: name(iv.caseId).req || iv.caseId, reqTitle: name(iv.caseId).reqTitle || '' })) });
+    const MODE_LABELS = { day: 'Ngày', week: 'Tuần', month: 'Tháng', quarter: 'Quý' };
+    const step = (dir) => () => this.setState({ anchor: MC.shift(anchor, S.mode, dir).getTime() });
+    const cur = ivs.find((iv) => iv.id === S.sel), sel = cur ? { ...view(cur), open: isOpen(cur), closed: !isOpen(cur) } : null;
+    const f = S.f, setF = (k) => (e) => this.setState({ f: { ...f, [k]: e.target.value } });
+    const cand = (P.cases || []).filter((c) => c.stage <= 2);
+    const shift = () => { const d = new Date(dd(cur).getTime() + DAY); return String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear() + ' ' + cur.at.split(' ')[1]; };
+    return { rows: pg.rows, footer: pg.footer, pager: window.MedPage.pager(this, pg), cal, dows: MC.DOW, modeBtns: MC.MODES.map((m) => ({ label: MODE_LABELS[m], on: S.mode === m, go: () => this.setState({ mode: m }) })), isGrid: S.view === 'cal' && (S.mode === 'day' || S.mode === 'week'), isMonth: S.view === 'cal' && S.mode === 'month', isQuarter: S.view === 'cal' && S.mode === 'quarter', empty: rows.length === 0, isCal: S.view === 'cal', isList: S.view === 'list', showCal: () => this.setState({ view: 'cal' }), showList: () => this.setState({ view: 'list', page: 0 }),
+      prevP: step(-1), nextP: step(1), goToday: () => this.setState({ anchor: null }),
+      form: S.form, openForm: () => this.setState({ form: true, fe: {} }), closeForm: () => this.setState({ form: false }), fe: S.fe, set: { date: setF('date'), time: setF('time'), mode: setF('mode'), dur: setF('dur'), loc: setF('loc'), url: setF('url') },
+      f: { ...f, isOnline: f.mode === 'Online', isDirect: f.mode === 'Trực tiếp' }, caseOpts: cand.map((c) => ({ v: c.id, label: c.name + ' · ' + c.id, sel: c.id === f.caseId })), onCase: (e) => this.setState({ f: { ...f, caseId: e.target.value } }),
+      save: () => { const fe = {}; if (!f.caseId) fe.caseId = 'Chọn ca tuyển'; if (!/^\d{2}\/\d{2}\/\d{4}$/.test(f.date)) fe.date = 'Nhập ngày dd/mm/yyyy';
+        if (f.mode === 'Online' && !f.url.trim()) fe.url = 'Nhập link họp cho buổi online.';
+        if (Object.keys(fe).length) return this.setState({ fe }); api.schedule && api.schedule(f.caseId, { at: f.date + ' ' + f.time, mode: f.mode, who: f.who, dur: f.dur, loc: f.loc, url: f.url }); this.setState({ form: false }); },
+      sel, closeSel: () => this.setState({ sel: null }), pass: () => { api.result && api.result(cur.id, 'PASS'); this.setState({ sel: null }); }, fail: () => { api.result && api.result(cur.id, 'FAIL'); this.setState({ sel: null }); },
+      resched: () => { api.resched && api.resched(cur.id, shift()); this.setState({ sel: null }); }, noShow: () => { api.noShow && api.noShow(cur.id); this.setState({ sel: null }); } };
+  }
+}
+</script>
+</body>
+</html>

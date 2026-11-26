@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Tạo / sửa khách hàng</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./client-master.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.fcol{display:flex;flex-direction:column;gap:20px}
+.r2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.r3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.r2,.r3{grid-template-columns:minmax(0,1fr)}}
+.ui-flat .col.page-in.cf-page{gap:12px}.ui-flat .cf-page .dh-page-head{padding:0 0 4px}.ui-flat .cf-page .dh-page-head + *{margin-top:0}
+.cf-page .fcol{gap:16px}.cf-page .r2,.cf-page .r3{gap:16px}
+
+.req{color:var(--danger-ink)}
+.sec{border-top:1px solid var(--line-soft);padding-top:24px;display:flex;flex-direction:column;gap:16px}
+.cc{border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--surface-2) 60%,transparent);padding:16px;display:flex;flex-direction:column;gap:16px}
+.cc .icon-btn{color:var(--danger-ink)}.cc .icon-btn:hover{background:var(--danger-soft);color:var(--danger-ink)}
+.addrow{height:40px;padding:0 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font:inherit;font-weight:500;cursor:pointer;transition:background-color .15s}.addrow:hover{background:var(--surface-2)}
+.alertbar{border-radius:12px;background:var(--danger-soft);color:var(--danger-ink);padding:8px 12px;font-size:13px;font-weight:600}
+.ft{display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--line-soft);padding-top:16px}
+</style></helmet>
+<div class="{{wrapCls}}"><div class="{{boxCls}}" style="{{boxStyle}}">
+  <sc-if value="{{isPage}}"><div class="muted small crumbs"><button class="crumb" onClick="{{onCancel}}">Khách hàng</button> / {{crumb}}</div>
+  <header class="dh-page-head"><div><h1>{{heading}}</h1></div></header></sc-if>
+  <sc-if value="{{isModal}}"><h2>{{heading}}</h2></sc-if>
+  <div class="card"><div class="card-b" style="padding:24px"><div class="fcol" style="gap:24px">
+    <div class="fcol">
+      <div class="field"><label>Nhóm khách hàng <span class="req">*</span></label><select class="input" onChange="{{set.type}}"><option value="">Chọn nhóm khách hàng</option><sc-for list="{{groups}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select><span class="err">{{e.type}}</span></div>
+      <div class="field"><label>Tên khách hàng <span class="req">*</span></label><input class="input" maxlength="255" value="{{f.name}}" placeholder="VD: Bệnh viện Đa khoa Tâm Đức" onInput="{{set.name}}"><span class="muted small">Ghi đúng tên trên giấy đăng ký doanh nghiệp hoặc đăng ký thuế; tên này ghi vào hợp đồng và hoá đơn.</span><span class="err">{{e.name}}</span></div>
+      <div class="field"><label>Nguồn khách hàng</label><select class="input" onChange="{{set.source}}"><option value="">Chưa chọn</option><sc-for list="{{sources}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></div>
+      <div class="r2">
+        <div class="field"><label>Điện thoại</label><input class="input" type="tel" value="{{f.phone}}" placeholder="VD: 0903123456" inputmode="numeric" maxlength="15" onInput="{{set.phone}}"><span class="err">{{e.phone}}</span></div>
+        <div class="field"><label>Email</label><input class="input" type="email" value="{{f.email}}" onInput="{{set.email}}"><span class="err">{{e.email}}</span></div>
+      </div>
+      <div class="r2">
+        <div class="field"><label>Tỉnh / thành <span class="req">*</span></label><select class="input" onChange="{{set.province}}"><option value="">Chưa chọn</option><sc-for list="{{provinces}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.v}}</option></sc-for></select><span class="err">{{e.province}}</span></div>
+        <div class="field"><label>Phường / xã <span class="req">*</span></label><select class="input" disabled="{{noWard}}" onChange="{{set.ward}}"><option value="">{{wardPh}}</option><sc-for list="{{wards}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.v}}</option></sc-for></select><span class="err">{{e.ward}}</span></div>
+      </div>
+      <div class="field"><label>Địa chỉ <span class="req">*</span></label><input class="input" maxlength="512" value="{{f.address}}" placeholder="Số nhà, tên đường" onInput="{{set.address}}"><span class="err">{{e.address}}</span></div>
+    </div>
+    <sc-if value="{{showContacts}}"><div class="sec">
+      <div><h3 style="font-size:15px;font-weight:700">Người liên hệ</h3><sc-if value="{{hq}}"><div class="muted small" style="margin-top:2px">{{hq}}</div></sc-if></div>
+      <sc-for list="{{contacts}}" as="p"><div class="cc">
+        <div class="row"><b style="font-size:13px;color:var(--ink-2)">Người liên hệ {{p.no}}</b><span class="spacer"></span><sc-if value="{{p.canRemove}}"><button class="icon-btn" aria-label="Xoá người liên hệ" onClick="{{p.ask}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 11v6M14 11v6"/></svg></button></sc-if></div>
+        <div class="field"><label>Họ tên</label><input class="input" value="{{p.name}}" placeholder="Nhập họ tên người liên hệ" onInput="{{p.onName}}"></div>
+        <div class="r3">
+          <div class="field"><label>Chức danh</label><input class="input" disabled="{{p.locked}}" value="{{p.title}}" placeholder="VD: Trưởng phòng Nhân sự" onInput="{{p.onTitle}}"></div>
+          <div class="field"><label>Điện thoại</label><input class="input" type="tel" inputmode="numeric" maxlength="15" disabled="{{p.locked}}" value="{{p.phone}}" onInput="{{p.onPhone}}"><span class="err">{{p.errPhone}}</span></div>
+          <div class="field"><label>Email</label><input class="input" type="email" disabled="{{p.locked}}" value="{{p.email}}" placeholder="Nhập email để cấp được tài khoản cổng" onInput="{{p.onEmail}}"><span class="err">{{p.errEmail}}</span></div>
+        </div>
+        <label class="row"><input type="checkbox" checked="{{p.primary}}" disabled="{{p.locked}}" onChange="{{p.setPrimary}}"> Người liên hệ mặc định</label>
+      </div></sc-for>
+      <div class="row" style="justify-content:center"><button class="addrow" onClick="{{addContact}}">+ Thêm người liên hệ</button></div>
+    </div></sc-if>
+    <sc-if value="{{banner}}"><div class="alertbar" role="alert">{{banner}}</div></sc-if>
+    <div class="ft"><button class="btn" onClick="{{onCancel}}">Huỷ</button><button class="btn primary" onClick="{{save}}">{{saveLabel}}</button></div>
+  </div></div></div>
+  <sc-if value="{{removing}}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Xoá người liên hệ"><h2>Xoá người liên hệ?</h2>
+    <div class="muted">{{removeAsk}}</div>
+    <div class="row"><span class="spacer"></span><button class="btn" onClick="{{cancelRemove}}">Huỷ</button><button class="btn danger" onClick="{{confirmRemove}}">Xoá</button></div></div></div></sc-if>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"onCancel":{"editor":null},"onSubmit":{"editor":null},"client":{"editor":null},"modal":{"editor":null},"$preview":{"width":900,"height":1000}}'>
+class Component extends DCLogic {
+  // Form theo client-new-page.tsx và docs BA module 03 (cập nhật 14/10/2026, B2.1, B2.2, UC-CUS-01): nhóm · tên · điện thoại / email (mã số thuế và tên thường gọi chưa hiện vì BA chưa chốt) · tỉnh, phường · địa chỉ · người liên hệ (cuối form); bỏ người đại diện theo yêu cầu 16/10
+  static GROUPS = MedClient.GROUPS;
+  static SOURCES = MedClient.SOURCES;
+  static PROV = MedClient.PROV;
+  static PHONE = MedClient.PHONE;
+  static MAIL = MedClient.MAIL;
+  static blank = (primary) => ({ name: '', title: '', phone: '', email: '', primary });
+  state = { f: null, contacts: [{ name: '', title: '', phone: '', email: '', primary: true }], e: {}, tried: false, banner: '', rm: null };
+  // Sửa khách hàng dùng chung form với tạo; người liên hệ quản lý ở trang chi tiết nên ẩn ở chế độ sửa
+  initial() { const c = this.props.client || {}; return { type: c.group || '', name: c.name || '', source: c.source || '', phone: MedClient.digits(c.phone === '—' ? '' : c.phone || ''), email: c.email === '—' ? '' : c.email || '', province: c.province === '—' ? '' : c.province || '', ward: c.ward || '', address: c.address === '—' ? '' : c.address || '' }; }
+  renderVals() {
+    const C = Component, S = this.state, P = this.props, edit = !!P.client, f = S.f || this.initial(), list = S.contacts;
+    const set = {};
+    ['type', 'name', 'source', 'phone', 'email', 'address', 'ward'].forEach((k) => { set[k] = (ev) => this.setState({ f: { ...f, [k]: ev.target.value }, e: { ...S.e, [k]: '' } }); });
+    set.phone = (ev) => { const r = MedClient.phoneInput(ev.target.value); ev.target.value = r.value; this.setState({ f: { ...f, phone: r.value }, e: { ...S.e, phone: r.rejected ? MedClient.PHONE_WARN : '' } }); };
+    set.province = (ev) => this.setState({ f: { ...f, province: ev.target.value, ward: '' }, e: { ...S.e, province: '' } });
+    const upd = (i, patch) => this.setState({ contacts: list.map((x, k) => (k === i ? { ...x, ...patch } : x)) });
+    const filled = (p) => p.name.trim() !== '';
+        const phoneErr = (p) => { const d = p.phone.replace(/[\s.()-]/g, ''); return d && !C.PHONE.test(d) ? 'Số điện thoại phải có ít nhất 10 chữ số.' : ''; };
+    const mailErr = (p) => { const m = p.email.trim(); return m && !C.MAIL.test(m.toLowerCase()) ? 'Email ' + m + ' không đúng định dạng.' : ''; };
+    const contacts = list.map((p, i) => ({ ...p, no: i + 1, locked: !filled(p), canRemove: list.length > 1 || filled(p), errEmail: (S.tried || p.email) ? mailErr(p) : '', errPhone: p.warn ? MedClient.PHONE_WARN : (S.tried || p.phone) ? phoneErr(p) : '',
+      onName: (ev) => upd(i, { name: ev.target.value }), onTitle: (ev) => upd(i, { title: ev.target.value }), onPhone: (ev) => { const r = MedClient.phoneInput(ev.target.value); ev.target.value = r.value; upd(i, { phone: r.value, warn: r.rejected }); }, onEmail: (ev) => upd(i, { email: ev.target.value }),
+      setPrimary: () => this.setState({ contacts: list.map((x, k) => ({ ...x, primary: k === i })) }),
+      ask: () => (filled(p) ? this.setState({ rm: i }) : this.drop(i)) }));
+    const wards = C.PROV[f.province] || [], hq = [f.address.trim(), f.ward, f.province].filter(Boolean).join(', ');
+    const rmName = S.rm !== null && list[S.rm] ? list[S.rm].name.trim() : '';
+    // Báo lỗi ngay khi gõ sai (không đợi bấm Lưu), giống thẻ người liên hệ
+    const digits0 = f.phone.replace(/[\s.()-]/g, ''), livePhone = digits0 && !C.PHONE.test(digits0) ? 'Số điện thoại phải có ít nhất 10 chữ số.' : '', liveMail = f.email.trim() && !C.MAIL.test(f.email.trim()) ? 'Email ' + f.email.trim() + ' không đúng định dạng.' : '';
+    const modal = !!P.modal;
+    return { f, edit, isModal: modal, isPage: !modal, wrapCls: modal ? 'scrim' : '', boxCls: modal ? 'modal anim-scale' : 'col page-in cf-page', boxStyle: modal ? 'width:min(720px,calc(100vw - 24px));max-height:calc(100vh - 48px);overflow:auto;gap:16px' : 'width:100%', showContacts: !edit, crumb: edit ? 'Sửa ' + P.client.code : 'Tạo mới', heading: edit ? 'Sửa khách hàng' : 'Tạo khách hàng', saveLabel: edit ? 'Lưu thay đổi' : 'Lưu', sources: C.SOURCES.map((v) => ({ v, l: MedClient.optLabel('source', v), sel: v === f.source })), e: { ...S.e, phone: S.e.phone || livePhone, email: S.e.email || liveMail }, set, contacts, hq, banner: S.banner, onCancel: P.onCancel, removing: S.rm !== null,
+      removeAsk: rmName ? 'Thông tin đã nhập của ' + rmName + ' sẽ mất.' : 'Thẻ người liên hệ trống này sẽ bị xoá.',
+      cancelRemove: () => this.setState({ rm: null }), confirmRemove: () => { this.drop(S.rm); this.setState({ rm: null }); },
+      groups: C.GROUPS.map((v) => ({ v, l: MedClient.optLabel('group', v), sel: v === f.type })), provinces: Object.keys(C.PROV).map((v) => ({ v, sel: v === f.province })),
+      wards: wards.map((v) => ({ v, sel: v === f.ward })), noWard: !f.province || wards.length === 0, wardPh: !f.province ? 'Chọn tỉnh/thành trước' : wards.length ? 'Chọn phường/xã' : 'Chưa có danh sách phường/xã',
+      addContact: () => this.setState({ contacts: [...list, C.blank(false)] }),
+      save: () => {
+        const e = {}, digits = f.phone.replace(/[\s.()-]/g, ''), miss = [];
+        if (!f.type) { e.type = 'Ô này bắt buộc nhập.'; miss.push('Nhóm khách hàng'); }
+        if (!f.name.trim()) { e.name = 'Ô này bắt buộc nhập.'; miss.push('Tên khách hàng'); }
+        if (!f.province) { e.province = 'Ô này bắt buộc nhập.'; miss.push('Tỉnh/thành'); }
+        if (f.province && wards.length && !f.ward) { e.ward = 'Ô này bắt buộc nhập.'; miss.push('Phường/xã'); }
+        if (!f.address.trim()) { e.address = 'Ô này bắt buộc nhập.'; miss.push('Địa chỉ'); }
+        if (digits && !C.PHONE.test(digits)) e.phone = 'Số điện thoại phải có ít nhất 10 chữ số.';
+        if (f.email.trim() && !C.MAIL.test(f.email.trim())) e.email = 'Email ' + f.email.trim() + ' không đúng định dạng.';
+        const bad = !edit && list.some((p) => mailErr(p) || phoneErr(p));
+        if (Object.keys(e).length || bad) { this.setState({ e, tried: true, banner: miss.length ? 'Nhập đủ các ô bắt buộc: ' + miss.join(', ') + '.' : 'Sửa các ô đang báo đỏ.' }); return; }
+        const out = { name: f.name.trim(), source: f.source, group: f.type, province: f.province, ward: f.ward, address: f.address.trim(), phone: f.phone.trim(), email: f.email.trim() };
+        if (edit) { P.onSubmit && P.onSubmit(out, []); return; }
+        const keep = list.filter(filled), primary = keep.some((p) => p.primary) ? keep : keep.map((p, i) => ({ ...p, primary: i === 0 }));
+        P.onSubmit && P.onSubmit(out, primary);
+      } };
+  }
+  // Bỏ một thẻ liên hệ; người mặc định bị xoá thì thẻ đầu thành mặc định
+  drop(i) {
+    const left = this.state.contacts.filter((_, k) => k !== i);
+    this.setState({ contacts: left.length ? left.map((x, k) => ({ ...x, primary: left.some((y) => y.primary) ? x.primary : k === 0 })) : [Component.blank(true)] });
+  }
+}
+</script>
+</body>
+</html>

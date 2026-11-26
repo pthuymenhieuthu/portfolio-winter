@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Cổng KH: Chi tiết yêu cầu</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}</style></helmet>
+<div class="col page-in">
+  <div class="muted small crumbs"><button class="crumb" onClick="{{api.goReqs}}">Yêu cầu tuyển dụng</button> / <span class="tabular">{{r.code}}</span></div>
+  <div class="page-head tight"><h1>{{r.title}}</h1><span class="{{r.chip}}">{{r.statusLabel}}</span></div>
+  <div class="muted">{{r.specialty}} · {{r.qty}} người · cần trước {{r.due}}</div>
+  <div class="g2">
+    <div class="col">
+      <h2>Hồ sơ SMS gửi</h2>
+      <sc-for list="{{cases}}" as="c"><div class="pcard"><div class="row"><span style="font-weight:600">Hồ sơ {{c.code}}</span><span class="muted small">{{c.spec}} · {{c.exp}} năm KN</span><span class="spacer"></span><span class="chip" style="{{c.style}}">{{c.label}}</span></div></div></sc-for>
+      <sc-if value="{{noCases}}"><div class="pcard"><div class="fw5">SMS chưa gửi hồ sơ</div><div class="muted">Khi có ứng viên phù hợp, hồ sơ sẽ hiện ở đây.</div></div></sc-if>
+    </div>
+    <div class="card"><div class="card-h"><h3>Tiến độ</h3></div><div class="card-b col"><div>{{progressText}}</div><div class="row"><div style="flex:1;height:8px;border-radius:999px;background:var(--line-soft);overflow:hidden"><i style="{{bar}};display:block;height:100%;background:var(--brand)"></i></div><span class="tabular small">{{r.hired}}/{{r.qty}}</span></div></div></div>
+    <sc-if value="{{hasPos}}"><div class="card"><div class="card-h"><h3>Vị trí cần tuyển</h3><span class="spacer"></span><span class="muted small">{{posSum}}</span></div><div class="card-b col">
+      <sc-for list="{{poss}}" as="p"><div class="row" style="align-items:flex-start;gap:12px"><div style="flex:1;min-width:0"><div class="fw5">{{p.title}}<sc-if value="{{p.stopped}}"><span class="chip gray" style="margin-left:6px">Ngừng tuyển</span></sc-if></div><div class="muted small">{{p.sub}}</div></div><span class="tabular small">{{p.qty}} người</span></div></sc-for></div></div></sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"d":{"editor":null,"default":{"requests":[],"cases":[]}},"code":{"editor":null},"api":{"editor":null,"default":{}},"$preview":{"width":1100,"height":420}}'>
+class Component extends DCLogic {
+  static L = ['Đã gửi','Phỏng vấn','Đạt phỏng vấn','Đã offer','Chờ thử việc','Thử việc','Bảo hành','Kết thúc bảo hành','Kết thúc giữa chừng'];
+  renderVals() {
+    const d = this.props.d || { requests: [], cases: [] }, api = this.props.api || {};
+    const r0 = d.requests.find((x) => x.code === this.props.code) || { code: '—', title: 'Không tìm thấy yêu cầu', qty: 1, hired: 0, statusLabel: '', tone: 'gray', due: '—', specialty: '' };
+    const cases = d.cases.filter((c) => c.req === r0.code).map((c) => ({ ...c, label: Component.L[c.stage], style: 'background:var(--stage-' + c.stage + '-soft);color:var(--stage-' + c.stage + ')' }));
+    const text = { DRAFT: 'Yêu cầu đang là nháp.', SUBMITTED: 'SMS đã nhận yêu cầu và sẽ phân công người phụ trách.', CLOSED: 'Yêu cầu đã hoàn thành.', CANCELLED: 'Yêu cầu đã huỷ.' }[r0.status] || 'SMS đang tìm và đánh giá ứng viên.';
+    const ps = r0.positions || [];
+    // Khách thấy từng vị trí của yêu cầu (không chỉ vị trí đầu); không lộ mức lương nội bộ
+    const poss = ps.map((p) => ({ title: p.title || 'Vị trí cần tuyển', stopped: !!p.stopped, qty: p.qty, sub: [[p.group, p.spec].filter(Boolean).join(' · '), p.level, p.due ? 'cần trước ' + p.due : ''].filter(Boolean).join(' · ') }));
+    return { api, hasPos: ps.length > 1, poss, posSum: ps.length + ' vị trí', r: { ...r0, chip: 'chip ' + r0.tone }, cases, noCases: cases.length === 0, progressText: text, bar: 'width:' + Math.round(r0.hired / Math.max(r0.qty, 1) * 100) + '%' };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Người liên hệ</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./client-master.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}.cm-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.cm-g .full{grid-column:1/-1}@media (max-width:700px){.cm-g{grid-template-columns:minmax(0,1fr)}}.req{color:var(--danger-ink)}.cm-dlg{width:min(560px,calc(100vw - 24px))}</style></helmet>
+<div class="scrim"><div class="modal anim-scale cm-dlg" role="dialog" aria-modal="true" aria-label="{{title}}"><h2>{{title}}</h2>
+  <div class="cm-g">
+    <div class="field full"><label>Họ tên <span class="req">*</span></label><input class="input" maxlength="255" value="{{f.name}}" placeholder="Nhập họ tên người liên hệ" onInput="{{set.name}}"><span class="err">{{e.name}}</span></div>
+    <div class="field"><label>Chức danh</label><input class="input" value="{{f.title}}" placeholder="VD: Trưởng phòng Nhân sự" onInput="{{set.title}}"></div>
+    <div class="field"><label>Trụ sở hoặc chi nhánh</label><select class="input" onChange="{{set.site}}"><sc-for list="{{sites}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></div>
+    <div class="field"><label>Điện thoại</label><input class="input" type="tel" inputmode="numeric" maxlength="15" value="{{f.phone}}" placeholder="VD: 0903123456" onInput="{{onPhone}}"><span class="err">{{e.phone}}</span></div>
+    <div class="field"><label>Email</label><input class="input" type="email" value="{{f.email}}" placeholder="Nhập email để cấp được tài khoản cổng" onInput="{{set.email}}"><span class="err">{{e.email}}</span></div>
+    <label class="row full"><input type="checkbox" checked="{{f.primary}}" disabled="{{lockPrimary}}" onChange="{{togglePrimary}}"> Người liên hệ mặc định của nơi này</label>
+    <sc-if value="{{lockPrimary}}"><span class="muted small full">Đang là người mặc định. Muốn đổi thì đặt người khác làm mặc định.</span></sc-if>
+  </div>
+  <div class="row"><span class="spacer"></span><button class="btn" onClick="{{onClose}}">Huỷ</button><button class="btn primary" onClick="{{save}}">Lưu</button></div></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"contact":{"editor":null},"sites":{"editor":null,"default":[]},"onSave":{"editor":null},"onClose":{"editor":null},"$preview":{"width":700,"height":520}}'>
+class Component extends DCLogic {
+  // Thêm hoặc sửa người liên hệ (M3 B2.2): họ tên bắt buộc; điện thoại chỉ số, đã nhập thì đủ 10 chữ số; email đúng định dạng; người đang mặc định không bỏ chọn được
+  state = { f: null, e: {} };
+  renderVals() {
+    const S = this.state, P = this.props, M = window.MedClient, c = P.contact || {};
+    const f = S.f || { id: c.id || '', name: c.name || '', title: c.title === '—' ? '' : c.title || '', phone: M.digits(c.phone || ''), email: c.email || '', site: c.site || '', primary: !!c.primary };
+    const up = (patch) => this.setState({ f: { ...f, ...patch }, e: { ...S.e, ...Object.fromEntries(Object.keys(patch).map((k) => [k, ''])) } });
+    const save = () => {
+      const e = {};
+      if (!f.name.trim()) e.name = 'Ô này bắt buộc nhập.';
+      if (f.phone && !M.PHONE.test(f.phone)) e.phone = 'Số điện thoại phải có ít nhất 10 chữ số.';
+      if (f.email.trim() && !M.MAIL.test(f.email.trim())) e.email = 'Email ' + f.email.trim() + ' không đúng định dạng.';
+      if (Object.keys(e).length) { this.setState({ f, e }); return; }
+      P.onSave && P.onSave({ ...f, name: f.name.trim(), title: f.title.trim(), email: f.email.trim() });
+    };
+    return { title: c.id ? 'Sửa người liên hệ' : 'Thêm người liên hệ', f, e: S.e, save, onClose: P.onClose, lockPrimary: !!c.primary,
+      sites: (P.sites || []).map((o) => ({ ...o, sel: o.v === f.site })), togglePrimary: () => up({ primary: !f.primary }),
+      set: { name: (ev) => up({ name: ev.target.value }), title: (ev) => up({ title: ev.target.value }), email: (ev) => up({ email: ev.target.value }), site: (ev) => up({ site: ev.target.value }) },
+      onPhone: (ev) => { const r = M.phoneInput(ev.target.value); ev.target.value = r.value; this.setState({ f: { ...f, phone: r.value }, e: { ...S.e, phone: r.rejected ? M.PHONE_WARN : '' } }); } };
+  }
+}
+</script>
+</body>
+</html>

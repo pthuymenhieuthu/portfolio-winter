@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Thanh toán khách hàng</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./filter-multi.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}.pm-s{display:flex;flex-wrap:wrap;gap:8px 32px;padding:14px 24px;border-bottom:1px solid var(--line-soft);font-size:13px;color:var(--muted)}.pm-s b{display:block;font-size:16px;color:var(--ink)}.pm-s .bad b{color:var(--danger-ink)}</style></helmet>
+<div class="card"><div class="card-h"><h3>Thanh toán</h3><span class="muted small">{{sub}}</span></div>
+  <sc-if value="{{hasRows}}"><div class="pm-s"><span>Tổng phí<b class="tabular">{{tot.total}}</b></span><span>Đã thu<b class="tabular">{{tot.paid}}</b></span><span>Còn phải thu<b class="tabular">{{tot.left}}</b></span><span class="bad">Quá hạn<b class="tabular">{{tot.over}}</b></span></div>
+  <table class="dh-table"><thead><tr><th>Ứng viên</th><th>Vị trí</th><th>Đợt cần thu tiếp</th><th style="text-align:right">Còn phải thu</th></tr></thead><tbody>
+    <sc-for list="{{rows}}" as="r"><tr><td class="fw5">{{r.name}}<div class="muted small tabular">{{r.id}}</div></td><td class="muted">{{r.posTitle}}</td><td>{{r.next}}</td><td class="tabular fw5" style="text-align:right">{{r.left}}</td></tr></sc-for></tbody></table>
+  <div class="tfoot"><span>{{footer}}</span><span class="spacer"></span><sc-for list="{{pager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></sc-if>
+  <sc-if value="{{empty}}"><div class="card-b muted">Khách hàng chưa có phí nào. Phí ghi khi lưu phiếu xác nhận tuyển dụng.</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"ledger":{"editor":null,"default":[]},"$preview":{"width":900,"height":360}}'>
+class Component extends DCLogic {
+  state = { page: 0 };
+  renderVals() {
+    const L = this.props.ledger || [], f = (n) => n.toLocaleString('vi-VN') + ' đ', sum = (g) => L.reduce((a, l) => a + g(l), 0);
+    const over = sum((l) => (l.insts || []).filter((i) => i.status === 'overdue').reduce((a, i) => a + i.leftN, 0));
+    const rows = L.map((l) => { const n = (l.insts || []).find((i) => i.leftN > 0);
+      return { ...l, left: f(Math.max(0, l.leftN)), next: l.leftN <= 0 ? 'Đã thu đủ' : n ? 'Đợt ' + n.n + ' · ' + f(n.expectedN - n.paidN) + (n.due ? ' · hạn ' + n.due.slice(0, 5) : ' · chưa có hạn') : 'Phí theo mốc, chưa chia đợt' }; });
+    const pg = window.MedPage.view(rows, this.state.page, 'ca tuyển');
+    return { rows: pg.rows, hasRows: rows.length > 0, empty: rows.length === 0, sub: 'Còn phải thu ' + f(sum((l) => l.leftN)) + ' · ' + rows.length + ' ca tuyển có phí',
+      tot: { total: f(sum((l) => l.totalN)), paid: f(sum((l) => l.paidN)), left: f(sum((l) => l.leftN)), over: f(over) }, footer: pg.footer, pager: window.MedPage.pager(this, pg) };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Chi tiết ứng viên</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}</style></helmet>
+<div class="col page-in g16">
+  <div class="muted small crumbs"><button class="crumb" onClick="{{onBack}}">Kho ứng viên</button> / {{c.name}}</div>
+  <div class="page-head"><h1>{{c.name}}</h1><span class="chip ok">Đang dùng</span><span class="chip gray">{{c.target}}</span><span class="spacer"></span><button class="btn">Sửa</button></div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="{{isProfile}}" onClick="{{goProfile}}">Hồ sơ</button>
+    <button class="tab" role="tab" aria-selected="{{isSent}}" onClick="{{goSent}}">Gửi hồ sơ</button>
+    <button class="tab" role="tab" aria-selected="{{isReview}}" onClick="{{goReview}}">Yêu cầu &amp; đánh giá</button>
+    <button class="tab" role="tab" aria-selected="false" disabled style="opacity:.5">9 tab khác · chưa dựng</button>
+  </div>
+  <sc-if value="{{isProfile}}"><div class="card"><div class="card-h"><h3>Thông tin hồ sơ</h3></div><div class="card-b"><dl class="kv">
+    <dt>Chuyên khoa</dt><dd>{{c.spec}}</dd><dt>Số năm kinh nghiệm</dt><dd class="tabular">{{c.exp}}</dd><dt>Nơi đang làm</dt><dd>{{c.place}}</dd><dt>Lương mong muốn</dt><dd class="tabular">{{c.salary}}</dd>
+    <dt>Chứng chỉ hành nghề</dt><dd><span class="{{cchnChip}}">{{c.cchn}}</span></dd><dt>Điện thoại</dt><dd class="tabular">{{c.phone}}</dd><dt>Đồng ý dữ liệu cá nhân</dt><dd><span class="chip ok">Đã đồng ý</span></dd></dl></div></div></sc-if>
+  <sc-if value="{{isSent}}"><div class="card"><div class="card-h"><h3>Lịch sử gửi hồ sơ</h3></div>
+    <table><thead><tr><th>Yêu cầu · khách</th><th>Ngày gửi</th><th>Bước hiện tại</th></tr></thead><tbody><sc-for list="{{history}}" as="h" hint-placeholder-count="1"><tr class="nc"><td>{{h.req}} · {{h.client}}</td><td class="tabular">{{h.sent}}</td><td><span class="chip" style="{{h.style}}">{{h.label}}</span></td></tr></sc-for></tbody></table>
+    <sc-if value="{{noHist}}"><div class="card-b muted">Chưa gửi hồ sơ này cho khách nào.</div></sc-if></div></sc-if>
+<sc-if value="{{isReview}}"><section class="card"><div class="card-h"><h3>Lịch sử yêu cầu &amp; đánh giá</h3></div><div class="card-b col g16"><sc-for list="{{reviewHistory}}" as="h"><section class="col g6"><div class="row wrap"><b>{{h.req}} · {{h.pos}}</b><span class="chip info">{{h.label}}</span></div><p class="small muted">{{h.removedAt}} {{h.reason}}</p><sc-for list="{{h.rounds}}" as="r"><p class="small">{{r.label}} · {{r.state}}<br>{{r.comment}}</p></sc-for></section></sc-for><sc-if value="{{noReview}}"><p class="muted">Chưa có lịch sử đánh giá.</p></sc-if></div></section></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"reviewHistory":{"editor":null,"default":[]},"cand":{"editor":null},"history":{"editor":null,"default":[]},"onBack":{"editor":null},"$preview":{"width":1100,"height":420}}'>
+class Component extends DCLogic {
+  state = { tab: 'p' };
+  renderVals() {
+    const c = this.props.cand || { name: '—', target: '', cchn: '' }, h = this.props.history || [];
+    return { reviewHistory: this.props.reviewHistory || [], noReview: !(this.props.reviewHistory || []).length, isReview: this.state.tab === 'r', goReview: () => this.setState({ tab: 'r' }), c, cchnChip: c.cchn === 'Còn hạn' ? 'chip ok' : 'chip warn', history: h, noHist: h.length === 0, onBack: this.props.onBack,
+      isProfile: this.state.tab === 'p', isSent: this.state.tab === 's', goProfile: () => this.setState({ tab: 'p' }), goSent: () => this.setState({ tab: 's' }) };
+  }
+}
+</script>
+</body>
+</html>

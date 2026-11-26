@@ -1,0 +1,151 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Đánh giá hồ sơ</title>
+<script src="./vendor/react.js"></script><script src="./vendor/react-dom.js"></script><script src="./filter-multi.js"></script><script src="./review-domain.js"></script><script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="ui.css"></head><body><x-dc>
+<helmet><style>
+.review-layout{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1.1fr);gap:24px;align-items:start}.review-detail{padding:24px;gap:20px}.review-text{white-space:pre-wrap;overflow-wrap:anywhere}.review-meta{font-size:12px;color:var(--muted);margin-top:8px}.review-form textarea{min-height:120px}.review-empty{padding:32px;text-align:center;color:var(--muted)}@media(max-width:1000px){.review-layout{grid-template-columns:1fr}}
+/* Bảng cây theo Deel và Braintrust: dòng cha nền trắng, chữ đậm 14px, mũi tên gập mở và số lượng trong ngoặc; dòng con thụt vào ở cột đầu, mã hồ sơ màu liên kết */
+.rv-c1{display:flex;align-items:center;gap:10px}.rv-c1 b{font-size:14px;font-weight:600;color:var(--ink)}.rv-c1 .rv-n{font-size:14px;font-weight:400;color:var(--muted)}.rv-c1 svg{flex:none;width:16px;height:16px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}.rv-c1 svg.shut{transform:rotate(-90deg)}
+.rv-tree tr.rv-par td{height:56px;background:var(--surface);color:var(--ink);font-weight:600;border-top:1px solid var(--line)}.rv-tree tr.rv-par:first-child td{border-top:0}.rv-tree tr.rv-par:hover td{background:#f6f7f8}
+.rv-tree tr.rv-kid td:first-child{padding-left:52px;color:var(--brand-ink);font-weight:600}
+.rv-chk{width:44px;padding-right:0!important}.rv-chk input{width:16px;height:16px;margin:0;accent-color:var(--brand);cursor:pointer}
+.rv-bulk{display:flex;align-items:center;gap:8px;padding:10px 16px;background:color-mix(in srgb,var(--brand) 7%,#fff);border-bottom:1px solid var(--line-soft);font-size:13px}
+.rv-modal{align-items:center;justify-content:center}.rv-dlg{position:relative;width:min(480px,calc(100vw - 24px));gap:14px}
+.rv-wrap{overflow-x:auto}.rv-wrap table{min-width:640px}
+.rv-layer{position:fixed;inset:0;z-index:80;display:flex;justify-content:flex-end}.rv-scrim{position:absolute;inset:0;background:rgba(15,27,48,.22)}
+.rv-drawer{position:relative;width:min(520px,calc(100vw - 24px));height:100%;overflow:auto;border-radius:0;box-shadow:-18px 0 48px rgba(24,42,78,.14)}
+.rv-contents{display:contents}
+tr.rv-leave{animation:rv-out .38s ease forwards}@keyframes rv-out{to{opacity:0;transform:translateX(48px)}}
+.dh-tabs button.rv-pulse{animation:rv-pulse 1.1s ease}@keyframes rv-pulse{30%{background:var(--brand);color:var(--on-brand)}}
+.rv-toast{position:fixed;top:84px;right:24px;z-index:95;display:flex;align-items:center;gap:12px;max-width:min(420px,92vw);padding:10px 12px 10px 16px;border-radius:12px;background:#1f2623;color:#fff;box-shadow:var(--elev-4);font-size:13px;animation:rv-in .25s ease}@keyframes rv-in{from{opacity:0;transform:translateY(-8px)}}
+.rv-toast .x{border:0;background:transparent;color:#fff;font-size:18px;line-height:1;cursor:pointer;padding:0 4px}
+.rv-empty{padding:48px 24px;text-align:center}.rv-empty b{display:block;font-size:15px;color:var(--ink-2)}.rv-empty p{margin:6px 0 16px;color:var(--muted);font-size:13px}
+.tb{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.row.tb{background:none;border:0;box-shadow:none;border-radius:0;padding:0}
+</style></helmet>
+<div class="col page-in g16">
+  <header class="dh-page-head"><div><h1>Hồ sơ cần đánh giá</h1><p>{{intro}}</p></div></header>
+  <sc-if value="{{isReviewer}}"><div class="row wrap"><div class="dh-tabs" role="group" aria-label="Nhóm hồ sơ"><sc-if value="{{showClaimTab}}"><button aria-pressed="{{isClaim}}" onClick="{{showClaim}}">Chờ nhận ({{claimN}})</button></sc-if><button class="{{mineCls}}" aria-pressed="{{isMine}}" onClick="{{showMine}}">Hồ sơ của tôi ({{mineN}})</button></div></div></sc-if>
+  <sc-if value="{{isStaffView}}"><div class="row wrap"><div class="dh-tabs" role="group" aria-label="Lọc lượt đánh giá"><button aria-pressed="{{isPending}}" onClick="{{pending}}">Cần xử lý ({{pendingN}})</button><button aria-pressed="{{isHistory}}" onClick="{{history}}">Đã kết luận ({{historyN}})</button></div></div></sc-if>
+  <div class="row tb">
+    <dc-import name="FilterBar" fields="{{filterFields}}" q="{{q}}" placeholder="Tìm mã hồ sơ, vị trí" on-q="{{search}}" on-apply="{{applyFilters}}" hint-size="100%,56px"></dc-import>
+  </div>
+  <sc-if value="{{message}}"><div class="chip info alert review-text" role="status">{{message}}</div></sc-if>
+  <div>
+    <div class="card"><sc-if value="{{hasSel}}"><div class="rv-bulk"><b>Đã chọn {{selN}} hồ sơ</b><span class="spacer"></span><sc-if value="{{canBulkClaim}}"><button class="btn sm primary" onClick="{{claimMany}}">Nhận {{claimPickN}} hồ sơ</button></sc-if><sc-if value="{{canBulkConclude}}"><button class="btn sm primary" onClick="{{openBulk}}">Đánh giá {{concN}} hồ sơ</button></sc-if><button class="btn sm" onClick="{{clearSel}}">Bỏ chọn</button></div></sc-if><div class="rv-wrap"><table class="dh-table rv-tree"><thead><tr><sc-if value="{{canSelect}}"><th class="rv-chk"><input type="checkbox" aria-label="Chọn tất cả hồ sơ trong trang" checked="{{allSel}}" onChange="{{toggleAll}}"></th></sc-if><th>Yêu cầu · Mã hồ sơ</th><th>Chuyên khoa · Cấp</th><th class="num">Kinh nghiệm</th><th>Hạn đánh giá</th><sc-if value="{{hasLastCol}}"><th>{{lastCol}}</th></sc-if></tr></thead><tbody>
+      <sc-for list="{{tree}}" as="r"><tr class="{{r.cls}}" data-click="1" onClick="{{r.open}}">
+        <sc-if value="{{canSelect}}"><td class="rv-chk"><input type="checkbox" aria-label="Chọn" checked="{{r.checked}}" disabled="{{r.selDisabled}}" onClick="{{stop}}" onChange="{{r.toggleSel}}"></td></sc-if>
+        <td class="pri"><span class="rv-c1"><sc-if value="{{r.isParent}}"><svg class="{{r.chev}}" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg><span class="dh-scope">{{r.code}}</span><b>{{r.pos}}</b><span class="rv-n">({{r.count}})</span></sc-if><sc-if value="{{r.isChild}}"><span class="dh-scope">{{r.code}}</span></sc-if></span></td>
+        <td>{{r.specLevel}}</td><td class="num">{{r.exp}}</td><td>{{r.dueText}} <sc-if value="{{r.late}}"><span class="chip bad">Quá hạn</span></sc-if></td>
+        <sc-if value="{{hasLastCol}}"><td><sc-if value="{{r.isChild}}"><sc-if value="{{r.canClaimRow}}"><button class="btn sm primary" onClick="{{r.claim}}">Nhận hồ sơ</button></sc-if><sc-if value="{{r.showChip}}"><span class="chip info">{{r.label}}</span></sc-if></sc-if></td></sc-if></tr></sc-for></tbody></table></div>
+      <div class="tfoot"><span>{{footer}}</span><span class="spacer"></span><sc-for list="{{pager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></div>
+    <sc-if value="{{emptyAll}}"><div class="dh-card rv-empty"><b>{{emptyTitle}}</b><p>{{emptySub}}</p><sc-if value="{{offerMine}}"><button class="btn" onClick="{{showMine}}">Xem hồ sơ của tôi ({{mineN}})</button></sc-if></div></sc-if>
+  </div>
+  <sc-if value="{{bulkOpen}}"><div class="rv-layer rv-modal"><div class="rv-scrim" onClick="{{closeBulk}}"></div><section class="card col review-detail rv-dlg" role="dialog" aria-modal="true" aria-label="Đánh giá nhiều hồ sơ">
+    <h2>Đánh giá {{concN}} hồ sơ</h2><p class="small muted">Một kết luận và một nhận xét chung cho các hồ sơ đã chọn. Hồ sơ nào cần đề xuất vòng 2 thì mở riêng từng hồ sơ.</p>
+    <label class="field"><span>Kết luận <span class="req">*</span></span><select class="input" aria-label="Kết luận" onChange="{{setBres}}"><option value="PASS" selected="{{bPass}}">Đạt</option><option value="FAIL" selected="{{bFail}}">Không đạt</option></select></label>
+    <label class="field"><span>Nhận xét chung <sc-if value="{{bFail}}"><span class="req">*</span></sc-if></span><textarea class="input review-text" aria-label="Nhận xét chung" placeholder="Nhận xét áp cho mọi hồ sơ đã chọn" value="{{bcomment}}" onInput="{{setBcomment}}"></textarea></label>
+    <sc-if value="{{bmsg}}"><div class="chip bad alert review-text" role="alert">{{bmsg}}</div></sc-if>
+    <div class="row wrap"><button class="btn" onClick="{{closeBulk}}">Huỷ</button><span class="spacer"></span><button class="btn primary" onClick="{{concludeMany}}">Lưu kết luận {{concN}} hồ sơ</button></div></section></div></sc-if>
+  <sc-if value="{{toast}}"><div class="rv-toast" role="status"><span>{{toast.text}}</span><sc-if value="{{toast.go}}"><button class="btn sm" onClick="{{toastGo}}">Xem</button></sc-if><button class="x" aria-label="Đóng thông báo" onClick="{{toastClose}}">×</button></div></sc-if>
+  <div class="rv-contents">
+    <sc-if value="{{detail}}"><div class="{{wrapCls}}"><div class="rv-scrim" onClick="{{closeDetail}}"></div><section class="{{detailCls}}" aria-label="Chi tiết đánh giá">
+      <div><div class="small muted">{{detail.req}} · {{detail.pos}}</div><h2>{{detail.code}}</h2><span class="chip info">{{detail.label}}</span></div>
+      <dl class="kv"><dt>Chuyên khoa</dt><dd>{{detail.spec}}</dd><dt>Kinh nghiệm</dt><dd>{{detail.exp}} năm</dd><dt>Chứng chỉ hành nghề</dt><dd>{{detail.cchn}}</dd></dl>
+      <div class="small muted">{{detail.roundLabel}} · {{detail.due}}</div>
+      <sc-if value="{{detail.hasFirst}}"><div class="card-b" style="background:var(--surface-2)"><h3>Kết luận vòng đầu</h3><p class="review-text">{{detail.firstText}}</p></div></sc-if>
+      <sc-if value="{{detail.hasPrescreens}}"><section><h3>Sơ vấn</h3><sc-for list="{{detail.prescreens}}" as="p"><p class="review-text small">{{p.date}} · {{p.mode}}<br>{{p.note}}</p></sc-for></section></sc-if>
+      <sc-if value="{{detail.claim}}"><button class="btn primary" onClick="{{claim}}">Nhận hồ sơ</button></sc-if>
+      <sc-if value="{{detail.canConclude}}"><div class="col review-form g16">
+        <label class="field"><span>Kết luận đánh giá <span class="req">*</span></span><select class="input" aria-label="Kết luận đánh giá" value="{{result}}" onChange="{{setResult}}"><option value="PASS">Đạt</option><option value="FAIL">Không đạt</option><sc-if value="{{detail.canSecond}}"><option value="SECOND">Đề xuất đánh giá vòng 2</option></sc-if></select></label>
+        <sc-if value="{{isSecond}}"><label class="field"><span>Người được đề xuất <span class="req">*</span></span><select class="input" aria-label="Người được đề xuất" onChange="{{setProposed}}"><option value="">Chọn người đánh giá</option><sc-for list="{{people}}" as="p"><option value="{{p.id}}" selected="{{p.selected}}">{{p.label}}</option></sc-for></select></label></sc-if>
+        <label class="field"><span>Nhận xét đánh giá <span class="req">*</span></span><textarea class="input review-text" aria-label="Nhận xét đánh giá" placeholder="Ghi nhận xét chuyên môn làm cơ sở cho kết luận" value="{{comment}}" onInput="{{setComment}}"></textarea></label>
+        <div class="row wrap"><sc-if value="{{detail.release}}"><button class="btn" onClick="{{release}}">Trả lại hồ sơ</button></sc-if><span class="spacer"></span><button class="btn primary" onClick="{{conclude}}">Lưu kết luận</button></div>
+      </div></sc-if>
+      <sc-if value="{{detail.hasVerdict}}"><section><h3>Kết luận đã lưu</h3><p class="review-text">{{detail.verdict}}</p><p class="review-text">{{detail.comment}}</p></section></sc-if>
+      <sc-if value="{{adminRelease}}"><button class="btn" onClick="{{release}}">Trả lại lượt đang chờ</button></sc-if>
+    </section></div></sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"records":{"editor":null,"default":[]},"actor":{"editor":null,"default":{"role":"internal","id":"BS Tâm"}},"today":{"editor":null},"onAction":{"editor":null}}'>
+class Component extends DCLogic {
+  state = { tab: '', open: {}, selected: '', mode: 'pending', q: '', result: 'PASS', comment: '', proposed: '', message: '', page: 0, freq: [], fpos: [], fspec: [], fst: [], fwho: [], sel: {}, leaving: {}, toast: null, pulse: false, bulkOpen: false, bres: 'PASS', bcomment: '', bmsg: '' };
+  // Đổi tab thì bỏ lọc cũ vì danh sách giá trị lọc đổi theo tab
+  reset = { page: 0, freq: [], fpos: [], fspec: [], fst: [], fwho: [], sel: {} };
+  renderVals() {
+    const P = this.props, S = this.state, D = window.MedReview, actor = P.actor, staff = D.staff(actor);
+    const current = (m) => staff ? D.current(m) : (m.rounds || []).at(-1);
+    // Người đánh giá: Hồ sơ mới (lượt vòng đầu chưa ai nhận, chỉ nội bộ) và Hồ sơ đã đánh giá; quản trị/nhân viên giữ màn theo dõi
+    const reviewer = !staff, pendingN = (P.records || []).filter((m) => current(m)?.state === 'PENDING').length, historyN = (P.records || []).filter((m) => current(m)?.state === 'REVIEWED').length, canClaim = ['internal', 'admin'].includes(actor.role);
+    const claimable = (m) => { const r = current(m); return !!r && r.n === 1 && !r.who && r.state === 'PENDING'; }, isMineRec = (m) => current(m)?.who === actor.id;
+    const claimN = (P.records || []).filter(claimable).length, mineN = (P.records || []).filter(isMineRec).length;
+    // Thẻ Chờ nhận chỉ hiện khi còn hồ sơ chờ (hoặc đang chạy hiệu ứng chuyển); nhận hết thì chỉ còn thẻ Hồ sơ của tôi
+    const leavingN = Object.keys(S.leaving).length, showClaimTab = canClaim && (claimN > 0 || leavingN > 0);
+    const tab = reviewer ? (showClaimTab && (S.tab || 'claim') === 'claim' ? 'claim' : 'mine') : '';
+    const list = reviewer ? (P.records || []).filter(tab === 'claim' ? claimable : isMineRec) : (P.records || []).filter((m) => current(m)?.state === (S.mode === 'pending' ? 'PENDING' : 'REVIEWED'));
+    const q = S.q.trim().toLocaleLowerCase('vi');
+    const MF = window.MedFilter, who = (m) => current(m)?.who || 'Chưa nhận', stLabel = (m) => D.STATUS[m.status];
+    const shown = list.filter((m) => (m.id + m.req + m.pos).toLocaleLowerCase('vi').includes(q) && MF.has(S.freq, m.req) && MF.has(S.fpos, m.pos) && MF.has(S.fspec, m.spec) && MF.has(S.fst, stLabel(m)) && MF.has(S.fwho, who(m)));
+    // Giá trị lọc lấy từ danh sách của tab (trước khi lọc) để chọn thêm không làm mất các lựa chọn khác
+    const uniq = (f) => [...new Set(list.map(f).filter(Boolean))].sort((a, b) => String(a).localeCompare(String(b), 'vi')).map((v) => [v, v]), ex = { extra: { page: 0 } };
+    const filterFields = [MF.field('freq', 'Yêu cầu', uniq((m) => m.req), S.freq, ex), MF.field('fpos', 'Vị trí', uniq((m) => m.pos), S.fpos, ex), MF.field('fspec', 'Chuyên khoa', uniq((m) => m.spec), S.fspec, ex),
+      ...(tab === 'claim' ? [] : [MF.field('fst', 'Trạng thái', uniq(stLabel), S.fst, ex)]), ...(staff ? [MF.field('fwho', 'Người đánh giá', uniq(who), S.fwho, ex)] : [])];
+    // Mã hồ sơ hiển thị dạng UV-0172 như code gốc (id mẫu U12 thành UV-0012)
+    const uv = (id) => { const n = /^U(\d+)/.exec(id); return n ? 'UV-' + String(+n[1]).padStart(4, '0') : id; };
+    const base = (m) => { const r = current(m); return { code: uv(m.id.split('~')[0]), req: m.req, pos: m.pos, spec: m.spec, exp: m.exp, cchn: m.cchn, label: D.STATUS[m.status], roundLabel: 'Vòng ' + r.n, due: r.due ? 'Hạn ' + r.due : '', late: r.state === 'PENDING' && D.date(r.due) < D.date(P.today + ' 09:00') }; };
+    // Chỉ hồ sơ đang giữ và đã nhận mới kết luận được (cùng điều kiện với ngăn chi tiết)
+    const concludable = (m) => { const r = current(m); return !staff && r.who === actor.id && ['PENDING', 'REVIEWED'].includes(r.state) && (r.n === 1 ? ['IN_REVIEW', 'REVIEW_PASSED', 'REVIEW_FAILED', 'SECOND_REVIEW_REQUESTED'] : ['SECOND_REVIEW_PENDING', 'SECOND_REVIEW_PASSED', 'SECOND_REVIEW_FAILED']).includes(m.status); };
+    const canPick = (x) => reviewer || (canClaim && claimable(x));
+    const key = (x) => x.id + ':' + x.req, picked = shown.filter((x) => S.sel[key(x)]), claimPick = picked.filter(claimable), concPick = picked.filter(concludable);
+    const sweep = (arr, on) => { const sel = { ...S.sel }; arr.forEach((x) => { if (on) sel[key(x)] = true; else delete sel[key(x)]; }); this.setState({ sel }); };
+    const runMany = (arr, action, payload) => { let ok = 0; const fails = []; arr.forEach((x) => { const out = P.onAction(x.req, [x.id], action, payload); if (out.ok) ok += 1; else fails.push(uv(x.id.split('~')[0]) + ': ' + out.message); }); return { ok, fails }; };
+    // Nhận hồ sơ: hàng trượt ra (380ms), sau đó mới nhận thật, báo ở góc phải và nháy thẻ Hồ sơ của tôi; API chỉ nhận một hồ sơ mỗi lần nên nhận nhiều thì lần lượt từng cái
+    const startClaim = (arr) => {
+      const lv = { ...S.leaving }; arr.forEach((x) => { lv[key(x)] = true; }); this.setState({ leaving: lv });
+      setTimeout(() => {
+        const out = runMany(arr, 'CLAIM', {}), text = arr.length === 1 && !out.fails.length ? 'Đã nhận hồ sơ ' + uv(arr[0].id.split('~')[0]) + '.' : 'Đã nhận ' + out.ok + '/' + arr.length + ' hồ sơ.' + (out.fails.length ? ' Chưa nhận được: ' + out.fails.join('; ') : '');
+        clearTimeout(this._tt); clearTimeout(this._pt);
+        this.setState({ leaving: {}, sel: {}, pulse: true, toast: { text, go: out.ok > 0 && reviewer } });
+        this._tt = setTimeout(() => this.setState({ toast: null }), 5000); this._pt = setTimeout(() => this.setState({ pulse: false }), 1200);
+      }, 380);
+    };
+    const m = shown.find((r) => r.id + ':' + r.req === S.selected), r = m && current(m);
+    const act = (action) => { if (!m) return; const out = P.onAction(m.req, [m.id], action, { result: S.result, comment: S.comment, proposed: S.proposed }); this.setState({ message: out.message, ...(out.ok ? { selected: '', comment: '', proposed: '', result: 'PASS' } : {}) }); };
+    const detail = m ? { ...base(m), claim: canClaim && r.n === 1 && !r.who && r.state === 'PENDING',
+      canConclude: !staff && r.who === actor.id && ['PENDING', 'REVIEWED'].includes(r.state) && (r.n === 1 ? ['IN_REVIEW', 'REVIEW_PASSED', 'REVIEW_FAILED', 'SECOND_REVIEW_REQUESTED'] : ['SECOND_REVIEW_PENDING', 'SECOND_REVIEW_PASSED', 'SECOND_REVIEW_FAILED']).includes(m.status),
+      canSecond: actor.role === 'internal' && r.n === 1, release: r.n === 1 && r.who === actor.id, hasVerdict: r.state === 'REVIEWED',
+      verdict: { PASS: 'Đạt', FAIL: 'Không đạt', SECOND: 'Đề xuất đánh giá vòng 2' }[r.result], comment: r.comment,
+      hasFirst: !!m.firstResult, firstText: m.firstResult ? ({ PASS: 'Đạt', FAIL: 'Không đạt', SECOND: 'Đề xuất đánh giá vòng 2' }[m.firstResult.result] + '\n' + m.firstResult.comment) : '',
+      prescreens: m.prescreens || [], hasPrescreens: (m.prescreens || []).length > 0 } : null;
+    const byKey = {}; shown.forEach((m) => { (byKey[m.req + '|' + m.pos] = byKey[m.req + '|' + m.pos] || { code: m.req, pos: m.pos, recs: [] }).recs.push(m); });
+    const keys = Object.keys(byKey), pg = window.MedPage.view(keys, S.page, 'yêu cầu · vị trí');
+    // Bảng cây phẳng: mỗi nhóm một dòng cha rồi các dòng hồ sơ con; mặc định mở hết nhóm trong trang để thấy nhiều yêu cầu cùng lúc
+    const pageRecs = pg.rows.flatMap((k) => byKey[k].recs).filter(canPick), allSel = pageRecs.length > 0 && pageRecs.every((x) => S.sel[key(x)]);
+    const tree = pg.rows.flatMap((k) => { const g = byKey[k], pickable = g.recs.filter(canPick), gAll = pickable.length > 0 && pickable.every((x) => S.sel[key(x)]), open = S.open[k] !== undefined ? S.open[k] : true, toggle = () => this.setState({ open: { ...S.open, [k]: !open } });
+      const parent = { cls: 'rv-par', isParent: true, isChild: false, chev: open ? '' : 'shut', code: g.code, pos: g.pos, count: g.recs.length, specLevel: '', exp: '', dueText: '', late: false, label: '', open: toggle, claim: () => {}, checked: gAll, selDisabled: pickable.length === 0, canClaimRow: false, showChip: false, toggleSel: () => sweep(pickable, !gAll) };
+      return [parent, ...(open ? g.recs.map((m) => { const b = base(m); const cr = canClaim && claimable(m) && (reviewer ? tab === 'claim' : true); return { cls: 'rv-kid' + (S.leaving[key(m)] ? ' rv-leave' : ''), isParent: false, isChild: true, checked: !!S.sel[key(m)], selDisabled: !canPick(m), canClaimRow: cr, showChip: !cr, toggleSel: () => sweep([m], !S.sel[key(m)]), code: b.code, specLevel: b.spec + (m.level ? ' · ' + m.level : ''), exp: b.exp + ' năm', dueText: current(m).due || '—', late: b.late, label: b.label,
+        open: () => this.setState({ selected: m.id + ':' + m.req, comment: current(m).comment || '', proposed: current(m).proposed || '', result: current(m).result || 'PASS', message: '' }),
+        claim: (e) => { e && e.stopPropagation && e.stopPropagation(); startClaim([m]); } }; }) : [])]; });
+    const rv = { showClaimTab, mineCls: S.pulse ? 'rv-pulse' : '', toast: S.toast, toastClose: () => this.setState({ toast: null }), toastGo: () => this.setState({ tab: 'mine', toast: null, page: 0, sel: {} }), isReviewer: reviewer, isStaffView: !reviewer, canClaim, claimN, mineN, isClaim: tab === 'claim', isMine: tab === 'mine', tree, pendingN, historyN, showStatus: tab !== 'claim', hasLastCol: !(reviewer && tab === 'mine'), lastCol: 'Thao tác',
+      emptyAll: shown.length === 0, emptyTitle: !reviewer ? 'Không có hồ sơ trong mục này.' : tab === 'claim' ? 'Chưa có hồ sơ nào cần đánh giá.' : 'Bạn chưa nhận hồ sơ nào.', emptySub: !reviewer ? (S.mode === 'pending' ? 'Hồ sơ được gửi đánh giá sẽ hiện ở đây.' : 'Chưa có lượt nào đã kết luận.') : tab === 'claim' ? 'Hồ sơ nhân viên gửi sang sẽ hiện ở đây để bạn nhận.' : 'Nhận hồ sơ ở tab Chờ nhận để bắt đầu đánh giá.', offerMine: tab === 'claim' && mineN > 0,
+      showClaim: () => this.setState({ tab: 'claim', selected: '', ...this.reset }), showMine: () => this.setState({ tab: 'mine', selected: '', ...this.reset }), closeDetail: () => this.setState({ selected: '' }),
+      wrapCls: 'rv-layer', detailCls: 'card col review-detail rv-drawer' };
+    return { ...rv, intro: staff ? 'Theo dõi các lượt đã gửi. Kết luận do người đánh giá được giao thực hiện.' : 'Hồ sơ chờ bạn nhận hoặc được giao cho bạn để kết luận.',
+      rows: shown.map((m) => ({ ...base(m), selected: S.selected === m.id + ':' + m.req, open: () => this.setState({ selected: m.id + ':' + m.req, comment: current(m).comment || '', proposed: current(m).proposed || '', result: current(m).result || 'PASS', message: '' }) })),
+      count: shown.length, empty: !shown.length, detail, adminRelease: actor.role === 'admin' && detail && ['PENDING', 'REVIEWED'].includes(r.state) && ['IN_REVIEW', 'SECOND_REVIEW_PENDING', 'REVIEW_PASSED', 'REVIEW_FAILED', 'SECOND_REVIEW_REQUESTED', 'SECOND_REVIEW_PASSED', 'SECOND_REVIEW_FAILED'].includes(m.status),
+      q: S.q, search: (e) => this.setState({ q: e.target.value, page: 0 }), filterFields, applyFilters: (patch) => this.setState({ ...patch, sel: {} }), footer: pg.footer, pager: window.MedPage.pager(this, pg), isPending: S.mode === 'pending', isHistory: S.mode === 'history',
+      pending: () => this.setState({ mode: 'pending', selected: '', ...this.reset }), history: () => this.setState({ mode: 'history', selected: '', ...this.reset }),
+      result: S.result, comment: S.comment, isSecond: S.result === 'SECOND', message: S.message,
+      people: D.PEOPLE.filter((p) => p.id !== actor.id).map((p) => ({ ...p, label: p.id + ' · ' + D.ROLES[p.role], selected: p.id === S.proposed })),
+      setResult: (e) => this.setState({ result: e.target.value }), setComment: (e) => this.setState({ comment: e.target.value }), setProposed: (e) => this.setState({ proposed: e.target.value }),
+      claim: () => act('CLAIM'), release: () => act('RELEASE'), conclude: () => act('VERDICT'),
+      // Chọn nhiều: nhận hoặc kết luận lần lượt từng hồ sơ (API chỉ nhận một hồ sơ mỗi lần), rồi báo N/M thành công
+      canSelect: reviewer || (canClaim && S.mode === 'pending'), allSel, toggleAll: () => sweep(pageRecs, !allSel), stop: (e) => e && e.stopPropagation && e.stopPropagation(), hasSel: picked.length > 0, selN: picked.length, concN: concPick.length, clearSel: () => this.setState({ sel: {} }),
+      canBulkClaim: (tab === 'claim' || !reviewer) && claimPick.length > 0, claimPickN: claimPick.length, canBulkConclude: tab === 'mine' && concPick.length > 0,
+      claimMany: () => startClaim(claimPick),
+      bulkOpen: S.bulkOpen, openBulk: () => this.setState({ bulkOpen: true, bmsg: '' }), closeBulk: () => this.setState({ bulkOpen: false }), bPass: S.bres === 'PASS', bFail: S.bres === 'FAIL', bcomment: S.bcomment, bmsg: S.bmsg,
+      setBres: (e) => this.setState({ bres: e.target.value }), setBcomment: (e) => this.setState({ bcomment: e.target.value }),
+      concludeMany: () => { if (S.bres === 'FAIL' && !S.bcomment.trim()) { this.setState({ bmsg: 'Nhận xét bắt buộc khi kết luận Không đạt (ERR-MAT-02).' }); return; }
+        const out = runMany(concPick, 'VERDICT', { result: S.bres, comment: S.bcomment }); this.setState({ sel: {}, bulkOpen: false, bcomment: '', bres: 'PASS', message: 'Đã kết luận ' + out.ok + '/' + concPick.length + ' hồ sơ.' + (out.fails.length ? ' Chưa lưu được: ' + out.fails.join('; ') : '') }); } };
+  }
+}
+</script></body></html>

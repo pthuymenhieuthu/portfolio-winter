@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Hộp thoại đổi trạng thái yêu cầu</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./modal-ux.js"></script><script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}.sm{width:min(560px,94vw)}.sm .hint{font-size:12px;color:var(--muted)}.sm .ck{display:grid;grid-template-columns:20px 1fr auto;gap:8px;align-items:start;font-size:13px}.sm .ck.ok .m{color:var(--success-ink)}.sm .ck:not(.ok) .m{color:var(--danger-ink)}.sm .msg{border-radius:12px;background:var(--danger-soft);color:var(--danger-ink);padding:8px 12px;font-size:13px}</style></helmet>
+<div class="scrim"><div class="modal anim-scale sm" role="dialog" aria-label="{{title}}">
+  <h2 style="margin:0">{{title}} · {{req.code}}</h2>
+  <div class="muted small">{{intro}}</div>
+  <sc-if value="{{isCancel}}">
+    <div class="field"><label>Lý do huỷ <span class="req">*</span></label><div class="rdg" role="radiogroup" aria-label="Lý do huỷ"><sc-for list="{{reasons}}" as="o"><label class="rd"><input type="radio" name="rd-ReqStatusModals-7" checked="{{o.on}}" onChange="{{o.pick}}"><span>{{o.label}}</span></label></sc-for></div></div>
+    <sc-if value="{{needNote}}"><div class="field"><label>Ghi chú <span class="req">*</span></label><textarea class="input" style="height:72px;padding:8px 12px" maxlength="1024" placeholder="Ghi lý do cụ thể (tối đa 1.024 ký tự)" onInput="{{onNote}}">{{f.note}}</textarea></div></sc-if>
+    <sc-if value="{{autoStopN}}"><div class="hint">{{autoStopTxt}}</div></sc-if>
+    <sc-if value="{{needTyped}}"><div class="field"><label>Gõ lại mã {{req.code}} để xác nhận <span class="req">*</span></label><input class="input" value="{{f.typed}}" placeholder="{{req.code}}" onInput="{{onTyped}}"></div></sc-if>
+  </sc-if>
+  <sc-if value="{{isPosStop}}">
+    <div class="field"><label>Lý do ngừng tuyển <span class="req">*</span></label><div class="rdg" role="radiogroup" aria-label="Lý do ngừng tuyển"><sc-for list="{{posReasons}}" as="o"><label class="rd"><input type="radio" name="rd-ReqStatusModals-pos" checked="{{o.on}}" onChange="{{o.pick}}"><span>{{o.label}}</span></label></sc-for></div></div>
+    <sc-if value="{{posNeedNote}}"><div class="field"><label>Ghi chú <span class="req">*</span></label><textarea class="input" style="height:64px;padding:8px 12px" maxlength="1024" placeholder="Ghi lý do cụ thể" onInput="{{onNote}}">{{f.note}}</textarea></div></sc-if>
+  </sc-if>
+  <sc-if value="{{isReopen}}"><div class="field"><label>Lý do mở lại <span class="req">*</span></label><textarea class="input" style="height:72px;padding:8px 12px" placeholder="Vì sao mở lại yêu cầu" onInput="{{onNote}}">{{f.note}}</textarea></div>
+    <div class="hint">Ca đã tự dừng khi huỷ không tự mở lại.</div></sc-if>
+  <sc-if value="{{isComplete}}"><div class="col g8"><sc-for list="{{checks}}" as="k"><div class="ck {{k.cls}}"><span class="m" aria-hidden="true">{{k.mark}}</span><span>{{k.label}}</span><b class="tabular">{{k.val}}</b></div></sc-for></div>
+    <sc-if value="{{noteOpt}}"><div class="field"><label>Ghi chú (tuỳ chọn)</label><textarea class="input" style="height:64px;padding:8px 12px" placeholder="VD: khách hàng xác nhận đủ người" onInput="{{onNote}}">{{f.note}}</textarea></div></sc-if></sc-if>
+  <sc-if value="{{isQty}}"><div class="field"><label>Số lượng mới <span class="req">*</span></label><input class="input" inputmode="numeric" value="{{f.qty}}" onInput="{{onQty}}"></div>
+    <div class="field"><label>Lý do sửa <span class="req">*</span></label><textarea class="input" style="height:64px;padding:8px 12px" placeholder="VD: khách hàng đổi nhu cầu" onInput="{{onNote}}">{{f.note}}</textarea></div></sc-if>
+  <sc-if value="{{hasErrs}}"><div class="msg" role="alert"><sc-for list="{{errs}}" as="e"><div>{{e.t}}</div></sc-for></div></sc-if>
+  <div class="row"><span class="spacer"></span><button class="btn" onClick="{{close}}">Đóng</button><button class="btn {{ctaCls}}" disabled="{{ctaOff}}" onClick="{{save}}">{{cta}}</button></div>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":null,"default":"cancel"},"req":{"editor":null,"default":{"code":"","qty":1}},"cases":{"editor":null,"default":[]},"checks":{"editor":null,"default":[]},"errors":{"editor":null,"default":[]},"prevLabel":{"editor":null,"default":""},"isAdmin":{"editor":null,"default":true},"pos":{"editor":null,"default":null},"posCases":{"editor":null,"default":[]},"profilesN":{"editor":null,"default":0},"dupPos":{"editor":null,"default":false},"onSave":{"editor":null},"onClose":{"editor":null},"$preview":{"width":640,"height":560}}'>
+class Component extends DCLogic {
+  componentDidMount() { this.releaseFocus = window.MedModalFocus(() => this.props.onClose?.()); }
+  componentWillUnmount() { this.releaseFocus?.(); }
+  // Theo module 04: huỷ (UC-REQ-16, B3.2 #18), mở lại (UC-REQ-14, B3.2 #15), hoàn thành (UC-REQ-09, B3.2 #7), sửa số lượng (UC-REQ-13, B3.2 #16)
+  static REASONS = [['CUSTOMER_STOP', 'Khách hàng dừng tuyển'], ['SMS_DECLINE', 'SMS không nhận'], ['OTHER', 'Khác']];
+  // Ngừng tuyển một vị trí (UC-REQ-18, B2.4): thêm lý do Nhân viên tạo nhầm
+  static POS_REASONS = [['CUSTOMER_STOP', 'Khách hàng dừng tuyển'], ['SMS_DECLINE', 'SMS không nhận'], ['MISTAKE', 'Nhân viên tạo nhầm'], ['OTHER', 'Khác']];
+  state = { f: { reason: 'CUSTOMER_STOP', note: '', qty: null, typed: '' }, tried: false };
+  renderVals() {
+    const P = this.props, S = this.state, C = Component, f = S.f, m = P.mode, req = P.req || { code: '', qty: 1 }, cases = P.cases || [];
+    const set = (patch) => this.setState({ f: { ...f, ...patch }, tried: false });
+    const qty = f.qty !== null ? f.qty : String((P.pos || {}).qty || req.qty || 1), note = f.note.trim();
+    const running = cases.filter((c) => c.stage >= 4 && c.stage <= 6), pending = cases.filter((c) => c.stage <= 3);
+    const sent = (req.status || 'DRAFT') !== 'DRAFT', needTyped = m === 'cancel' && sent, notAdmin = needTyped && P.isAdmin === false, pos = P.pos || {}, pcases = P.posCases || [];
+    const prun = pcases.filter((c) => c.stage >= 4 && c.stage <= 6), pauto = pcases.filter((c) => c.stage <= 3);
+    const block = (m === 'cancel' && running.length > 0) || (m === 'posStop' && prun.length > 0) || notAdmin || (m === 'posResume' && !!P.dupPos);
+    const errs = [];
+    if (block) errs.push('Còn ' + running.length + ' ca ở Chờ thử việc, Thử việc hoặc Bảo hành (' + running.map((c) => c.name).join(', ') + '). Hãy dừng ca hoặc chờ ca kết thúc rồi mới huỷ yêu cầu (ERR-REQ-26).');
+    if (notAdmin) errs.push('Chỉ quản trị hệ thống huỷ được yêu cầu đã gửi. Báo quản trị hệ thống nếu cần huỷ (ERR-REQ-40).');
+    if (m === 'posStop' && prun.length) errs.push('Còn ' + prun.length + ' ca của vị trí ở Chờ thử việc, Thử việc hoặc Bảo hành (' + prun.map((c) => c.name).join(', ') + '). Hãy dừng ca hoặc chờ ca kết thúc rồi mới ngừng tuyển (ERR-REQ-26).');
+    if (m === 'posResume' && P.dupPos) errs.push('Vị trí này trùng một vị trí đang tuyển. Sửa vị trí cho khác đi trước khi tuyển lại (ERR-REQ-46).');
+    if (m === 'complete') (P.errors || []).forEach((e) => errs.push(e));
+    if (S.tried) {
+      if (m === 'cancel' && f.reason === 'OTHER' && !note) errs.push('Lý do Khác bắt buộc ghi chú (ERR-REQ-32).');
+      if (needTyped && f.typed.trim() !== req.code) errs.push('Mã yêu cầu gõ lại không khớp. Gõ đúng ' + req.code + ' để huỷ (ERR-REQ-39).');
+      if (m === 'posStop' && f.reason === 'OTHER' && !note) errs.push('Chọn lý do ngừng tuyển. Lý do Khác thì ghi rõ lý do (ERR-REQ-42).');
+      if (m === 'reopen' && !note) errs.push('Nhập lý do mở lại yêu cầu (ERR-REQ-29).');
+      if (m === 'qty') { if (!(+qty >= 1)) errs.push('Số lượng phải từ 1 trở lên (ERR-REQ-01).'); if (!note) errs.push('Nhập lý do sửa số lượng (ERR-REQ-28).'); }
+    }
+    const titles = { cancel: 'Huỷ yêu cầu', reopen: 'Mở lại yêu cầu', complete: 'Hoàn thành yêu cầu', qty: 'Sửa số lượng', posStop: 'Ngừng tuyển vị trí', posResume: 'Tuyển lại vị trí' };
+    const intros = { cancel: sent ? 'Huỷ ' + req.code + ' sẽ ngừng toàn bộ yêu cầu: ' + pending.length + ' ca chưa có kết quả sẽ tự dừng, ' + (P.profilesN || 0) + ' hồ sơ đang chờ đánh giá sẽ ngừng đánh giá.' : 'Yêu cầu nháp chuyển sang Đã huỷ.', reopen: 'Yêu cầu quay về trạng thái trước khi kết thúc' + (P.prevLabel ? ' (' + P.prevLabel + ').' : '.'), complete: 'Cần đủ 4 điều kiện dưới đây.', posStop: pos.title + ': ' + pauto.length + ' ca chưa có kết quả sẽ tự dừng, ' + (P.profilesN || 0) + ' hồ sơ đang chờ đánh giá sẽ tạm ngừng đánh giá.', posResume: pos.title + ' tuyển tiếp; chọn hồ sơ và gửi khách hàng lại được. Ca đã tự dừng giữ nguyên.', qty: 'Số lượng hiện tại: ' + ((P.pos || {}).qty || req.qty || 0) + '.' };
+    const save = () => {
+      const bad = (m === 'cancel' && (block || (f.reason === 'OTHER' && !note) || (needTyped && f.typed.trim() !== req.code))) || (m === 'posStop' && (block || (f.reason === 'OTHER' && !note))) || (m === 'posResume' && block) || (m === 'reopen' && !note) || (m === 'qty' && (!(+qty >= 1) || !note)) || (m === 'complete' && (P.errors || []).length > 0);
+      if (bad) { this.setState({ tried: true }); return; }
+      P.onSave && P.onSave({ reason: f.reason, note, qty: +qty, typed: f.typed.trim() });
+    };
+    const autoN = m === 'cancel' && !sent ? pending.length : 0;
+    return { req, title: titles[m], intro: intros[m], isCancel: m === 'cancel', isReopen: m === 'reopen', isComplete: m === 'complete', isQty: m === 'qty', isPosStop: m === 'posStop', needTyped, posNeedNote: f.reason === 'OTHER', posReasons: C.POS_REASONS.map(([k, label]) => ({ label, on: f.reason === k, pick: () => set({ reason: k }) })), onTyped: (e) => set({ typed: e.target.value }), f: { ...f, qty }, errs: errs.map((t) => ({ t })), hasErrs: errs.length > 0, close: P.onClose, save,
+      reasons: C.REASONS.map(([k, label]) => ({ label, on: f.reason === k, pick: () => set({ reason: k }) })), needNote: f.reason === 'OTHER', autoStopN: autoN > 0, autoStopTxt: autoN + ' ca chưa có kết quả sẽ tự dừng (' + (f.reason === 'CUSTOMER_STOP' ? 'Khách hàng dừng, D5' : 'SMS rút, D6') + ').',
+      checks: (P.checks || []).map((k) => ({ ...k, cls: k.ok ? 'ok' : '', mark: k.ok ? '✓' : '✕' })), noteOpt: true, onNote: (e) => set({ note: e.target.value }), onQty: (e) => set({ qty: e.target.value.replace(/\D/g, '') }),
+      cta: { cancel: 'Huỷ yêu cầu', reopen: 'Mở lại', complete: 'Hoàn thành', qty: 'Lưu', posStop: 'Ngừng tuyển', posResume: 'Tuyển lại' }[m], ctaCls: m === 'cancel' || m === 'posStop' ? 'danger' : 'primary', ctaOff: block || (m === 'complete' && (P.errors || []).length > 0) };
+  }
+}
+</script>
+</body>
+</html>

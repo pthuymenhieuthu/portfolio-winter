@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Cổng KH: Nhân sự đã tuyển</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./filter-multi.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}.tb{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}.tb .btn{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;flex:none}.btn.xl{background:#f6f7f8;border:1px solid #d3d7dc;box-shadow:none}.btn.xl:hover{background:#eff1f3}</style></helmet>
+<div class="col page-in">
+  <div class="page-head tight"><h1>Nhân sự đã tuyển</h1></div>
+  <div class="muted">Bảo hành = thời gian thử việc tính từ ngày đi làm. Trong bảo hành, có thể yêu cầu SMS thay thế theo hợp đồng.</div>
+  <div class="ovc stagger" style="grid-template-columns:repeat(3,minmax(0,1fr))"><sc-for list="{{tiles}}" as="t" hint-placeholder-count="4"><button class="{{t.cls}}" style="{{t.accStyle}}" aria-pressed="{{t.on}}" onClick="{{t.pick}}"><span class="ovico"><sc-if value="{{t.fAct}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></sc-if><sc-if value="{{t.fCheck}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3"></path></svg></sc-if><sc-if value="{{t.fAlert}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4m0 4h.01M10.3 3.6 2.7 17a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0Z"></path></svg></sc-if></span><span class="ovn tabular {{t.nCls}}">{{t.n}}</span><span class="ovt">{{t.label}}</span></button></sc-for></div>
+  <div class="row tb">
+    <input class="input" style="max-width:320px;flex:1;min-width:0" placeholder="Tìm mã hồ sơ, vị trí…" value="{{q}}" onInput="{{onQ}}" aria-label="Tìm kiếm">
+    <div style="position:relative"><button class="btn" aria-expanded="{{fOpen}}" onClick="{{togF}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg> Bộ lọc<sc-if value="{{nF}}"><span class="chip ok tabular">{{nF}}</span></sc-if></button>
+      <sc-if value="{{fOpen}}"><div style="position:fixed;inset:0;z-index:30" onClick="{{togF}}" aria-hidden="true"></div>
+      <div class="anim-pop" role="dialog" aria-label="Bộ lọc" style="position:absolute;left:0;top:calc(100% + 8px);z-index:31;width:min(560px,92vw);box-sizing:border-box;display:flex;flex-wrap:wrap;gap:12px;padding:16px;background:var(--surface);border-radius:16px;box-shadow:var(--elev-3)">
+    <label class="field" style="min-width:170px;flex:1"><span class="muted small fw5">Nhóm</span><select class="input" onChange="{{setGrp}}"><sc-for list="{{grpOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+    <label class="field" style="min-width:170px;flex:1"><span class="muted small fw5">Tình trạng</span><select class="input" onChange="{{setSt}}"><sc-for list="{{stOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+    <label class="field" style="min-width:170px;flex:1"><span class="muted small fw5">Vị trí</span><select class="input" onChange="{{setReq}}"><sc-for list="{{reqOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+      </div></sc-if></div>
+    <sc-if value="{{anyFilter}}"><button class="btn sm xl" onClick="{{clear}}">Xoá lọc</button></sc-if>
+  </div>
+  <div class="card"><table><thead><tr><sc-for list="{{cols}}" as="h"><th class="sortable" onClick="{{h.sort}}" aria-sort="{{h.aria}}">{{h.label}} {{h.arrow}}</th></sc-for></tr></thead><tbody class="stagger">
+    <sc-for list="{{rows}}" as="p"><tr class="nc"><td class="fw5">Hồ sơ {{p.code}}</td><td>{{p.reqTitle}}</td><td class="tabular">{{p.start}}</td><td><div class="prog"><i style="{{p.bar}}"></i></div></td><td><span class="chip" style="{{p.style}}">{{p.label}}</span></td></tr></sc-for></tbody></table>
+    <sc-if value="{{empty}}"><div class="card-b col"><span class="muted">Không có nhân sự nào. Khi ứng viên nhận việc, SMS cập nhật ngày đi làm và thời gian bảo hành tại đây.</span><div><button class="btn sm" onClick="{{clear}}">Bỏ mọi bộ lọc</button></div></div></sc-if>
+    <div class="tfoot"><span>{{footer}}</span><span class="spacer"></span><sc-for list="{{pager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"d":{"editor":null,"default":{"cases":[]}},"$preview":{"width":1100,"height":440}}'>
+class Component extends DCLogic {
+  state = { tile: 'g', stage: '', req: '', fOpen: false, q: '', key: null, dir: 1, page: 0 };
+  static L = { 4: 'Chờ thử việc', 5: 'Thử việc', 6: 'Bảo hành', 7: 'Đã chính thức' };
+  renderVals() {
+    const S = this.state, d = this.props.d || { cases: [] }, offers = d.offers || {};
+    const placed = d.cases.filter((c) => c.stage >= 4 && c.stage <= 7);
+    const T = [['Đang bảo hành', 'g', (c) => c.stage <= 6], ['Đã chính thức', 'o', (c) => c.stage === 7], ['Khiếu nại đang mở', 'kn', () => false]];
+    const tiles = T.map(([label, k, fn]) => ({ label, n: placed.filter(fn).length, on: S.tile === k, pick: () => this.setState({ tile: S.tile === k ? null : k, page: 0 }) }));
+    const DECO = [['Act'], ['Check'], ['Alert']];
+    tiles.forEach((t, i) => Object.assign(t, { cls: 'ovi' + (t.pick ? '' : ' st'), accStyle: '--acc:var(' + window.MedDash.statTone(i, tiles.length) + ')', ['f' + DECO[i][0]]: true }));
+    const tf = (T.find((t) => t[1] === S.tile) || [])[2], q = S.q.trim().toLowerCase();
+    const dnum = (v) => { const [dd, mm, yy] = String(v).split('/').map(Number); return (yy || 0) * 10000 + (mm || 0) * 100 + (dd || 0); };
+    const val = { code: (r) => r.code, reqTitle: (r) => r.reqTitle, start: (r) => dnum(r.start), stage: (r) => r.stage };
+    const uniq = [...new Set(placed.map((c) => c.reqTitle).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'vi')), mk = (arr, cur) => arr.map(([v, l]) => ({ v, l, sel: v === cur }));
+    const mapped = placed.filter((c) => (!tf || tf(c)) && (!S.stage || String(c.stage) === S.stage) && (!S.req || c.reqTitle === S.req) && [c.code, c.reqTitle].join(' ').toLowerCase().includes(q)).map((c) => ({ ...c, start: (offers[c.id] || {}).start || '—', label: Component.L[c.stage], style: 'background:var(--stage-' + c.stage + '-soft);color:var(--stage-' + c.stage + ')', bar: 'width:' + ({ 4: 0, 5: 25, 6: 60, 7: 100 }[c.stage]) + '%' }));
+    const list = S.key ? mapped.slice().sort((a, b) => { const x = val[S.key](a), y = val[S.key](b); return (x > y ? 1 : x < y ? -1 : 0) * S.dir; }) : mapped;
+    const pg = window.MedPage.view(list, S.page, 'nhân sự'), rows = pg.rows;
+    const cols = [['code', 'Nhân sự'], ['reqTitle', 'Vị trí'], ['start', 'Ngày đi làm'], ['stage', 'Bảo hành'], ['stage', 'Tình trạng']].map(([k, label], i) => ({ label, arrow: k === S.key && (k !== 'stage' || i === S.col) ? (S.dir > 0 ? '↑' : '↓') : '', aria: k === S.key && (k !== 'stage' || i === S.col) ? (S.dir > 0 ? 'ascending' : 'descending') : 'none', sort: () => this.setState({ key: k, col: i, dir: k === S.key && i === S.col ? -S.dir : 1, page: 0 }) }));
+    const nF = [S.tile, S.stage, S.req].filter(Boolean).length;
+    return { tiles, cols, rows, fOpen: S.fOpen, togF: () => this.setState({ fOpen: !S.fOpen }), nF, anyFilter: nF > 0 || !!q,
+      grpOpts: mk([['', 'Tất cả'], ['g', 'Đang bảo hành'], ['o', 'Đã chính thức']], S.tile || ''), setGrp: (e) => this.setState({ tile: e.target.value || null, page: 0 }),
+      stOpts: mk([['', 'Tất cả'], ...Object.entries(Component.L)], S.stage), setSt: (e) => this.setState({ stage: e.target.value, page: 0 }),
+      reqOpts: mk([['', 'Tất cả vị trí'], ...uniq.map((v) => [v, v])], S.req), setReq: (e) => this.setState({ req: e.target.value, page: 0 }), q: S.q, onQ: (e) => this.setState({ q: e.target.value, page: 0 }), empty: list.length === 0, clear: () => this.setState({ q: '', tile: null, stage: '', req: '', page: 0 }),
+      footer: pg.footer, pager: window.MedPage.pager(this, pg) };
+  }
+}
+</script>
+</body>
+</html>

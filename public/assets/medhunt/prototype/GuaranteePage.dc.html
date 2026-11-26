@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Bảo hành &amp; khiếu nại</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./filter-multi.js"></script><script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}</style></helmet>
+<div class="col page-in">
+  <div class="seg" role="group" aria-label="Mục"><sc-for list="{{tabs}}" as="t"><button aria-pressed="{{t.on}}" onClick="{{t.go}}">{{t.label}}</button></sc-for></div>
+  <sc-if value="{{isList}}">
+    <div class="subtabs"><sc-for list="{{filters}}" as="f"><button class="sub" aria-pressed="{{f.on}}" onClick="{{f.go}}">{{f.label}}</button></sc-for></div>
+    <div class="card"><table><thead><tr><th>Ca</th><th>Tổng số ngày</th><th>Tiến độ</th><th>Hạn bảo hành</th><th>Trạng thái</th></tr></thead><tbody class="stagger">
+      <sc-for list="{{rows}}" as="g"><tr onClick="{{g.open}}"><td class="fw5">{{g.name}} <span class="muted small tabular">{{g.id}}</span></td><td class="tabular">{{g.days}} ngày</td>
+        <td><div class="prog" role="progressbar" aria-valuenow="{{g.pct}}"><i style="{{g.bar}}"></i></div></td><td class="tabular">{{g.end}}</td><td><span class="chip" style="{{g.style}}">{{g.label}}</span></td></tr></sc-for></tbody></table>
+      <sc-if value="{{empty}}"><div class="card-b muted">Không có ca bảo hành phù hợp. Ca vào danh sách khi tới ngày bắt đầu thử việc.</div></sc-if>
+      <div class="tfoot"><span>{{footer}}</span><span class="spacer"></span><sc-for list="{{pager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></div></sc-if>
+  <sc-if value="{{isComplaints}}"><div class="card"><div class="card-b muted">Chưa có khiếu nại nào. Khiếu nại ghi từ chi tiết ca bảo hành.</div></div></sc-if>
+  <sc-if value="{{isRepl}}"><div class="card"><div class="card-b muted">Chưa có ca thay thế. Ca thay thế mở khi ứng viên nghỉ trong thời hạn bảo hành.</div></div></sc-if>
+
+  <sc-if value="{{sel}}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Chi tiết bảo hành" style="width:min(600px,94vw)"><div class="row"><h2>{{sel.name}}</h2><span class="spacer"></span><button class="icon-btn" aria-label="Đóng" onClick="{{closeSel}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <div class="muted">{{sel.id}} · {{sel.start}} → {{sel.end}} ({{sel.days}} ngày)</div>
+    <div><div style="font-weight:500;margin-bottom:6px">Checkpoint</div><div class="row wrap"><sc-for list="{{cps}}" as="c"><span class="{{c.chip}}">{{c.label}}</span></sc-for></div></div>
+    <div><div style="font-weight:500;margin-bottom:6px">Theo dõi sau tuyển ({{fuCount}})</div><div class="col g6"><sc-for list="{{fus}}" as="u"><div class="row"><span class="chip gray tabular">{{u.at}}</span><span>{{u.who}}: {{u.result}}</span></div></sc-for><sc-if value="{{noFu}}"><span class="muted">Chưa có lần hỏi thăm nào.</span></sc-if></div></div>
+    <div class="field"><label>Ghi lần hỏi thăm</label><div class="row"><select class="input" onChange="{{onWho}}"><option selected="{{whoCand}}">Ứng viên</option><option selected="{{whoCust}}">Khách hàng</option></select><input class="input" value="{{result}}" placeholder="Kết quả" onInput="{{onResult}}"><button class="btn" onClick="{{logFu}}">Ghi</button></div><span class="err">{{err}}</span></div>
+    <div class="row"><span class="spacer"></span><button class="btn" onClick="{{openCase}}">Mở ca</button></div></div></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"cases":{"editor":null,"default":[]},"fus":{"editor":null,"default":{}},"offers":{"editor":null,"default":{}},"onFollowUp":{"editor":null},"onOpenCase":{"editor":null},"$preview":{"width":1100,"height":480}}'>
+class Component extends DCLogic {
+  state = { tab: 'list', filter: 'all', page: 0, sel: null, who: 'Ứng viên', result: '', err: '' };
+  static DAYS = 90; // chính sách bảo hành mẫu, cần BA chốt
+  renderVals() {
+    const S = this.state, P = this.props, cases = (P.cases || []).filter((c) => c.stage >= 5 && c.stage <= 7), offers = P.offers || {}, DAYS = Component.DAYS;
+    const sty = (i) => 'background:var(--stage-' + i + '-soft);color:var(--stage-' + i + ')', L = { 5: 'Thử việc', 6: 'Bảo hành', 7: 'Kết thúc bảo hành' };
+    const add = (s, d) => { const [dd, m, y] = s.split('/').map(Number), t = new Date(y, m - 1, dd + d); return String(t.getDate()).padStart(2, '0') + '/' + String(t.getMonth() + 1).padStart(2, '0') + '/' + t.getFullYear(); };
+    const all = cases.map((c) => { const st = (offers[c.id] || {}).start || '01/10/2026', pct = c.stage === 7 ? 100 : c.stage === 6 ? 60 : 25;
+      return { id: c.id, name: c.name, stage: c.stage, start: st, end: add(st, DAYS), days: DAYS, pct, bar: 'width:' + pct + '%', label: L[c.stage], style: sty(c.stage), open: () => this.setState({ sel: c.id }) }; });
+    const F = [['all', 'Tất cả', () => true], ['p', 'Thử việc', (g) => g.stage === 5], ['w', 'Bảo hành', (g) => g.stage === 6], ['d', 'Kết thúc bảo hành', (g) => g.stage === 7]];
+    const fn = F.find((f) => f[0] === S.filter)[2], list = all.filter(fn), view = MedPage.view(list, S.page, 'ca bảo hành'), rows = view.rows;
+    const cur = all.find((g) => g.id === S.sel), fus = ((P.fus || {})[S.sel] || []).slice().reverse();
+    const cps = [30, 60, 90].map((n) => { const ok = cur && cur.pct >= n / DAYS * 100 - 1; return { label: 'Ngày ' + n + (ok ? ': đạt' : ''), chip: ok ? 'chip ok' : 'chip gray' }; });
+    return { tabs: [['list', 'Bảo hành'], ['c', 'Khiếu nại'], ['r', 'Ca thay thế']].map(([k, label]) => ({ label, on: S.tab === k, go: () => this.setState({ tab: k, page: 0 }) })), isList: S.tab === 'list', isComplaints: S.tab === 'c', isRepl: S.tab === 'r',
+      filters: F.map(([k, label, f]) => ({ label: label + ' ' + all.filter(f).length, on: S.filter === k, go: () => this.setState({ filter: k, page: 0 }) })), rows, empty: list.length === 0, footer: view.footer, pager: MedPage.pager(this, view),
+      sel: cur || null, closeSel: () => this.setState({ sel: null }), cps, fus, fuCount: fus.length, noFu: fus.length === 0, whoCand: S.who === 'Ứng viên', whoCust: S.who === 'Khách hàng', result: S.result, err: S.err,
+      onWho: (e) => this.setState({ who: e.target.value }), onResult: (e) => this.setState({ result: e.target.value, err: '' }),
+      logFu: () => { if (S.result.trim().length < 3) return this.setState({ err: 'Nhập kết quả (ít nhất 3 ký tự)' }); P.onFollowUp && P.onFollowUp(S.sel, S.who, S.result.trim()); this.setState({ result: '' }); },
+      openCase: () => P.onOpenCase && P.onOpenCase(S.sel) };
+  }
+}
+</script>
+</body>
+</html>

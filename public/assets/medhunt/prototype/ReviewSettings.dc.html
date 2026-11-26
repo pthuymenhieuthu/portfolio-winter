@@ -1,0 +1,16 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Quy tắc đánh giá</title><script src="./vendor/react.js"></script><script src="./vendor/react-dom.js"></script><script src="./support.js"></script><link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="ui.css"></head><body><x-dc>
+<div class="col page-in g16"><div class="page-head"><div><h1>Quy tắc đánh giá</h1><p class="muted">Áp dụng cho các lượt đánh giá của công ty.</p></div></div><section class="card"><div class="card-b col g16">
+<label class="row"><input type="checkbox" checked="{{cfg.showPrescreen}}" disabled="{{readonly}}" onChange="{{prescreen}}"> Người đánh giá được xem ghi chú sơ vấn</label>
+<label class="row"><input type="checkbox" checked="{{cfg.showFirst}}" disabled="{{readonly}}" onChange="{{first}}"> Người đánh giá vòng 2 được xem kết luận vòng đầu</label><p class="small muted">Mặc định tắt. Khi bật vẫn không hiện tên người đánh giá vòng đầu cho người đánh giá vòng 2.</p>
+<label class="field" style="max-width:320px"><span>Ngưỡng Chậm xử lý (giờ)</span><input class="input" type="number" min="1" aria-label="Ngưỡng Chậm xử lý (giờ)" value="{{hours}}" disabled="{{readonly}}" onInput="{{setHours}}"><span class="muted small">Để trống: không gắn cờ. Cờ không chặn thao tác.</span></label>
+<sc-if value="{{error}}"><p class="t-danger" role="alert">{{error}}</p></sc-if><sc-if value="{{message}}"><p class="chip ok" role="status">{{message}}</p></sc-if><div><button class="btn primary" disabled="{{readonly}}" onClick="{{save}}">Lưu quy tắc</button></div>
+</div></section></div>
+</x-dc><script type="text/x-dc" data-dc-script data-props='{"settings":{"editor":null,"default":{}},"isAdmin":{"editor":null,"default":false},"onSave":{"editor":null}}'>
+class Component extends DCLogic {
+state = { patch: {}, message: '', error: '' };
+renderVals() { const S = this.state, P = this.props, cfg = { ...P.settings, ...S.patch }; const update = (p) => this.setState({ patch: { ...S.patch, ...p }, message: '', error: '' });
+return { cfg, readonly: !P.isAdmin, hours: cfg.slowHours || '', message: S.message, error: S.error,
+prescreen: () => update({ showPrescreen: !cfg.showPrescreen }), first: () => update({ showFirst: !cfg.showFirst }), setHours: (e) => update({ slowHours: e.target.value }),
+save: () => { if (!P.isAdmin) return; if (cfg.slowHours !== '' && cfg.slowHours != null && !(+cfg.slowHours > 0)) { this.setState({ error: 'Ngưỡng phải lớn hơn 0 hoặc để trống.' }); return; } P.onSave(cfg); this.setState({ message: 'Đã lưu quy tắc đánh giá.' }); } }; }
+}
+</script></body></html>

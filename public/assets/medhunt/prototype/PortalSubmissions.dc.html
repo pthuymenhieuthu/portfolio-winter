@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Cổng KH: Hồ sơ nhận được</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./filter-multi.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0}.tb{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}.tb .btn{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;flex:none}.btn.xl{background:#f6f7f8;border:1px solid #d3d7dc;box-shadow:none}.btn.xl:hover{background:#eff1f3}</style></helmet>
+<div class="col page-in">
+  <div class="page-head tight"><h1>Hồ sơ nhận được</h1></div>
+  <div class="muted">Hồ sơ đã được SMS sàng lọc và kiểm chứng. Liên hệ ứng viên do SMS điều phối — thông tin liên lạc không hiển thị trên cổng.</div>
+  <div class="ovc stagger" style="grid-template-columns:repeat(4,minmax(0,1fr))"><sc-for list="{{tiles}}" as="t" hint-placeholder-count="4"><button class="{{t.cls}}" style="{{t.accStyle}}" aria-pressed="{{t.on}}" onClick="{{t.pick}}"><span class="ovico"><sc-if value="{{t.fClock}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"></path></svg></sc-if><sc-if value="{{t.fAct}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></sc-if><sc-if value="{{t.fCheck}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3"></path></svg></sc-if><sc-if value="{{t.fCross}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm3 6-6 6m0-6 6 6"></path></svg></sc-if></span><span class="ovn tabular {{t.nCls}}">{{t.n}}</span><span class="ovt">{{t.label}}</span></button></sc-for></div>
+  <div class="row tb">
+    <input class="input" style="max-width:320px;flex:1;min-width:0" placeholder="Tìm mã hồ sơ, yêu cầu, chuyên khoa…" value="{{q}}" onInput="{{onQ}}" aria-label="Tìm kiếm">
+    <div style="position:relative"><button class="btn" aria-expanded="{{fOpen}}" onClick="{{togF}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg> Bộ lọc<sc-if value="{{nF}}"><span class="chip ok tabular">{{nF}}</span></sc-if></button>
+      <sc-if value="{{fOpen}}"><div style="position:fixed;inset:0;z-index:30" onClick="{{togF}}" aria-hidden="true"></div>
+      <div class="anim-pop" role="dialog" aria-label="Bộ lọc" style="position:absolute;left:0;top:calc(100% + 8px);z-index:31;width:min(560px,92vw);box-sizing:border-box;display:flex;flex-wrap:wrap;gap:12px;padding:16px;background:var(--surface);border-radius:16px;box-shadow:var(--elev-3)">
+    <label class="field" style="min-width:170px;flex:1"><span class="muted small fw5">Trạng thái</span><select class="input" onChange="{{setSt}}"><sc-for list="{{stOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+    <label class="field" style="min-width:170px;flex:1"><span class="muted small fw5">Yêu cầu</span><select class="input" onChange="{{setReq}}"><sc-for list="{{reqOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+    <label class="field" style="min-width:170px;flex:1"><span class="muted small fw5">Chuyên khoa</span><select class="input" onChange="{{setSpec}}"><sc-for list="{{specOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+    <label class="field" style="min-width:170px;flex:1"><span class="muted small fw5">Ngày nhận</span><select class="input" onChange="{{setWhen}}"><sc-for list="{{whenOpts}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+      </div></sc-if></div>
+    <sc-if value="{{anyFilter}}"><button class="btn sm xl" onClick="{{clear}}">Xoá lọc</button></sc-if>
+  </div>
+  <div class="card"><table><thead><tr><sc-for list="{{cols}}" as="h"><th class="sortable" onClick="{{h.sort}}" aria-sort="{{h.aria}}">{{h.label}} {{h.arrow}}</th></sc-for></tr></thead><tbody class="stagger">
+    <sc-for list="{{rows}}" as="c"><tr onClick="{{c.open}}"><td class="fw5">Hồ sơ {{c.code}} <span class="muted small">{{c.spec}} · {{c.exp}} năm KN</span></td><td>{{c.reqTitle}}</td><td class="tabular">{{c.sent}}</td><td><span class="{{c.chip}}">{{c.label}}</span></td></tr></sc-for></tbody></table>
+    <sc-if value="{{empty}}"><div class="card-b col"><span class="muted">Không có hồ sơ nào.</span><div><button class="btn sm" onClick="{{clear}}">Bỏ mọi bộ lọc</button></div></div></sc-if>
+    <div class="tfoot"><span>{{footer}}</span><span class="spacer"></span><sc-for list="{{pager}}" as="pg"><button class="{{pg.cls}}" disabled="{{pg.off}}" aria-label="{{pg.aria}}" aria-current="{{pg.cur}}" onClick="{{pg.go}}">{{pg.label}}</button></sc-for></div></div>
+
+  <sc-if value="{{sel}}"><div class="scrim"><div class="modal anim-scale" role="dialog" aria-label="Hồ sơ" style="width:min(560px,94vw)">
+    <div class="row"><h2>Hồ sơ {{sel.code}}</h2><span class="spacer"></span><button class="icon-btn" aria-label="Đóng" onClick="{{close}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <div class="muted">{{sel.reqTitle}} · {{sel.spec}} · {{sel.exp}} năm kinh nghiệm. SMS đã kiểm chứng chứng chỉ hành nghề.</div>
+    <sc-if value="{{sel.answered}}"><div class="chip info alert">{{sel.answerText}}</div></sc-if>
+    <sc-if value="{{sel.canAnswer}}"><div class="row wrap"><button class="btn primary" onClick="{{openAns}}">Phản hồi hồ sơ</button></div></sc-if>
+  </div></div></sc-if>
+  <sc-if value="{{rowOpen}}"><dc-import name="ReqRowAct" cfg="{{ansCfg}}" on-save="{{saveAns}}" on-close="{{closeAns}}" hint-size="100%,100px"></dc-import></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"d":{"editor":null,"default":{"cases":[]}},"api":{"editor":null,"default":{}},"$preview":{"width":1100,"height":520}}'>
+class Component extends DCLogic {
+  state = { ans: false, tile: 'cho', req: '', spec: '', when: '', fOpen: false, sel: null, q: '', key: null, dir: 1, page: 0 };
+  static L = ['Đã gửi','Phỏng vấn','Đạt phỏng vấn','Đã offer','Chờ thử việc','Thử việc','Bảo hành','Kết thúc bảo hành','Kết thúc giữa chừng'];
+  static ANS = { INTERVIEW_REQUESTED: 'Đã mời phỏng vấn', REJECTED: 'Đã từ chối' };
+  renderVals() {
+    const S = this.state, d = this.props.d || { cases: [] }, api = this.props.api || {}, C = Component, all = d.cases;
+    const waitingFn = (c) => c.stage === 0 && !c.decision;
+    const T = [['Chờ phản hồi', 'cho', waitingFn], ['Đang xử lý', 'dang', (c) => c.stage >= 1 && c.stage <= 3 || (c.stage === 0 && c.decision && c.decision !== 'REJECTED')], ['Đã tuyển', 'tuyen', (c) => c.stage >= 4 && c.stage <= 7], ['Đã dừng', 'dung', (c) => c.stage === 8]];
+    const tiles = T.map(([label, k, fn]) => ({ label, n: all.filter(fn).length, on: S.tile === k, pick: () => this.setState({ tile: S.tile === k ? null : k, page: 0 }) }));
+    const DECO = [['Clock'], ['Act'], ['Check'], ['Cross']];
+    tiles.forEach((t, i) => Object.assign(t, { cls: 'ovi' + (t.pick ? '' : ' st'), accStyle: '--acc:var(' + window.MedDash.statTone(i, tiles.length) + ')', ['f' + DECO[i][0]]: true }));
+    const tf = (T.find((t) => t[1] === S.tile) || [])[2], q = S.q.trim().toLowerCase();
+    const dnum = (v) => { const [dd, mm, yy] = String(v).split(' ')[0].split('/').map(Number); return (yy || 0) * 10000 + (mm || 0) * 100 + (dd || 0); };
+    const TODAY = new Date(2026, 9, 15), since = (n) => { const t = new Date(TODAY.getTime() - n * 864e5); return t.getFullYear() * 10000 + (t.getMonth() + 1) * 100 + t.getDate(); };
+    const uniq = (k) => [...new Set(all.map((c) => c[k]).filter(Boolean))].sort((a, b) => String(a).localeCompare(String(b), 'vi'));
+    const mk = (arr, cur) => arr.map(([v, l]) => ({ v, l, sel: v === cur }));
+    const val = { code: (r) => r.code, reqTitle: (r) => r.reqTitle, sent: (r) => dnum(r.sent), label: (r) => r.label };
+    const mapped = all.filter((c) => (!tf || tf(c)) && (!S.req || c.reqTitle === S.req) && (!S.spec || c.spec === S.spec) && (!S.when || dnum(c.sent) >= since(+S.when)) && [c.code, c.reqTitle, c.spec].join(' ').toLowerCase().includes(q)).map((c) => { const w = waitingFn(c); return { ...c, label: w ? 'Chờ phản hồi' : c.decision && c.stage === 0 ? C.ANS[c.decision] : C.L[c.stage], chip: w ? 'chip warn' : c.stage === 8 ? 'chip gray' : 'chip info', open: () => { api.view && api.view(c.id); this.setState({ sel: c.id }); } }; });
+    const list = S.key ? mapped.slice().sort((a, b) => { const x = val[S.key](a), y = val[S.key](b); return (x > y ? 1 : x < y ? -1 : 0) * S.dir; }) : mapped;
+    const pg = window.MedPage.view(list, S.page, 'hồ sơ'), rows = pg.rows;
+    const cols = [['code', 'Hồ sơ'], ['reqTitle', 'Yêu cầu'], ['sent', 'Ngày nhận'], ['label', 'Tình trạng']].map(([k, label]) => ({ label, arrow: k === S.key ? (S.dir > 0 ? '↑' : '↓') : '', aria: k === S.key ? (S.dir > 0 ? 'ascending' : 'descending') : 'none', sort: () => this.setState({ key: k, dir: k === S.key ? -S.dir : 1, page: 0 }) }));
+    const cur = all.find((c) => c.id === S.sel);
+    const nF = [S.tile, S.req, S.spec, S.when].filter(Boolean).length;
+    return { tiles, cols, rows, fOpen: S.fOpen, togF: () => this.setState({ fOpen: !S.fOpen }), nF, anyFilter: nF > 0 || !!q,
+      stOpts: mk([['', 'Tất cả'], ...T.map(([label, k]) => [k, label])], S.tile || ''), setSt: (e) => this.setState({ tile: e.target.value || null, page: 0 }),
+      reqOpts: mk([['', 'Tất cả yêu cầu'], ...uniq('reqTitle').map((v) => [v, v])], S.req), setReq: (e) => this.setState({ req: e.target.value, page: 0 }),
+      specOpts: mk([['', 'Tất cả chuyên khoa'], ...uniq('spec').map((v) => [v, v])], S.spec), setSpec: (e) => this.setState({ spec: e.target.value, page: 0 }),
+      whenOpts: mk([['', 'Mọi lúc'], ['7', '7 ngày gần đây'], ['30', '30 ngày gần đây']], S.when), setWhen: (e) => this.setState({ when: e.target.value, page: 0 }), q: S.q, onQ: (e) => this.setState({ q: e.target.value, page: 0 }), empty: list.length === 0, clear: () => this.setState({ q: '', tile: null, req: '', spec: '', when: '', page: 0 }),
+      footer: pg.footer, pager: window.MedPage.pager(this, pg),
+      close: () => this.setState({ sel: null }),
+      sel: cur ? { ...cur, canAnswer: waitingFn(cur), answered: !waitingFn(cur) && !!cur.decision, answerText: C.ANS[cur.decision] || '' } : null,
+      openAns: () => this.setState({ ans: true }), rowOpen: S.ans && !!cur, ansCfg: cur ? { id: cur.id, name: 'Hồ sơ ' + cur.code, kind: 'respond', stage: 0 } : {}, closeAns: () => this.setState({ ans: false }),
+      saveAns: (kind, id, d, why) => { api.respond && api.respond(id, d, why); this.setState({ ans: false, sel: null }); } };
+  }
+}
+</script>
+</body>
+</html>

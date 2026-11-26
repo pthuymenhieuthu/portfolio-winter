@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Xác nhận tuyển dụng</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.hc{width:min(720px,94vw);max-height:90vh;padding:0;display:flex;flex-direction:column;overflow:hidden}
+.hc .hh{padding:24px 24px 16px;display:flex;flex-direction:column;gap:6px}
+.hc .hb{padding:0 24px 24px;overflow:auto;flex:1 1 auto}
+.hc .hf{display:flex;align-items:center;justify-content:flex-end;gap:8px;border-top:1px solid var(--line-soft);padding:16px 24px;flex:none;background:var(--surface)}
+/* cùng kiểu nhóm của form Tạo yêu cầu: tiêu đề xanh, cách nhóm 32px, ngăn bằng đường kẻ */
+.hc .grp{padding:32px 0;border-top:1px solid var(--line)}.hc .grp:first-child{padding-top:8px;border-top:0}.hc .grp:last-child{padding-bottom:0}
+.hc .lgd{display:flex;align-items:center;gap:8px;margin-bottom:16px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--brand-ink)}
+.hc .g4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.hc .grp>.hint,.hc .grp>.tot,.hc .grp>.field{margin-top:16px}
+.hc .ir{display:grid;grid-template-columns:52px 84px minmax(0,1fr) minmax(0,1fr) 32px;gap:8px;align-items:start}
+.hc .ir .ix{height:40px;display:flex;align-items:center;font-weight:600}
+.hc .hint{font-size:12px;color:var(--muted)}
+.hc .tot{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:var(--brand-50);font-weight:700}
+</style></helmet>
+<div class="scrim"><div class="modal anim-scale hc" role="dialog" aria-label="Xác nhận tuyển dụng">
+  <div class="hh"><h2 style="margin:0">Xác nhận tuyển dụng · {{kase.name}}</h2>
+  <div class="muted small">Chốt ngày, lương và phí rồi bấm Lưu. Chưa lưu thì ca vẫn ở Đã offer.</div></div>
+  <div class="hb">
+  <div class="grp"><div class="lgd">Ngày của ca</div>
+  <div class="g4">
+    <div class="field" style="grid-column:1/-1"><label>Có thử việc</label><div class="rdg" role="radiogroup" aria-label="Có thử việc"><label class="rd"><input type="radio" name="rd-HireConfirm-1" checked="{{prob}}" onChange="{{setProb}}"><span>Có</span></label><label class="rd"><input type="radio" name="rd-HireConfirm-1" checked="{{noProb}}" onChange="{{setNoProb}}"><span>Không</span></label></div></div>
+    <div class="field"><label>{{labelA}}</label><input class="input" value="{{v.a}}" placeholder="dd/mm/yyyy" onInput="{{on.a}}"><span class="err">{{e.a}}</span></div>
+    <sc-if value="{{prob}}"><div class="field"><label>Ngày kết thúc thử việc (b)</label><input class="input" value="{{v.b}}" placeholder="dd/mm/yyyy" onInput="{{on.b}}"><span class="err">{{e.b}}</span></div></sc-if>
+    <div class="field"><label>Ngày bắt đầu làm chính thức (c)</label><input class="input" value="{{v.c}}" placeholder="dd/mm/yyyy" disabled="{{noProb}}" onInput="{{on.c}}"><span class="err">{{e.c}}</span></div>
+    <div class="field"><label>Hạn bảo hành (d)</label><input class="input" value="{{v.d}}" placeholder="dd/mm/yyyy" onInput="{{on.d}}"><span class="err">{{e.d}}</span></div>
+  </div>
+  <div class="hint">{{dateHint}}</div></div>
+  <div class="grp"><div class="lgd">Lương và phí</div>
+  <div class="g4">
+    <div class="field"><label>Mức lương chính thức (đồng/tháng)</label><input class="input" value="{{salaryTxt}}" disabled="true"><span class="hint">Lấy từ offer. Sửa ở đây không đổi offer.</span></div>
+    <div class="field"><label>Mức tính phí (đồng/tháng) <span class="req">*</span></label><input class="input" inputmode="numeric" value="{{baseTxt}}" onInput="{{on.base}}"><span class="hint">Điền sẵn bằng mức lương chính thức.</span><span class="err">{{e.base}}</span></div>
+    <div class="field"><label>Cách tính <span class="req">*</span></label><select class="input" onChange="{{on.method}}"><option value="pct" selected="{{isPct}}">% tổng lương năm</option><option value="months" selected="{{isMonths}}">Số tháng lương</option></select></div>
+    <sc-if value="{{isPct}}"><div class="field"><label>Tỷ lệ lương năm (%) <span class="req">*</span></label><input class="input" inputmode="decimal" value="{{f.rate}}" onInput="{{on.rate}}"><span class="hint">Thường 18-25%</span><span class="err">{{e.rate}}</span></div></sc-if>
+    <sc-if value="{{isMonths}}"><div class="field"><label>Số tháng lương <span class="req">*</span></label><input class="input" inputmode="decimal" value="{{f.months}}" onInput="{{on.months}}"><span class="hint">Thường 1-3 tháng</span><span class="err">{{e.months}}</span></div></sc-if>
+    <div class="field"><label>Ngày xác nhận tuyển dụng <span class="req">*</span></label><input class="input" value="{{v.hireOn}}" placeholder="dd/mm/yyyy" onInput="{{on.hireOn}}"><span class="err">{{e.hireOn}}</span></div>
+  </div>
+  <div class="tot"><span>Tổng phí dịch vụ</span><span class="spacer"></span><span class="tabular">{{totalTxt}}</span></div></div>
+  <div class="grp"><div class="lgd">Các đợt thanh toán</div>
+  <div class="col" style="gap:8px">
+    <sc-for list="{{insts}}" as="i"><div class="ir"><span class="ix">Đợt {{i.n}}</span>
+      <div class="field"><input class="input" inputmode="decimal" value="{{i.pct}}" aria-label="Tỷ lệ đợt {{i.n}} (%)" onInput="{{i.onPct}}"></div>
+      <div class="field"><input class="input" inputmode="numeric" value="{{i.amount}}" aria-label="Số tiền đợt {{i.n}}" onInput="{{i.onAmt}}"></div>
+      <div class="field"><input class="input" value="{{i.due}}" placeholder="Hạn dd/mm/yyyy" aria-label="Hạn đợt {{i.n}}" onInput="{{i.onDue}}"></div>
+      <button class="icon-btn" aria-label="Bỏ đợt {{i.n}}" disabled="{{i.lock}}" onClick="{{i.drop}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></div></sc-for>
+    <div class="row"><button class="btn sm" onClick="{{addInst}}">+ Thêm đợt</button><span class="spacer"></span><span class="small {{sumCls}} tabular">{{sumTxt}}</span></div>
+    <span class="err">{{e.insts}}</span>
+  </div>
+  <div class="hint">{{instHint}}</div>
+  <div class="field"><label>Ghi chú</label><input class="input" value="{{f.note}}" onInput="{{on.note}}" placeholder="Tuỳ chọn"></div></div>
+  </div>
+  <div class="hf"><button class="btn" onClick="{{cancel}}">Đóng</button><button class="btn primary" onClick="{{save}}">Lưu</button></div>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"kase":{"editor":null,"default":{"id":"","name":""}},"offer":{"editor":null,"default":{}},"onSave":{"editor":null},"onCancel":{"editor":null},"$preview":{"width":760,"height":900}}'>
+class Component extends DCLogic {
+  // Theo module 09 B2.1, B2.3, B3.2 #1, #4, #6, #8: có thử việc hay không, bốn ngày a b c d, tổng phí tính từ mức tính phí (không nhập tay), các đợt điền sẵn 60/20/20.
+  // Ô để trống (null) thì đi theo ô nguồn; người dùng gõ vào ô nào thì ô đó giữ số đã gõ.
+  static DEFAULTS = [{ pct: '60', anchor: 'a' }, { pct: '20', anchor: 'c' }, { pct: '20', anchor: 'd' }]; // cấu hình mặc định của công ty (module 09 B3.2 #8)
+  state = { f: { prob: true, a: null, b: null, c: null, d: null, hireOn: '15/10/2026', base: null, method: 'pct', rate: '18', months: '2', note: '', insts: Component.DEFAULTS.map((i) => ({ ...i, amt: null, due: null })) }, e: {} };
+  static RE = /^\d{2}\/\d{2}\/\d{4}$/;
+  static pd = (s) => { const [d, m, y] = s.split('/').map(Number); return new Date(y, m - 1, d); };
+  static fd = (t) => String(t.getDate()).padStart(2, '0') + '/' + String(t.getMonth() + 1).padStart(2, '0') + '/' + t.getFullYear();
+  static addD = (s, n) => { const t = Component.pd(s); t.setDate(t.getDate() + n); return Component.fd(t); };
+  static addM = (s, n) => { const t = Component.pd(s); t.setMonth(t.getMonth() + n); return Component.fd(t); };
+  static maskDate = (v) => { const d = String(v).replace(/\D/g, '').slice(0, 8); return d.slice(0, 2) + (d.length > 2 ? '/' + d.slice(2, 4) : '') + (d.length > 4 ? '/' + d.slice(4) : ''); };
+  static num = (s) => parseFloat(String(s).replace(',', '.')) || 0;
+  renderVals() {
+    const P = this.props, S = this.state, C = Component, f = S.f, offer = P.offer || {}, ok = (s) => C.RE.test(s || ''), money = (n) => (n || 0).toLocaleString('vi-VN');
+    const a = f.a !== null ? f.a : offer.start || '', b = !f.prob ? '' : f.b !== null ? f.b : ok(a) ? C.addM(a, 2) : '';
+    const c = !f.prob ? a : f.c !== null ? f.c : ok(b) ? C.addD(b, 1) : '', d = f.d !== null ? f.d : ok(c) ? C.addM(c, 3) : '';
+    const base = f.base !== null ? +String(f.base).replace(/\D/g, '') : offer.salary || 0;
+    const total = Math.round(f.method === 'pct' ? base * 12 * C.num(f.rate) / 100 : base * C.num(f.months));
+    const anchorDay = { a, c, d }, dueOf = (i) => (i.due !== null ? i.due : f.prob && ok(anchorDay[i.anchor]) ? anchorDay[i.anchor] : '');
+    // Đợt nhập theo số tiền giữ số tiền, tỷ lệ tính lại; đợt nhập theo tỷ lệ thì số tiền = tổng × tỷ lệ; đợt cuối nhận phần lẻ đồng để tổng khớp
+    const exp = f.insts.map((i) => (i.amt !== null ? +i.amt || 0 : Math.round(total * C.num(i.pct) / 100))), diff = total - exp.reduce((x, y) => x + y, 0);
+    if (f.insts.length && Math.abs(diff) <= f.insts.length && f.insts.every((i) => i.amt === null)) exp[exp.length - 1] += diff;
+    const sumAmt = exp.reduce((x, y) => x + y, 0), sumOk = total > 0 && sumAmt === total;
+    const set = (patch) => this.setState({ f: { ...f, ...patch }, e: {} });
+    const upI = (k, patch) => set({ insts: f.insts.map((x, j) => (j === k ? { ...x, ...patch } : x)) });
+    const dig = (e) => e.target.value.replace(/\D/g, ''), md = (k) => (e) => set({ [k]: C.maskDate(e.target.value) }), on = { a: md('a'), b: md('b'), c: md('c'), d: md('d'), hireOn: md('hireOn'), note: (e) => set({ note: e.target.value }),
+      base: (e) => set({ base: dig(e) }), method: (e) => set({ method: e.target.value }), rate: (e) => set({ rate: e.target.value.replace(/[^\d.,]/g, '') }), months: (e) => set({ months: e.target.value.replace(/[^\d.,]/g, '') }) };
+    const save = () => {
+      const e = {}, bad = (s) => !ok(s), after = (x, y) => C.pd(x) > C.pd(y);
+      if (bad(a)) e.a = 'Nhập ngày dd/mm/yyyy'; if (f.prob && bad(b)) e.b = 'Nhập ngày dd/mm/yyyy'; if (bad(c)) e.c = 'Nhập ngày dd/mm/yyyy'; if (bad(d)) e.d = 'Nhập ngày dd/mm/yyyy'; if (bad(f.hireOn)) e.hireOn = 'Nhập ngày dd/mm/yyyy';
+      // ERR-PAY-10: có thử việc thì a < b < c < d; không thử việc thì c = a và d sau c
+      if (!e.a && f.prob && !e.b && !after(b, a)) e.b = 'Ngày kết thúc thử việc phải sau ngày bắt đầu (ERR-PAY-10).';
+      if (!e.c && f.prob && !e.b && !after(c, b)) e.c = 'Ngày làm chính thức phải sau ngày kết thúc thử việc (ERR-PAY-10).';
+      if (!e.d && !e.c && !after(d, c)) e.d = 'Hạn bảo hành phải sau ngày làm chính thức (ERR-PAY-10).';
+      if (!(base > 0)) e.base = 'Nhập mức tính phí lớn hơn 0.';
+      if (f.method === 'pct' && !(C.num(f.rate) > 0 && C.num(f.rate) <= 100)) e.rate = 'Tỷ lệ lớn hơn 0 và không quá 100.';
+      if (f.method === 'months' && !(C.num(f.months) > 0)) e.months = 'Số tháng lớn hơn 0.';
+      if (f.insts.some((i, k) => !(exp[k] > 0))) e.insts = 'Mỗi đợt có tỷ lệ hoặc số tiền lớn hơn 0.';
+      else if (f.insts.some((i) => { const dd = dueOf(i); return dd && bad(dd); })) e.insts = 'Hạn của đợt nhập ngày dd/mm/yyyy.';
+      else if (total > 0 && !sumOk) e.insts = 'Tổng số tiền các đợt phải bằng tổng phí dịch vụ (ERR-PAY-08).';
+      if (Object.keys(e).length) { this.setState({ e }); return; }
+      P.onSave && P.onSave(P.kase.id, { prob: f.prob, a, b, c, d, hireOn: f.hireOn, base, method: f.method, rate: C.num(f.rate), months: C.num(f.months), total, salary: offer.salary || 0, note: f.note.trim(),
+        insts: f.insts.map((i, k) => ({ n: k + 1, pct: Math.round(exp[k] / total * 1e4) / 100, amt: exp[k], due: dueOf(i) })) });
+    };
+    const setProb = (v) => () => set({ prob: v, b: null, c: null, insts: f.insts.map((i) => ({ ...i, due: null })) });
+    return { kase: P.kase, v: { a, b, c, d, hireOn: f.hireOn }, f, e: S.e, on, prob: f.prob, noProb: !f.prob, setProb: setProb(true), setNoProb: setProb(false), labelA: f.prob ? 'Ngày bắt đầu thử việc (a)' : 'Ngày bắt đầu đi làm (a)',
+      dateHint: f.prob ? 'Điền sẵn theo ngày nhận việc của offer. Bốn ngày phải khác nhau và theo đúng thứ tự.' : 'Không thử việc: ca vào Bảo hành ngay ngày bắt đầu (c = a). Hạn bảo hành điền sẵn sau 3 tháng.',
+      salaryTxt: money(offer.salary), baseTxt: money(base), isPct: f.method === 'pct', isMonths: f.method === 'months', totalTxt: money(total) + ' đ',
+      insts: f.insts.map((i, k) => ({ n: k + 1, pct: i.amt !== null ? (total ? String(Math.round(exp[k] / total * 1e4) / 100) : '') : i.pct, amount: money(exp[k]), due: dueOf(i), lock: f.insts.length === 1,
+        onPct: (e) => upI(k, { pct: e.target.value.replace(/[^\d.,]/g, ''), amt: null }), onAmt: (e) => upI(k, { amt: dig(e) || '0' }), onDue: (e) => upI(k, { due: C.maskDate(e.target.value) }), drop: () => set({ insts: f.insts.filter((_, j) => j !== k) }) })),
+      addInst: () => set({ insts: [...f.insts, { pct: '', anchor: '', amt: null, due: '' }] }), sumTxt: 'Tổng ' + money(sumAmt) + ' / ' + money(total) + ' đ', sumCls: sumOk ? 'muted' : 't-danger', save, cancel: P.onCancel,
+      instHint: f.prob ? 'Hạn mỗi đợt tự theo ngày a, c, d. Sửa hạn một đợt thì đợt đó không đi theo nữa.' : 'Không thử việc: hạn các đợt để trống, nhập theo thoả thuận với khách hàng.' };
+  }
+}
+</script>
+</body>
+</html>

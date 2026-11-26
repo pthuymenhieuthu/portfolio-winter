@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Tạo hồ sơ ứng viên</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>
+body{margin:0}
+.drop{border:2px dashed var(--line);border-radius:16px;padding:28px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center;background:var(--surface-2)}
+.steps2{display:flex;flex-direction:column;gap:6px}.stp{display:flex;gap:8px;align-items:center}.stp i{width:10px;height:10px;border-radius:50%;border:2px solid var(--line)}.stp.on i{border-color:var(--brand);background:var(--brand)}
+.aitag{font-size:10px;padding:0 6px;border-radius:999px;background:var(--ai-soft);color:var(--ai-ink);font-weight:600}
+</style></helmet>
+<div class="col page-in" style="gap:16px;max-width:880px">
+  <div class="muted small crumbs"><button class="crumb" onClick="{{onCancel}}">Kho ứng viên</button> / Tạo hồ sơ</div>
+  <div class="page-head"><h1>Tạo hồ sơ</h1></div>
+  <div class="seg" role="group" aria-label="Cách tạo"><button aria-pressed="{{isCv}}" onClick="{{showCv}}">Tải CV (AI đọc)</button><button aria-pressed="{{isManual}}" onClick="{{showManual}}">Nhập tay</button></div>
+  <sc-if value="{{showDrop}}"><div class="drop"><div class="fw5">Kéo thả CV vào đây (PDF hoặc Word)</div><div class="muted small">Tối đa 10 MB. AI đọc CV và gợi ý các trường; bạn kiểm lại trước khi lưu.</div><button class="btn" onClick="{{pickFile}}">Chọn CV mẫu</button></div></sc-if>
+  <sc-if value="{{reading}}"><div class="card"><div class="card-h"><h3>AI đang đọc CV</h3></div><div class="card-b steps2">
+    <sc-for list="{{stepsList}}" as="s"><div class="{{s.cls}}"><i></i><span>{{s.label}}</span></div></sc-for></div></div></sc-if>
+  <sc-if value="{{showForm}}">
+    <sc-if value="{{aiNote}}"><div class="chip ai alert">AI đã điền sẵn 7 trường (gắn nhãn AI). Hãy kiểm lại trước khi lưu.</div></sc-if>
+    <sc-if value="{{banner}}"><div class="chip bad alert">{{banner}}</div></sc-if>
+    <sc-if value="{{dup}}"><div class="chip warn alert">Nghi trùng với 1 hồ sơ đã có ({{dupName}}, trùng điện thoại). Cần bấm “Vẫn lưu hồ sơ” để lưu.</div></sc-if>
+    <div class="card"><div class="card-h"><h3>Thông tin ứng viên</h3></div><div class="card-b col"><div class="g2">
+      <div class="field"><label>Họ tên <sc-if value="{{aiNote}}"><span class="aitag">AI</span></sc-if></label><input class="input" value="{{f.name}}" onInput="{{set.name}}"><span class="err">{{e.name}}</span></div>
+      <div class="field"><label>Điện thoại <sc-if value="{{aiNote}}"><span class="aitag">AI</span></sc-if></label><input class="input" value="{{f.phone}}" onInput="{{set.phone}}"></div>
+      <div class="field"><label>Email <sc-if value="{{aiNote}}"><span class="aitag">AI</span></sc-if></label><input class="input" value="{{f.email}}" onInput="{{set.email}}"><span class="err">{{e.contact}}</span></div>
+      <div class="field"><label>Đối tượng</label><select class="input" onChange="{{set.target}}"><sc-for list="{{targets}}" as="o"><option value="{{o.v}}" selected="{{o.sel}}">{{o.v}}</option></sc-for></select></div>
+      <div class="field"><label>Chuyên khoa <sc-if value="{{aiNote}}"><span class="aitag">AI</span></sc-if></label><input class="input" value="{{f.spec}}" onInput="{{set.spec}}"></div>
+      <div class="field"><label>Số năm kinh nghiệm <sc-if value="{{aiNote}}"><span class="aitag">AI</span></sc-if></label><input class="input" type="number" value="{{f.exp}}" onInput="{{set.exp}}"></div>
+      <div class="field"><label>Nơi đang làm <sc-if value="{{aiNote}}"><span class="aitag">AI</span></sc-if></label><input class="input" value="{{f.place}}" onInput="{{set.place}}"></div>
+      <div class="field"><label>Lương mong muốn (triệu)</label><input class="input" type="number" value="{{f.salary}}" onInput="{{set.salary}}"></div></div>
+      <label class="row"><input type="checkbox" checked="{{f.consent}}" onChange="{{tog.consent}}"> Ứng viên đã đồng ý xử lý dữ liệu cá nhân <span class="muted small">(Luật BVDLCN 91/2025/QH15; chưa đồng ý thì chưa gửi khách)</span></label>
+      <sc-if value="{{aiNote}}"><label class="row"><input type="checkbox" checked="{{f.checked}}" onChange="{{tog.checked}}"> Tôi đã kiểm tra các trường AI gợi ý</label><span class="err">{{e.checked}}</span></sc-if>
+    </div></div>
+    <div class="row"><span class="spacer"></span><button class="btn" onClick="{{onCancel}}">Huỷ</button><button class="btn primary" onClick="{{save}}">{{saveLabel}}</button></div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"existing":{"editor":null,"default":[]},"onCancel":{"editor":null},"onSubmit":{"editor":null},"$preview":{"width":900,"height":760}}'>
+class Component extends DCLogic {
+  static STEPS = ['Tải CV nháp lên', 'AI đọc CV và gợi ý trường', 'Tạo hồ sơ'];
+  static TARGETS = ['Bác sĩ', 'Điều dưỡng', 'Kỹ thuật viên', 'Dược sĩ', 'Nữ hộ sinh'];
+  state = { mode: 'cv', phase: 'drop', step: 0, f: { name: '', phone: '', email: '', target: 'Điều dưỡng', spec: '', exp: '', place: '', salary: '', consent: false, checked: false }, e: {}, banner: '', dupOk: false };
+  renderVals() {
+    const S = this.state, f = S.f, P = this.props;
+    const setF = (k) => (ev) => this.setState({ f: { ...f, [k]: ev.target.value }, dupOk: false });
+    const set = {}; ['name', 'phone', 'email', 'target', 'spec', 'exp', 'place', 'salary'].forEach((k) => { set[k] = setF(k); });
+    const ai = S.mode === 'cv' && S.phase === 'form';
+    const digits = (s) => s.replace(/\D/g, '');
+    const dupC = f.phone && (P.existing || []).find((u) => digits(u.phone) === digits(f.phone));
+    return { isCv: S.mode === 'cv', isManual: S.mode === 'manual', showCv: () => this.setState({ mode: 'cv', phase: 'drop' }), showManual: () => this.setState({ mode: 'manual', phase: 'form' }),
+      showDrop: S.mode === 'cv' && S.phase === 'drop', reading: S.mode === 'cv' && S.phase === 'read', showForm: S.phase === 'form', aiNote: ai,
+      stepsList: Component.STEPS.map((label, i) => ({ label, cls: 'stp' + (i <= S.step ? ' on' : '') })),
+      pickFile: () => {
+        this.setState({ phase: 'read', step: 0 });
+        setTimeout(() => this.setState({ step: 1 }), 600);
+        setTimeout(() => this.setState({ step: 2 }), 1300);
+        setTimeout(() => this.setState({ phase: 'form', f: { name: 'Ngô Thị Thanh Tâm', phone: '0903 111 222', email: 'tam.nt@example.com', target: 'Điều dưỡng', spec: 'Hồi sức tích cực', exp: '6', place: 'BV Chợ Rẫy', salary: '', consent: false, checked: false } }), 1900);
+      },
+      f, set, e: S.e, banner: S.banner, targets: Component.TARGETS.map((v) => ({ v, sel: v === f.target })),
+      tog: { consent: () => this.setState({ f: { ...f, consent: !f.consent } }), checked: () => this.setState({ f: { ...f, checked: !f.checked } }) },
+      dup: !!dupC, dupName: dupC ? dupC.name : '', saveLabel: dupC ? 'Vẫn lưu hồ sơ' : 'Lưu hồ sơ', onCancel: P.onCancel,
+      save: () => {
+        const e = {};
+        if (!f.name.trim()) e.name = 'Nhập họ tên ứng viên.';
+        if (!f.phone.trim() && !f.email.trim()) e.contact = 'Nhập ít nhất số điện thoại hoặc email của ứng viên.';
+        if (ai && !f.checked) e.checked = 'Hãy xác nhận đã kiểm tra các trường AI gợi ý';
+        if (Object.keys(e).length) { this.setState({ e, banner: 'Vui lòng kiểm tra các trường được đánh dấu' }); return; }
+        P.onSubmit && P.onSubmit(f, ai);
+      } };
+  }
+}
+</script>
+</body>
+</html>
