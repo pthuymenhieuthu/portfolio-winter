@@ -11,6 +11,7 @@
 .heroOverlay { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg,rgba(255,255,255,.70) 0%,rgba(255,255,255,.28) 36%,transparent 68%), radial-gradient(ellipse 75% 48% at 0% 85%,rgba(255,255,255,.82),transparent), linear-gradient(180deg,rgba(255,255,255,.42) 0%,rgba(255,255,255,.18) 34%,rgba(255,255,255,.38) 58%,rgba(255,255,255,.95) 100%); }
 .heroContent { position: relative; width: 100%; padding: 128px 48px; }
 .hero h1 { max-width: 1050px; font-family: var(--font-heading), sans-serif; font-size: 52px; font-weight: 500; line-height: 1.12; letter-spacing: -.035em; text-wrap: balance; }
+.heroActions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 .intro { max-width: 46ch; margin-top: 24px; font-size: 17px; line-height: 1.65; color: #334155; }
 .showcases { display: flex; flex-direction: column; gap: 144px; }
 .showcase { display: grid; grid-template-columns: minmax(260px, .37fr) minmax(0, 1fr); gap: 64px; align-items: center; }

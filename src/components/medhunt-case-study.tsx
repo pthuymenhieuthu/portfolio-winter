@@ -4,6 +4,7 @@ import { ArrowRight, Braces, Check, Code2, FileText, UsersRound } from "lucide-r
 import { CaseStudyBubbleCard } from "@/components/case-study-bubble-card";
 import styles from "./medhunt-case-study.module.css";
 import { MedhuntPrototype } from "./medhunt-prototype";
+import { Icons } from "@/components/icons";
 
 /** Crops the original product capture in CSS, preserving the source for later motion. */
 function ProductCrop({ src, alt, crop, priority = false }: {
@@ -76,6 +77,14 @@ export function MedhuntCaseStudy() {
       <div className={styles.heroContent}>
         <h1>MedHunt — Making the next hiring step visible</h1>
         <p className={styles.intro}>A healthcare recruitment dashboard that shows recruiters where each candidate stands and what comes next.</p>
+        <div className={styles.heroActions}>
+          <a href="https://medhunts.com/" target="_blank" rel="noreferrer"
+            aria-label="Open Live project in a new tab"
+            className="project-hero-glass-link project-hero-glass-link--silver inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium text-[#17324a] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#3BA0FF]">
+            <Icons.globe className="size-4 shrink-0" aria-hidden="true" />
+            Live project
+          </a>
+        </div>
       </div>
     </header>
     <div className={styles.container}>
