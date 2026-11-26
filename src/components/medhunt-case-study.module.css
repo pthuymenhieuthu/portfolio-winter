@@ -1,0 +1,110 @@
+.page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  color: #111827;
+}
+.page ::selection { background: #c9d8ff; color: #10285f; }
+.container { width: min(100% - 112px, 1320px); margin-inline: auto; }
+.header { padding-top: 176px; padding-bottom: 88px; }
+.header h1 {
+  max-width: 1050px;
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(40px, 4.2vw, 60px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+.intro { max-width: 700px; margin-top: 28px; font-size: 20px; line-height: 1.6; color: #5b677c; }
+.meta { display: flex; align-items: center; gap: 12px; margin-top: 26px; font-size: 14px; color: #66758d; }
+.meta span { color: #2457c5; }
+.showcases { display: flex; flex-direction: column; gap: 144px; }
+.showcase { display: grid; grid-template-columns: minmax(260px, .37fr) minmax(0, 1fr); gap: 64px; align-items: center; }
+.showcase > div { min-width: 0; }
+.showcaseCopy { max-width: 340px; }
+.showcase h2, .learning h2 { font-family: var(--font-heading), sans-serif; font-weight: 400; font-size: 32px; line-height: 1.25; letter-spacing: -.02em; text-wrap: balance; }
+.copy { margin-top: 22px; color: #5b677c; font-size: 17px; line-height: 1.7; }
+.visual { width: 100%; min-width: 0; margin: 0; }
+.productFrame { padding: 12px; }
+.crop { position: relative; overflow: hidden; border-radius: 14px; background: #fff; }
+.sourceImage { position: absolute; display: block; max-width: none; height: auto; user-select: none; }
+.visual figcaption { margin-top: 15px; color: #728097; font-size: 13px; line-height: 1.6; }
+.visualFirst { grid-template-columns: minmax(0, 1fr) minmax(260px, .37fr); }
+.visualFirst > div { grid-column: 2; grid-row: 1; }
+.visualFirst > figure { grid-column: 1; grid-row: 1; }
+.funnelVisual { max-width: 660px; justify-self: center; }
+.learning { display: grid; grid-template-columns: minmax(260px, .37fr) minmax(0, 1fr); gap: 64px; align-items: start; margin-top: 160px; padding-top: 64px; border-top: 1px solid #d7deea; }
+.learningHeading { position: sticky; top: 128px; align-self: start; }
+.learningContent { min-width: 0; }
+.learning h2 { max-width: 340px; font-size: 36px; }
+.learningCopy { display: flex; flex-direction: column; gap: 28px; }
+.takeaway { max-width: 100%; font-family: var(--font-heading), sans-serif; font-size: 25px; line-height: 1.5; color: #17213a; }
+.story { max-width: 100%; color: #5b677c; font-size: 17px; line-height: 1.8; }
+.illustration { margin-top: 56px; }
+.illustrationFrame { padding: 26px 32px 34px; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; margin-top: 0; }
+.scene { position: relative; min-width: 0; }
+.sketch { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; min-height: 208px; border: 1px dashed #b4c2d5; border-radius: 14px; color: #66758d; }
+.sketchLabel { font-size: 12px; }
+.ruleCard { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1px solid #b4c2d5; border-radius: 8px; font-size: 12px; }
+.statePair, .referencePair { display: flex; gap: 10px; align-items: center; }
+.statePair > div, .referencePair > div { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 90px; padding: 10px; border: 1px solid #b4c2d5; border-radius: 8px; font-size: 12px; }
+.scene > p { display: flex; gap: 10px; margin-top: 20px; font-size: 14px; color: #17213a; }
+.learning .scenes { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+.learning .scene { display: grid; grid-template-columns: minmax(0, .6fr) minmax(0, 1fr); gap: 24px; align-items: center; }
+.learning .sketch { grid-column: 2; grid-row: 1; }
+.learning .scene > p { display: block; grid-column: 1; grid-row: 1; margin-top: 0; font-size: 16px; }
+.learning .sketchLabel { max-width: calc(100% - 16px); text-align: center; }
+.learning .statePair, .learning .referencePair { width: calc(100% - 24px); max-width: 240px; }
+.learning .statePair > div, .learning .referencePair > div { flex: 1; min-width: 0; padding: 8px; }
+.learning .statePair > svg { flex-shrink: 0; }
+.learning .sceneArrow { display: none; }
+.sceneArrow { position: absolute; top: 94px; right: -35px; color: #728097; }
+.footer { display: flex; justify-content: space-between; gap: 24px; margin-top: 112px; padding: 32px 0 96px; border-top: 1px solid #d7deea; }
+.footer a { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: #2457c5; }
+.footer a:focus-visible { outline: 2px solid #2457c5; outline-offset: 5px; border-radius: 4px; }
+/* Clip horizontal overflow without creating an intermediate scroll container.
+   These overrides apply only while this case study is in the document. */
+@media (min-width: 1024px) {
+  :global(html):has(.page), :global(body):has(.page), :global(div):has(> .page) {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+}
+/* Basic document flow only; mobile art direction is intentionally deferred. */
+@media (max-width: 1023px) {
+  .container { width: calc(100% - 48px); }
+  .showcase { grid-template-columns: minmax(220px, .45fr) minmax(0, 1fr); gap: 32px; }
+  .visualFirst { grid-template-columns: minmax(0, 1fr) minmax(220px, .45fr); }
+  .showcase h2 { font-size: 27px; }
+  .learning { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .learningHeading { position: static; }
+  .learning h2 { max-width: 700px; }
+  .learningCopy { gap: 28px; }
+  .scenes { gap: 24px; }
+  .sceneArrow { right: -23px; width: 20px; }
+  .statePair, .referencePair { gap: 5px; }
+  .statePair > div, .referencePair > div { min-width: 60px; padding: 8px; }
+}
+@media (max-width: 767px) {
+  .container { width: calc(100% - 40px); }
+  .header { padding-top: 136px; padding-bottom: 64px; }
+  .header h1 { font-size: 36px; }
+  .intro { font-size: 18px; }
+  .meta { flex-wrap: wrap; gap: 8px; font-size: 12px; }
+  .showcases { gap: 80px; }
+  .showcase, .visualFirst, .learningCopy, .scenes { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .visualFirst > div, .visualFirst > figure { grid-column: auto; grid-row: auto; }
+  .showcaseCopy { max-width: 100%; }
+  .productFrame { padding: 7px; }
+  .crop { border-radius: 16px; }
+  .learning { margin-top: 88px; padding-top: 40px; }
+  .learning h2 { font-size: 32px; }
+  .takeaway { font-size: 23px; }
+  .illustrationFrame { padding: 24px; }
+  .sceneArrow { display: none; }
+  .learning .scene { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .learning .sketch { grid-column: 1; grid-row: 1; }
+  .learning .scene > p { grid-column: 1; grid-row: 2; }
+  .footer { margin-top: 72px; padding-bottom: 64px; }
+}
