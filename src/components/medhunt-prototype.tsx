@@ -114,7 +114,7 @@ export function MedhuntPrototype() {
           <path className={styles.pointerEdge} d="M4.2 3.3 20.1 9.6 13.3 12.3 10.6 19.2Z" />
           <path className={styles.pointerFill} d="M4.2 3.3 20.1 9.6 13.3 12.3 10.6 19.2Z" />
         </svg>
-        <span className={styles.pointerLabel}>Prototype</span>
+        <span className={styles.pointerLabel}>You</span>
       </div>
     </div>
   </section>;
