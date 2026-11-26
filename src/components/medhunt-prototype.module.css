@@ -1,7 +1,8 @@
 /* Silver iMac adapted from Devices.css, Copyright (c) 2017 Yan Zhu, MIT.
    Source: https://github.com/picturepan2/devices.css/blob/1184624/src/_imac.scss
    Full notice: /assets/medhunt/prototype/DEVICES-CSS-LICENSE.txt */
-.section { margin-top: 144px; }
+.section { position: relative; margin-top: 144px; padding: 64px 48px 40px; border-radius: 32px; background: #eceef1; }
+.title { margin-bottom: 48px; font-family: var(--font-heading), sans-serif; font-size: 36px; font-weight: 400; line-height: 1.25; letter-spacing: -.02em; text-align: center; color: #111827; }
 .container { position: relative; width: 100%; max-width: 1120px; aspect-ratio: 640 / 540; margin-inline: auto; }
 .computer, .computer *, .computer *::before, .computer *::after { box-sizing: border-box; }
 .computer { position: absolute; top: 0; left: 0; width: 640px; height: 540px; transform-origin: top left; }
@@ -44,4 +45,24 @@
 .stand::before { height: 92px; background: linear-gradient(to bottom, #a0a2a8 0, #c7c8cb 40%, #c7c8cb 85%, #fff 90%, #6d7079 100%); }
 .stand::after { height: 6px; border-top: 1px solid #d4d5d7; background: radial-gradient(circle at center, #d4d5d7 85%, #a0a2a8 100%); }
 .foot { position: absolute; bottom: 0; left: calc(50% - 15px); width: 30px; height: 2px; border-radius: 0 0 3px 3px; background: transparent; box-shadow: -61px 0 #d4d5d7, 61px 0 #d4d5d7; }
-@media (max-width: 767px) { .section { margin-top: 80px; } }
+/* Pointer artwork adapted from ReactDrops Showcase Pointer (Component License
+   1.0). Source and full notice: medhunt-playground-pointer.LICENSE.txt. The
+   original scripted cursor is adapted here to follow the real user's pointer. */
+.pointer { display: none; position: fixed; z-index: 100; top: 0; left: 0; pointer-events: none; user-select: none; }
+.pointerBody { opacity: 0; transform: scale(.6); transform-origin: 0 0; transition: opacity 180ms ease-out, transform 260ms cubic-bezier(.34,1.56,.64,1); }
+.pointer[data-visible] .pointerBody { opacity: 1; transform: scale(1); }
+.pointerArrow { position: absolute; top: -4px; left: -5px; overflow: visible; transform-origin: 5px 4px; filter: drop-shadow(0 1px 1.5px rgb(0 0 0 / 22%)) drop-shadow(0 3px 6px rgb(0 0 0 / 14%)); transition: transform 140ms cubic-bezier(.2,.8,.2,1); }
+.pointer[data-pressed] .pointerArrow { transform: scale(.86); }
+.pointerEdge { fill: #fff; stroke: #fff; stroke-width: 5; stroke-linejoin: round; }
+.pointerFill { fill: #2457c5; stroke: #2457c5; stroke-width: 1.4; stroke-linejoin: round; }
+.pointerLabel { position: absolute; top: 27px; left: 19px; padding: .32em .66em .36em; border-radius: .6em; background: #2457c5; box-shadow: 0 1px 2px rgb(0 0 0 / 14%), 0 4px 12px -2px rgb(36 87 197 / 45%); color: #fff; font: 600 14px/1.25 var(--font-heading), sans-serif; letter-spacing: -.005em; white-space: nowrap; }
+.pointer[data-flip="true"] .pointerLabel { left: auto; right: 12px; }
+@media (hover: hover) and (pointer: fine) {
+  .section, .section * { cursor: none; }
+  .pointer { display: block; }
+}
+@media (prefers-reduced-motion: reduce) { .pointerBody, .pointerArrow { transition: none; } }
+@media (max-width: 767px) {
+  .section { margin-top: 80px; padding: 36px 12px 24px; border-radius: 24px; }
+  .title { margin-bottom: 28px; font-size: 28px; }
+}
