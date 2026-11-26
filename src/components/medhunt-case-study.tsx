@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Braces, Check, Code2, FileText, UsersRound } from "lucide-react";
 import { CaseStudyBubbleCard } from "@/components/case-study-bubble-card";
 import styles from "./medhunt-case-study.module.css";
 import { MedhuntPrototype } from "./medhunt-prototype";
@@ -37,27 +37,62 @@ const teamStory = [
     title: "When UI edits overlapped with evolving logic",
     copy: "At first, I edited the UI directly in the shared codebase while the frontend developer and BA were still refining the logic. Some of my edits affected that logic, and I had to pull updates frequently to keep up.",
     image: "01-shared-code",
-    alt: "The BA, designer and frontend developer making changes around the same shared code window, with edits overlapping between UI and logic.",
+
   },
   {
     title: "Agree on the rules",
     copy: "We agreed on a different workflow. I clarified the business rules with the BA before translating them into UI behavior.",
     image: "02-agree-on-rules",
-    alt: "A BA and designer pointing at the same business rule: a passed interview leads to creating an offer.",
+
   },
   {
     title: "Prototype the behavior",
     copy: "I used Claude to build a standalone, clickable HTML prototype showing how the interface should respond to those rules.",
     image: "03-prototype-behavior",
-    alt: "Two concrete MedHunt case states: interview with the record-result action, then passed interview with the create-offer action.",
+
   },
   {
     title: "Build from the reference",
     copy: "I shared the prototype with the frontend developer as a reference for implementation.",
     image: "04-build-reference",
-    alt: "A frontend developer working with the HTML prototype and a code window open side by side.",
+
   },
 ] as const;
+
+function TeamStoryVisual({ scene }: { scene: typeof teamStory[number]["image"] }) {
+  return <CaseStudyBubbleCard staticFilm className={styles.storyVisual}>
+    <div className={styles.iconScene} aria-hidden="true">
+      {scene === "01-shared-code" && <>
+        <UsersRound size={38} strokeWidth={1.2} />
+        <div className={styles.iconPair}>
+          <div><Code2 size={24} strokeWidth={1.2} /><span>UI</span></div>
+          <div><Braces size={24} strokeWidth={1.2} /><span>Logic</span></div>
+        </div>
+      </>}
+      {scene === "02-agree-on-rules" && <>
+        <UsersRound size={38} strokeWidth={1.2} />
+        <span className={styles.iconLabel}>BA + designer</span>
+        <div className={styles.ruleCard}><FileText size={18} strokeWidth={1.2} /><span>Business rule</span><Check size={17} strokeWidth={1.3} /></div>
+      </>}
+      {scene === "03-prototype-behavior" && <>
+        <Code2 size={32} strokeWidth={1.2} />
+        <span className={styles.iconLabel}>HTML prototype</span>
+        <div className={styles.iconPair}>
+          <div>Phỏng vấn</div><ArrowRight size={17} strokeWidth={1.2} />
+          <div>Đạt phỏng vấn</div>
+        </div>
+      </>}
+      {scene === "04-build-reference" && <>
+        <Braces size={32} strokeWidth={1.2} />
+        <span className={styles.iconLabel}>Frontend developer</span>
+        <div className={styles.iconPair}>
+          <div><FileText size={20} strokeWidth={1.2} /><span>Prototype</span></div>
+          <div><Code2 size={20} strokeWidth={1.2} /><span>Code</span></div>
+        </div>
+      </>}
+    </div>
+  </CaseStudyBubbleCard>;
+}
 
 export function MedhuntCaseStudy() {
   return <main className={styles.page}>
@@ -131,9 +166,7 @@ export function MedhuntCaseStudy() {
           {teamStory.map(scene => <article key={scene.image} className={styles.storyScene}>
             <h3>{scene.title}</h3>
             <p>{scene.copy}</p>
-            <Image src={`/assets/medhunt/story/${scene.image}.svg`} alt={scene.alt}
-              width={1020} height={480} unoptimized className={styles.storySketch}
-              sizes="(max-width: 1023px) 90vw, 920px" />
+            <TeamStoryVisual scene={scene.image} />
           </article>)}
           <p className={styles.takeaway}>A clickable prototype gave our team a concrete way to discuss what the interface should do before implementation.</p>
         </div>
