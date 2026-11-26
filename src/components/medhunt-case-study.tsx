@@ -103,7 +103,6 @@ export function MedhuntCaseStudy() {
                 alt="MedHunt overview with open requests, active cases and outstanding fees above today’s work and new recruitment requests."
                 crop={{ x: 292, y: 264, width: 1120, height: 574 }} />
             </CaseStudyBubbleCard>
-            <figcaption>“Clear, consistent, clear.”</figcaption>
           </figure>
         </section>
 
