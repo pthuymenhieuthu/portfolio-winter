@@ -69,13 +69,16 @@ function TeamIllustrationDraft() {
 
 export function MedhuntCaseStudy() {
   return <main className={styles.page}>
-    <div className={styles.container}>
-      <header className={styles.header} id="medhunt-hero">
+    <header className={styles.hero} id="medhunt-hero" data-project-hero="true">
+      <Image src="/assets/project-thumbnails/medhunt-monitor.png" alt="" fill priority unoptimized
+        sizes="100vw" className={styles.heroImage} aria-hidden="true" />
+      <div className={styles.heroOverlay} aria-hidden="true" />
+      <div className={styles.heroContent}>
         <h1>MedHunt — Making the next hiring step visible</h1>
         <p className={styles.intro}>A healthcare recruitment dashboard that shows recruiters where each candidate stands and what comes next.</p>
-        <p className={styles.meta}>UI/UX Designer <span aria-hidden="true">·</span> Prototype in development</p>
-      </header>
-
+      </div>
+    </header>
+    <div className={styles.container}>
       <div className={styles.showcases}>
         <section className={styles.showcase} id="medhunt-pipeline" aria-labelledby="medhunt-pipeline-title">
           <div><ShowcaseCopy id="medhunt-pipeline-title" title="See where a candidate stands">
@@ -83,7 +86,7 @@ export function MedhuntCaseStudy() {
           </ShowcaseCopy></div>
           <figure className={styles.visual} data-medhunt-visual="pipeline">
             <CaseStudyBubbleCard staticFilm className={styles.productFrame}>
-              <ProductCrop src="/assets/medhunt/screens/pipeline.png" priority
+              <ProductCrop src="/assets/medhunt/screens/pipeline.png"
                 alt="MedHunt pipeline: the hiring step chart above candidate rows, with current stage and next milestone visible together."
                 crop={{ x: 292, y: 248, width: 1120, height: 398 }} />
             </CaseStudyBubbleCard>

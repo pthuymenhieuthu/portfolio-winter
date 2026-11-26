@@ -17,7 +17,7 @@ export function MedhuntPrototype() {
     return () => observer.disconnect();
   }, []);
 
-  return <section id="medhunt-prototype" className={styles.section} aria-label="MedHunt interactive prototype">
+  return <section id="medhunt-prototype" className={styles.section} aria-label="MedHunt interactive prototype — Prototype in development">
     <div ref={container} className={styles.container}>
       <div className={styles.computer} style={{ transform: `scale(${scale})` }}>
         <div className={styles.frame}>
