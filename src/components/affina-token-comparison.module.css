@@ -1,8 +1,8 @@
 .comparison { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:32px; align-items:start; margin-top:48px; }
 .comparison figure { margin:0; min-width:0; }
 .comparison figcaption { margin-top:16px; color:#737373; font-size:13px; line-height:1.6; }
-.capture { position:relative; overflow:hidden; border:1px solid #dce3eb; border-radius:16px; background:#edf6ff; }
-.capture img { width:100%; height:auto; display:block; }
+.capture { position:relative; aspect-ratio:1095/421; overflow:hidden; border:1px solid #dce3eb; border-radius:16px; background:#edf6ff; }
+.capture img { position:absolute; top:0; left:0; width:100%; height:auto; display:block; }
 .captureRow { position:absolute; left:1.55%; width:97.25%; margin:0; padding:0; cursor:pointer; background:transparent; border:0; border-radius:2px; }
 .captureRow[aria-pressed=true] { box-shadow:inset 0 0 0 1px #2c86ff; background:#2c86ff06; }
 .captureRow:focus-visible { outline:1px solid #2c86ff; outline-offset:2px; }

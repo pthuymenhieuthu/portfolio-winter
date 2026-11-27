@@ -13,7 +13,7 @@ export function AffinaTokenComparison() {
       <div className={styles.capture}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/assets/affina/brand-rebuild/token-table-capture.png" alt="Original Figma capture of brand and accent text tokens, their usage, and color references" width={1095} height={439} loading="lazy"/>
-        {tokens.map((token,index)=><button key={token.figmaName} type="button" className={styles.captureRow} style={{top:`${(117+index*76)/439*100}%`,height:`${76/439*100}%`}} aria-label={`Preview ${token.figmaName}`} aria-pressed={selected===index} onPointerEnter={()=>setSelected(index)} onFocus={()=>setSelected(index)} onClick={()=>setSelected(index)} data-capture-row={index}/>)}
+        {tokens.map((token,index)=><button key={token.figmaName} type="button" className={styles.captureRow} style={{top:`${(117+index*76)/421*100}%`,height:`${76/421*100}%`}} aria-label={`Preview ${token.figmaName}`} aria-pressed={selected===index} onPointerEnter={()=>setSelected(index)} onFocus={()=>setSelected(index)} onClick={()=>setSelected(index)} data-capture-row={index}/>)}
       </div>
       <figcaption>Figma</figcaption>
       <div className={styles.valuePreview} id="affina-token-value-preview" aria-live="polite" aria-atomic="true">
