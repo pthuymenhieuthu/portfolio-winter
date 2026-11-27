@@ -96,7 +96,7 @@ export function LeadScene() {
         <path fill="white" d="M412 258l175 3-2 34-174-2zM425 302l175-2 1 34-176 2zM414 345l175 3-1 34-175-2z"/>
         <path d="M111 69q50 0 72 40m-14-6l15 8-1-16M316 223q13-20 43-20m-9-8l11 8-11 8"/>
       </g>
-      <image href="/assets/affina/brand-rebuild/affina-approved.svg" x="401" y="150" width="90" height="90" preserveAspectRatio="xMidYMid meet"/>
+      <image href="/assets/affina/brand-rebuild/affina-horizontal.svg" x="384" y="169" width="124" height="32.062" preserveAspectRatio="xMidYMid meet"/>
       <g fontFamily="Georgia,serif" fill="#192022">
         <text x="37" y="50" fontSize="26" transform="rotate(-5 37 50)">Affina founder</text>
         <text x="375" y="126" fontSize="19" transform="rotate(-6 375 126)">Logo</text>

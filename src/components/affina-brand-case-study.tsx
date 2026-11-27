@@ -31,16 +31,16 @@ export function AffinaBrandCaseStudy() {
             <img src="/assets/affina/brand-rebuild/previous-identity-full.svg" alt="Previous Affina logo with its original Vietnamese tagline from the 2024 brand guidelines"/><figcaption>Previous identity</figcaption></figure>
             <figure className={styles.logoFrame}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img style={{width:180,height:180}} src="/assets/affina/brand-rebuild/affina-approved.svg" alt="New Affina logo supplied by the designer"/><figcaption>New identity</figcaption></figure>
+            <img src="/assets/affina/brand-rebuild/affina-horizontal.svg" alt="New Affina horizontal logo"/><figcaption>New identity</figcaption></figure>
           </div>
           <div className={styles.logoBreakdown}>
             <div><span>Insurance<br/>Healthcare<br/>Finance</span><p>Three leaf-like shapes</p></div><b aria-hidden="true">→</b>
             <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/affina/brand-rebuild/affina-approved.svg" alt="Affina A and shield logo"/><p>‘A’ and shield</p></div><b aria-hidden="true">→</b>
+            <img src="/assets/affina/brand-logomark-after.svg" alt="Affina A and shield logo"/><p>‘A’ and shield</p></div><b aria-hidden="true">→</b>
             <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img style={{maxWidth:230}} src="/assets/affina/brand-wordmark-after.svg" alt="Complete Affina wordmark"/><p>Affina</p></div>
+            <img style={{maxWidth:230}} src="/assets/affina/brand-rebuild/affina-horizontal.svg" alt="Complete Affina horizontal logo"/><p>Affina</p></div>
           </div>
         </section>
         <section id="affina-design-system" aria-labelledby="affina-design-system-title">
