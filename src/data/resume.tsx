@@ -266,7 +266,7 @@ export const DATA = {
   video: "",
 },
     {
-      title: "Affina — Product Design",
+      title: "Affina — Product Design - P2",
       href: "/blog/affina-product-design",
       dates: "Mar 2026",
       active: true,
