@@ -144,7 +144,7 @@
   .previewLabel { display: none; }
   .surface { min-height: max(560px, 100dvh); height: 100dvh; }
   .fluid :global(.fluid-typing-stage) { padding: 106px 18px 75px; }
-  .fluid :global(.fluid-typing-copy) { font-size: clamp(30px, 7.8vw, 48px); }
+  .fluid :global(.fluid-typing-copy) { font-size: clamp(44px, 12vw, 64px); }
   .intro > .composer { margin-top: 40px; }
   .inputBubble { min-height: 61px; padding-left: 18px; }
   .inputBubble input { font-size: 16px; }
