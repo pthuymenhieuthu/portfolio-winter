@@ -1,17 +1,17 @@
 export const portfolioProjects = {
   affina: {
-    title: "Affina — Simplifying Insurance with AI",
+    title: "Affina — Brand Rebuild",
     href: "/blog/affina",
     image: "/assets/project-thumbnails/affina-pink-meadow-en.webp",
-    tag: "Insurance journey · Product design",
-    facts: "Thuy designed a guided insurance purchase journey from a four-question survey through recommendations, plan comparison, declarations, and payment. She also worked on a reusable web/mobile UI system. She designed the experience around AI-assisted recommendations, not the ranking model. The portfolio's 30-day funnel numbers describe an earlier live web flow, not the newer screens.",
+    tag: "Brand identity · Design system",
+    facts: "Thuy rebuilt Affina’s logo, brand guidelines and design system, developed a mascot concept, and worked with developers to apply the identity to the product. She agreed Figma and JSON naming conventions with developers and documented system changes. The audience was young and middle-aged women. She worked directly with her lead on the direction.",
   },
   affinaPartner: {
-    title: "Affina — Unifying Customer & Partner Insurance Journeys",
-    href: "/blog/affina-partner-flow",
+    title: "Affina — Product Design",
+    href: "/blog/affina-product-design",
     image: "/assets/affina-partner-flow/partner-thumbnail.png",
-    tag: "Insurance flow · Business rules",
-    facts: "Thuy designed a family-insurance purchase model for multiple insured people across sales-assisted Affina Pro and self-service web. She clarified rules with BA, business owners, product and developers; mapped happy paths and edge cases; and documented responsive states and handoff.",
+    tag: "AI consultation · Insurance & healthcare",
+    facts: "Thuy worked with Product, AI and IT teams, including business analysts and developers, to map the insurance consultation flow, design screens and refine the UI in code. The showcase then covers healthcare service discovery and family insurance purchase, across sales-assisted Affina Pro and self-service Web App. Her role covered the recommendation experience, not the ranking model. App-wide satisfaction data is collected after claims and is not an outcome of the consultation design.",
   },
   zoan: {
     title: "Zoan AI — Designing Clearer AI Workflows",

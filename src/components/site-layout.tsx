@@ -24,6 +24,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
     pathname === "/blog/mcdonalds-kiosk" ||
     pathname === "/blog/medhunt" ||
     pathname === "/blog/affina" ||
+    pathname === "/blog/affina-product-design" ||
     pathname === "/blog/affina-partner-flow" ||
     pathname === "/blog/4oranges" ||
     pathname === "/blog/zoan" ||

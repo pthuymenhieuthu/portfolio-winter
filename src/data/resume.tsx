@@ -240,14 +240,14 @@ export const DATA = {
       video: "",
     },
     {
-  title: "Affina — Simplifying Insurance with AI",
+  title: "Affina — Brand Rebuild",
   href: "/blog/affina",
   dates: "Mar 2026",
   active: true,
   description:
-    "Designed a guided insurance journey from survey to plan comparison, supported by a reusable UI system across web and mobile.",
+    "Rebuilt Affina’s visual identity and design system, developed brand guidelines, and worked with developers to apply the identity to the product.",
   technologies: [
-    "Insurance App",
+    "Brand Identity",
     "Design System",
   ],
   links: [
@@ -266,15 +266,15 @@ export const DATA = {
   video: "",
 },
     {
-      title: "Affina — Unifying Customer & Partner Insurance Journeys",
-      href: "/blog/affina-partner-flow",
+      title: "Affina — Product Design",
+      href: "/blog/affina-product-design",
       dates: "Mar 2026",
       active: true,
       description:
-        "Designed a scalable purchase flow for partners, translating complex insurance rules into clearer UI, states, and handoff logic.",
+        "Designed AI-assisted insurance consultation, healthcare discovery, and family insurance purchase across app and web.",
       technologies: [
-        "Partner Portal",
-        "Business Rules",
+        "AI Consultation",
+        "Insurance & Healthcare",
       ],
       links: [
         {

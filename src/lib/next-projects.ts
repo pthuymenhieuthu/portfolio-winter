@@ -6,7 +6,7 @@ type ProjectLink = {
 export function getVisibleProjects<T extends ProjectLink>(projects: readonly T[]): T[] {
   const projectOrder: Record<string, number> = {
     "/blog/affina": 0,
-    "/blog/affina-partner-flow": 1,
+    "/blog/affina-product-design": 1,
     "/blog/medhunt": 2,
     "/blog/4oranges": 4,
     "/blog/zoan": 5,

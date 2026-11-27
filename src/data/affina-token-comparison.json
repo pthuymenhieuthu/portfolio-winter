@@ -1,0 +1,42 @@
+[
+  {
+    "figmaName": "color.text.brand.primary",
+    "figmaAlias": "Blue600",
+    "figmaValue": "#095efb",
+    "export": {
+      "name": "color/text/brand/primary",
+      "token": "color-text-brand-primary",
+      "value": "#4d56df"
+    }
+  },
+  {
+    "figmaName": "color.text.brand.secondary",
+    "figmaAlias": "Pink500",
+    "figmaValue": "#f44099",
+    "export": {
+      "name": "color/text/brand/secondary",
+      "token": "color-text-brand-secondary",
+      "value": "#ff51ff"
+    }
+  },
+  {
+    "figmaName": "color.text.accent.positive",
+    "figmaAlias": "Green500",
+    "figmaValue": "#1cb680",
+    "export": {
+      "name": "color/text/accent/positive",
+      "token": "color-text-accent-positive",
+      "value": "#10b981"
+    }
+  },
+  {
+    "figmaName": "color.text.accent.attention",
+    "figmaAlias": "Yellow500",
+    "figmaValue": "#f59e0b",
+    "export": {
+      "name": "color/text/accent/attention",
+      "token": "color-text-accent-attention",
+      "value": "#eebd04"
+    }
+  }
+]

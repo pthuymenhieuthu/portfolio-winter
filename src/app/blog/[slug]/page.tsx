@@ -5,8 +5,9 @@ import { Suspense } from "react";
 import { TableOfContents } from "@/components/table-of-contents";
 import ClientBlog from "@/components/client-blog";
 import { PasswordGate } from "@/components/password-gate";
-import { AffinaCaseStudy } from "@/components/affina-case-study";
-import { AffinaPartnerFlowCaseStudy } from "@/components/affina-partner-flow-case-study";
+import { AffinaBrandCaseStudy } from "@/components/affina-brand-case-study";
+import { AffinaProductCaseStudy } from "@/components/affina-product-case-study";
+import { redirect } from "next/navigation";
 import { FourOrangesCaseStudy } from "@/components/four-oranges-case-study";
 import { ZoanCaseStudy } from "@/components/zoan-case-study";
 import { MedhuntCaseStudy } from "@/components/medhunt-case-study";
@@ -35,11 +36,15 @@ export default async function BlogPage({
   }
 
   if (params.slug === "affina") {
-    return <AffinaCaseStudy />;
+    return <AffinaBrandCaseStudy />;
   }
 
   if (params.slug === "affina-partner-flow") {
-    return <AffinaPartnerFlowCaseStudy />;
+    redirect("/blog/affina-product-design#affina-family");
+  }
+
+  if (params.slug === "affina-product-design") {
+    return <AffinaProductCaseStudy />;
   }
 
   if (params.slug === "4oranges") {
