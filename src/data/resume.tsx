@@ -240,7 +240,7 @@ export const DATA = {
       video: "",
     },
     {
-  title: "Affina — Brand Rebuild - P1",
+  title: "Affina — Brand Rebuild [P1]",
   href: "/blog/affina",
   dates: "Mar 2026",
   active: true,
@@ -266,7 +266,7 @@ export const DATA = {
   video: "",
 },
     {
-      title: "Affina — Product Design - P2",
+      title: "Affina — Product Design [P2]",
       href: "/blog/affina-product-design",
       dates: "Mar 2026",
       active: true,

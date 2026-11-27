@@ -14,7 +14,7 @@ import { CaseStudyBubbleLink } from "./case-study-bubble-card";
 
 export function AffinaBrandCaseStudy() {
   return <main className={styles.page}>
-    <ProjectCaseStudyHero id="affina-brand-overview" title="Affina — Brand Rebuild - P1" titleLines={["Affina —", "Brand Rebuild - P1"]} role="Brand & Product Designer" scope="Logo, brand guidelines, design system" status="Design exploration" outcome="Identity across app and website" colors={projectMeshPalettes.affina} background={<AffinaMockupHero/>} appearance="light" summary="I rebuilt Affina’s visual identity and design system as the company brought insurance, healthcare, and finance together under one brand. I designed the new logo, developed the brand guidelines, and worked with developers to carry the new identity into the product."/>
+    <ProjectCaseStudyHero id="affina-brand-overview" title="Affina — Brand Rebuild [P1]" titleLines={["Affina —", "Brand Rebuild [P1]"]} role="Brand & Product Designer" scope="Logo, brand guidelines, design system" status="Design exploration" outcome="Identity across app and website" colors={projectMeshPalettes.affina} background={<AffinaMockupHero/>} appearance="light" summary="I rebuilt Affina’s visual identity and design system as the company brought insurance, healthcare, and finance together under one brand. I designed the new logo, developed the brand guidelines, and worked with developers to carry the new identity into the product."/>
     <div className={styles.body}>
       <div className={styles.stack}>
         <section className={styles.row} aria-labelledby="affina-lead-title">
@@ -63,7 +63,7 @@ export function AffinaBrandCaseStudy() {
         </section>
         <section aria-labelledby="affina-application-title">
           <AffinaBrandApplication/>
-          <div className={styles.nextPart}><CaseStudyBubbleLink className={styles.projectCta} href="/blog/affina-product-design">Next part: Affina — Product Design - P2 →</CaseStudyBubbleLink></div>
+          <div className={styles.nextPart}><CaseStudyBubbleLink className={styles.projectCta} href="/blog/affina-product-design">Next part: Affina — Product Design [P2] →</CaseStudyBubbleLink></div>
         </section>
       </div>
       <div className={styles.footer}><CaseStudyNextProjects currentHref="/blog/affina" id="affina-brand-next"/></div>
