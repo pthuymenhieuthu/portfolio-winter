@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import styles from "./affina-brand-application.module.css";
 import device from "./medhunt-prototype.module.css";
+import { AffinaLegacyWebPreview } from "./affina-legacy-web-preview";
 
 export function SilverDesktop({children,className=""}:{children?:ReactNode;className?:string}) {
   const container = useRef<HTMLDivElement>(null);
@@ -20,7 +21,7 @@ export function SilverDesktop({children,className=""}:{children?:ReactNode;class
   return <div id={children?undefined:"affina-desktop-showcase"} ref={container} className={`${styles.desktop} ${className}`}>
     <div className={device.computer} style={{transform:`scale(${scale})`}}>
       <div className={device.frame}>
-        <div className={device.screen}>{children?<div className={styles.desktopContent} data-lenis-prevent tabIndex={0} role="region" aria-label="Scroll the Web App review">{children}</div>:<iframe className={styles.websiteFrame} src="https://www.affina.com.vn/ai/?affina_set_lang=en" title="Current Affina website in English" loading="lazy" allow="autoplay"/>}</div>
+        <div className={device.screen}>{children?<div className={styles.desktopContent} data-lenis-prevent tabIndex={0} role="region" aria-label="Scroll the Web App review">{children}</div>:<AffinaLegacyWebPreview/>}</div>
       </div>
       <div className={device.stand}/><div className={device.foot}/>
     </div>

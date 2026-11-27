@@ -1,0 +1,23 @@
+.page { position:relative; width:1814px; height:1020px; overflow:hidden; background:white; transform:scale(.3329658214); transform-origin:top left; font-family:Arial,sans-serif; color:#072d41; }
+.sky { position:absolute; left:0; top:-1px; width:1814px; height:955px; object-fit:cover; object-position:bottom; }
+.header { position:absolute; top:0; left:0; width:100%; height:68px; display:flex; align-items:center; justify-content:space-between; padding:17px 68px; box-sizing:border-box; background:#ffffffcc; backdrop-filter:blur(40px); }
+.navigation,.actions,.products,.language,.solution { display:flex; align-items:center; }
+.navigation { gap:45px; font-size:22.675px; font-weight:600; color:#56515e; }
+.products { gap:11px; }
+.actions { gap:62px; font-size:22.675px; }
+.language { gap:11px; }
+.language i { display:block; width:28.344px; height:28.344px; border-radius:50%; background:linear-gradient(45deg,transparent 40%,white 40%,white 46%,#ffadad 46%,#ffadad 53%,white 53%,white 60%,transparent 60%),linear-gradient(-45deg,transparent 42%,white 42%,white 58%,transparent 58%),#444da0; mask:url('/assets/affina/brand-rebuild/legacy-web/flag.svg') center/contain no-repeat; }
+.solution { gap:11px; padding:12px 24px; border:1px solid #ffb9ff; border-radius:999px; color:#ff51ff; background:white; font-size:18px; white-space:nowrap; }
+.hero { position:absolute; left:187px; top:196px; width:1440px; height:561px; padding:48px 80px; box-sizing:border-box; display:flex; align-items:center; justify-content:center; }
+.copy { width:738px; flex-shrink:0; margin-right:-162px; position:relative; z-index:1; }
+.copy h3 { font:600 56px/1.1 var(--font-heading),Arial,sans-serif; letter-spacing:-1.12px; margin:0 0 24px; }
+.copy h3 span { color:#ff51ff; background:linear-gradient(89deg,#ff51ff,#f616b9); background-clip:text; -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.copy p { font-size:20px; line-height:1.3; margin:0 0 48px; color:#183b4e; }
+.start { display:inline-flex; align-items:center; justify-content:center; gap:8px; width:180px; height:48px; box-sizing:border-box; border:1px solid #ffffffcc; border-radius:16px; background:linear-gradient(90deg,#5e6bfc,#8b6cf6 55%,#ff51ff); color:white; font-size:16px; font-weight:600; box-shadow:0 16px 28px -12px #d728af52,inset 0 1px #ffffff66; }
+.family { position:relative; width:775px; height:471.39px; flex-shrink:0; }
+.family > img { position:absolute; left:0; top:35.95px; width:775px; height:435.438px; object-fit:cover; }
+.back { position:absolute; left:69.24px; top:0; width:635.18px; height:17.311px; border-radius:8.655px 8.655px 0 0; background:#ffffff66; backdrop-filter:blur(5px); }
+.front { position:absolute; left:30.63px; top:17.31px; width:712.414px; height:18.643px; border-radius:9.321px 9.321px 0 0; background:#ffffffcc; backdrop-filter:blur(13px); }
+.chat { position:absolute; right:68px; top:776px; width:232px; height:117px; }
+.chat img { position:absolute; left:0; bottom:0; object-fit:contain; }
+.chat span { position:absolute; right:0; bottom:0; height:64px; width:168px; display:flex; align-items:center; justify-content:center; border-radius:15px; background:linear-gradient(white,#c2d5ff); color:#ff51ff; font-size:16px; font-weight:700; }
