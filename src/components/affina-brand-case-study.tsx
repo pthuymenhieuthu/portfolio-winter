@@ -31,20 +31,17 @@ export function AffinaBrandCaseStudy() {
             <img src="/assets/affina/brand-rebuild/previous-identity-full.svg" alt="Previous Affina logo with its original Vietnamese tagline from the 2024 brand guidelines"/><figcaption>Previous identity</figcaption></figure>
             <figure className={styles.logoFrame}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/affina/brand-wordmark-after.svg" alt="New Affina vivid pink wordmark"/><figcaption>New identity</figcaption></figure>
+            <img style={{width:180,height:180}} src="/assets/affina/brand-rebuild/affina-approved.svg" alt="New Affina logo supplied by the designer"/><figcaption>New identity</figcaption></figure>
           </div>
           <div className={styles.logoBreakdown}>
             <div><span>Insurance<br/>Healthcare<br/>Finance</span><p>Three leaf-like shapes</p></div><b aria-hidden="true">→</b>
             <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/affina/brand-logomark-after.svg" alt="Three shapes forming an A and a shield"/><p>‘A’ and shield</p></div><b aria-hidden="true">→</b>
+            <img src="/assets/affina/brand-rebuild/affina-approved.svg" alt="Affina A and shield logo"/><p>‘A’ and shield</p></div><b aria-hidden="true">→</b>
             <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img style={{maxWidth:230}} src="/assets/affina/brand-wordmark-after.svg" alt="Complete Affina wordmark"/><p>Affina</p></div>
           </div>
-          <div className={styles.paper}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.guideline} src="/assets/affina/color-after.png" alt="Affina brand color system from the new visual guidelines" loading="lazy"/></div>
         </section>
         <section id="affina-design-system" aria-labelledby="affina-design-system-title">
           <div className={styles.sectionIntro}><h2 className={styles.heading} id="affina-design-system-title">Rebuilding the design system</h2><p>I worked closely with developers to rebuild Affina’s design system. We agreed on a naming convention in Figma and used it in the JSON exports I shared with the team. Whenever I updated the system, I documented what changed and let developers know so they could keep the implementation in sync.</p></div>

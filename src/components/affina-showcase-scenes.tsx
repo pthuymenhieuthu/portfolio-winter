@@ -96,7 +96,7 @@ export function LeadScene() {
         <path fill="white" d="M412 258l175 3-2 34-174-2zM425 302l175-2 1 34-176 2zM414 345l175 3-1 34-175-2z"/>
         <path d="M111 69q50 0 72 40m-14-6l15 8-1-16M316 223q13-20 43-20m-9-8l11 8-11 8"/>
       </g>
-      <image href="/assets/affina/brand-wordmark-after.svg" x="384" y="171" width="124" height="24.815" preserveAspectRatio="xMidYMid meet"/>
+      <image href="/assets/affina/brand-rebuild/affina-approved.svg" x="401" y="150" width="90" height="90" preserveAspectRatio="xMidYMid meet"/>
       <g fontFamily="Georgia,serif" fill="#192022">
         <text x="37" y="50" fontSize="26" transform="rotate(-5 37 50)">Affina founder</text>
         <text x="375" y="126" fontSize="19" transform="rotate(-6 375 126)">Logo</text>
@@ -121,7 +121,7 @@ export function AudienceScene() {
       <path d="M354 174Q359 171 364 174M381 175Q386 173 391 176M355 181Q359 179 362 182M380 183Q384 181 387 184M372 182L369 192L375 193M347 182C340 178 341 188 348 191M400 184C407 181 406 190 400 193M337 242L324 257M391 248L405 262"/>
       <circle cx="346" cy="194" r="2.3"/><circle cx="399" cy="197" r="2.3"/>
       <path d="M365 273H367M365 288H367M364 303H366"/>
-      <path d="M77 366q206-12 390 7M499 112q-10-47 56-61m-12-6l13 6-8 15"/>
+      <path d="M77 366q206-12 390 7M468 108Q475 77 507 88M498 78L508 88L495 92"/>
     </g>
     <g fill="none" stroke="white" strokeWidth="1.15" strokeLinecap="round" opacity=".7">
       <path d="M157 88q-27 4-29 51m37-51q-12 5-18 17m39-9q18 21 15 54M362 119q-20 4-23 29m33-28q21 4 28 27m-21-20q14 8 19 21"/>
