@@ -4,7 +4,7 @@ export const portfolioProjects = {
     href: "/blog/affina",
     image: "/assets/project-thumbnails/affina-pink-meadow-en.webp",
     tag: "Brand identity · Design system",
-    facts: "Thuy rebuilt Affina’s logo, brand guidelines and design system, developed a mascot concept, and worked with developers to apply the identity to the product. She agreed Figma and JSON naming conventions with developers and documented system changes. The audience was young and middle-aged women. She worked directly with her lead on the direction.",
+    facts: "Thuy rebuilt Affina’s logo, brand guidelines and design system, developed a mascot concept, and worked with developers to apply the identity to the product. She agreed Figma and JSON naming conventions with developers and documented system changes. The audience was young and middle-aged women. She worked directly with the founder on the direction.",
   },
   affinaPartner: {
     title: "Affina — Product Design",
