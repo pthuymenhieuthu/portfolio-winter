@@ -1,6 +1,6 @@
 export const portfolioProjects = {
   affina: {
-    title: "Affina — Brand Rebuild",
+    title: "Affina — Brand Rebuild - P1",
     href: "/blog/affina",
     image: "/assets/project-thumbnails/affina-pink-meadow-en.webp",
     tag: "Brand identity · Design system",

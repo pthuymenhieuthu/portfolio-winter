@@ -240,7 +240,7 @@ export const DATA = {
       video: "",
     },
     {
-  title: "Affina — Brand Rebuild",
+  title: "Affina — Brand Rebuild - P1",
   href: "/blog/affina",
   dates: "Mar 2026",
   active: true,
