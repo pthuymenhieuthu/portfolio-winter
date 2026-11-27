@@ -20,7 +20,7 @@ export function SilverDesktop({children,className=""}:{children?:ReactNode;class
   return <div id={children?undefined:"affina-desktop-showcase"} ref={container} className={`${styles.desktop} ${className}`}>
     <div className={device.computer} style={{transform:`scale(${scale})`}}>
       <div className={device.frame}>
-        <div className={device.screen}>{children?<div className={styles.desktopContent} data-lenis-prevent tabIndex={0} role="region" aria-label="Scroll the Web App review">{children}</div>:<img className={styles.website} src="/assets/affina/brand-rebuild/imac-affina-screen.png" alt="Affina website displayed in a silver iMac mockup" width={902} height={508} loading="lazy"/>}</div>
+        <div className={device.screen}>{children?<div className={styles.desktopContent} data-lenis-prevent tabIndex={0} role="region" aria-label="Scroll the Web App review">{children}</div>:<iframe className={styles.websiteFrame} src="https://www.affina.com.vn/ai/?affina_set_lang=en" title="Current Affina website in English" loading="lazy" allow="autoplay"/>}</div>
       </div>
       <div className={device.stand}/><div className={device.foot}/>
     </div>
