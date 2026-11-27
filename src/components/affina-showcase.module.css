@@ -32,6 +32,7 @@
 .projectCta.projectCta { display:inline-flex; align-items:center; justify-content:center; max-width:100%; margin-top:32px; padding:18px 28px; border-radius:999px; background:radial-gradient(ellipse at 20% 0%,#ffffffcc,transparent 65%),linear-gradient(135deg,#e5f4ff99,#eee8fa55); color:#245d83; font-size:17px; font-weight:500; line-height:1.5; text-align:center; text-decoration:none; transition:background .18s ease; }
 .projectCta.projectCta:hover { background:radial-gradient(ellipse at 20% 0%,#ffffffee,transparent 65%),linear-gradient(135deg,#d8efffcc,#e9e2f877); }
 .projectCta:focus-visible { outline:2px solid #2c86ff; outline-offset:5px; }
+.nextPart { display:flex; justify-content:center; }
 .healthPair { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
 .healthPair img { width:100%; height:auto; display:block; border-radius:20px; }
 .healthPair figure { margin:0; }

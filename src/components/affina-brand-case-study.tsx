@@ -63,7 +63,7 @@ export function AffinaBrandCaseStudy() {
         </section>
         <section aria-labelledby="affina-application-title">
           <AffinaBrandApplication/>
-          <CaseStudyBubbleLink className={styles.projectCta} href="/blog/affina-product-design#affina-ai">Explore Affina — Product Design →</CaseStudyBubbleLink>
+          <div className={styles.nextPart}><CaseStudyBubbleLink className={styles.projectCta} href="/blog/affina-product-design">Next part: Affina — Product Design →</CaseStudyBubbleLink></div>
         </section>
       </div>
       <div className={styles.footer}><CaseStudyNextProjects currentHref="/blog/affina" id="affina-brand-next"/></div>
