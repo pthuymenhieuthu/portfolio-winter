@@ -1,4 +1,6 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Thao tác hồ sơ</title><script src="./vendor/react.js"></script><script src="./vendor/react-dom.js"></script><script src="./modal-ux.js"></script><script src="./support.js"></script><link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="ui.css"></head><body><x-dc>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Thao tác hồ sơ</title><script src="./vendor/react.js"></script><script src="./vendor/react-dom.js"></script>
+<script src="./english-dictionary.js"></script>
+<script src="./english-ui.js"></script><script src="./modal-ux.js"></script><script src="./support.js"></script><link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="ui.css"></head><body><x-dc>
 <helmet><style>.profile-actions textarea{min-height:96px;height:auto;padding:12px;resize:vertical}</style></helmet>
 <div class="scrim"><div class="modal anim-scale profile-actions" role="dialog" aria-modal="true" aria-label="{{title}}"><h2>{{title}}</h2><p class="muted">{{intro}}</p>
 <sc-if value="{{isRemove}}"><label class="field"><span>Lý do bỏ {{required}}</span><textarea class="input" aria-label="Lý do bỏ" maxlength="255" value="{{reason}}" onInput="{{setReason}}"></textarea></label></sc-if>

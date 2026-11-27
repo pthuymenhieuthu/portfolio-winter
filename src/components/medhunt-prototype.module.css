@@ -1,7 +1,7 @@
 /* Silver iMac adapted from Devices.css, Copyright (c) 2017 Yan Zhu, MIT.
    Source: https://github.com/picturepan2/devices.css/blob/1184624/src/_imac.scss
    Full notice: /assets/medhunt/prototype/DEVICES-CSS-LICENSE.txt */
-.section { position: relative; margin-top: 144px; padding: 64px 48px 40px; border-radius: 32px; background: #fafafa; }
+.section { position: relative; margin-top: 144px; padding: 64px 48px 40px; border-radius: 32px; background: #e9edf5; }
 .title { margin-bottom: 48px; font-family: var(--font-heading), sans-serif; font-size: 36px; font-weight: 400; line-height: 1.25; letter-spacing: -.02em; text-align: center; color: #111827; }
 .container { position: relative; width: 100%; max-width: 1120px; aspect-ratio: 640 / 540; margin-inline: auto; }
 .computer, .computer *, .computer *::before, .computer *::after { box-sizing: border-box; }

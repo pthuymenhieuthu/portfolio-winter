@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" fill="none">
+  <g stroke="#192022" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- The same interface appears in the reference and the implementation. -->
+    <g transform="rotate(-6 187 213)">
+      <path d="M66 109h234v207H66Z" fill="#fff"/>
+      <path d="M66 134h234"/>
+      <circle cx="79" cy="121" r="2" fill="#192022" stroke="none"/>
+      <circle cx="88" cy="121" r="2" fill="#192022" stroke="none"/>
+      <circle cx="97" cy="121" r="2" fill="#192022" stroke="none"/>
+      <path d="M80 150h34v149H80Z" fill="#eef0ed" stroke="none"/>
+      <path d="m87 162 18 1m-18 13 14 1m-14 13 17 1"/>
+      <rect x="127" y="151" width="71" height="42" rx="3"/>
+      <rect x="211" y="151" width="71" height="42" rx="3"/>
+      <path d="m137 164 18 1m-18 13 45 1m40-15 17 1m-17 13 44 1m-139 31 155 1m-155 16 123 1m-123 16 155 1m-155 16 137 1m-137 16 155 1"/>
+    </g>
+    <g transform="rotate(5 508 248)">
+      <path d="M405 139h221v218H405Z" fill="#fff"/>
+      <path d="M405 164h221"/>
+      <circle cx="418" cy="151" r="2" fill="#192022" stroke="none"/>
+      <circle cx="427" cy="151" r="2" fill="#192022" stroke="none"/>
+      <circle cx="436" cy="151" r="2" fill="#192022" stroke="none"/>
+      <path d="m421 182 7 5-7 5m15-5 33 1m-34 12 10 1m11 0 63 1m-74 12 16 1m11 0 87 1m-103 12 13 1m11 0 54 1m-65 12 10 1m11 0 78 1"/>
+      <path d="M421 264h188v77H421Zm0 12h188"/>
+      <path d="M429 284h21v49h-21Z" fill="#eef0ed" stroke="none"/>
+      <path d="M460 284h63v19h-63Zm73 0h64v19h-64Zm-73 28h137m-137 9h115m-115 9h137"/>
+    </g>
+    <path d="M318 207c25-13 47-12 72 2m-11-12 12 13-18 1" stroke-width="2"/>
+    <path d="M216 337c42 54 105 58 170 35" stroke-dasharray="7 9"/>
+    <path d="m372 370 15 1-8 12"/>
+    <!-- Developer above the code window. -->
+    <g transform="rotate(5 553 86)">
+      <path d="M525 38h57v92h-57Z" fill="#fff" stroke="none"/>
+      <path d="M551 50c-5 0-7 6-5 11 2 5 7 5 10 1 3-5 1-12-5-12Zm-1 16-8 10-9 23 4 2 11-20 2 21-4 20h5l6-18 5 18h5l-5-23-5-26 14 14 3-3-15-18Z" fill="#192022" stroke="none"/>
+      <path d="m524 131 60-1"/>
+    </g>
+    <path d="M411 59c34-12 61-10 91 1m-12-8 13 8-15 4"/>
+  </g>
+  <g fill="#192022" font-family="Georgia, 'Times New Roman', serif" font-size="23">
+    <text x="101" y="73" transform="rotate(-4 101 73)">Prototype</text>
+    <text x="224" y="43" font-size="21" transform="rotate(2 224 43)">Frontend developer</text>
+    <text x="439" y="411" transform="rotate(3 439 411)">Implementation</text>
+  </g>
+</svg>

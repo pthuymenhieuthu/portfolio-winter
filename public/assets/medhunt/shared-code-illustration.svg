@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" fill="none">
+  <g stroke="#192022" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Two edits share the same surface. -->
+    <g transform="rotate(-7 337 193)">
+      <path d="M225 99 438 101 437 286 223 284Z" fill="#fff"/>
+      <path d="m225 126 213 2"/>
+      <circle cx="237" cy="113" r="2" fill="#192022" stroke="none"/>
+      <circle cx="246" cy="113" r="2" fill="#192022" stroke="none"/>
+      <circle cx="255" cy="113" r="2" fill="#192022" stroke="none"/>
+      <path d="m237 140 36 1-1 130-36-1Z" fill="#eef0ed" stroke="none"/>
+      <path d="m244 152 21 1m-21 10 15 1m-15 17 19 1m-19 10 15 1"/>
+      <rect x="286" y="143" width="61" height="38" rx="3"/>
+      <rect x="357" y="143" width="62" height="38" rx="3"/>
+      <path d="m295 155 14 1m-14 11 31 1m40-13 15 1m-15 11 31 1m-111 28 132 1m-132 13 132 1m-132 13 132 1m-132 13 132 1m-132 13 132 1"/>
+    </g>
+    <g transform="rotate(8 421 250)">
+      <path d="M335 172 501 171 504 321 334 323Z" fill="#f5f7fb"/>
+      <path d="m350 192 16 1m9 0 36 1m-61 14 12 1m13 0 65 1m-78 14 18 1m12 0 40 1m-57 14 39 1m-64 15 12 1m13 0 61 1m-74 14 19 1m12 0 36 1m-79 14 12 1m13 0 47 1"/>
+      <path d="m465 191-9 9 9 9m11-18 9 9-9 9"/>
+    </g>
+    <!-- The overlap, circled as an annotation rather than a warning icon. -->
+    <path d="M339 203c-19-3-32 10-31 25 1 18 25 27 45 19 21-9 18-32-2-41-9-4-20-6-29-2" stroke-width="1.2"/>
+    <path d="m324 218 17 18m-1-20-15 21" stroke-width="2"/>
+    <!-- Arrows are drawn independently so their direction remains legible. -->
+    <path d="M166 134c29-32 53-40 90-34m-13-9 14 9-15 5"/>
+    <path d="M563 200c-14-22-31-32-59-31m10-9-12 9 12 5"/>
+    <path d="M459 335c-62 78-157 72-229 1-17-17-31-38-40-63" stroke-dasharray="9 11" stroke-width="2"/>
+    <path d="m181 283 9-13 12 9" stroke-width="2"/>
+    <path d="M359 51c-9 13-12 23-12 39m-6-9 6 10 6-10"/>
+    <!-- Designer on a small loose sheet. -->
+    <g transform="rotate(-8 123 224)">
+      <path d="M87 168h73v107H87Z" fill="#fff" stroke="none"/>
+      <path d="M121 185c-5 0-7 6-5 11 2 5 7 5 10 1 3-5 1-12-5-12Z" fill="#192022" stroke="none"/>
+      <path d="m120 201-8 10-9 23 4 2 11-20 2 21-5 28h5l7-25 6 25h5l-5-31-5-26 14 14 3-3-15-18Z" fill="#192022" stroke="none"/>
+      <path d="m86 276 75-1"/>
+    </g>
+    <!-- BA and developer work alongside the same document. -->
+    <g transform="rotate(5 596 245)">
+      <path d="M550 197h89v103h-89Z" fill="#fff" stroke="none"/>
+      <path d="M574 211c-5 0-7 5-5 10 2 4 7 4 9 0 3-5 1-10-4-10Zm-4 15-5 15-9 10 3 3 12-11 1 16-5 30h5l6-24 4 24h5l-3-32-4-22 12 9 2-3-16-16Z" fill="#192022" stroke="none"/>
+      <path d="M609 211c-5 0-7 5-5 10 2 4 7 4 9 0 3-5 1-10-4-10Zm-4 15-9 14-7 3 1 4 11-3 4-5-1 20-4 30h5l5-24 5 24h5l-4-32-2-24 9 20 4-2-8-22-6-4Z" fill="#192022" stroke="none"/>
+      <path d="m549 301 91-1"/>
+    </g>
+  </g>
+  <g fill="#192022" font-family="Georgia, 'Times New Roman', serif" font-size="23">
+    <text x="275" y="37" transform="rotate(-2 275 37)">Shared codebase</text>
+    <text x="102" y="92" transform="rotate(-7 102 92)">UI edits</text>
+    <text x="494" y="140" transform="rotate(5 494 140)">Logic changes</text>
+    <text x="85" y="310" font-size="20" transform="rotate(-4 85 310)">Designer</text>
+    <text x="553" y="333" font-size="20" transform="rotate(4 553 333)">BA + dev</text>
+    <text x="265" y="423" transform="rotate(2 265 423)">Pull updates</text>
+  </g>
+</svg>

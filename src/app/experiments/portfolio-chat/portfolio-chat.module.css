@@ -66,7 +66,7 @@
 .intro { grid-row: 2; display: flex; flex-direction: column; align-items: center; width: min(100%, 760px); opacity: 0; transform: translateY(10px); transition: opacity 650ms ease, transform 650ms cubic-bezier(.2,.8,.2,1); }
 .introReady { opacity: 1; transform: translateY(0); }
 .composer { width: min(100%, 650px); }
-.intro > .composer { margin-top: 80px; }
+.intro > .composer { margin-top: 64px; }
 .inputBubble { display: flex; align-items: center; width: 100%; min-height: 68px; padding: 8px 9px 8px 24px; border: 1px solid rgba(59, 160, 255, .3); border-radius: 999px; background: rgba(255, 255, 255, .76); backdrop-filter: blur(20px); box-shadow: 0 12px 32px rgba(31,88,126,.09); }
 .inputBubble input { position: relative; z-index: 1; flex: 1; min-width: 0; height: 46px; border: 0; outline: 0; background: transparent; color: #173b4b; font: inherit; font-size: 17px; }
 .inputBubble input::placeholder { color: #567382; opacity: 1; }
@@ -145,7 +145,7 @@
   .surface { min-height: max(560px, 100dvh); height: 100dvh; }
   .fluid :global(.fluid-typing-stage) { padding: 106px 18px 75px; }
   .fluid :global(.fluid-typing-copy) { font-size: clamp(30px, 7.8vw, 48px); }
-  .intro > .composer { margin-top: 48px; }
+  .intro > .composer { margin-top: 40px; }
   .inputBubble { min-height: 61px; padding-left: 18px; }
   .inputBubble input { font-size: 16px; }
   .inputBubble input::placeholder { font-size: 14px; }

@@ -1,0 +1,6 @@
+Tool: built-in image_gen (image editing).
+Output: public/assets/project-thumbnails/medhunt-monitor-en.png
+Inputs: public/assets/project-thumbnails/medhunt-monitor.png and public/assets/medhunt/screens/fees-funnel.png
+
+Prompt:
+Use case: text-localization / precise compositing. Image 1 is the edit target: the existing blue-lit monitor photograph used as a portfolio hero. Image 2 is the exact English UI screenshot to insert. Replace ONLY the display content inside the monitor in Image 1 with the English screen in Image 2. Match the original perspective, screen crop, subtle display softness and lighting. Preserve the original monitor bezel, stand, plant, keyboard, mouse, desk, camera angle, framing, blue background, illumination, shadows and aspect ratio. Do not redesign the screen; accurately use the screenshot's logo, chart numbers, sidebar and English text. Main visible UI headings must read 'Fees and recruitment funnel', 'Outstanding fees', 'Recruitment funnel', 'Selected profiles', 'Submitted to client', 'Interview', 'Offer', 'Job started', 'Warranty completed', 'Overall conversion'. No Vietnamese UI text. Preserve the brand MedHunt. Keep the entire photograph outside the display unchanged. Landscape output matching Image 1 composition.

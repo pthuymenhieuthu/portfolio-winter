@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" fill="none">
+  <g stroke="#192022" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- The prototype contains two concrete, connected interface states. -->
+    <g transform="rotate(-3 355 223)">
+      <path d="M117 100 592 102 594 330 116 328Z" fill="#fff"/>
+      <path d="m118 128 474 2"/>
+      <circle cx="132" cy="114" r="2" fill="#192022" stroke="none"/>
+      <circle cx="141" cy="114" r="2" fill="#192022" stroke="none"/>
+      <circle cx="150" cy="114" r="2" fill="#192022" stroke="none"/>
+      <path d="m213 116 121 1" stroke="#819092"/>
+      <path d="M139 148h34v160h-34Z" fill="#eef0ed" stroke="none"/>
+      <path d="m147 162 17 1m-17 15 13 1m-13 15 16 1m-16 15 11 1"/>
+      <path d="M194 155h150v143H194Zm210 0h166v143H404Z"/>
+      <path d="m208 199 120 1m-120 23 61 1m-61 15 103 1m-103 15 88 1m-88 15 105 1m102-72 136 1m-136 23 62 1m-62 15 115 1m-115 15 94 1m-94 15 119 1"/>
+      <path d="M270 286c11 15 24 18 35 11"/>
+      <path d="m286 260 5 24 7-8 11 3Z" fill="#192022" stroke="#fff" stroke-width="1"/>
+      <path d="M353 224c13-11 24-11 41-2m-9-10 10 10-14 3" stroke-width="2"/>
+      <path d="m286 246-3-8m12 7 3-8m4 14 8-3"/>
+      <path d="m539 285 6 6 10-13" stroke-width="2"/>
+      <g fill="#192022" stroke="none" font-family="Georgia, 'Times New Roman', serif" font-size="18">
+        <text x="208" y="182">Interview</text>
+        <text x="416" y="182">Passed interview</text>
+      </g>
+    </g>
+    <path d="M79 85c4 26 9 42 26 55m-5-13 6 14-14-4"/>
+    <path d="M257 353c43 26 137 29 194 0" stroke-dasharray="7 9"/>
+    <path d="m439 352 14-1-7 12"/>
+    <path d="M354 397c-2-7-2-12-2-19m-5 8 5-10 5 10"/>
+  </g>
+  <g fill="#192022" font-family="Georgia, 'Times New Roman', serif" font-size="23">
+    <text x="43" y="65" transform="rotate(-5 43 65)">Claude</text>
+    <text x="283" y="57" transform="rotate(2 283 57)">HTML prototype</text>
+    <text x="278" y="429" transform="rotate(-2 278 429)">UI behavior</text>
+  </g>
+</svg>

@@ -23,7 +23,7 @@ export const portfolioProjects = {
   medhunt: {
     title: "MedHunt — Healthcare Recruitment OS",
     href: "/blog/medhunt",
-    image: "/assets/project-thumbnails/medhunt-monitor.png",
+    image: "/assets/project-thumbnails/medhunt-monitor-en.png",
     tag: "Recruitment · Developer handoff",
     facts: "Thuy mapped a healthcare recruitment workflow from customer request and candidate search through interviews, placement, warranty and fees. She worked in interactive HTML, clarified roles, statuses and edge cases, and iterated with BA, operations and engineering for developer handoff.",
   },

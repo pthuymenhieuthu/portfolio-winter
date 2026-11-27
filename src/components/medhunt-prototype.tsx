@@ -16,18 +16,39 @@ export function MedhuntPrototype() {
     const cursor = pointer.current;
     if (!area || !frame || !cursor) return;
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    let lastPosition: { x: number; y: number } | null = null;
     const hide = () => { delete cursor.dataset.visible; delete cursor.dataset.pressed; };
     const move = (event: PointerEvent, insideFrame = false) => {
       if (!finePointer.matches || event.pointerType === "touch") return hide();
       const box = frame.getBoundingClientRect();
       const x = insideFrame ? box.left + event.clientX * box.width / frame.clientWidth : event.clientX;
       const y = insideFrame ? box.top + event.clientY * box.height / frame.clientHeight : event.clientY;
+      lastPosition = { x, y };
       cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       cursor.dataset.visible = "true";
       cursor.dataset.flip = String(x > window.innerWidth - 170);
     };
-    const parentMove = (event: PointerEvent) => move(event);
+    const parentMove = (event: PointerEvent) => {
+      if (!finePointer.matches || event.pointerType === "touch") {
+        lastPosition = null;
+        return hide();
+      }
+      lastPosition = { x: event.clientX, y: event.clientY };
+      if (event.target instanceof Node && area.contains(event.target)) move(event);
+      else hide();
+    };
     const frameMove = (event: PointerEvent) => move(event, true);
+    // Scrolling moves the content beneath the pointer, not the pointer itself.
+    // Keep it visible unless the playground has moved away from that position.
+    const scroll = () => {
+      if (!lastPosition || !finePointer.matches) return;
+      const target = document.elementFromPoint(lastPosition.x, lastPosition.y);
+      if (target && area.contains(target)) {
+        cursor.style.transform = `translate3d(${lastPosition.x}px, ${lastPosition.y}px, 0)`;
+        cursor.dataset.visible = "true";
+        cursor.dataset.flip = String(lastPosition.x > window.innerWidth - 170);
+      } else hide();
+    };
     const press = () => { cursor.dataset.pressed = "true"; };
     const release = () => { delete cursor.dataset.pressed; };
     // Focusing the embedded prototype blurs the outer window, but the pointer
@@ -48,36 +69,34 @@ export function MedhuntPrototype() {
       doc.addEventListener("pointerleave", hide);
       doc.addEventListener("pointerdown", press);
       doc.addEventListener("pointerup", release);
-      doc.addEventListener("scroll", hide, true);
       detachFrame = () => {
         style.remove();
         doc.removeEventListener("pointermove", frameMove);
         doc.removeEventListener("pointerleave", hide);
         doc.removeEventListener("pointerdown", press);
         doc.removeEventListener("pointerup", release);
-        doc.removeEventListener("scroll", hide, true);
       };
     };
-    area.addEventListener("pointermove", parentMove);
+    window.addEventListener("pointermove", parentMove);
     area.addEventListener("pointerleave", hide);
     area.addEventListener("pointerdown", press);
     window.addEventListener("pointerup", release);
     window.addEventListener("blur", blur);
     document.addEventListener("visibilitychange", visibility);
-    window.addEventListener("scroll", hide, true);
+    window.addEventListener("scroll", scroll, true);
     window.addEventListener("resize", hide);
     finePointer.addEventListener("change", hide);
     frame.addEventListener("load", attachFrame);
     attachFrame();
     return () => {
       detachFrame();
-      area.removeEventListener("pointermove", parentMove);
+      window.removeEventListener("pointermove", parentMove);
       area.removeEventListener("pointerleave", hide);
       area.removeEventListener("pointerdown", press);
       window.removeEventListener("pointerup", release);
       window.removeEventListener("blur", blur);
       document.removeEventListener("visibilitychange", visibility);
-      window.removeEventListener("scroll", hide, true);
+      window.removeEventListener("scroll", scroll, true);
       window.removeEventListener("resize", hide);
       finePointer.removeEventListener("change", hide);
       frame.removeEventListener("load", attachFrame);

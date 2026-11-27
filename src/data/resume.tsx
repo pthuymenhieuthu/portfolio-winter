@@ -213,7 +213,7 @@ export const DATA = {
       dates: "Independent mini case study",
       active: true,
       description: "Helping first-time and occasional kiosk users find, choose, and collect their meals with confidence.",
-      technologies: ["UX/UI Design", "Self-Service Kiosk", "Research Exploration"],
+      technologies: ["Self-Service Kiosk", "UX Research"],
       links: [],
       image: "/assets/kiosk/thumbnail-mockup.png",
       video: "",
@@ -226,11 +226,8 @@ export const DATA = {
       description:
         "Designed an end-to-end operating system connecting recruitment requests, candidates, interviews, placements, warranty, and service fees.",
       technologies: [
-        "Dashboard",
-        "Information Architecture",
-        "Interactive HTML",
-        "Design System",
-        "Developer Handoff",
+        "Recruitment Dashboard",
+        "HTML Prototyping",
       ],
       links: [
         {
@@ -239,7 +236,7 @@ export const DATA = {
           icon: <Icons.globe className="size-3" />,
         },
       ],
-      image: "/assets/project-thumbnails/medhunt-monitor.png",
+      image: "/assets/project-thumbnails/medhunt-monitor-en.png",
       video: "",
     },
     {
@@ -250,10 +247,8 @@ export const DATA = {
   description:
     "Designed a guided insurance journey from survey to plan comparison, supported by a reusable UI system across web and mobile.",
   technologies: [
-    "Product Design",
-    "Insurance Journey",
+    "Insurance App",
     "Design System",
-    "UI/UX Design",
   ],
   links: [
     {
@@ -278,11 +273,8 @@ export const DATA = {
       description:
         "Designed a scalable purchase flow for partners, translating complex insurance rules into clearer UI, states, and handoff logic.",
       technologies: [
-        "Product Design",
-        "Insurance Flow",
+        "Partner Portal",
         "Business Rules",
-        "BA Collaboration",
-        "Handoff",
       ],
       links: [
         {
@@ -312,10 +304,8 @@ export const DATA = {
       description:
         "Mobile reward experience for 4Oranges — the company behind MYKOLOR, SPEC, SONBOSS, EXPO, OEXPO, and SUPORSEAL.",
       technologies: [
-        "Product Design",
+        "QR Rewards",
         "Mobile App",
-        "UI/UX Design",
-        "UI Kit",
       ],
       links: [],
       image: "/assets/project-thumbnails/4oranges.png",
@@ -329,10 +319,8 @@ export const DATA = {
       description:
         "From fearing AI to designing for it.",
       technologies: [
-        "UI Design",
-        "Product Design",
-        "Rive Motion Design",
-        "AI Product",
+        "AI Content Creation",
+        "Rive Animation",
       ],
       links: [
         {
@@ -352,11 +340,8 @@ export const DATA = {
       description:
         "Pizzy is a mobile application that helps users manage shared budgets with friends in a simple, engaging, and social way.",
       technologies: [
-        "App Design",
-        "UI/UX Design",
-        "Motion",
-        "Prototype",
-        "Finance",
+        "Shared Budgeting",
+        "Mobile Interaction",
       ],
       links: [
         {
@@ -376,10 +361,8 @@ export const DATA = {
       description:
         "Mingg UI Design Challenge: A 6-week UI design competition where participants created one landing page per week based on a given brief.",
       technologies: [
-        "UI Design",
-        "Web Design",
-        "Motion",
-        "Prototype",
+        "Landing Pages",
+        "Web Animation",
       ],
       links: [
         {
@@ -399,13 +382,8 @@ export const DATA = {
       description:
         "- Contributed to refining the [TrueProfit landing page](https://trueprofit.io/)- Redesigned the in-app onboarding flow for TrueProfit",
       technologies: [
-        "Web Design",
-        "Product Design",
-        "UI/UX Design",
-        "Prototype",
-        "E-commerce",
-        "Finance",
-        "Shopify"
+        "Shopify App",
+        "Onboarding",
       ],
       links: [
         {
@@ -425,10 +403,8 @@ export const DATA = {
     description:
       "UI improvements for top-rated learning apps on the App Store.",
     technologies: [
-      "UI Design",
-      "Mobile App",
-      "EdTech",
-      "App Store Graphics",
+      "Education Apps",
+      "UI & Motion",
     ],
     links: [
       {
@@ -453,11 +429,8 @@ export const DATA = {
       description:
         "- Social & promotional visuals for TikTok Shop campaigns\n- Product highlight & seasonal banners for language learning apps",
       technologies: [
-        "Marketing Design",
-        "Visual Communication",
         "Campaign Graphics",
         "App Promotion",
-        "E-commerce",
       ],
       links: [
         {
@@ -477,9 +450,8 @@ export const DATA = {
       description:
         "A take-home assignment for the Product Designer position at Cake, focusing on creating a rounded-up savings feature that helps users save effortlessly while keeping their balances neat.",
       technologies: [
-        "Product Design",
-        "UI/UX Design",
-        "Prototype",
+        "Digital Banking",
+        "Automated Savings",
       ],
       links: [
         {
@@ -499,9 +471,8 @@ export const DATA = {
       description:
         "A project with Team 14 at Lollypop Designathon 2024, centered around traditional folk games.",
       technologies: [
-        "Web Design",
+        "Folk Games",
         "UX Research",
-        "Prototype",
       ],
       links: [
         {

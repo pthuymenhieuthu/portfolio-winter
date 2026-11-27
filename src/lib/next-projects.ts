@@ -7,9 +7,8 @@ export function getVisibleProjects<T extends ProjectLink>(projects: readonly T[]
   const projectOrder: Record<string, number> = {
     "/blog/affina": 0,
     "/blog/affina-partner-flow": 1,
-    "/blog/mcdonalds-kiosk": 2,
-    "/blog/4oranges": 3,
-    "/blog/medhunt": 4,
+    "/blog/medhunt": 2,
+    "/blog/4oranges": 4,
     "/blog/zoan": 5,
     "/blog/chande": 6,
   };
@@ -17,6 +16,7 @@ export function getVisibleProjects<T extends ProjectLink>(projects: readonly T[]
     projectOrder[project.href ?? ""] ?? 7;
 
   return [...projects]
+    .filter((project) => project.href !== "/blog/mcdonalds-kiosk")
     .sort(
       (a, b) => priority(a) - priority(b)
     );

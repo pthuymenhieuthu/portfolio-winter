@@ -1,10 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, Braces, Check, Code2, FileText, UsersRound } from "lucide-react";
 import { CaseStudyBubbleCard } from "@/components/case-study-bubble-card";
 import styles from "./medhunt-case-study.module.css";
 import { MedhuntPrototype } from "./medhunt-prototype";
 import { Icons } from "@/components/icons";
+import { CaseStudyNextProjects } from "@/components/case-study-next-projects";
 
 /** Crops the original product capture in CSS, preserving the source for later motion. */
 function ProductCrop({ src, alt, crop, priority = false }: {
@@ -60,44 +59,35 @@ const teamStory = [
 ] as const;
 
 function TeamStoryVisual({ scene }: { scene: typeof teamStory[number]["image"] }) {
-  return <CaseStudyBubbleCard staticFilm className={styles.storyVisual}>
-    <div className={styles.iconScene} aria-hidden="true">
-      {scene === "01-shared-code" && <>
-        <UsersRound size={38} strokeWidth={1.2} />
-        <div className={styles.iconPair}>
-          <div><Code2 size={24} strokeWidth={1.2} /><span>UI</span></div>
-          <div><Braces size={24} strokeWidth={1.2} /><span>Logic</span></div>
-        </div>
-      </>}
-      {scene === "02-agree-on-rules" && <>
-        <UsersRound size={38} strokeWidth={1.2} />
-        <span className={styles.iconLabel}>BA + designer</span>
-        <div className={styles.ruleCard}><FileText size={18} strokeWidth={1.2} /><span>Business rule</span><Check size={17} strokeWidth={1.3} /></div>
-      </>}
-      {scene === "03-prototype-behavior" && <>
-        <Code2 size={32} strokeWidth={1.2} />
-        <span className={styles.iconLabel}>HTML prototype</span>
-        <div className={styles.iconPair}>
-          <div>Phỏng vấn</div><ArrowRight size={17} strokeWidth={1.2} />
-          <div>Đạt phỏng vấn</div>
-        </div>
-      </>}
-      {scene === "04-build-reference" && <>
-        <Braces size={32} strokeWidth={1.2} />
-        <span className={styles.iconLabel}>Frontend developer</span>
-        <div className={styles.iconPair}>
-          <div><FileText size={20} strokeWidth={1.2} /><span>Prototype</span></div>
-          <div><Code2 size={20} strokeWidth={1.2} /><span>Code</span></div>
-        </div>
-      </>}
-    </div>
-  </CaseStudyBubbleCard>;
+  const illustrations = {
+    "01-shared-code": {
+      src: "shared-code-illustration.svg",
+      alt: "The designer’s UI edits overlap with BA and developer logic changes in the shared codebase, requiring repeated updates.",
+    },
+    "02-agree-on-rules": {
+      src: "agree-on-rules-illustration.svg",
+      alt: "The BA and designer clarify shared business rules before translating them into UI behavior.",
+    },
+    "03-prototype-behavior": {
+      src: "prototype-behavior-illustration.svg",
+      alt: "A clickable HTML prototype built with Claude demonstrates the change from interview to passed interview.",
+    },
+    "04-build-reference": {
+      src: "build-reference-illustration.svg",
+      alt: "The frontend developer uses the shared prototype as a reference for implementation.",
+    },
+  };
+  const illustration = illustrations[scene];
+  return <figure className={styles.storyIllustration}>
+    <Image src={`/assets/medhunt/${illustration.src}`} alt={illustration.alt}
+      width={720} height={440} unoptimized />
+  </figure>;
 }
 
 export function MedhuntCaseStudy() {
   return <main className={styles.page}>
     <header className={styles.hero} id="medhunt-hero" data-project-hero="true">
-      <Image src="/assets/project-thumbnails/medhunt-monitor.png" alt="" fill priority unoptimized
+      <Image src="/assets/project-thumbnails/medhunt-monitor-en.png" alt="" fill priority unoptimized
         sizes="100vw" className={styles.heroImage} aria-hidden="true" />
       <div className={styles.heroOverlay} aria-hidden="true" />
       <div className={styles.heroContent}>
@@ -149,7 +139,7 @@ export function MedhuntCaseStudy() {
             <CaseStudyBubbleCard staticFilm className={styles.productFrame}>
               <ProductCrop src="/assets/medhunt/screens/fees-funnel.png"
                 alt="Recruitment funnel with stage labels, candidate counts and conversion percentages, from selected profiles through warranty completion. Sample data."
-                crop={{ x: 866, y: 80, width: 546, height: 410 }} />
+                crop={{ x: 862, y: 160, width: 550, height: 494 }} />
             </CaseStudyBubbleCard>
             <figcaption>Sample data</figcaption>
           </figure>
@@ -172,10 +162,13 @@ export function MedhuntCaseStudy() {
         </div>
       </section>
 
-      <footer className={styles.footer}>
-        <Link href="/#projects">Back to projects <ArrowRight size={17} aria-hidden="true" /></Link>
-        <a href="mailto:phuongthuy101222@gmail.com">Get in touch <ArrowRight size={17} aria-hidden="true" /></a>
-      </footer>
+      <div className="mx-auto mt-28 max-w-[1040px] sm:mt-40">
+        <CaseStudyNextProjects currentHref="/blog/medhunt" id="medhunt-next" />
+      </div>
     </div>
+    <section className="px-5 pb-72 pt-24 text-center sm:pb-80" id="medhunt-contact">
+      <h2 className="font-[var(--font-heading)] text-[30px] tracking-[-0.02em] sm:text-[40px]">Let’s build clearer product systems.</h2>
+      <p className="mx-auto mt-5 max-w-[600px] text-base leading-7 text-[#64748b]">I’m open to UI/UX and Product Design opportunities. Email me at <a className="font-medium text-[#2457c5] underline decoration-[#9fb4e6] underline-offset-4" href="mailto:phuongthuy101222@gmail.com">phuongthuy101222@gmail.com</a>.</p>
+    </section>
   </main>;
 }
