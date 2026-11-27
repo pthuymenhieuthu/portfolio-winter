@@ -94,7 +94,7 @@ export function LeadScene() {
         <path fill="white" stroke="none" d="M348 105l177-20 19 171-177 20z"/>
         <path d="M377 137l93-10m-96 17l66-7"/>
         <path fill="white" d="M412 258l175 3-2 34-174-2zM425 302l175-2 1 34-176 2zM414 345l175 3-1 34-175-2z"/>
-        <path d="M111 69q50 0 72 40m-14-6l15 8-1-16M316 223q13-20 43-20m-9-8l11 8-11 8"/>
+        <path d="M222 58C264 59 291 88 279 116m-3-16l3 16 14-7M316 223q13-20 43-20m-9-8l11 8-11 8"/>
       </g>
       <image href="/assets/affina/brand-rebuild/affina-horizontal.svg" x="384" y="169" width="124" height="32.062" preserveAspectRatio="xMidYMid meet"/>
       <g fontFamily="Georgia,serif" fill="#192022">
