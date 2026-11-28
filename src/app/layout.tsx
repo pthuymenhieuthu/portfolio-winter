@@ -30,6 +30,16 @@ const fontHeading = localFont({
   display: "swap",
 });
 
+const fontKrub = localFont({
+  src: [
+    { path: "../../public/fonts/Krub-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/Krub-Italic.ttf", weight: "400", style: "italic" },
+    { path: "../../public/fonts/Krub-MediumItalic.ttf", weight: "500", style: "italic" },
+  ],
+  variable: "--font-krub",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   ...(DATA.url ? { metadataBase: new URL(DATA.url) } : {}), 
   title: {
@@ -113,7 +123,8 @@ export default function RootLayout({
         className={cn(
           "relative min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
-          fontHeading.variable
+          fontHeading.variable,
+          fontKrub.variable
         )}
       >
         <LayoutClient>{children}</LayoutClient>

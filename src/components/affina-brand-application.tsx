@@ -29,8 +29,9 @@ export function SilverDesktop({children,className=""}:{children?:ReactNode;class
 }
 
 export function SilverPhone({src,alt="",className="",children}:{src?:string;alt?:string;className?:string;children?:ReactNode}) {
+  const scrollable = children != null;
   return <div className={`${styles.phone} ${className}`}>
-    <div className={styles.phoneScreen} data-lenis-prevent tabIndex={0} role="region" aria-label={alt?`Scroll ${alt}`:"Scroll the Affina Pro review"}>{children??<img src={src} alt={alt} width={1533} height={3317} loading="lazy"/>}</div>
+    <div className={`${styles.phoneScreen} ${scrollable ? "" : styles.phoneScreenStatic}`} {...(scrollable ? { "data-lenis-prevent": true, tabIndex: 0, role: "region", "aria-label": alt ? `Scroll ${alt}` : "Scroll the Affina Pro review" } : {})}>{children??<img src={src} alt={alt} width={1533} height={3317} loading="lazy"/>}</div>
     <span className={styles.island} aria-hidden="true"/>
     <span className={styles.volume} aria-hidden="true"/>
     <span className={styles.power} aria-hidden="true"/>

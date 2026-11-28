@@ -5,9 +5,8 @@ import { AffinaMockupHero } from "@/components/affina-mockup-hero";
 import { projectMeshPalettes } from "@/components/project-mesh-gradient";
 import { CaseStudyNextProjects } from "@/components/case-study-next-projects";
 import { AffinaCaseStudyContact } from "./affina-product-case-study";
-import { AudienceScene, LeadScene, SystemUpdateScene } from "./affina-showcase-scenes";
+import { LeadScene, SystemUpdateScene } from "./affina-showcase-scenes";
 import styles from "./affina-showcase.module.css";
-import { affinaCaseContext } from "@/data/affina-case-context";
 import { AffinaTokenComparison } from "./affina-token-comparison";
 import { AffinaBrandApplication } from "./affina-brand-application";
 import { CaseStudyBubbleLink } from "./case-study-bubble-card";
@@ -20,27 +19,23 @@ export function AffinaBrandCaseStudy() {
         <section className={styles.row} aria-labelledby="affina-lead-title">
           <div className={styles.copy}><h2 id="affina-lead-title">Working directly with the founder</h2><blockquote>“I worked directly with the founder from the start to agree on who we were designing for, how Affina should feel, and how that direction would carry through to the app and website.”</blockquote></div><LeadScene/>
         </section>
-        <section className={`${styles.row} ${styles.reverse}`} aria-labelledby="affina-audience-title">
-          <div className={styles.copy}><span className={styles.label}>Primary audience · Young and middle-aged women</span><h2 id="affina-audience-title">Who we designed for</h2><p>The redesign focused on young and middle-aged women making decisions about insurance, healthcare, and finances for themselves and their families. I chose a vivid pink to give the refreshed identity a brighter, more energetic feel.</p><dl className={styles.audienceNumbers}><div><dt>Median buyer age</dt><dd>{affinaCaseContext.retail.medianBuyerAge}</dd></div><div><dt>Insured under 18</dt><dd>{affinaCaseContext.retail.insuredUnder18Percent}%</dd></div></dl><small className={styles.source}>{affinaCaseContext.retail.source} · {affinaCaseContext.retail.asOf}</small></div><AudienceScene/>
-        </section>
         <section aria-labelledby="affina-identity-title">
           <div className={styles.row}><div className={styles.copy}><h2 id="affina-identity-title">Rebuilding the Affina identity</h2></div><div className={styles.copy}><p>Protection was already part of Affina’s identity. I carried that idea into the redesign through three leaf-like shapes that form an ‘A’ and suggest a shield. The three shapes represent insurance, healthcare, and finance.</p></div></div>
           <div className={styles.logoPair}>
             <figure className={styles.logoFrame}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/affina/brand-rebuild/previous-identity-full.svg" alt="Previous Affina logo with its original Vietnamese tagline from the 2024 brand guidelines"/><figcaption>Previous identity</figcaption></figure>
+              <div className={styles.logoAsset}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/assets/affina/brand-rebuild/previous-identity-full.svg" alt="Previous Affina logo with its original Vietnamese tagline from the 2024 brand guidelines"/>
+              </div>
+              <figcaption>Previous identity</figcaption>
+            </figure>
             <figure className={styles.logoFrame}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/affina/brand-rebuild/affina-horizontal.svg" alt="New Affina horizontal logo"/><figcaption>New identity</figcaption></figure>
-          </div>
-          <div className={styles.logoBreakdown}>
-            <div><span>Insurance<br/>Healthcare<br/>Finance</span><p>Three leaf-like shapes</p></div><b aria-hidden="true">→</b>
-            <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/affina/brand-logomark-after.svg" alt="Affina A and shield logo"/><p>‘A’ and shield</p></div><b aria-hidden="true">→</b>
-            <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img style={{maxWidth:230}} src="/assets/affina/brand-rebuild/affina-horizontal.svg" alt="Complete Affina horizontal logo"/><p>Affina</p></div>
+              <div className={styles.logoAsset}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/assets/affina/brand-rebuild/affina-horizontal.svg" alt="New Affina horizontal logo"/>
+              </div>
+              <figcaption>New identity</figcaption>
+            </figure>
           </div>
         </section>
         <section id="affina-design-system" aria-labelledby="affina-design-system-title">

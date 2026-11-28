@@ -3,9 +3,9 @@ import styles from "./affina-legacy-web-preview.module.css";
 
 const assets = "/assets/affina/brand-rebuild/legacy-web/";
 
-/** The first desktop fold of Figma node 1:35708, using its source assets. */
+/** The first desktop fold of Figma node 2078:2, scaled to fill the iMac screen. */
 export function AffinaLegacyWebPreview() {
-  return <div className={styles.page} role="img" aria-label="Affina’s previous website design: sky background, family photograph and insurance consultation">
+  return <div className={styles.page} role="img" aria-label="Affina website design: sky background, family photograph and insurance consultation">
     <img className={styles.sky} src={`${assets}sky.png`} alt="" width={1814} height={955}/>
     <div className={styles.header}>
       <div className={styles.navigation}>
@@ -21,15 +21,14 @@ export function AffinaLegacyWebPreview() {
     </div>
     <div className={styles.hero}>
       <div className={styles.copy}>
-        <h3>Proactively<br/>design insurance<br/><span>your way</span></h3>
+        <h3>Choose insurance<br/>coverage<br/><span>that fits your<br/>needs</span></h3>
         <p>Simple. Transparent. Effective.</p>
-        <span className={styles.start}><img src={`${assets}start.svg`} alt="" width={24} height={24}/>Get started</span>
+        <span className={styles.start}><img src={`${assets}start.svg`} alt="" width={24} height={24}/>Get started now</span>
       </div>
       <div className={styles.family}>
         <div className={styles.back}/><div className={styles.front}/>
         <img src={`${assets}family.png`} alt="" width={775} height={435.438}/>
       </div>
     </div>
-    <div className={styles.chat}><img src={`${assets}chat.png`} alt="" width={110} height={117}/><span>Chat with FINA</span></div>
   </div>;
 }
